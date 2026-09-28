@@ -1,0 +1,57 @@
+---
+// Featured paper + smaller cards. An optional figure island goes in the "figure" slot of the featured card.
+import type { Status, StatusLabels, UiCta } from '../types.ts';
+import Button from './Button.astro';
+import StatusPill from './StatusPill.astro';
+import Banner from './Banner.astro';
+interface Card { slug: string; title: string; summary: string; status: Status; kind: string; featured?: boolean; banner?: string; href?: string; cta?: UiCta }
+interface Props { cards: Card[]; statusLabels: StatusLabels; statusPrefix?: string; headingLevel?: 2 | 3 }
+const { cards, statusLabels, statusPrefix, headingLevel = 3 } = Astro.props;
+const featured = cards.find((c) => c.featured);
+const rest = cards.filter((c) => c !== featured);
+const H = headingLevel === 2 ? 'h2' : 'h3';
+const hasFigure = Astro.slots.has('figure');
+---
+{featured && (
+  <article class={`paper nf-card${hasFigure ? ' with-fig' : ''}`} aria-labelledby={`paper-${featured.slug}`}>
+    <div class="body">
+      <div class="meta"><StatusPill status={featured.status} label={statusLabels[featured.status]} prefix={statusPrefix} /><span class="nf-label">{featured.kind}</span></div>
+      <H id={`paper-${featured.slug}`}>{featured.href ? <a href={featured.href}>{featured.title}</a> : featured.title}</H>
+      <p>{featured.summary}</p>
+      {featured.banner && <Banner text={featured.banner} />}
+      {featured.cta && <Button cta={featured.cta} />}
+    </div>
+    {hasFigure && <div class="fig"><slot name="figure" /></div>}
+  </article>
+)}
+{rest.length > 0 && (
+  <div class="papers">
+    {rest.map((c) => (
+      <article class="nf-card card" aria-labelledby={`paper-${c.slug}`}>
+        <StatusPill status={c.status} label={statusLabels[c.status]} prefix={statusPrefix} />
+        <H id={`paper-${c.slug}`}>{c.href ? <a href={c.href}>{c.title}</a> : c.title}</H>
+        <p class="kind nf-label">{c.kind}</p>
+        <p>{c.summary}</p>
+        {c.banner && <Banner text={c.banner} />}
+        {c.cta && <Button cta={c.cta} />}
+      </article>
+    ))}
+  </div>
+)}
+<style>
+  .paper { display: grid; grid-template-columns: 1fr; overflow: hidden; }
+  .paper.with-fig { grid-template-columns: 1.1fr .9fr; }
+  .body { padding: 34px; }
+  .meta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+  .paper h2, .paper h3 { font-size: 24px; font-weight: 400; line-height: 1.25; letter-spacing: -.01em; }
+  .paper h2 a, .paper h3 a, .card h2 a, .card h3 a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .body > p { color: var(--color-muted); margin-top: 14px; font-size: 15.5px; }
+  .body :global(.nf-btn), .card :global(.nf-btn) { margin-top: 22px; }
+  .fig { border-left: 1px solid var(--color-line); background: var(--color-bg); padding: 24px; min-width: 0; }
+  .papers { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .card { padding: 28px; }
+  .card h2, .card h3 { font-size: 17px; font-weight: 500; margin: 12px 0 8px; }
+  .card p { color: var(--color-muted); font-size: 15px; }
+  .card .kind { margin-bottom: 8px; }
+  @media (max-width: 860px) { .paper.with-fig { grid-template-columns: 1fr; } .fig { border-left: 0; border-top: 1px solid var(--color-line); } .papers { grid-template-columns: 1fr; } }
+</style>

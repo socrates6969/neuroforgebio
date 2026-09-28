@@ -1,0 +1,34 @@
+{
+  "advisories": {
+    "1099001": {
+      "id": 1099001,
+      "module_name": "fixture-lib",
+      "severity": "high",
+      "cves": ["CVE-2099-0001"],
+      "github_advisory_id": "GHSA-fixt-ure0-0001",
+      "vulnerable_versions": "<1.2.3",
+      "patched_versions": ">=1.2.3",
+      "findings": [{ "version": "1.0.0", "paths": ["apps/web>fixture-lib"] }],
+      "url": "https://github.com/advisories/GHSA-fixt-ure0-0001"
+    },
+    "1099002": {
+      "id": 1099002,
+      "module_name": "fixture-moderate",
+      "severity": "moderate",
+      "cves": ["CVE-2099-0003"],
+      "github_advisory_id": "GHSA-fixt-ure0-0003",
+      "patched_versions": ">=2.0.0",
+      "findings": [{ "version": "1.9.0", "paths": ["apps/web>fixture-moderate"] }]
+    },
+    "1099003": {
+      "id": 1099003,
+      "module_name": "fixture-nofix",
+      "severity": "critical",
+      "cves": ["CVE-2099-0004"],
+      "github_advisory_id": "GHSA-fixt-ure0-0004",
+      "patched_versions": "<0.0.0",
+      "findings": [{ "version": "3.0.0", "paths": ["apps/web>fixture-nofix"] }]
+    }
+  },
+  "metadata": {}
+}

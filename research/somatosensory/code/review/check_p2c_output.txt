@@ -1,0 +1,26 @@
+1. digitised points: 42 | last adaptation 0.434 (quoted 43.5%) | last recovery 0.726 (quoted 72.6%)
+   [rest_first] tau_a 13.16 s (CI 11.2-15.4), tau_r 108.0 s (CI 89-131), RMSE 0.0470, end-adapt 0.439, end-recov 0.895; A0 PASS; prereg 14.6/120 RMSE here 0.0480
+   [on_first] tau_a 14.41 s (CI 12.6-16.5), tau_r 118.5 s (CI 100-140), RMSE 0.0447, end-adapt 0.438, end-recov 0.867; A0 PASS; prereg 14.6/120 RMSE here 0.0447
+   coder: tau_a 13.17, tau_r 108.0
+   steady state for duty ~1/3 contact, a/60=1 (prereg arithmetic): 1/(1+(tau_r/tau_a)/3) = 0.268
+
+   world built 5s; charge ratio 1.0000
+2. own Euler gain session vs coder exact: max|dg| bio 7.53e-06, lin 7.90e-06 (13s)
+   g_ss contact: own bio 0.2726 lin 0.2730 | coder 0.2726 0.2730
+   charge per episode after gain (sum g*a): bio/lin = 1.0003 (unadapted charge ratio 1.0000)
+3. bio: FV sd own vs noise_sd max diff 0.0e+00; HS sd const [141.528] (= sqrt(100) x 14.153); mean FV contact sd adapted 45.3 vs unadapted 139.9
+3. lin: FV sd own vs noise_sd max diff 0.0e+00; HS sd const [141.528] (= sqrt(100) x 14.153); mean FV contact sd adapted 45.3 vs unadapted 139.9
+   observe_r(bio, HS) - g*a is pure noise with sd 141.534 -> gain acts on the signal only (HS) as prereg 2.1
+
+4. gain-scaling decomposition (g_ss = 0.2728, g_ss^2 = 0.0744)
+   HS g=1             Delta(max D1,D2) +0.0550  Delta_D1only +0.0740  best ('D1', 'D2')  AUC bioD1,bioD2,linD1,linD2 (0.5217, 0.5055, 0.5009, 0.5062)  own-rank AUC bioD1 0.5217
+   HS const g_ss      Delta(max D1,D2) +0.0000  Delta_D1only +0.0054  best ('D2', 'D2')  AUC bioD1,bioD2,linD1,linD2 (0.5014, 0.503, 0.4999, 0.503)  own-rank AUC bioD1 0.5014
+   HS const own g_ss  Delta(max D1,D2) +0.0000  Delta_D1only +0.0054  best ('D2', 'D2')  AUC bioD1,bioD2,linD1,linD2 (0.5014, 0.503, 0.4999, 0.503)  own-rank AUC bioD1 0.5014
+   HS session g       Delta(max D1,D2) +0.0000  Delta_D1only +0.0053  best ('D2', 'D2')  AUC bioD1,bioD2,linD1,linD2 (0.5014, 0.503, 0.4999, 0.503)  own-rank AUC bioD1 0.5014
+   FV g=1             Delta(max D1,D2) +0.1121  Delta_D1only +0.1340  best ('D1', 'D2')  AUC bioD1,bioD2,linD1,linD2 (0.5365, 0.5104, 0.4987, 0.5049)  own-rank AUC bioD1 0.5365
+   FV const g_ss      Delta(max D1,D2) +0.0864  Delta_D1only +0.1048  best ('D1', 'D2')  AUC bioD1,bioD2,linD1,linD2 (0.5286, 0.509, 0.499, 0.5042)  own-rank AUC bioD1 0.5286
+   FV const own g_ss  Delta(max D1,D2) +0.0863  Delta_D1only +0.1048  best ('D1', 'D2')  AUC bioD1,bioD2,linD1,linD2 (0.5286, 0.509, 0.499, 0.5042)  own-rank AUC bioD1 0.5286
+   FV session g       Delta(max D1,D2) +0.0832  Delta_D1only +0.1030  best ('D1', 'D2')  AUC bioD1,bioD2,linD1,linD2 (0.5277, 0.5087, 0.4986, 0.5042)  own-rank AUC bioD1 0.5277
+   HS: D1-only ratio const/g=1 = 0.073, session/g=1 = 0.072 (g_ss = 0.273, g_ss^2 = 0.074); session vs const D1-only differ by -0.0001
+   HS D1-only Delta vs constant g: {1.0: np.float64(0.074), 0.75: np.float64(0.0415), 0.5: np.float64(0.0181), 0.273: np.float64(0.0054)}
+total 19s

@@ -1,0 +1,19 @@
+{
+ "p2b_and_p2_helper_selftests_all": true,
+ "exact_integrator_vs_euler_0.1ms": true,
+ "rest_closed_form": true,
+ "periodic_fixed_point": true,
+ "A0_fit_parameter_recovery": true,
+ "g_equals_1_when_tau_a_inf": true,
+ "R0_path_equals_p2b_arm_eval": true,
+ "session_carry_over": true,
+ "gain_in_(0,1]": true,
+ "identical_encoders_Delta_0": true,
+ "adapted_calibration_MC_JND_weber": true,
+ "adapted_calibration_MC_JND_hs": true,
+ "decide_pass": true,
+ "decide_fail": true,
+ "decide_disagree_inconclusive": true,
+ "decide_rmse_fail": true,
+ "decide_ci_straddles_inconclusive": true
+}

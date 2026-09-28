@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Editorial Brain Plate</title>
+<style>
+  html,body{margin:0;height:100%;background:#FBF8F1;overflow:hidden}
+  #plate{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif}
+  .draw{stroke-dasharray:1 2;stroke-dashoffset:1;animation:draw var(--dur,2.2s) cubic-bezier(.55,.08,.3,1) var(--delay,0s) forwards}
+  .fade{opacity:0;animation:fade var(--dur,1.2s) ease var(--delay,0s) forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes fade{to{opacity:1}}
+  .paused *{animation-play-state:paused!important}
+  @media (prefers-reduced-motion: reduce){
+    .draw{animation:none;stroke-dashoffset:0}
+    .fade{animation:none;opacity:1}
+  }
+</style>
+</head>
+<body>
+<svg id="plate" viewBox="0 0 1280 800" preserveAspectRatio="xMidYMid meet" role="img"
+     aria-label="Scientific-plate style engraving of a lateral brain view with fine contour lines. A red pathway runs from scalp sensors to four numbered callouts: 1 ingest, 2 clean, 3 model, 4 SDK. Caption: Fig. 1 — Signal pathway from sensor to model."
+     xmlns="http://www.w3.org/2000/svg"></svg>
+<script>
+(function(){
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg';
+  var svg = document.getElementById('plate');
+  var INK = '#1A1A1A', RED = '#B3261E', PAPER = '#FBF8F1';
+
+  function el(tag, attrs, parent, text){
+    var e = document.createElementNS(NS, tag);
+    for(var k in attrs) if(Object.prototype.hasOwnProperty.call(attrs,k)) e.setAttribute(k, attrs[k]);
+    if(text != null) e.textContent = text;
+    (parent || svg).appendChild(e);
+    return e;
+  }
+  function f(n){ return Math.round(n*10)/10; }
+
+  // ---------- geometry helpers ----------
+  function crPath(pts, closed){
+    var n = pts.length, d = 'M' + f(pts[0][0]) + ',' + f(pts[0][1]);
+    var segs = closed ? n : n-1;
+    for(var i=0;i<segs;i++){
+      var p0 = pts[closed ? (i-1+n)%n : Math.max(0,i-1)], p1 = pts[i], p2 = pts[(i+1)%n],
+          p3 = pts[closed ? (i+2)%n : Math.min(n-1,i+2)];
+      d += ' C' + f(p1[0]+(p2[0]-p0[0])/6) + ',' + f(p1[1]+(p2[1]-p0[1])/6) + ' ' +
+           f(p2[0]-(p3[0]-p1[0])/6) + ',' + f(p2[1]-(p3[1]-p1[1])/6) + ' ' + f(p2[0]) + ',' + f(p2[1]);
+    }
+    return d + (closed ? 'Z' : '');
+  }
+  function crSample(pts, per){
+    var n = pts.length, out = [];
+    for(var i=0;i<n;i++){
+      var p0=pts[(i-1+n)%n], p1=pts[i], p2=pts[(i+1)%n], p3=pts[(i+2)%n];
+      for(var s=0;s<per;s++){
+        var t=s/per, t2=t*t, t3=t2*t;
+        out.push([0.5*((2*p1[0])+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3),
+                  0.5*((2*p1[1])+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3)]);
+      }
+    }
+    return out;
+  }
+  function inPoly(x,y,poly){
+    var c=false;
+    for(var i=0,j=poly.length-1;i<poly.length;j=i++){
+      var xi=poly[i][0], yi=poly[i][1], xj=poly[j][0], yj=poly[j][1];
+      if(((yi>y)!==(yj>y)) && (x < (xj-xi)*(y-yi)/(yj-yi)+xi)) c=!c;
+    }
+    return c;
+  }
+  function h2(x,y){ var n = (Math.imul(x,374761393) + Math.imul(y,668265263))|0; n = Math.imul(n^(n>>>13),1274126177); n ^= n>>>16; return (n>>>0)/4294967295; }
+  function vn2(x,y){
+    var xi=Math.floor(x), yi=Math.floor(y), xf=x-xi, yf=y-yi;
+    xf=xf*xf*(3-2*xf); yf=yf*yf*(3-2*yf);
+    var a=h2(xi,yi), b=h2(xi+1,yi), c=h2(xi,yi+1), d=h2(xi+1,yi+1);
+    return a + (b-a)*xf + (c-a)*yf + (a-b-c+d)*xf*yf;
+  }
+
+  // ---------- anatomy (lateral view, frontal pole at left) ----------
+  var BRAIN = [[250,360],[268,270],[338,196],[450,150],[570,138],[690,155],[790,205],[858,285],[880,370],
+               [852,430],[780,462],[660,472],[560,500],[452,492],[378,458],[386,428],[312,416]];
+  var CEREB = [[690,466],[752,452],[824,462],[862,494],[852,532],[790,550],[722,542],[684,510]];
+  var STEM = 'M618,470 C628,520 622,562 612,614 L668,614 C668,568 676,526 694,484 Z';
+  var brainPoly = crSample(BRAIN, 14);
+  var brainD = crPath(BRAIN, true), cerebD = crPath(CEREB, true);
+
+  var defs = el('defs', {});
+  var cp1 = el('clipPath', {id:'clipBrain'}, defs); el('path', {d:brainD}, cp1);
+  var cp2 = el('clipPath', {id:'clipCereb'}, defs); el('path', {d:cerebD}, cp2);
+  var cp3 = el('clipPath', {id:'clipStem'}, defs); el('path', {d:STEM}, cp3);
+  var rg1 = el('radialGradient', {id:'rg1', cx:0.5, cy:0.5, r:0.5}, defs);
+  el('stop', {offset:0, 'stop-color':'#fff', 'stop-opacity':0.95}, rg1); el('stop', {offset:1, 'stop-color':'#fff', 'stop-opacity':0}, rg1);
+  var mask = el('mask', {id:'shade', maskUnits:'userSpaceOnUse', x:0, y:0, width:1280, height:800}, defs);
+  el('rect', {x:0,y:0,width:1280,height:800,fill:'#000'}, mask);
+  el('ellipse', {cx:760, cy:470, rx:300, ry:200, fill:'url(#rg1)'}, mask);
+  el('ellipse', {cx:470, cy:500, rx:190, ry:110, fill:'url(#rg1)'}, mask);
+  el('ellipse', {cx:280, cy:420, rx:120, ry:120, fill:'url(#rg1)', opacity:0.6}, mask);
+  var grain = el('filter', {id:'grain', x:0, y:0, width:'100%', height:'100%'}, defs);
+  el('feTurbulence', {type:'fractalNoise', baseFrequency:0.9, numOctaves:2, seed:7, result:'n'}, grain);
+  el('feColorMatrix', {type:'matrix', values:'0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 0 0.22  0 0 0 0.09 0'}, grain);
+
+  // paper grain + frame
+  el('rect', {x:0,y:0,width:1280,height:800,fill:PAPER});
+  el('rect', {x:0,y:0,width:1280,height:800,filter:'url(#grain)', opacity:0.6});
+  el('rect', {x:24,y:24,width:1232,height:752,fill:'none',stroke:INK,'stroke-width':0.9,'stroke-opacity':0.8});
+  el('rect', {x:30,y:30,width:1220,height:740,fill:'none',stroke:INK,'stroke-width':0.4,'stroke-opacity':0.6});
+
+  // header
+  var hdr = el('g', {'class':'serif fade', style:'--delay:0s', fill:INK});
+  el('text', {x:52, y:62, 'font-size':12.5, 'letter-spacing':3.2}, hdr, 'PLATE I');
+  el('text', {x:1228, y:62, 'font-size':12, 'letter-spacing':2.6, 'text-anchor':'end', 'fill-opacity':0.75}, hdr, 'NEUROFORGE (WORKING NAME) · SIGNAL ATLAS');
+  el('line', {x1:52, y1:76, x2:1228, y2:76, stroke:INK, 'stroke-width':0.5, 'stroke-opacity':0.6}, hdr);
+
+  // ---------- brainstem ----------
+  var gStem = el('g', {});
+  el('path', {d:STEM, fill:PAPER, stroke:INK, 'stroke-width':1.1, pathLength:1, 'class':'draw', style:'--delay:0.6s;--dur:1.6s'}, gStem);
+  var stemLines = '';
+  for(var k=0;k<5;k++){ var sx=622+k*12; stemLines += 'M'+sx+',474 C'+(sx+8)+',524 '+(sx-4)+',566 '+(sx-8-k*1.2)+',614 '; }
+  el('path', {d:stemLines, fill:'none', stroke:INK, 'stroke-width':0.45, 'stroke-opacity':0.7, 'clip-path':'url(#clipStem)', pathLength:1, 'class':'draw', style:'--delay:1.2s;--dur:1.8s'}, gStem);
+
+  // ---------- cerebellum ----------
+  var gCb = el('g', {});
+  el('path', {d:cerebD, fill:PAPER, stroke:INK, 'stroke-width':1.1, pathLength:1, 'class':'draw', style:'--delay:0.7s;--dur:1.6s'}, gCb);
+  var fol = '';
+  for(k=0;k<22;k++){ var fy = 452 + k*5.6; fol += 'M660,'+f(fy)+' Q780,'+f(fy+16+k*0.35)+' 900,'+f(fy-2)+' '; }
+  el('path', {d:fol, fill:'none', stroke:INK, 'stroke-width':0.5, 'stroke-opacity':0.75, 'clip-path':'url(#clipCereb)', pathLength:1, 'class':'draw', style:'--delay:1.3s;--dur:2s'}, gCb);
+
+  // ---------- cerebrum ----------
+  var gBr = el('g', {});
+  el('path', {d:brainD, fill:PAPER, stroke:'none'}, gBr);
+
+  // gyri: zero-crossings of band-limited noise (sum of plane waves) give a labyrinth that reads as cortical folds;
+  // extracted with marching squares and drawn front-to-back in bands
+  var WAVES = [];
+  for(var q=0;q<28;q++){ var ang=h2(q,11)*Math.PI*2, lam=30+h2(q,23)*12, kk=2*Math.PI/lam; WAVES.push([Math.cos(ang)*kk, Math.sin(ang)*kk*1.15, h2(q,37)*Math.PI*2]); }
+  var WN = 1/Math.sqrt(WAVES.length/2);
+  var BX0=236, BY0=126, CS=4, NX=Math.ceil((896-BX0)/CS), NY=Math.ceil((512-BY0)/CS);
+  var val = new Float32Array((NX+1)*(NY+1)), ins = new Uint8Array((NX+1)*(NY+1));
+  for(var j=0;j<=NY;j++) for(var i=0;i<=NX;i++){
+    var x = BX0+i*CS, y = BY0+j*CS, idx = j*(NX+1)+i;
+    var wx = x + 26*(vn2(y*0.01+3.1, x*0.01)-0.5), wy = y + 26*(vn2(x*0.01+8.7, y*0.01)-0.5), sum = 0;
+    for(var q2=0;q2<WAVES.length;q2++) sum += Math.cos(WAVES[q2][0]*wx + WAVES[q2][1]*wy + WAVES[q2][2]);
+    val[idx] = sum*WN;
+    ins[idx] = inPoly(x,y,brainPoly) ? 1 : 0;
+  }
+  var CASES = {1:[[3,2]],2:[[2,1]],3:[[3,1]],4:[[0,1]],5:[[0,3],[2,1]],6:[[0,2]],7:[[0,3]],8:[[0,3]],9:[[0,2]],10:[[0,1],[3,2]],11:[[0,1]],12:[[3,1]],13:[[2,1]],14:[[3,2]]};
+  function edgePt(e, i, j, lv){
+    var x=BX0+i*CS, y=BY0+j*CS, a=val[j*(NX+1)+i], b=val[j*(NX+1)+i+1], c=val[(j+1)*(NX+1)+i+1], d=val[(j+1)*(NX+1)+i], t;
+    if(e===0){ t=(lv-a)/(b-a); return [x+t*CS, y]; }
+    if(e===1){ t=(lv-b)/(c-b); return [x+CS, y+t*CS]; }
+    if(e===2){ t=(lv-d)/(c-d); return [x+t*CS, y+CS]; }
+    t=(lv-a)/(d-a); return [x, y+t*CS];
+  }
+  var BANDS = 6, LEVELS = [[0,0.9,0.95],[-0.55,0.45,0.5],[0.55,0.45,0.5]];
+  var gGyri = el('g', {'clip-path':'url(#clipBrain)', fill:'none', stroke:INK, 'stroke-linecap':'round'}, gBr);
+  LEVELS.forEach(function(L, li){
+    var paths = []; for(var b=0;b<BANDS;b++) paths.push('');
+    for(var j=0;j<NY;j++) for(var i=0;i<NX;i++){
+      var i00=j*(NX+1)+i;
+      if(!(ins[i00]||ins[i00+1]||ins[i00+NX+1]||ins[i00+NX+2])) continue;
+      var lv=L[0], cs = (val[i00]>lv?8:0)|(val[i00+1]>lv?4:0)|(val[i00+NX+2]>lv?2:0)|(val[i00+NX+1]>lv?1:0);
+      var segs = CASES[cs]; if(!segs) continue;
+      var band = Math.min(BANDS-1, Math.floor(i/NX*BANDS));
+      for(var s=0;s<segs.length;s++){
+        var p=edgePt(segs[s][0],i,j,lv), q=edgePt(segs[s][1],i,j,lv);
+        paths[band] += 'M'+f(p[0])+','+f(p[1])+'L'+f(q[0])+','+f(q[1]);
+      }
+    }
+    paths.forEach(function(d, b){
+      if(!d) return;
+      el('path', {d:d, 'stroke-width':L[1], 'stroke-opacity':L[2], pathLength:1, 'class':'draw',
+                  style:'--delay:'+(0.9+b*0.28+li*0.15).toFixed(2)+'s;--dur:2.4s'}, gGyri);
+    });
+  });
+
+  // engraved hatching (shading), masked to lower/posterior regions
+  var hatch = '';
+  for(var c=BX0-420; c<900; c+=4.2){ hatch += 'M'+f(c)+',512 L'+f(c+280)+',126 '; }
+  var gH = el('g', {'clip-path':'url(#clipBrain)'}, gBr);
+  el('path', {d:hatch, fill:'none', stroke:INK, 'stroke-width':0.38, 'stroke-opacity':0.55, mask:'url(#shade)', 'class':'fade', style:'--delay:2.6s;--dur:1.6s'}, gH);
+
+  // major sulci
+  var SULCI = [
+    'M386,436 C450,418 520,404 580,378 S650,338 672,316',          // lateral (Sylvian) fissure
+    'M606,142 C592,190 616,222 590,262 S570,326 548,372',          // central sulcus
+    'M440,472 C500,454 560,442 620,420 S684,392 704,370',                           // superior temporal sulcus
+    'M806,214 C792,244 812,262 796,294',                           // parieto-occipital
+    'M338,236 C392,222 450,232 520,214'                            // superior frontal
+  ];
+  SULCI.forEach(function(d,i){
+    el('path', {d:d, fill:'none', stroke:INK, 'stroke-width':1.35, 'stroke-linecap':'round', 'clip-path':'url(#clipBrain)',
+                pathLength:1, 'class':'draw', style:'--delay:'+(1.6+i*0.18).toFixed(2)+'s;--dur:1.6s'}, gBr);
+  });
+  // outline + inner echo line
+  el('path', {d:brainD, fill:'none', stroke:INK, 'stroke-width':1.5, pathLength:1, 'class':'draw', style:'--delay:0.2s;--dur:2.2s'}, gBr);
+  var cx0=565, cy0=325;
+  var inner = BRAIN.map(function(p){ return [cx0+(p[0]-cx0)*0.975, cy0+(p[1]-cy0)*0.965]; });
+  el('path', {d:crPath(inner,true), fill:'none', stroke:INK, 'stroke-width':0.45, 'stroke-opacity':0.6, pathLength:1, 'class':'draw', style:'--delay:0.5s;--dur:2.4s'}, gBr);
+
+  // ---------- scalp arc + sensors ----------
+  var scalpPts = BRAIN.slice(0,9).map(function(p){ return [cx0+(p[0]-cx0)*1.095, cy0+(p[1]-cy0)*1.12]; });
+  el('path', {d:crPath(scalpPts,false), fill:'none', stroke:INK, 'stroke-width':0.8, 'stroke-dasharray':'1.5 4.5', 'stroke-linecap':'round', 'class':'fade', style:'--delay:2.2s'});
+  var sensors = [2,3,4,5,6].map(function(i){ return scalpPts[i]; });
+
+  // ---------- pathway (red) ----------
+  var NODE_X = 1062, NODE_Y = [172, 322, 472, 622];
+  var gPath = el('g', {fill:'none', stroke:RED});
+  sensors.forEach(function(p, i){
+    var d = 'M'+f(p[0])+','+f(p[1])+' C'+f(p[0]+30)+','+f(p[1]-54+i*4)+' '+(880+i*8)+','+(92+i*6)+' '+(NODE_X-17)+','+NODE_Y[0];
+    el('path', {d:d, 'stroke-width':i===2?1.3:0.7, 'stroke-opacity':i===2?1:0.7, pathLength:1, 'class':'draw', style:'--delay:'+(3.0+i*0.08).toFixed(2)+'s;--dur:1.6s'}, gPath);
+  });
+  for(var n=0;n<3;n++){
+    el('path', {d:'M'+NODE_X+','+(NODE_Y[n]+17)+' L'+NODE_X+','+(NODE_Y[n+1]-21), 'stroke-width':1.1, pathLength:1, 'class':'draw', style:'--delay:'+(4.2+n*0.35).toFixed(2)+'s;--dur:0.6s'}, gPath);
+    el('path', {d:'M'+(NODE_X-4)+','+(NODE_Y[n+1]-27)+' L'+NODE_X+','+(NODE_Y[n+1]-20)+' L'+(NODE_X+4)+','+(NODE_Y[n+1]-27), 'stroke-width':1.1, 'class':'fade', style:'--delay:'+(4.6+n*0.35).toFixed(2)+'s;--dur:0.4s'}, gPath);
+  }
+  var gSens = el('g', {'class':'fade', style:'--delay:2.6s'});
+  sensors.forEach(function(p, i){
+    el('circle', {cx:f(p[0]), cy:f(p[1]), r:i===2?7.5:5.5, fill:PAPER, stroke:i===2?RED:INK, 'stroke-width':1.1}, gSens);
+    el('circle', {cx:f(p[0]), cy:f(p[1]), r:i===2?2.6:1.8, fill:i===2?RED:INK}, gSens);
+  });
+
+  // ---------- numbered callouts ----------
+  var CALL = [['Ingest','hardware-agnostic streams'],['Clean','automated artifact removal'],['Model','neuro-AI inference'],['SDK','Python · REST · streaming']];
+  CALL.forEach(function(cl, i){
+    var y = NODE_Y[i], g = el('g', {'class':'serif fade', style:'--delay:'+(3.9+i*0.35).toFixed(2)+'s;--dur:0.9s'});
+    el('circle', {cx:NODE_X, cy:y, r:16, fill:PAPER, stroke:RED, 'stroke-width':1.3}, g);
+    el('text', {x:NODE_X, y:y+5.5, 'text-anchor':'middle', 'font-size':16, fill:RED}, g, String(i+1));
+    el('text', {x:NODE_X+30, y:y-3, 'font-size':17, fill:INK, 'letter-spacing':1.6}, g, cl[0].toUpperCase());
+    el('text', {x:NODE_X+30, y:y+16, 'font-size':13, 'font-style':'italic', fill:INK, 'fill-opacity':0.72}, g, cl[1]);
+    // small engraved glyphs to the left of each node
+    var gx = NODE_X-78, gl = el('g', {fill:'none', stroke:INK, 'stroke-width':0.8, 'stroke-linecap':'round'}, g), d='', t;
+    if(i===0){ for(t=0;t<=44;t+=2){ d += (t?'L':'M')+(gx+t)+','+f(y+Math.sin(t*0.9)*4+Math.sin(t*2.3)*3); } el('path',{d:d},gl); }
+    if(i===1){ for(t=0;t<=44;t+=2){ d += (t?'L':'M')+(gx+t)+','+f(y+Math.sin(t*0.28)*6); } el('path',{d:d},gl); }
+    if(i===2){
+      var A=[[gx,y-9],[gx,y],[gx,y+9]], B=[[gx+22,y-5],[gx+22,y+5]], Cc=[[gx+44,y]];
+      A.forEach(function(a){ B.forEach(function(b){ d+='M'+a[0]+','+a[1]+'L'+b[0]+','+b[1]; }); });
+      B.forEach(function(b){ d+='M'+b[0]+','+b[1]+'L'+Cc[0][0]+','+Cc[0][1]; });
+      el('path',{d:d,'stroke-width':0.5},gl);
+      A.concat(B,Cc).forEach(function(p){ el('circle',{cx:p[0],cy:p[1],r:2.2,fill:PAPER},gl); });
+    }
+    if(i===3){ el('text', {x:gx+22, y:y+6, 'text-anchor':'middle', 'font-size':18, fill:INK, stroke:'none', 'font-family':'Georgia,serif'}, gl, '{ }'); }
+  });
+
+  // ---------- anatomical labels ----------
+  var LAB = [
+    ['Lobus frontalis', 92, 250, 'start', [212,248], [318,292]],
+    ['Lobus parietalis', 824, 172, 'start', [820,168], [724,222]],
+    ['Lobus occipitalis', 904, 414, 'start', [900,410], [860,398]],
+    ['Lobus temporalis', 226, 566, 'start', [350,560], [452,486]],
+    ['Cerebellum', 890, 586, 'start', [886,582], [822,522]],
+    ['Truncus encephali', 590, 660, 'end', [594,656], [630,596]]
+  ];
+  var gLab = el('g', {'class':'serif fade', style:'--delay:3.2s;--dur:1.2s'});
+  LAB.forEach(function(l){
+    el('line', {x1:l[4][0], y1:l[4][1], x2:l[5][0], y2:l[5][1], stroke:INK, 'stroke-width':0.5, 'stroke-opacity':0.8}, gLab);
+    el('circle', {cx:l[5][0], cy:l[5][1], r:1.6, fill:INK}, gLab);
+    el('text', {x:l[1], y:l[2], 'text-anchor':l[3], 'font-size':13.5, 'font-style':'italic', fill:INK, 'fill-opacity':0.8}, gLab, l[0]);
+  });
+
+  // ---------- caption ----------
+  var cap = el('g', {'class':'serif fade', style:'--delay:0.4s;--dur:1.4s', 'text-anchor':'middle', fill:INK});
+  el('text', {x:640, y:736, 'font-size':21, 'font-style':'italic'}, cap, 'Fig. 1 — Signal pathway from sensor to model.');
+  el('text', {x:640, y:758, 'font-size':11.5, 'letter-spacing':1.2, 'fill-opacity':0.6}, cap, 'SCHEMATIC ILLUSTRATION · ANATOMY STYLISED, NOT TO SCALE');
+
+  // pause CSS animations while the page is hidden
+  document.addEventListener('visibilitychange', function(){ document.documentElement.classList.toggle('paused', document.hidden); });
+  if(document.hidden) document.documentElement.classList.add('paused');
+})();
+</script>
+</body>
+</html>

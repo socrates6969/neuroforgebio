@@ -1,0 +1,16 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://example.invalid/vex/fixture-lib-2099-0001",
+  "author": "Security role (fixture)",
+  "timestamp": "2026-09-26T00:00:00Z",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": { "name": "CVE-2099-0001" },
+      "products": [{ "@id": "pkg:npm/fixture-lib@1.0.0" }],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "Fixture: the vulnerable parser is never called by the static site."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../lib/site.ts';
+const nf = site.notFound;
+---
+<Base title={nf.meta.title} description={nf.meta.description} noindex>
+  <section class="nf-section" aria-labelledby="h-404">
+    <div class="nf-wrap">
+      <h1 id="h-404" set:html={nf.heading} />
+      <p class="nf-lede">{nf.body}</p>
+      <p class="back"><a class="nf-btn nf-btn--ghost" href={nf.homeLink.href}>{nf.homeLink.label}</a></p>
+    </div>
+  </section>
+</Base>
+<style>
+  .nf-lede { margin-top: 16px; }
+  .back { margin-top: 28px; }
+</style>

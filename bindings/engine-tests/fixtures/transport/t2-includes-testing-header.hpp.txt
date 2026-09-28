@@ -1,0 +1,19 @@
+// Regression fixture for T2 (nfb-security, WinHTTP transport packaging): a "shipped" header that
+// directly #includes the test-only trust-bypass header. That would ship
+// SECURITY_FLAG_IGNORE_UNKNOWN_CA and the TestAccess hook to production builds, not just mention
+// them in developer-facing documentation. This file is text only, read by
+// transport-guards.test.mjs to prove mentionsTestingHeader() flags this pattern (and finds no such
+// #include, and no mention outside comments/diagnostics, in the real shipped
+// nf_winhttp_transport.hpp).
+#ifndef NF_WINHTTP_TRANSPORT_HPP
+#define NF_WINHTTP_TRANSPORT_HPP
+
+#include "../tests/nf_winhttp_testing.hpp"
+
+namespace nf {
+namespace transport {
+// ...
+}  // namespace transport
+}  // namespace nf
+
+#endif  // NF_WINHTTP_TRANSPORT_HPP

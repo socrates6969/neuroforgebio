@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NeuroForge — Signal Console</title>
+<meta name="description" content="Design option 5 (data-visualization, dashboard-forward) for NeuroForge (working name): the data layer for brain-computer interfaces.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F172A; --panel:#1E293B; --panel-2:#172033; --border:#334155;
+  --fg:#E2E8F0; --muted:#94A3B8; --dim:#64748B;
+  --sky:#38BDF8; --lime:#A3E635; --amber:#FBBF24; --red:#F87171;
+  --radius:14px; --gut:16px; --max:1240px;
+  --ui:"Inter Tight",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"DM Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.55 var(--ui);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--sky)}
+img,svg,canvas{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--sky);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--sky);color:var(--bg);padding:10px 14px;border-radius:8px;font-weight:700;z-index:100}
+.skip:focus{left:12px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+@media (min-width:720px){:root{--gut:28px}}
+.mono{font-family:var(--mono)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- header ---------- */
+header.top{position:sticky;top:0;z-index:50;background:rgba(15,23,42,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(51,65,85,.7)}
+.nav{display:flex;align-items:center;gap:18px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--fg);text-decoration:none;font-weight:800;letter-spacing:-.01em;font-size:18px;white-space:nowrap}
+.brand .wn{font:500 11px var(--mono);color:var(--muted);border:1px solid var(--border);border-radius:99px;padding:2px 8px;letter-spacing:0}
+.nav ul{display:none;list-style:none;margin:0 0 0 12px;padding:0;gap:4px}
+.nav ul a{color:var(--muted);text-decoration:none;font-weight:500;font-size:15px;padding:8px 10px;border-radius:8px}
+.nav ul a:hover{color:var(--fg);background:var(--panel)}
+.nav .act{margin-left:auto;display:flex;gap:8px;align-items:center}
+.signin{color:var(--fg);text-decoration:none;font-weight:500;font-size:15px;padding:8px 10px;display:none}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:11px 16px;font:600 15px var(--ui);text-decoration:none;border:1px solid transparent;cursor:pointer;white-space:nowrap}
+.btn.pri{background:var(--sky);color:#0B1220}
+.btn.pri:hover{background:#7dd3fc}
+.btn.sec{background:transparent;color:var(--fg);border-color:var(--border)}
+.btn.sec:hover{background:var(--panel)}
+.btn.sm{padding:8px 12px;font-size:14px}
+@media (min-width:980px){.nav ul{display:flex}.signin{display:inline-block}}
+
+/* ---------- hero ---------- */
+.hero{padding:48px 0 32px;position:relative}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(600px 300px at 80% 10%,rgba(56,189,248,.12),transparent 70%),
+  radial-gradient(500px 260px at 10% 90%,rgba(163,230,53,.07),transparent 70%);pointer-events:none}
+.hero-grid{display:grid;gap:32px;position:relative}
+@media (min-width:1060px){.hero-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:center}.hero{padding:72px 0 40px}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:500 13px var(--mono);color:var(--lime);background:rgba(163,230,53,.08);border:1px solid rgba(163,230,53,.25);padding:5px 10px;border-radius:99px}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(163,230,53,.2)}
+h1{font-size:clamp(34px,5.4vw,58px);line-height:1.04;letter-spacing:-.035em;margin:18px 0 16px;font-weight:800}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--sky),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{font-size:clamp(17px,1.8vw,19px);color:#CBD5E1;max-width:34em;margin:0 0 24px}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px}
+.formats{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
+.formats span.chip{font:500 12px var(--mono);color:var(--fg);background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+
+/* app window */
+.app{background:var(--panel-2);border:1px solid var(--border);border-radius:16px;box-shadow:0 30px 80px -30px rgba(0,0,0,.7),0 0 0 1px rgba(56,189,248,.05);overflow:hidden;min-width:0}
+.app-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);background:#131c2e;font-size:13px;color:var(--muted);min-width:0}
+.dots{display:flex;gap:6px;flex:none}.dots b{width:10px;height:10px;border-radius:50%;background:#334155}
+.app-bar .path{font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.app-bar .path strong{color:var(--fg);font-weight:500}
+.tag{font:500 11px var(--mono);letter-spacing:.02em;padding:2px 8px;border-radius:99px;border:1px solid;white-space:nowrap}
+.tag.demo{color:var(--amber);border-color:rgba(251,191,36,.45);background:rgba(251,191,36,.08)}
+.tag.ok{color:var(--lime);border-color:rgba(163,230,53,.45);background:rgba(163,230,53,.08)}
+.tag.sky{color:var(--sky);border-color:rgba(56,189,248,.45);background:rgba(56,189,248,.08)}
+.app-bar .tag{margin-left:auto;flex:none}
+.app-side{display:none}
+.app-body{display:flex}
+@media (min-width:1200px){
+  .app-side{display:flex;flex-direction:column;gap:4px;padding:12px 8px;border-right:1px solid var(--border);width:132px;flex:none;font-size:13px}
+  .app-side span{padding:6px 10px;border-radius:7px;color:var(--muted)}
+  .app-side span.on{background:var(--panel);color:var(--fg)}
+}
+#dash{position:relative;height:520px;flex:1;min-width:0}
+@media (max-width:679px){#dash{height:760px}}
+#dash canvas{display:block;width:100%;height:100%}
+.app-foot{display:flex;flex-wrap:wrap;gap:6px 16px;padding:9px 14px;border-top:1px solid var(--border);font:400 12px var(--mono);color:var(--muted)}
+.app-foot .live{color:var(--lime)}
+
+/* ---------- sections ---------- */
+section{padding:72px 0}
+.sec-head{max-width:760px;margin-bottom:32px}
+.kicker{font:500 13px var(--mono);color:var(--sky);letter-spacing:.04em;text-transform:uppercase}
+h2{font-size:clamp(28px,3.6vw,42px);line-height:1.1;letter-spacing:-.03em;margin:10px 0 12px;font-weight:800}
+.sec-head p{color:#CBD5E1;margin:0;font-size:18px}
+h3{font-size:19px;letter-spacing:-.015em;margin:0 0 6px;font-weight:700}
+.card p{color:var(--muted);margin:0}
+
+/* bento */
+.bento{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:760px){.bento{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){.bento{grid-template-columns:repeat(6,minmax(0,1fr))}.b-4{grid-column:span 4}.b-2{grid-column:span 2}.b-3{grid-column:span 3}}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px;min-width:0;position:relative;display:flex;flex-direction:column;gap:12px}
+.card-top{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.step{font:500 12px var(--mono);color:var(--muted)}
+.step b{color:var(--sky);font-weight:500}
+.viz{background:var(--panel-2);border:1px solid rgba(51,65,85,.8);border-radius:10px;position:relative;overflow:hidden;min-height:150px}
+.viz canvas{width:100%;height:150px}
+.viz .overlay{position:absolute;left:10px;top:8px;font:500 12px var(--mono);color:var(--muted)}
+.viz .overlay strong{color:var(--fg);font-weight:500;font-size:18px;display:block}
+.viz .corner{position:absolute;right:8px;top:8px}
+ul.ticks{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14px;color:#CBD5E1}
+ul.ticks li{padding-left:18px;position:relative}
+ul.ticks li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--sky)}
+
+/* toggle */
+.seg{display:inline-flex;background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:3px;gap:2px}
+.seg button{font:600 13px var(--ui);color:var(--muted);background:transparent;border:0;border-radius:7px;padding:6px 12px;cursor:pointer}
+.seg button[aria-pressed="true"],.seg button[aria-selected="true"]{background:var(--border);color:var(--fg)}
+.seg.lg button{font-size:15px;padding:10px 18px}
+
+/* model bars */
+.probs{display:grid;gap:7px;padding:12px}
+.prob{display:grid;grid-template-columns:78px 1fr 44px;align-items:center;gap:10px;font:500 12px var(--mono);color:var(--muted)}
+.prob .track{height:10px;background:#0F172A;border-radius:99px;overflow:hidden}
+.prob .fill{height:100%;border-radius:99px;background:var(--sky);width:10%;transition:width .5s ease}
+.prob.top .fill{background:var(--lime)} .prob.top{color:var(--fg)}
+.cm{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;padding:0 12px 12px}
+.cm i{aspect-ratio:1;border-radius:3px;display:block}
+
+/* code */
+pre.code{margin:0;padding:14px;font:400 13px/1.65 var(--mono);color:#CBD5E1;overflow-x:auto;background:var(--panel-2);border-radius:10px;border:1px solid rgba(51,65,85,.8);min-height:150px}
+.code .k{color:#C4B5FD}.code .s{color:var(--lime)}.code .c{color:var(--dim)}.code .f{color:var(--sky)}
+.note{font:400 12px var(--mono);color:var(--dim)}
+
+/* audience */
+.aud-head{display:flex;flex-wrap:wrap;gap:16px;align-items:end;justify-content:space-between;margin-bottom:24px}
+.aud-panel[hidden]{display:none}
+.kpi{font:500 34px/1 var(--mono);color:var(--fg);letter-spacing:-.02em}
+.kpi small{font-size:13px;color:var(--muted);margin-left:6px}
+.stack{display:flex;flex-direction:column;gap:8px}
+.pill-row{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font:500 12px var(--mono);padding:4px 9px;border-radius:6px;background:var(--panel-2);border:1px solid var(--border);color:#CBD5E1}
+.flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font:500 12px var(--mono);color:#CBD5E1}
+.flow b{background:var(--panel-2);border:1px solid var(--border);padding:6px 9px;border-radius:7px;font-weight:500}
+.flow span{color:var(--sky)}
+
+/* status board */
+.board{display:grid;gap:10px;grid-template-columns:1fr}
+@media (min-width:640px){.board{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1000px){.board{grid-template-columns:repeat(4,1fr)}}
+.svc{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.svc .st{display:flex;align-items:center;gap:8px;font:500 12px var(--mono)}
+.svc .st i{width:9px;height:9px;border-radius:50%}
+.st.g{color:var(--lime)} .st.g i{background:var(--lime);box-shadow:0 0 0 3px rgba(163,230,53,.18)}
+.st.a{color:var(--amber)} .st.a i{background:var(--amber);box-shadow:0 0 0 3px rgba(251,191,36,.18)}
+.svc h3{font-size:16px;margin:0}
+.svc p{margin:0;color:var(--muted);font-size:14px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin:0 0 16px;font:500 13px var(--mono);color:var(--muted)}
+.legend .st{display:inline-flex;align-items:center;gap:8px}
+.disclaim{margin-top:14px;font-size:14px;color:var(--muted);border-left:3px solid var(--amber);padding:6px 0 6px 12px}
+
+/* pricing */
+.price-grid{display:grid;gap:14px}
+@media (min-width:1000px){.price-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}}
+.tiers{display:grid;gap:10px}
+.tier{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+.tier h3{margin:0;font-size:17px}
+.tier .pr{font:500 15px var(--mono);color:var(--fg);text-align:right}
+.tier p{grid-column:1/-1;margin:0;color:var(--muted);font-size:14px}
+.tier.hl{border-color:rgba(56,189,248,.55);box-shadow:inset 0 0 0 1px rgba(56,189,248,.25)}
+.calc{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:18px}
+.field label{display:flex;justify-content:space-between;font-weight:600;font-size:15px;margin-bottom:8px}
+.field label output{font:500 14px var(--mono);color:var(--sky)}
+input[type=range]{width:100%;accent-color:var(--sky);height:28px}
+.meter{display:grid;gap:8px}
+.meter-row{display:grid;grid-template-columns:120px 1fr 70px;gap:10px;align-items:center;font:500 12px var(--mono);color:var(--muted)}
+.meter-row .track{height:12px;border-radius:99px;background:var(--panel-2);border:1px solid rgba(51,65,85,.8);overflow:hidden}
+.meter-row .fill{height:100%;background:linear-gradient(90deg,var(--sky),var(--lime));width:0;transition:width .3s}
+.estimate{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:var(--panel-2);border:1px dashed var(--border);border-radius:10px;padding:14px}
+.estimate strong{font-size:17px}
+
+/* research */
+.res-grid{display:grid;gap:14px}
+@media (min-width:1000px){.res-grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}}
+.paper{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:14px}
+.paper h3{font-size:22px;line-height:1.2}
+.meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.fig{background:var(--panel-2);border:1px solid rgba(51,65,85,.8);border-radius:12px;padding:14px}
+.fig svg{width:100%;height:auto}
+.fig figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.fig-controls{display:grid;gap:12px;margin-top:10px}
+@media (min-width:600px){.fig-controls{grid-template-columns:1fr 1fr}}
+.warn{font-size:13px;color:#FCD34D;background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.3);border-radius:8px;padding:8px 10px}
+.side-papers{display:grid;gap:14px;align-content:start}
+.mini{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mini h3{font-size:17px}
+.mini p{margin:0;color:var(--muted);font-size:14px}
+
+/* cta + footer */
+.cta{background:linear-gradient(120deg,rgba(56,189,248,.14),rgba(163,230,53,.08));border:1px solid var(--border);border-radius:20px;padding:36px 24px;display:grid;gap:18px}
+@media (min-width:900px){.cta{grid-template-columns:1fr auto;align-items:center;padding:44px}}
+.cta h2{margin:0}
+.cta p{margin:6px 0 0;color:#CBD5E1}
+footer{border-top:1px solid var(--border);padding:40px 0 48px;margin-top:72px;color:var(--muted);font-size:14px}
+.foot{display:grid;gap:22px}
+@media (min-width:800px){.foot{grid-template-columns:1fr auto;align-items:start}}
+.foot nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px}
+.foot a{color:var(--muted);text-decoration:none}
+.foot a:hover{color:var(--fg)}
+.concept{font:500 12px var(--mono);color:var(--amber)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="NeuroForge, working name, home">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="7" fill="#1E293B" stroke="#334155"/><path d="M5 14h3l2-6 3 11 2.5-8 1.5 3H21" fill="none" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      NeuroForge <span class="wn">working name</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#platform">Platform</a></li>
+        <li><a href="#neuro-ai">Neuro-AI</a></li>
+        <li><a href="#sdks">SDKs</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#docs">Docs</a></li>
+      </ul>
+    </nav>
+    <div class="act">
+      <a class="signin" href="#signin">Sign in</a>
+      <a class="btn pri sm" href="#pricing">Start free</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<!-- HERO -->
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><i aria-hidden="true"></i>Neural data infrastructure</span>
+      <h1 id="hero-title">The data layer for <em>brain-computer interfaces.</em></h1>
+      <p class="lede">Hardware-agnostic ingest, automated neuro-cleaning, and Neuro-AI models — so your team ships decoders, not data pipelines.</p>
+      <div class="cta-row">
+        <a class="btn pri" href="#pricing">Start free (academic)</a>
+        <a class="btn sec" href="#contact">Book a demo</a>
+      </div>
+      <div class="formats" aria-label="Supported formats">
+        <span>Works with</span>
+        <span class="chip">BIDS</span><span class="chip">LSL</span><span class="chip">EDF/BDF</span><span class="chip">NWB</span><span class="chip">XDF</span>
+      </div>
+    </div>
+
+    <div class="app" aria-label="Product preview: live session dashboard with demo data">
+      <div class="app-bar">
+        <span class="dots" aria-hidden="true"><b></b><b></b><b></b></span>
+        <span class="path">sessions / <strong>lsl://headset-01</strong> · 32 ch · 256 Hz</span>
+        <span class="tag demo">DEMO DATA</span>
+      </div>
+      <div class="app-body">
+        <div class="app-side" aria-hidden="true">
+          <span class="on">Live session</span><span>Pipelines</span><span>Datasets</span><span>Models</span><span>Audit log</span>
+        </div>
+        <div id="dash" role="img" aria-label="Live analytics dashboard with synthetic demo data: a topographic scalp heatmap of alpha power, relative band-power bars for delta, theta, alpha, beta and gamma, a scrolling eight-channel EEG trace panel, and a p50 ingest latency sparkline against a 16 millisecond budget.">
+          <canvas id="dash-c" aria-hidden="true"></canvas>
+        </div>
+      </div>
+      <div class="app-foot" aria-hidden="true">
+        <span class="live">● streaming</span><span>pipeline: ica-default@v3</span><span>model: motor-intent/v1</span><span>synthetic signals</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM BENTO -->
+<section id="platform" aria-labelledby="plat-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Platform · 4 stages</span>
+      <h2 id="plat-title">Electrode to model, observable at every step.</h2>
+      <p>One pipeline from raw voltage to predictions. Every stage is versioned, measured and replayable.</p>
+    </div>
+    <div class="bento">
+      <!-- 1 ingest -->
+      <article class="card b-4" aria-labelledby="c-ingest">
+        <div class="card-top"><span class="step"><b>01</b> / Ingest</span><span class="tag demo">demo data</span></div>
+        <h3 id="c-ingest">Hardware-agnostic ingest</h3>
+        <p>Connectors for EEG, ECoG and microelectrode arrays. BIDS, Lab Streaming Layer (LSL), EDF/BDF, NWB and XDF into low-latency time-series storage.</p>
+        <div class="viz">
+          <canvas id="spark-ingest" role="img" aria-label="Sparkline of ingest throughput in samples per second, demo data"></canvas>
+          <div class="overlay">throughput<strong><span id="ingest-num">0</span> <span style="font-size:12px;color:var(--muted)">samples/s</span></strong></div>
+          <div class="corner"><span class="tag sky" id="ingest-ch">32 ch</span></div>
+        </div>
+      </article>
+      <!-- 2 clean -->
+      <article class="card b-2" aria-labelledby="c-clean">
+        <div class="card-top"><span class="step"><b>02</b> / Clean</span>
+          <div class="seg" role="group" aria-label="Trace view">
+            <button type="button" id="btn-raw" aria-pressed="true">Raw</button>
+            <button type="button" id="btn-clean" aria-pressed="false">Cleaned</button>
+          </div>
+        </div>
+        <h3 id="c-clean">Automated neuro-cleaning</h3>
+        <p>Filtering, ICA, artifact rejection, re-referencing and normalization — reproducible, with provenance.</p>
+        <div class="viz">
+          <canvas id="spark-clean" role="img" aria-label="Three EEG channels shown before and after automated cleaning, synthetic data"></canvas>
+          <div class="corner"><span class="tag demo">synthetic</span></div>
+        </div>
+      </article>
+      <!-- 3 neuro-ai -->
+      <article class="card b-3" id="neuro-ai" aria-labelledby="c-ai">
+        <div class="card-top"><span class="step"><b>03</b> / Neuro-AI</span><span class="tag demo">demo data</span></div>
+        <h3 id="c-ai">Model marketplace</h3>
+        <p>Motor-intent decoding, cognitive-state estimation, or bring your own model. Benchmarks published with methods.</p>
+        <div class="viz" style="display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);align-items:center">
+          <div class="probs" id="probs" aria-live="off" aria-label="Class probabilities from an illustrative motor-intent model, demo data">
+            <div class="prob"><span>left</span><span class="track"><span class="fill"></span></span><span class="v">0%</span></div>
+            <div class="prob"><span>right</span><span class="track"><span class="fill"></span></span><span class="v">0%</span></div>
+            <div class="prob"><span>rest</span><span class="track"><span class="fill"></span></span><span class="v">0%</span></div>
+            <div class="prob"><span>feet</span><span class="track"><span class="fill"></span></span><span class="v">0%</span></div>
+          </div>
+          <div>
+            <div class="cm" id="cm" role="img" aria-label="Illustrative 4 by 4 confusion matrix, demo data, strongest on the diagonal"></div>
+            <div class="note" style="padding:0 12px 10px">confusion · demo</div>
+          </div>
+        </div>
+      </article>
+      <!-- 4 sdks -->
+      <article class="card b-3" id="sdks" aria-labelledby="c-sdk">
+        <div class="card-top"><span class="step"><b>04</b> / SDKs</span>
+          <div class="seg" role="tablist" aria-label="SDK language">
+            <button type="button" role="tab" id="t-py" aria-selected="true" aria-controls="code-panel">Python</button>
+            <button type="button" role="tab" id="t-cpp" aria-selected="false" aria-controls="code-panel" tabindex="-1">C++</button>
+            <button type="button" role="tab" id="t-unity" aria-selected="false" aria-controls="code-panel" tabindex="-1">Unity</button>
+          </div>
+        </div>
+        <h3 id="c-sdk">Stream in, predictions out</h3>
+        <p>Python, C++ and Unity / Unreal SDKs.</p>
+        <pre class="code" id="code-panel" role="tabpanel" aria-labelledby="t-py" tabindex="0"></pre>
+        <span class="note">Illustrative API — subject to change</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section id="audience" aria-labelledby="aud-title" style="padding-top:24px">
+  <div class="wrap">
+    <div class="aud-head">
+      <div class="sec-head" style="margin:0">
+        <span class="kicker">Built for two teams</span>
+        <h2 id="aud-title">Same platform, different workspace.</h2>
+      </div>
+      <div class="seg lg" role="tablist" aria-label="Audience">
+        <button type="button" role="tab" id="tab-res" aria-selected="true" aria-controls="panel-res">For researchers</button>
+        <button type="button" role="tab" id="tab-hw" aria-selected="false" aria-controls="panel-hw" tabindex="-1">For hardware companies</button>
+      </div>
+    </div>
+
+    <div class="aud-panel bento" id="panel-res" role="tabpanel" aria-labelledby="tab-res">
+      <article class="card b-2"><span class="step">tier</span><div class="kpi">$0<small>academic</small></div><p>Free academic tier for labs and students, with fair-use limits.</p></article>
+      <article class="card b-4"><h3>BIDS-native, reproducible by default</h3><p>Every dataset, pipeline and parameter is versioned, so a figure can be regenerated months later.</p>
+        <div class="flow" aria-label="Workflow: BIDS dataset to pipeline to derivatives to export"><b>BIDS dataset</b><span>→</span><b>ica-default@v3</b><span>→</span><b>derivatives/</b><span>→</span><b>export</b></div></article>
+      <article class="card b-3"><h3>Export to your tools</h3><p>Hand results to MNE- and EEGLAB-compatible formats, or keep working in the notebook SDK.</p><div class="pill-row"><span class="pill">MNE-compatible</span><span class="pill">EEGLAB-compatible</span><span class="pill">NWB</span><span class="pill">Parquet</span></div></article>
+      <article class="card b-3"><h3>Citation-ready provenance</h3><p>A methods block per analysis: software versions, parameters and dataset hashes.</p><pre class="code" style="min-height:0">provenance.json  <span class="c"># hash, versions, params</span></pre></article>
+    </div>
+
+    <div class="aud-panel bento" id="panel-hw" role="tabpanel" aria-labelledby="tab-hw" hidden>
+      <article class="card b-2"><span class="step">pricing</span><div class="kpi">usage<small>based</small></div><p>Pay for what streams through. Built for seed-stage BCI hardware teams.</p></article>
+      <article class="card b-4"><h3>White-label SDK &amp; connector program</h3><p>Ship your device with a data platform on day one. Your brand in the SDK, our pipelines underneath.</p>
+        <div class="flow" aria-label="Deployment: device to edge to cloud to your app"><b>your device</b><span>→</span><b>edge runtime</b><span>→</span><b>cloud</b><span>→</span><b>your app</b></div></article>
+      <article class="card b-3"><h3>Cloud + edge deployment</h3><p>Run cleaning and inference next to the headset, or in the cloud, with the same pipeline definition.</p><div class="pill-row"><span class="pill">edge</span><span class="pill">cloud</span><span class="pill">hybrid</span></div></article>
+      <article class="card b-3"><h3>Compliance handled, focus on the device</h3><p>Access control, audit logs and encryption are part of the platform, not your backlog.</p><div class="pill-row"><span class="pill">RBAC</span><span class="pill">audit log</span><span class="pill">AES-256</span></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section id="security" aria-labelledby="sec-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Compliance &amp; security</span>
+      <h2 id="sec-title">Status board, not a badge wall.</h2>
+      <p>Neural data is some of the most personal data there is. Here is exactly where each control stands.</p>
+    </div>
+    <div class="legend" aria-label="Legend">
+      <span class="st g"><i aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:var(--lime)"></i>In the architecture baseline</span>
+      <span class="st a"><i aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:var(--amber)"></i>Planned / roadmap</span>
+    </div>
+    <div class="board">
+      <div class="svc"><span class="st g"><i></i>baseline</span><h3>Encryption</h3><p>AES-256 at rest, TLS 1.3 in transit.</p></div>
+      <div class="svc"><span class="st g"><i></i>baseline</span><h3>RBAC &amp; audit logs</h3><p>Role-based access and an append-only record of who touched what.</p></div>
+      <div class="svc"><span class="st g"><i></i>baseline</span><h3>HIPAA-aligned workflows</h3><p>Designed for HIPAA-aligned handling of protected data.</p></div>
+      <div class="svc"><span class="st g"><i></i>baseline</span><h3>De-identification tooling</h3><p>Strip and pseudonymize identifiers before data leaves the lab.</p></div>
+      <div class="svc"><span class="st a"><i></i>planned</span><h3>BAA</h3><p>Business Associate Agreement for enterprise customers.</p></div>
+      <div class="svc"><span class="st a"><i></i>roadmap</span><h3>SOC 2 Type II</h3><p>On the roadmap. Not yet audited.</p></div>
+      <div class="svc"><span class="st a"><i></i>planned</span><h3>Data residency</h3><p>Region-pinned storage options.</p></div>
+      <div class="svc"><span class="st g"><i></i>baseline</span><h3>Neural-data privacy</h3><p>Built to support emerging US state neural-data privacy laws (e.g. Colorado, California, Connecticut, Montana).</p></div>
+    </div>
+    <p class="disclaim">No certifications are claimed. Statuses describe design intent for a concept product and are not legal advice.</p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" aria-labelledby="price-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Pricing</span>
+      <h2 id="price-title">Free for science. Usage-based for builders.</h2>
+      <p>Final prices come at launch. Size your workload now and join early access.</p>
+    </div>
+    <div class="price-grid">
+      <div class="tiers">
+        <div class="tier"><h3>Academic</h3><span class="pr">Free</span><p>Labs &amp; students, fair-use limits.</p></div>
+        <div class="tier hl"><h3>Startup</h3><span class="pr">Usage-based</span><p>For seed-stage BCI hardware teams. Pricing at launch.</p></div>
+        <div class="tier"><h3>Enterprise</h3><span class="pr">Custom</span><p>BAA, SSO, dedicated support, on-prem / edge.</p></div>
+      </div>
+      <form class="calc" aria-labelledby="calc-title" onsubmit="return false">
+        <div class="card-top"><h3 id="calc-title" style="margin:0">Size your workload</h3><span class="tag demo">no prices yet</span></div>
+        <div class="field"><label for="r-ch">Channels per device <output id="o-ch" for="r-ch">32</output></label><input type="range" id="r-ch" min="8" max="1024" step="8" value="32"></div>
+        <div class="field"><label for="r-dev">Devices streaming <output id="o-dev" for="r-dev">5</output></label><input type="range" id="r-dev" min="1" max="200" value="5"></div>
+        <div class="field"><label for="r-hr">Hours per device / month <output id="o-hr" for="r-hr">40</output></label><input type="range" id="r-hr" min="1" max="720" value="40"></div>
+        <div class="meter" aria-live="polite">
+          <div class="meter-row"><span>channel-hours</span><span class="track"><span class="fill" id="m-chh"></span></span><span id="v-chh">6.4k</span></div>
+          <div class="meter-row"><span>raw volume*</span><span class="track"><span class="fill" id="m-vol"></span></span><span id="v-vol">0 GB</span></div>
+        </div>
+        <div class="note">*ESTIMATE: channels × devices × hours × 3600 s × 256 Hz × 4 bytes (float32), uncompressed.</div>
+        <div class="estimate"><div><strong>Estimate coming at launch</strong><div class="note">You'd likely fit: <span id="fit">Startup</span></div></div><a class="btn pri sm" href="#contact">Join the early-access list</a></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research" aria-labelledby="res-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Research &amp; whitepapers</span>
+      <h2 id="res-title">Show the model, not just the claim.</h2>
+      <p>Computational and theoretical work, published with methods and code.</p>
+    </div>
+    <div class="res-grid">
+      <article class="paper" aria-labelledby="p1">
+        <div class="meta"><span class="tag demo">In preparation</span><span class="tag sky">Whitepaper</span><span class="note">computational / theoretical</span></div>
+        <h3 id="p1">Bidirectional closed-loop somatosensory feedback: a computational study</h3>
+        <p style="margin:0;color:#CBD5E1">Modelling how patterned stimulation of somatosensory cortex could encode touch, pressure and proprioception.</p>
+        <figure class="fig" style="margin:0">
+          <svg id="fig-svg" viewBox="0 0 520 250" role="img" aria-labelledby="fig-t fig-d">
+            <title id="fig-t">Illustrative model: normalized stimulation amplitude versus modelled perceived intensity</title>
+            <desc id="fig-d">A sigmoid curve rises from zero after a detection threshold and saturates near one. A marker shows the value selected with the slider. Illustrative model, not data.</desc>
+          </svg>
+          <figcaption>Fig. P1 — Toy psychometric model <span class="mono">I(a) = 1 / (1 + e<sup>−k(a − θ)</sup>)</span>. <strong>Illustrative model, not data.</strong></figcaption>
+          <div class="fig-controls">
+            <div class="field"><label for="r-amp">Amplitude a (normalized) <output id="o-amp" for="r-amp">0.50</output></label><input type="range" id="r-amp" min="0" max="1" step="0.01" value="0.5"></div>
+            <div class="field"><label for="r-k">Slope k <output id="o-k" for="r-k">12</output></label><input type="range" id="r-k" min="4" max="24" step="1" value="12"></div>
+          </div>
+          <p class="mono" style="margin:10px 0 0;font-size:13px;color:#CBD5E1" aria-live="polite">modelled intensity I = <span id="o-int" style="color:var(--lime)">0.50</span> · threshold θ = 0.45</p>
+        </figure>
+        <p class="warn">Computational/theoretical work; any clinical application requires IRB/FDA oversight.</p>
+        <div><a class="btn sec sm" href="#research">Read preview</a></div>
+      </article>
+      <div class="side-papers">
+        <article class="mini"><div class="meta"><span class="tag sky">Planned</span></div><h3>Benchmarking automated artifact rejection on public EEG datasets</h3><p>Open benchmark of cleaning pipelines, with methods and code.</p></article>
+        <article class="mini"><div class="meta"><span class="tag sky">Planned</span></div><h3>A reference architecture for HIPAA-aligned neural data pipelines</h3><p>How encryption, RBAC, audit logs and de-identification fit together.</p></article>
+        <article class="mini" id="docs"><div class="meta"><span class="tag ok">Docs</span></div><h3>Read the docs</h3><p>Quickstarts for the Python, C++ and Unity SDKs.</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" aria-labelledby="cta-title" style="padding-top:24px">
+  <div class="wrap">
+    <div class="cta">
+      <div><h2 id="cta-title">Stop building pipelines. Start building decoders.</h2><p>Free for academic labs. Early access for BCI hardware teams.</p></div>
+      <div class="cta-row"><a class="btn pri" href="#pricing">Start free (academic)</a><a class="btn sec" href="#contact">Book a demo</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <a class="brand" href="#top" style="font-size:16px">NeuroForge <span class="wn">working name</span></a>
+      <p style="margin:10px 0 4px">NeuroForge (working name) — design concept, not a live product.</p>
+      <p class="concept" style="margin:0">Option 5 · Signal Console · all figures are demo data</p>
+      <p style="margin:10px 0 0">© 2026</p>
+    </div>
+    <nav aria-label="Footer"><ul><li><a href="#docs">Docs</a></li><li><a href="#status">Status</a></li><li><a href="#security">Security</a></li><li><a href="#privacy">Privacy</a></li><li><a href="#careers">Careers</a></li></ul></nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+var RM = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : {matches:false};
+var C = {bg:'#0F172A', panel:'#1E293B', panel2:'#172033', sky:'#38BDF8', lime:'#A3E635', amber:'#FBBF24', red:'#F87171', txt:'#E2E8F0', mute:'#94A3B8', dim:'#475569'};
+function rgba(hex,a){ var n=parseInt(hex.slice(1),16); return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'; }
+var seed = 42; function rnd(){ seed = (Math.imul(seed,1664525)+1013904223)>>>0; return seed/4294967296; }
+
+/* ---------- shared animation loop: each widget = {el, update(dt,t), draw(t), resize(), vis} ---------- */
+var widgets = [], raf = 0, running = false, last = 0, T = 6;
+function anyVisible(){ for(var i=0;i<widgets.length;i++) if(widgets[i].vis) return true; return false; }
+function frame(now){
+  var dt = Math.min(0.05,(now-last)/1000)||0; last = now; T += dt;
+  for(var i=0;i<widgets.length;i++){ var w=widgets[i]; if(w.vis){ w.update && w.update(dt,T); w.draw(T); } }
+  raf = requestAnimationFrame(frame);
+}
+function start(){ if(running||RM.matches||document.hidden||!anyVisible()) return; running=true; last=performance.now(); raf=requestAnimationFrame(frame); }
+function stop(){ running=false; cancelAnimationFrame(raf); }
+function drawAll(){ widgets.forEach(function(w){ w.draw(T); }); }
+document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+var onRM = function(){ if(RM.matches){ stop(); drawAll(); } else start(); };
+if(RM.addEventListener) RM.addEventListener('change', onRM); else if(RM.addListener) RM.addListener(onRM);
+var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function(es){
+  es.forEach(function(e){ widgets.forEach(function(w){ if(w.el===e.target) w.vis = e.isIntersecting; }); });
+  anyVisible() ? start() : stop();
+}) : null;
+var ro = ('ResizeObserver' in window) ? new ResizeObserver(function(es){
+  es.forEach(function(e){ widgets.forEach(function(w){ if(w.el===e.target){ w.resize(); w.draw(T); } }); });
+}) : null;
+function register(w){
+  w.vis = true; widgets.push(w); w.resize(); w.draw(T);
+  if(io) io.observe(w.el); if(ro) ro.observe(w.el);
+}
+if(!ro) window.addEventListener('resize', function(){ widgets.forEach(function(w){ w.resize(); w.draw(T); }); });
+function fitCanvas(cv){
+  var r = cv.getBoundingClientRect(), d = Math.min(2, window.devicePixelRatio||1);
+  var W = Math.max(1,r.width), H = Math.max(1,r.height);
+  cv.width = Math.round(W*d); cv.height = Math.round(H*d);
+  var ctx = cv.getContext('2d'); ctx.setTransform(d,0,0,d,0,0);
+  return {ctx:ctx, W:W, H:H};
+}
+
+/* ================= HERO DASHBOARD (adapted from assets/asset-5-dashboard.html) ================= */
+(function(){
+  var stage = document.getElementById('dash'), cv = document.getElementById('dash-c'), ctx = cv.getContext('2d');
+  var FONT = '"Inter Tight", system-ui, sans-serif', MONO = '"DM Mono", ui-monospace, Menlo, Consolas, monospace';
+  var EL = [[-0.247,0.761],[0.247,0.761],[-0.647,0.47],[-0.335,0.42],[0,0.4],[0.335,0.42],[0.647,0.47],
+            [-0.8,0],[-0.4,0],[0,0],[0.4,0],[0.8,0],[-0.647,-0.47],[-0.335,-0.42],[0,-0.4],[0.335,-0.42],[0.647,-0.47],
+            [-0.247,-0.761],[0.247,-0.761]];
+  var TR_NAMES = ['Fz','Cz','Pz','C3','C4','O1','O2','Fp1'];
+  var BANDS = [['δ','Delta','1–4'],['θ','Theta','4–8'],['α','Alpha','8–13'],['β','Beta','13–30'],['γ','Gamma','30–45']];
+  var STOPS = [[0,'#10213d'],[0.25,'#1f6f9c'],[0.45,'#38BDF8'],[0.65,'#A3E635'],[0.82,'#FBBF24'],[1,'#F87171']];
+  var LUT = new Uint8ClampedArray(256*3);
+  for(var i=0;i<256;i++){
+    var t=i/255, k=0; while(k<STOPS.length-2 && t>STOPS[k+1][0]) k++;
+    var a=STOPS[k], b=STOPS[k+1], u=(t-a[0])/(b[0]-a[0]);
+    var ca=parseInt(a[1].slice(1),16), cb=parseInt(b[1].slice(1),16);
+    LUT[i*3]=(ca>>16&255)*(1-u)+(cb>>16&255)*u; LUT[i*3+1]=(ca>>8&255)*(1-u)+(cb>>8&255)*u; LUT[i*3+2]=(ca&255)*(1-u)+(cb&255)*u;
+  }
+  var TM = 72, tmc = document.createElement('canvas'); tmc.width = tmc.height = TM;
+  var tmx = tmc.getContext('2d'), tmImg = tmx.createImageData(TM, TM);
+  var W=1,H=1,P={},fs=11;
+  var band = [0.22,0.18,0.3,0.2,0.1], bandT = band.slice(), bandTimer = 0;
+  var lat = [], latTimer = 0, latV = 11.6, topoTimer = 1;
+  function stepLat(v){ v += (rnd()-0.5)*0.9 + (11.5 - v)*0.12; if(rnd() < 0.03) v += 3 + rnd()*3; return Math.max(7.5, Math.min(19, v)); }
+  for(i=0;i<90;i++){ latV = stepLat(latV); lat.push(latV); }
+
+  function layout(){
+    var f = fitCanvas(cv); W=f.W; H=f.H;
+    var g = Math.max(8, Math.min(14, W/80));
+    fs = Math.max(9.5, Math.min(12, W/95));
+    if(W >= 560){
+      var lw = (W-3*g)*0.42, rw = W-3*g-lw, ih = H-3*g;
+      P.topo  = {x:g, y:g, w:lw, h:ih*0.62};
+      P.lat   = {x:g, y:g*2+ih*0.62, w:lw, h:ih*0.38};
+      P.band  = {x:g*2+lw, y:g, w:rw, h:ih*0.42};
+      P.trace = {x:g*2+lw, y:g*2+ih*0.42, w:rw, h:ih*0.58};
+    } else {
+      var ih2 = H-5*g, y = g;
+      P.topo  = {x:g, y:y, w:W-2*g, h:ih2*0.34}; y += P.topo.h+g;
+      P.band  = {x:g, y:y, w:W-2*g, h:ih2*0.2};  y += P.band.h+g;
+      P.trace = {x:g, y:y, w:W-2*g, h:ih2*0.3};  y += P.trace.h+g;
+      P.lat   = {x:g, y:y, w:W-2*g, h:ih2*0.16};
+    }
+  }
+  function rr(x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+  function panel(p, title, tag, tagCol){
+    rr(p.x,p.y,p.w,p.h,10); ctx.fillStyle = C.panel; ctx.fill();
+    ctx.strokeStyle = 'rgba(148,163,184,0.12)'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.font = '600 '+(fs*0.88)+'px '+FONT; ctx.fillStyle = C.mute; ctx.textAlign='left'; ctx.textBaseline='middle';
+    ctx.fillText(title, p.x+14, p.y+fs*1.6);
+    if(tag){
+      ctx.font = '500 '+(fs*0.78)+'px '+MONO;
+      var tw = ctx.measureText(tag).width + 12, tx = p.x+p.w-14-tw, ty = p.y+fs*1.6;
+      rr(tx, ty-fs*0.72, tw, fs*1.44, fs*0.72);
+      ctx.fillStyle = rgba(tagCol||C.mute, 0.12); ctx.fill();
+      ctx.strokeStyle = rgba(tagCol||C.mute, 0.5); ctx.stroke();
+      ctx.fillStyle = tagCol||C.mute; ctx.textAlign='center'; ctx.fillText(tag, tx+tw/2, ty+0.5);
+    }
+    return {x:p.x+14, y:p.y+fs*3.1, w:p.w-28, h:p.h-fs*3.1-12};
+  }
+  function topoValues(t){
+    var v = new Float32Array(EL.length);
+    var hx = 0.35*Math.cos(t*0.35), hy = -0.45 + 0.2*Math.sin(t*0.5);
+    var gx = -0.5*Math.cos(t*0.23+1), gy = 0.35*Math.sin(t*0.31);
+    for(var i=0;i<EL.length;i++){
+      var dx=EL[i][0]-hx, dy=EL[i][1]-hy, ex=EL[i][0]-gx, ey=EL[i][1]-gy;
+      v[i] = 0.12 + 0.8*Math.exp(-(dx*dx+dy*dy)/0.18) + 0.35*Math.exp(-(ex*ex+ey*ey)/0.12) + 0.05*Math.sin(t*1.3+i);
+    }
+    return v;
+  }
+  function renderTopo(t){
+    var v = topoValues(t), d = tmImg.data, half = TM/2;
+    for(var py=0;py<TM;py++) for(var px=0;px<TM;px++){
+      var x=(px+0.5-half)/half, y=-(py+0.5-half)/half, o=(py*TM+px)*4;
+      if(x*x+y*y > 1.02){ d[o+3]=0; continue; }
+      var num=0, den=0;
+      for(var i=0;i<EL.length;i++){ var dx=x-EL[i][0], dy=y-EL[i][1], w=1/(dx*dx+dy*dy+0.004); w*=w; num+=w*v[i]; den+=w; }
+      var k = Math.max(0, Math.min(255, (num/den)*255|0));
+      d[o]=LUT[k*3]; d[o+1]=LUT[k*3+1]; d[o+2]=LUT[k*3+2]; d[o+3]=255;
+    }
+    tmx.putImageData(tmImg,0,0);
+  }
+  function drawTopo(){
+    var b = panel(P.topo, 'TOPOGRAPHY · α 8–13 Hz', 'demo', C.mute);
+    var legendW = Math.max(26, b.w*0.08);
+    var R = Math.min((b.w-legendW-24)/2, b.h/2 - fs*1.2) * 0.86;
+    if(R < 10) return;
+    var cx = b.x + (b.w-legendW)/2, cy = b.y + b.h/2 + R*0.04;
+    ctx.strokeStyle = 'rgba(226,232,240,0.55)'; ctx.lineWidth = 1.3;
+    ctx.beginPath(); ctx.moveTo(cx-R*0.12, cy-R*0.99); ctx.lineTo(cx, cy-R*1.12); ctx.lineTo(cx+R*0.12, cy-R*0.99); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(cx-R*1.02, cy, R*0.06, R*0.17, 0, Math.PI*0.5, Math.PI*1.5); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(cx+R*1.02, cy, R*0.06, R*0.17, 0, -Math.PI*0.5, Math.PI*0.5); ctx.stroke();
+    ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.clip();
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(tmc, cx-R, cy-R, R*2, R*2);
+    ctx.strokeStyle = 'rgba(15,23,42,0.18)'; ctx.lineWidth = 1;
+    for(var k=1;k<4;k++){ ctx.beginPath(); ctx.arc(cx,cy,R*k/4,0,Math.PI*2); ctx.stroke(); }
+    ctx.restore();
+    ctx.strokeStyle = 'rgba(226,232,240,0.55)';
+    ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.stroke();
+    for(var i=0;i<EL.length;i++){
+      ctx.fillStyle = 'rgba(15,23,42,0.75)'; ctx.beginPath(); ctx.arc(cx+EL[i][0]*R, cy-EL[i][1]*R, Math.max(1.8,R*0.028), 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.8)'; ctx.beginPath(); ctx.arc(cx+EL[i][0]*R, cy-EL[i][1]*R, Math.max(1,R*0.014), 0, Math.PI*2); ctx.fill();
+    }
+    var lx = b.x + b.w - legendW + 8, ly0 = cy - R*0.8, lh = R*1.6, lw = 8;
+    var lg = ctx.createLinearGradient(0, ly0+lh, 0, ly0);
+    STOPS.forEach(function(s){ lg.addColorStop(s[0], s[1]); });
+    rr(lx, ly0, lw, lh, 4); ctx.fillStyle = lg; ctx.fill();
+    ctx.font = '500 '+(fs*0.78)+'px '+FONT; ctx.fillStyle = C.mute; ctx.textAlign='left'; ctx.textBaseline='middle';
+    ctx.fillText('high', lx+lw+5, ly0+4); ctx.fillText('low', lx+lw+5, ly0+lh-4);
+  }
+  function drawBands(){
+    var b = panel(P.band, 'RELATIVE BAND POWER', 'demo', C.mute);
+    var n = BANDS.length, labH = fs*2.6, top = b.y + fs*1.2, bot = b.y + b.h - labH, ch = bot-top;
+    if(ch < 8) return;
+    var gap = b.w/n, bw = Math.min(gap*0.52, 64), mx = 0, mi = 0, tot = 0, i;
+    for(i=0;i<n;i++){ tot += band[i]; if(band[i]>mx){ mx=band[i]; mi=i; } }
+    ctx.strokeStyle = 'rgba(148,163,184,0.08)'; ctx.lineWidth = 1;
+    for(var k=0;k<=4;k++){ var gy = bot - ch*k/4; ctx.beginPath(); ctx.moveTo(b.x, gy+0.5); ctx.lineTo(b.x+b.w, gy+0.5); ctx.stroke(); }
+    for(i=0;i<n;i++){
+      var frac = band[i]/tot, bh = Math.max(3, ch * frac / 0.5), x = b.x + gap*i + (gap-bw)/2, y = bot - Math.min(ch, bh);
+      var col = i===mi ? C.amber : C.sky;
+      rr(x, y, bw, bot-y, 4); ctx.fillStyle = rgba(col, i===mi?0.95:0.75); ctx.fill();
+      ctx.font = '500 '+(fs*0.95)+'px '+MONO; ctx.fillStyle = i===mi ? C.amber : C.txt; ctx.textAlign='center'; ctx.textBaseline='bottom';
+      ctx.fillText(Math.round(frac*100)+'%', x+bw/2, y-4);
+      ctx.textBaseline='top'; ctx.font = '600 '+fs+'px '+FONT; ctx.fillStyle = C.txt;
+      ctx.fillText(BANDS[i][0]+' '+BANDS[i][1], x+bw/2, bot+6);
+      ctx.font = '500 '+(fs*0.8)+'px '+FONT; ctx.fillStyle = C.mute;
+      ctx.fillText(BANDS[i][2]+' Hz', x+bw/2, bot+6+fs*1.25);
+    }
+  }
+  function trVal(c, s){ var a = s*0.05; return 0.45*Math.sin(a*1.7 + c*1.3)*(0.6+0.4*Math.sin(s*0.004+c)) + 0.3*Math.sin(a*3.9+c*2.1) + 0.15*Math.sin(a*8.3+c*0.4) + 0.1*Math.sin(a*0.45+c); }
+  function drawTraces(t){
+    var b = panel(P.trace, 'EEG · 8 OF 32 CH · 256 Hz', 'synthetic', C.mute);
+    var n = 8, lab = fs*3, gap = b.h/n, x0 = b.x+lab, x1 = b.x+b.w-fs*1.6, amp = gap*0.38, sNow = t*90;
+    if(gap < 6) return;
+    ctx.font = '500 '+(fs*0.85)+'px '+MONO; ctx.textAlign='left'; ctx.textBaseline='middle';
+    for(var c=0;c<n;c++){
+      var yc = b.y + gap*(c+0.5);
+      ctx.fillStyle = C.mute; ctx.fillText(TR_NAMES[c], b.x, yc);
+      ctx.strokeStyle = 'rgba(148,163,184,0.07)'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(x0,yc); ctx.lineTo(x1,yc); ctx.stroke();
+      ctx.strokeStyle = rgba(C.sky, 0.9); ctx.lineWidth = 1.1; ctx.beginPath();
+      for(var x=x0; x<=x1; x+=2){ var v = trVal(c, sNow - (x1 - x)); if(x===x0) ctx.moveTo(x, yc - v*amp); else ctx.lineTo(x, yc - v*amp); }
+      ctx.stroke();
+      var ok = !(c===7 && Math.sin(t*0.7) > 0.6);
+      ctx.fillStyle = ok ? C.lime : C.amber; ctx.beginPath(); ctx.arc(b.x+b.w-fs*0.5, yc, 3, 0, Math.PI*2); ctx.fill();
+    }
+    ctx.strokeStyle = rgba(C.sky,0.35); ctx.setLineDash([2,3]); ctx.beginPath(); ctx.moveTo(x1+0.5,b.y); ctx.lineTo(x1+0.5,b.y+b.h); ctx.stroke(); ctx.setLineDash([]);
+    var lf = ctx.createLinearGradient(x0,0,x0+40,0); lf.addColorStop(0,C.panel); lf.addColorStop(1,'rgba(30,41,59,0)');
+    ctx.fillStyle = lf; ctx.fillRect(x0-1, b.y, 41, b.h);
+  }
+  function drawLatency(){
+    var b = panel(P.lat, 'P50 INGEST LATENCY', 'DEMO DATA', C.amber);
+    var cur = lat[lat.length-1];
+    var big = Math.max(16, Math.min(34, b.h*0.42, b.w*0.1));
+    ctx.font = '500 '+big+'px '+MONO; ctx.fillStyle = C.lime; ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+    var numStr = cur.toFixed(1), nw = ctx.measureText(numStr).width, baseY = b.y + big*0.9;
+    ctx.fillText(numStr, b.x, baseY);
+    ctx.font = '500 '+(fs*1.05)+'px '+FONT; ctx.fillStyle = C.mute; ctx.fillText('ms', b.x+nw+5, baseY);
+    var sx = b.x, sy = baseY + fs*0.9, sw = b.w, sh = b.y + b.h - sy;
+    if(sh < 18){ sx = b.x + nw + fs*4; sy = b.y; sw = b.w - (sx-b.x); sh = b.h; }
+    if(sw < 20 || sh < 10) return;
+    var lo = 6, hi = 20, n = lat.length, i;
+    function X(i){ return sx + sw*i/(n-1); } function Y(v){ return sy + sh - (v-lo)/(hi-lo)*sh; }
+    ctx.strokeStyle = rgba(C.red,0.45); ctx.setLineDash([3,4]); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(sx, Y(16)); ctx.lineTo(sx+sw, Y(16)); ctx.stroke(); ctx.setLineDash([]);
+    ctx.font = '500 '+(fs*0.75)+'px '+MONO; ctx.fillStyle = rgba(C.red,0.85); ctx.textAlign='right'; ctx.textBaseline='bottom';
+    ctx.fillText('budget 16 ms (target)', sx+sw, Y(16)-2);
+    var ag = ctx.createLinearGradient(0,sy,0,sy+sh); ag.addColorStop(0,rgba(C.lime,0.25)); ag.addColorStop(1,rgba(C.lime,0));
+    ctx.beginPath(); ctx.moveTo(X(0), sy+sh); for(i=0;i<n;i++) ctx.lineTo(X(i), Y(lat[i])); ctx.lineTo(X(n-1), sy+sh); ctx.closePath(); ctx.fillStyle = ag; ctx.fill();
+    ctx.beginPath(); for(i=0;i<n;i++){ if(i) ctx.lineTo(X(i), Y(lat[i])); else ctx.moveTo(X(i), Y(lat[i])); }
+    ctx.strokeStyle = C.lime; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = C.lime; ctx.beginPath(); ctx.arc(X(n-1), Y(cur), 3.2, 0, Math.PI*2); ctx.fill();
+  }
+  renderTopo(T);
+  register({
+    el: stage,
+    resize: layout,
+    update: function(dt,t){
+      bandTimer -= dt;
+      if(bandTimer <= 0){ bandTimer = 1.1 + rnd()*0.8; bandT = [0.18+rnd()*0.1, 0.14+rnd()*0.08, 0.24+rnd()*0.16, 0.16+rnd()*0.1, 0.06+rnd()*0.06]; }
+      var k = Math.min(1, dt*2.2); for(var i=0;i<5;i++) band[i] += (bandT[i]-band[i])*k;
+      latTimer -= dt; if(latTimer <= 0){ latTimer = 0.3; latV = stepLat(latV); lat.push(latV); lat.shift(); }
+      topoTimer -= dt; if(topoTimer <= 0){ topoTimer = 1/15; renderTopo(t); }
+    },
+    draw: function(t){ ctx.fillStyle = C.panel2; ctx.fillRect(0,0,W,H); drawTopo(); drawBands(); drawTraces(t); drawLatency(); }
+  });
+})();
+
+/* ================= Ingest sparkline ================= */
+(function(){
+  var cv = document.getElementById('spark-ingest'), num = document.getElementById('ingest-num'), chTag = document.getElementById('ingest-ch');
+  var f, data = [], timer = 0, v = 8192, chs = [32,64,128,256], chi = 0, chTimer = 6;
+  for(var i=0;i<120;i++){ v = step(v); data.push(v); }
+  function target(){ return chs[chi]*256; }
+  function step(x){ var tg = target(); x += (tg - x)*0.08 + (rnd()-0.5)*tg*0.05; return Math.max(0,x); }
+  function fmt(x){ return x >= 1000 ? (x/1000).toFixed(1)+'k' : Math.round(x)+''; }
+  num.textContent = fmt(data[data.length-1]);
+  register({
+    el: cv,
+    resize: function(){ f = fitCanvas(cv); },
+    update: function(dt){
+      timer -= dt; chTimer -= dt;
+      if(chTimer <= 0){ chTimer = 5; chi = (chi+1)%chs.length; chTag.textContent = chs[chi]+' ch'; }
+      if(timer <= 0){ timer = 0.12; v = step(v); data.push(v); data.shift(); num.textContent = fmt(v); }
+    },
+    draw: function(){
+      var c = f.ctx, W = f.W, H = f.H, n = data.length, top = 50, pad = 8, hi = 70000;
+      c.clearRect(0,0,W,H);
+      c.strokeStyle = 'rgba(148,163,184,0.08)'; c.lineWidth = 1;
+      for(var k=0;k<4;k++){ var gy = top + (H-top-pad)*k/3; c.beginPath(); c.moveTo(0,gy+.5); c.lineTo(W,gy+.5); c.stroke(); }
+      function X(i){ return W*i/(n-1); } function Y(x){ return H - pad - Math.min(1,x/hi)*(H-top-pad); }
+      var g = c.createLinearGradient(0,top,0,H); g.addColorStop(0,rgba(C.sky,0.3)); g.addColorStop(1,rgba(C.sky,0));
+      c.beginPath(); c.moveTo(0,H); for(var i=0;i<n;i++) c.lineTo(X(i),Y(data[i])); c.lineTo(W,H); c.closePath(); c.fillStyle = g; c.fill();
+      c.beginPath(); for(i=0;i<n;i++){ i ? c.lineTo(X(i),Y(data[i])) : c.moveTo(X(i),Y(data[i])); } c.strokeStyle = C.sky; c.lineWidth = 1.6; c.stroke();
+      c.fillStyle = C.sky; c.beginPath(); c.arc(W-3, Y(data[n-1]), 3, 0, Math.PI*2); c.fill();
+    }
+  });
+})();
+
+/* ================= Clean before/after ================= */
+(function(){
+  var cv = document.getElementById('spark-clean'), bRaw = document.getElementById('btn-raw'), bCl = document.getElementById('btn-clean');
+  var f, mix = 0, target = 0, auto = true, autoT = 3;
+  function set(clean, user){ target = clean ? 1 : 0; bRaw.setAttribute('aria-pressed', String(!clean)); bCl.setAttribute('aria-pressed', String(clean)); if(user){ auto = false; } if(RM.matches || !running){ mix = target; draw(T); } }
+  bRaw.addEventListener('click', function(){ set(false, true); });
+  bCl.addEventListener('click', function(){ set(true, true); });
+  function sig(c, s){ return 0.5*Math.sin(s*0.09+c) + 0.3*Math.sin(s*0.21+c*2) + 0.15*Math.sin(s*0.5+c*3); }
+  function noise(c, s){
+    var line = 0.35*Math.sin(s*1.9+c);                              // line noise
+    var blink = c===0 ? 2.2*Math.exp(-Math.pow(((s%160)-80)/9,2)) : 0; // eye blink on frontal
+    var drift = 0.6*Math.sin(s*0.012+c*1.7);                         // baseline drift
+    var musc = c===2 ? 0.5*Math.sin(s*3.3)*Math.sin(s*3.7+1)*(Math.sin(s*0.03)>0.3?1:0) : 0;
+    return line + blink + drift + musc;
+  }
+  function draw(t){
+    var c = f.ctx, W = f.W, H = f.H, n = 3, gap = (H-16)/n, labels = ['Fp1','Cz','T7'];
+    c.clearRect(0,0,W,H);
+    c.font = '500 11px "DM Mono", monospace'; c.textBaseline = 'middle';
+    for(var ch=0; ch<n; ch++){
+      var yc = 8 + gap*(ch+0.5), amp = gap*0.2;
+      c.fillStyle = C.mute; c.fillText(labels[ch], 8, yc);
+      c.beginPath();
+      for(var x=40; x<=W-6; x+=2){
+        var s = t*40 + x*0.5, v = sig(ch, s) + (1-mix)*noise(ch, s);
+        var y = yc - v*amp; x===40 ? c.moveTo(x,y) : c.lineTo(x,y);
+      }
+      c.strokeStyle = mix > 0.5 ? C.lime : C.red; c.globalAlpha = 0.9; c.lineWidth = 1.2; c.stroke(); c.globalAlpha = 1;
+    }
+  }
+  register({
+    el: cv,
+    resize: function(){ f = fitCanvas(cv); },
+    update: function(dt){
+      if(auto){ autoT -= dt; if(autoT <= 0){ autoT = 3; set(target < 0.5, false); } }
+      mix += (target - mix)*Math.min(1, dt*3);
+    },
+    draw: draw
+  });
+})();
+
+/* ================= Neuro-AI probabilities + confusion ================= */
+(function(){
+  var rows = Array.prototype.slice.call(document.querySelectorAll('#probs .prob'));
+  var cm = document.getElementById('cm');
+  var M = [[.82,.08,.06,.04],[.07,.80,.08,.05],[.05,.06,.84,.05],[.06,.05,.07,.82]];
+  M.forEach(function(r){ r.forEach(function(v){ var i = document.createElement('i'); i.style.background = rgba(C.sky, 0.12 + v*0.85); cm.appendChild(i); }); });
+  function tick(){
+    var cls = Math.floor(rnd()*4), p = [], s = 0;
+    for(var i=0;i<4;i++){ p[i] = (i===cls ? 2.4 : 0.35) + rnd()*0.6; s += p[i]; }
+    rows.forEach(function(r,i){
+      var v = p[i]/s; r.querySelector('.fill').style.width = (v*100).toFixed(0)+'%';
+      r.querySelector('.v').textContent = Math.round(v*100)+'%'; r.classList.toggle('top', i===cls);
+    });
+  }
+  tick();
+  var el = document.getElementById('probs'), acc = 0;
+  register({ el: el, resize: function(){}, update: function(dt){ acc += dt; if(acc > 1.4){ acc = 0; tick(); } }, draw: function(){} });
+})();
+
+/* ================= SDK code tabs ================= */
+(function(){
+  var CODE = {
+    'py': '<span class="k">import</span> neuroforge <span class="k">as</span> nf\n\nstream = nf.<span class="f">connect</span>(<span class="s">"lsl://headset-01"</span>)\nclean  = stream.<span class="f">pipeline</span>(<span class="s">"ica-default"</span>).<span class="f">run</span>()\nintent = nf.models.<span class="f">get</span>(<span class="s">"motor-intent/v1"</span>).<span class="f">predict</span>(clean)',
+    'cpp': '<span class="k">#include</span> <span class="s">&lt;neuroforge/client.hpp&gt;</span>\n\n<span class="k">auto</span> stream = nf::<span class="f">connect</span>(<span class="s">"lsl://headset-01"</span>);\n<span class="k">auto</span> clean  = stream.<span class="f">pipeline</span>(<span class="s">"ica-default"</span>).<span class="f">run</span>();\n<span class="k">auto</span> intent = nf::models::<span class="f">get</span>(<span class="s">"motor-intent/v1"</span>).<span class="f">predict</span>(clean);',
+    'unity': '<span class="k">using</span> NeuroForge;\n\n<span class="k">var</span> stream = NF.<span class="f">Connect</span>(<span class="s">"lsl://headset-01"</span>);\n<span class="k">var</span> clean  = stream.<span class="f">Pipeline</span>(<span class="s">"ica-default"</span>).<span class="f">Run</span>();\n<span class="k">var</span> intent = NF.Models.<span class="f">Get</span>(<span class="s">"motor-intent/v1"</span>).<span class="f">Predict</span>(clean);'
+  };
+  tabs(['t-py','t-cpp','t-unity'], function(id){ var p = document.getElementById('code-panel'); p.innerHTML = CODE[id.slice(2)]; p.setAttribute('aria-labelledby', id); });
+})();
+
+/* generic accessible tablist: arrow keys + click */
+function tabs(ids, onSelect){
+  var btns = ids.map(function(id){ return document.getElementById(id); });
+  function sel(i, focus){
+    btns.forEach(function(b,j){ b.setAttribute('aria-selected', String(i===j)); b.tabIndex = i===j ? 0 : -1; });
+    if(focus) btns[i].focus(); onSelect(ids[i]);
+  }
+  btns.forEach(function(b,i){
+    b.addEventListener('click', function(){ sel(i); });
+    b.addEventListener('keydown', function(e){
+      if(e.key==='ArrowRight'){ e.preventDefault(); sel((i+1)%btns.length, true); }
+      else if(e.key==='ArrowLeft'){ e.preventDefault(); sel((i-1+btns.length)%btns.length, true); }
+    });
+  });
+  sel(0);
+}
+
+/* ================= Audience switch ================= */
+tabs(['tab-res','tab-hw'], function(id){
+  document.getElementById('panel-res').hidden = id !== 'tab-res';
+  document.getElementById('panel-hw').hidden = id !== 'tab-hw';
+});
+
+/* ================= Usage sizer (no prices) ================= */
+(function(){
+  var ch = document.getElementById('r-ch'), dv = document.getElementById('r-dev'), hr = document.getElementById('r-hr');
+  function fmt(x, u){ var s = ['','k','M','B'], i = 0; while(x >= 1000 && i < 3){ x /= 1000; i++; } return (x < 10 ? x.toFixed(1) : Math.round(x)) + s[i] + (u||''); }
+  function bytes(x){ var s = ['B','KB','MB','GB','TB','PB'], i = 0; while(x >= 1000 && i < 5){ x /= 1000; i++; } return (x < 10 ? x.toFixed(1) : Math.round(x)) + ' ' + s[i]; }
+  function upd(){
+    var c = +ch.value, d = +dv.value, h = +hr.value;
+    document.getElementById('o-ch').textContent = c; document.getElementById('o-dev').textContent = d; document.getElementById('o-hr').textContent = h;
+    var chh = c*d*h, vol = chh*3600*256*4;
+    document.getElementById('v-chh').textContent = fmt(chh);
+    document.getElementById('v-vol').textContent = bytes(vol);
+    document.getElementById('m-chh').style.width = Math.min(100, Math.log10(chh+1)/Math.log10(1024*200*720)*100) + '%';
+    document.getElementById('m-vol').style.width = Math.min(100, Math.log10(vol+1)/Math.log10(1024*200*720*3600*256*4)*100) + '%';
+    document.getElementById('fit').textContent = (d <= 3 && c <= 64 && h <= 80) ? 'Academic' : (d > 50 || c > 256) ? 'Enterprise' : 'Startup';
+  }
+  [ch,dv,hr].forEach(function(e){ e.addEventListener('input', upd); }); upd();
+})();
+
+/* ================= Research figure: illustrative psychometric model ================= */
+(function(){
+  var svg = document.getElementById('fig-svg'), ra = document.getElementById('r-amp'), rk = document.getElementById('r-k');
+  var NS = 'http://www.w3.org/2000/svg', L = 52, R = 500, Tp = 18, B = 208, TH = 0.45;
+  function el(n, a, txt){ var e = document.createElementNS(NS, n); for(var k in a) e.setAttribute(k, a[k]); if(txt) e.textContent = txt; svg.appendChild(e); return e; }
+  function X(a){ return L + a*(R-L); } function Y(i){ return B - i*(B-Tp); }
+  for(var g=0; g<=4; g++){
+    el('line', {x1:L, x2:R, y1:Y(g/4), y2:Y(g/4), stroke:'#334155', 'stroke-width':1});
+    el('text', {x:L-10, y:Y(g/4)+4, 'text-anchor':'end', fill:'#94A3B8', 'font-size':11, 'font-family':'DM Mono, monospace'}, (g/4).toFixed(2));
+    el('text', {x:X(g/4), y:B+18, 'text-anchor':'middle', fill:'#94A3B8', 'font-size':11, 'font-family':'DM Mono, monospace'}, (g/4).toFixed(2));
+  }
+  el('text', {x:(L+R)/2, y:B+38, 'text-anchor':'middle', fill:'#CBD5E1', 'font-size':12, 'font-family':'Inter Tight, sans-serif'}, 'normalized amplitude a');
+  el('text', {x:14, y:(Tp+B)/2, 'text-anchor':'middle', fill:'#CBD5E1', 'font-size':12, 'font-family':'Inter Tight, sans-serif', transform:'rotate(-90 14 '+((Tp+B)/2)+')'}, 'modelled intensity I');
+  el('line', {x1:X(TH), x2:X(TH), y1:Tp, y2:B, stroke:'#FBBF24', 'stroke-dasharray':'4 4', 'stroke-width':1});
+  el('text', {x:X(TH)+6, y:Tp+12, fill:'#FBBF24', 'font-size':11, 'font-family':'DM Mono, monospace'}, 'θ');
+  var area = el('path', {fill:'rgba(56,189,248,0.12)'}), curve = el('path', {fill:'none', stroke:'#38BDF8', 'stroke-width':2.2});
+  var guide = el('line', {stroke:'#A3E635', 'stroke-width':1, 'stroke-dasharray':'2 3'});
+  var dot = el('circle', {r:6, fill:'#A3E635', stroke:'#0F172A', 'stroke-width':2});
+  el('text', {x:R, y:Tp+2, 'text-anchor':'end', fill:'#FBBF24', 'font-size':11, 'font-family':'DM Mono, monospace'}, 'ILLUSTRATIVE MODEL · NOT DATA');
+  function I(a, k){ return 1/(1+Math.exp(-k*(a-TH))); }
+  function upd(){
+    var a = +ra.value, k = +rk.value, d = '', i, v;
+    for(i=0;i<=100;i++){ v = i/100; d += (i ? 'L' : 'M') + X(v).toFixed(1) + ' ' + Y(I(v,k)).toFixed(1); }
+    curve.setAttribute('d', d);
+    area.setAttribute('d', d + 'L' + X(1) + ' ' + B + 'L' + X(0) + ' ' + B + 'Z');
+    var iv = I(a,k);
+    dot.setAttribute('cx', X(a)); dot.setAttribute('cy', Y(iv));
+    guide.setAttribute('x1', X(a)); guide.setAttribute('x2', X(a)); guide.setAttribute('y1', B); guide.setAttribute('y2', Y(iv));
+    document.getElementById('o-amp').textContent = a.toFixed(2);
+    document.getElementById('o-k').textContent = k;
+    document.getElementById('o-int').textContent = iv.toFixed(2);
+  }
+  ra.addEventListener('input', upd); rk.addEventListener('input', upd); upd();
+})();
+
+start();
+})();
+</script>
+</body>
+</html>

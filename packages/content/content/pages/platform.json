@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "title": "Platform · {brand}",
+    "description": "Hardware-agnostic ingest, versioned and comparable preprocessing pipelines, provenance for every run, and a governed model registry. Built and tested internally; not deployed yet."
+  },
+  "hero": {
+    "eyebrow": "Platform",
+    "heading": "Reproducible, comparable pipelines, <em>from electrode to model.</em>",
+    "lede": "Every run is pinned to a pipeline version and records every parameter, version and input hash. Compare pipelines side by side instead of trusting one cleaning default."
+  },
+  "sections": [
+    {
+      "id": "why",
+      "heading": "Preprocessing choices <em>change results.</em>",
+      "body": [
+        "There is no single correct way to clean a neural recording. The published evidence says the choice of pipeline moves the answer, so the pipeline has to be recorded, versioned and comparable."
+      ],
+      "evidence": [
+        {
+          "text": "In a 2025 study, every artifact-correction step reduced decoding performance, while higher high-pass cutoffs increased it.",
+          "source": "market/landscape.md §3",
+          "sourceUrl": "https://doi.org/10.1038/s42003-025-08464-3",
+          "grade": "A"
+        },
+        {
+          "text": "A 2025 comparison of 43 preprocessing pipelines found no single best pipeline.",
+          "source": "market/landscape.md §3",
+          "sourceUrl": "https://doi.org/10.1111/psyp.70197",
+          "grade": "A"
+        },
+        {
+          "text": "A systematic review of 129 EEG-BCI publications found code or pipeline availability in 20.9% of them.",
+          "source": "market/landscape.md §3",
+          "sourceUrl": "https://doi.org/10.3390/s26175562",
+          "grade": "A"
+        }
+      ]
+    },
+    {
+      "id": "ingest",
+      "heading": "Hardware-agnostic <em>ingest.</em>",
+      "body": [
+        "Connectors for EEG, ECoG and microelectrode recordings in open formats. Recordings are stored on standard time-series infrastructure; we compete on provenance, not on storage."
+      ],
+      "items": [
+        {
+          "heading": "Open formats",
+          "body": "EDF/BDF, BrainVision, XDF and BIDS import, with typed errors for corrupt files. NWB import is written but not yet tested.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M2-REPORT.md step 2.5"
+        },
+        {
+          "heading": "Streaming",
+          "body": "Lab Streaming Layer (LSL) input for real-time sessions, tested on a single host.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M2-REPORT.md step 2.7; docs/hive/M4-REPORT.md step 4.4"
+        },
+        {
+          "heading": "Existing tools",
+          "body": "Integrations with MNE-Python, BrainFlow and the BIDS and NWB tooling your lab already uses.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "pipelines",
+      "heading": "Versioned pipelines <em>with full provenance.</em>",
+      "body": [
+        "Versioned preprocessing pipelines with full provenance. Run one, or run a grid of them and see how your results move."
+      ],
+      "items": [
+        {
+          "heading": "Pinned versions",
+          "body": "A run names an exact pipeline version, so it can be repeated later.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M3-REPORT.md step 3.2"
+        },
+        {
+          "heading": "Provenance graph",
+          "body": "Inputs, parameters, versions and outputs are linked, from raw recording to trained model.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M3-REPORT.md step 3.1; docs/hive/M6-REPORT.md step 6.1"
+        },
+        {
+          "heading": "Pipeline grids",
+          "body": "Run a grid of pipelines on one dataset and see how decoding metrics shift across them.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M3-REPORT.md step 3.6"
+        }
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "import {pkg} as nf            # Illustrative API, subject to change",
+          "rec = nf.open(\"sub-01_task-motor_eeg.edf\")",
+          "run = nf.pipelines.get(\"eeg-basic@1.0.0\").run(rec)",
+          "print(run.provenance.id)          # every parameter, version and input hash"
+        ],
+        "note": "Illustrative API, subject to change"
+      }
+    },
+    {
+      "id": "models",
+      "heading": "A governed <em>model registry.</em>",
+      "body": [
+        "Governed model registry, built and tested internally but not deployed: versioned models with provenance, documented intended use and use restrictions. Benchmarks will be published with methods.",
+        "Models whose outputs drive a clinical or assistive device are likely to be regulated as device software in the customer's product. The registry is built to document that boundary, not to blur it."
+      ],
+      "items": [
+        {
+          "heading": "Intended use and restrictions",
+          "body": "Each model records what it is for and where it must not be deployed.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M6-REPORT.md step 6.2"
+        },
+        {
+          "heading": "Component disclosure",
+          "body": "Model components listed for customers' software documentation.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M6-REPORT.md step 6.5"
+        }
+      ],
+      "evidence": [
+        {
+          "text": "Our planning assumption, not legal advice: outputs that drive a clinical or assistive BCI are likely device software in the customer's product, which then carries the regulatory submission.",
+          "source": "market/regulation.md §4"
+        }
+      ]
+    }
+  ],
+  "cta": [
+    {
+      "label": "Join early access",
+      "href": "/pricing#early-access",
+      "variant": "primary",
+      "disabled": true,
+      "note": "Early-access list opens soon"
+    },
+    { "label": "Governance", "href": "/governance", "variant": "ghost" }
+  ]
+}

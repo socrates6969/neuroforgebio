@@ -1,0 +1,11 @@
+{
+  "name": "NeuroForge.Runtime",
+  "rootNamespace": "NeuroForge",
+  "references": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": true,
+  "overrideReferences": false,
+  "autoReferenced": true,
+  "noEngineReferences": false
+}

@@ -1,0 +1,32 @@
+<!-- Row 7 PASSING fixture (paired with row7-playground-good.ts), trimmed from apps/web/src/pages/
+     playground.astro: the controls form is JS-only (`hidden` at render), so the time scrubber's
+     missing render-time aria-valuetext is not a 7a finding; its companion is the sibling <output
+     data-pg-time> the script writes, and draw() keeps aria-valuetext in sync (7b). The neurons range
+     has its companion <output> inside its <label>, aria-valuetext at render, and settingsChanged()
+     syncs it. Expected: 2 ranges, 2 with a companion, 0 findings. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div class="pg" data-pg data-seconds="s" data-neurons-unit="neurons">
+      <form class="controls nf-card" data-pg-controls data-pg-needs-js hidden aria-labelledby="h-pg-controls">
+        <h2 id="h-pg-controls" class="nf-visually-hidden">Playback controls</h2>
+        <div class="row row--play">
+          <label class="grow">
+            <span class="lbl">Time</span>
+            <input type="range" data-pg-scrub min="0" max="1200" step="10" value="0" disabled />
+          </label>
+          <output class="mono" data-pg-time aria-live="off">0.00 / 1.20 s</output>
+        </div>
+        <div class="row">
+          <label class="grow">
+            <span class="lbl">Neurons: <output class="mono" data-pg-neurons-out aria-live="off">130</output></span>
+            <input type="range" data-pg-neurons min="0" max="4" step="1" value="4" aria-valuetext="130 neurons" disabled />
+          </label>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

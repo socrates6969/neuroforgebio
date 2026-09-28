@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="clinical"> <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{brand.legalName} · Reproducible pipelines and governance for neural data</title>
+<meta name="description" content="Versioned, comparable pipelines and neural-data governance, from electrode to model. In development; for research and development use.">
+<link rel="canonical" href="https://{brand.domain}/">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="color-scheme" content="light">
+<meta property="og:title" content="{brand.legalName} · Reproducible pipelines and governance for neural data">
+<meta property="og:description" content="Versioned, comparable pipelines and neural-data governance, from electrode to model. In development; for research and development use.">
+<meta property="og:url" content="https://{brand.domain}/">
+<meta property="og:site_name" content="{brand.legalName}">
+<meta property="og:locale" content="en_US">
+<!-- stylesheets: see home-css -->
+
+
+
+
+
+
+
+
+
+</head> <body> <a class="nf-skip" href="#main">Skip to content</a> <header class="site" data-astro-cid-cid1> <div class="nf-wrap" data-astro-cid-cid1> <nav class="nav" aria-label="Primary" data-nf-nav data-astro-cid-cid1> <a class="brand" href="/" aria-label="{brand.legalName}, home" data-astro-cid-cid1>
+<span class="nf-bm" data-astro-cid-cid0> <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true" focusable="false" data-astro-cid-cid0> <circle cx="13" cy="13" r="11.5" fill="none" stroke="currentColor" stroke-width="1.4" data-astro-cid-cid0>
+</circle> <circle cx="13" cy="13" r="3" fill="currentColor" data-astro-cid-cid0>
+</circle> <circle cx="13" cy="5.5" r="1.6" fill="currentColor" data-astro-cid-cid0>
+</circle> <circle cx="20.5" cy="13" r="1.6" fill="currentColor" data-astro-cid-cid0>
+</circle> <circle cx="5.5" cy="13" r="1.6" fill="currentColor" data-astro-cid-cid0>
+</circle> <circle cx="13" cy="20.5" r="1.6" fill="none" stroke="currentColor" stroke-width="1" data-astro-cid-cid0>
+</circle> </svg> <span class="nf-bm-name" data-astro-cid-cid0>{brand.legalName}</span> </span> </a> <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nf-navlist" data-open-label="Open menu" data-close-label="Close menu" data-astro-cid-cid1>Open menu</button> <div class="menu" id="nf-navlist" data-astro-cid-cid1> <ul data-astro-cid-cid1> <li data-astro-cid-cid1>
+<a href="/platform" data-astro-cid-cid1>Platform</a>
+</li>
+<li data-astro-cid-cid1>
+<a href="/governance" data-astro-cid-cid1>Governance</a>
+</li>
+<li data-astro-cid-cid1>
+<a href="/sdks" data-astro-cid-cid1>SDKs</a>
+</li>
+<li data-astro-cid-cid1>
+<a href="/research" data-astro-cid-cid1>Research</a>
+</li>
+<li data-astro-cid-cid1>
+<a href="/pricing" data-astro-cid-cid1>Pricing</a>
+</li>
+<li data-astro-cid-cid1>
+<a href="/security" data-astro-cid-cid1>Security</a>
+</li> </ul> <div class="right" data-astro-cid-cid1>
+<a class="nf-btn nf-btn--primary" href="/pricing#early-access" data-astro-cid-cid14>Early access</a>
+</div> </div> </nav>  </div> </header> <script type="module" src="/_assets/Nav.astro_astro_type_script_index_0_lang.js">
+</script>  <main id="main" tabindex="-1">  <section class="hero" aria-labelledby="h-hero" data-astro-cid-cid5> <div class="nf-wrap" data-astro-cid-cid5> <div class="hero-top" data-astro-cid-cid5> <div data-astro-cid-cid5> <p class="nf-label eyebrow" data-astro-cid-cid5>
+<span class="dot" aria-hidden="true" data-astro-cid-cid5>
+</span>Neural data infrastructure</p> <h1 id="h-hero" data-astro-cid-cid5>The data layer for <em>brain-computer interfaces.</em>
+</h1> <p class="nf-lede" data-astro-cid-cid5>Versioned, comparable pipelines and neural-data governance, from electrode to model.</p> <div class="ctas" data-astro-cid-cid5>
+<span class="nf-btn-wrap" data-astro-cid-cid14>
+<button type="button" class="nf-btn nf-btn--primary" disabled aria-describedby="btn-note-37" data-astro-cid-cid14>Join early access</button>
+<small class="note" id="btn-note-37" data-astro-cid-cid14>Early-access list opens soon</small>
+</span>
+<a class="nf-btn nf-btn--ghost" href="/platform" data-astro-cid-cid14>See the platform</a>
+</div> <p class="formats" data-astro-cid-cid5> <span class="nf-visually-hidden" data-astro-cid-cid5>Open data formats and protocols the platform is designed for: </span> Designed for <b data-astro-cid-cid5>BIDS</b>
+<span aria-hidden="true" data-astro-cid-cid5> · </span>
+<b data-astro-cid-cid5>LSL</b>
+<span aria-hidden="true" data-astro-cid-cid5> · </span>
+<b data-astro-cid-cid5>EDF/BDF</b>
+<span aria-hidden="true" data-astro-cid-cid5> · </span>
+<b data-astro-cid-cid5>NWB</b>
+<span aria-hidden="true" data-astro-cid-cid5> · </span>
+<b data-astro-cid-cid5>XDF</b> <span class="fnote" data-astro-cid-cid5> Open formats and protocols, not partners.</span> </p> </div>  </div> <div class="stage" data-astro-cid-cid5>
+<div class="nf-hv" data-astro-cid-cid4> <div class="nf-hv-stage" role="img" aria-label="Animated EEG montage: synthetic traces scrolling across scalp channels. Demo data, not a recording." data-nf-eeg data-astro-cid-cid4> <canvas aria-hidden="true" data-astro-cid-cid4>
+</canvas> </div> <p class="nf-hv-cap" data-astro-cid-cid4>Synthetic signal, demo data.</p> </div>  <script type="module" src="/_assets/HeroVisual.astro_astro_type_script_index_0_lang.js">
+</script>
+</div> </div> </section>  <section class="nf-section" id="platform" aria-labelledby="h-plat" data-astro-cid-cid19> <div class="nf-wrap" data-astro-cid-cid19> <div class="sec-head" data-astro-cid-cid13> <p class="nf-label" data-astro-cid-cid13>
+<span class="nf-so" data-n="01" aria-hidden="true" data-astro-cid-cid10>
+</span> 01 · Platform</p> <div data-astro-cid-cid13> <h2 id="h-plat" data-astro-cid-cid13="true">One pipeline, <em>from electrode to model.</em>
+</h2> <p class="nf-lede" data-astro-cid-cid13>Four stages. Every run is versioned, and every parameter, version and input hash is recorded as provenance.</p> </div> </div>  <ol class="pipe" data-astro-cid-cid6> <li class="step" id="step-ingest" data-astro-cid-cid6> <span class="node" aria-hidden="true" data-astro-cid-cid6>
+</span> <span class="num" data-astro-cid-cid6>01 / Ingest</span> <h3 data-astro-cid-cid6>Hardware-agnostic ingest</h3> <p data-astro-cid-cid6>Connectors for EEG, ECoG and microelectrode recordings in open formats, stored on standard time-series infrastructure.</p> <ul data-astro-cid-cid6>
+<li data-astro-cid-cid6>BIDS</li>
+<li data-astro-cid-cid6>Lab Streaming Layer</li>
+<li data-astro-cid-cid6>EDF/BDF · NWB · XDF</li>
+</ul> <p class="st" data-astro-cid-cid6>
+<span class="pill pill--designed" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Designed</span>
+</p> </li>
+<li class="step" id="step-pipelines" data-astro-cid-cid6> <span class="node" aria-hidden="true" data-astro-cid-cid6>
+</span> <span class="num" data-astro-cid-cid6>02 / Pipelines</span> <h3 data-astro-cid-cid6>Reproducible, comparable pipelines</h3> <p data-astro-cid-cid6>Versioned preprocessing pipelines with full provenance. Run one, or run a grid of them and see how your results move.</p> <ul data-astro-cid-cid6>
+<li data-astro-cid-cid6>Pinned versions</li>
+<li data-astro-cid-cid6>Parameter provenance</li>
+<li data-astro-cid-cid6>Pipeline grids</li>
+</ul> <p class="st" data-astro-cid-cid6>
+<span class="pill pill--designed" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Designed</span>
+</p> </li>
+<li class="step" id="step-models" data-astro-cid-cid6> <span class="node" aria-hidden="true" data-astro-cid-cid6>
+</span> <span class="num" data-astro-cid-cid6>03 / Neuro-AI</span> <h3 data-astro-cid-cid6>Governed model registry</h3> <p data-astro-cid-cid6>Governed model registry (roadmap): versioned models with provenance, documented intended use and use restrictions. Benchmarks will be published with methods.</p> <ul data-astro-cid-cid6>
+<li data-astro-cid-cid6>Versioned models</li>
+<li data-astro-cid-cid6>Intended use</li>
+<li data-astro-cid-cid6>Use restrictions</li>
+</ul> <p class="st" data-astro-cid-cid6>
+<span class="pill pill--roadmap" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Roadmap</span>
+</p> </li>
+<li class="step" id="step-sdks" data-astro-cid-cid6> <span class="node" aria-hidden="true" data-astro-cid-cid6>
+</span> <span class="num" data-astro-cid-cid6>04 / SDKs</span> <h3 data-astro-cid-cid6>Python first, one shared core</h3> <p data-astro-cid-cid6>A Python SDK first, built on one shared core so every language records provenance the same way. C and C++ bindings follow; game engines on request.</p> <ul data-astro-cid-cid6>
+<li data-astro-cid-cid6>Python</li>
+<li data-astro-cid-cid6>C / C++</li>
+<li data-astro-cid-cid6>Unity / Unreal on request</li>
+</ul> <p class="st" data-astro-cid-cid6>
+<span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</p> </li> </ol> <div class="code" data-astro-cid-cid6> <div class="explain" data-astro-cid-cid6>  <h3 data-astro-cid-cid6>Every run carries its provenance.</h3> <p data-astro-cid-cid6>Open a recording, run a pinned pipeline version, and get a provenance handle that records every parameter, version and input hash.</p> </div> <pre aria-label="Illustrative Python example" tabindex="0" data-astro-cid-cid6>
+<code data-astro-cid-cid6>import {brand.codeIdentifiers.pythonImport} as nf            # Illustrative API, subject to change
+rec = nf.open(&quot;sub-01_task-motor_eeg.edf&quot;)
+run = nf.pipelines.get(&quot;eeg-basic@1.0.0&quot;).run(rec)
+print(run.provenance.id)          # every parameter, version and input hash</code>
+<span class="cnote" data-astro-cid-cid6>Illustrative API, subject to change</span>
+</pre> </div>  <div class="evidence" data-astro-cid-cid17>  <ol data-astro-cid-cid17> <li data-astro-cid-cid17> <span class="t" data-astro-cid-cid17>In a 2025 study, every artifact-correction step reduced decoding performance.</span> <span class="src" data-astro-cid-cid17> <span class="grade" data-astro-cid-cid17>[A]</span> <a href="https://doi.org/10.1038/s42003-025-08464-3" rel="noopener noreferrer" data-astro-cid-cid17>market/landscape.md §3</a> </span> </li>
+<li data-astro-cid-cid17> <span class="t" data-astro-cid-cid17>A 2025 comparison of 43 preprocessing pipelines found no single best pipeline.</span> <span class="src" data-astro-cid-cid17> <span class="grade" data-astro-cid-cid17>[A]</span> <a href="https://doi.org/10.1111/psyp.70197" rel="noopener noreferrer" data-astro-cid-cid17>market/landscape.md §3</a> </span> </li> </ol> </div>  </div> </section> <section class="nf-section band" id="governance" aria-labelledby="h-gov" data-astro-cid-cid19> <div class="nf-wrap" data-astro-cid-cid19> <div class="sec-head" data-astro-cid-cid13> <p class="nf-label" data-astro-cid-cid13>
+<span class="nf-so" data-n="02" aria-hidden="true" data-astro-cid-cid10>
+</span> 02 · Governance</p> <div data-astro-cid-cid13> <h2 id="h-gov" data-astro-cid-cid13="true">Neural-data law is here. <em>Govern the data, not just the files.</em>
+</h2> <p class="nf-lede" data-astro-cid-cid13>US states define neural data differently, so one recording can be regulated in one state and not in the next. Classification, consent and deletion have to follow the data into every derivative.</p> </div> </div>  <ul class="points" data-astro-cid-cid19> <li class="nf-card" data-astro-cid-cid19>
+<h3 data-astro-cid-cid19>Per-jurisdiction classification</h3>
+<p data-astro-cid-cid19>Each channel and derived feature is classified against each state&#39;s definition.</p>
+<span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</li>
+<li class="nf-card" data-astro-cid-cid19>
+<h3 data-astro-cid-cid19>Versioned consent ledger</h3>
+<p data-astro-cid-cid19>Opt-in consent recorded with its version, and withdrawal propagated to raw data, derivatives and trained models.</p>
+<span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</li>
+<li class="nf-card" data-astro-cid-cid19>
+<h3 data-astro-cid-cid19>Use restrictions on models</h3>
+<p data-astro-cid-cid19>Models carry intended-use and use-restriction metadata, for example for EU workplace and education settings.</p>
+<span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</li> </ul> <p class="more" data-astro-cid-cid19>
+<a href="/law-tracker" data-astro-cid-cid19>Read the neural-data law tracker</a>
+</p> <div class="evidence" data-astro-cid-cid17>  <ol data-astro-cid-cid17> <li data-astro-cid-cid17> <span class="t" data-astro-cid-cid17>Colorado, California, Montana and Connecticut have passed laws that add neural data to the sensitive data their privacy laws protect; Connecticut&#39;s amendments carry July 1, 2026 effective dates.</span> <span class="src" data-astro-cid-cid17> <span class="grade" data-astro-cid-cid17>[A]</span> <span data-astro-cid-cid17>market/regulation.md §1</span> </span> </li>
+<li data-astro-cid-cid17> <span class="t" data-astro-cid-cid17>Colorado and California cover the central or peripheral nervous system; Connecticut covers the central nervous system only; California excludes data inferred from non-neural information.</span> <span class="src" data-astro-cid-cid17> <span class="grade" data-astro-cid-cid17>[A]</span> <span data-astro-cid-cid17>market/regulation.md §1</span> </span> </li> </ol> </div>  </div> </section> <section class="nf-section" id="audience" aria-labelledby="h-aud" data-astro-cid-cid19> <div class="nf-wrap" data-astro-cid-cid19> <div class="sec-head" data-astro-cid-cid13> <p class="nf-label" data-astro-cid-cid13>
+<span class="nf-so" data-n="03" aria-hidden="true" data-astro-cid-cid10>
+</span> 03 · Who it is for</p> <div data-astro-cid-cid13> <h2 id="h-aud" data-astro-cid-cid13="true">Built for labs <em>and for device makers.</em>
+</h2> <p class="nf-lede" data-astro-cid-cid13>The same provenance and governance layer, packaged for two different jobs.</p> </div> </div>  <div class="tabs-root" data-nf-tabs data-astro-cid-cid7> <div class="tabs" role="tablist" aria-label="Who it is for" data-astro-cid-cid7> <button type="button" role="tab" id="aud-tab-researchers" aria-controls="aud-panel-researchers" aria-selected="true" tabindex="0" data-astro-cid-cid7>For researchers</button>
+<button type="button" role="tab" id="aud-tab-hardware" aria-controls="aud-panel-hardware" aria-selected="false" tabindex="-1" data-astro-cid-cid7>For hardware companies</button> </div> <div class="panel" id="aud-panel-researchers" role="tabpanel" aria-labelledby="aud-tab-researchers" tabindex="0" data-astro-cid-cid7> <div class="nf-card tinted" data-astro-cid-cid7> <p class="nf-label" data-astro-cid-cid7>Academic tier · free (planned)</p> <h3 data-astro-cid-cid7>Spend your grant on science, <em>not plumbing.</em>
+</h3> <p data-astro-cid-cid7>Open your lab&#39;s recordings in a pipeline that other labs can re-run exactly, and compare pipelines instead of trusting one default.</p> <span class="nf-btn-wrap" data-astro-cid-cid14>
+<button type="button" class="nf-btn nf-btn--primary" disabled aria-describedby="btn-note-39" data-astro-cid-cid14>Join early access</button>
+<small class="note" id="btn-note-39" data-astro-cid-cid14>Early-access list opens soon</small>
+</span> </div> <div class="nf-card" data-astro-cid-cid7> <ul class="nf-checks" data-astro-cid-cid7> <li data-astro-cid-cid7>BIDS-native import and export <span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</li>
+<li data-astro-cid-cid7>Versioned pipelines you can cite and rerun <span class="pill pill--designed" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Designed</span>
+</li>
+<li data-astro-cid-cid7>Export to MNE- and EEGLAB-compatible formats <span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</li>
+<li data-astro-cid-cid7>Citation-ready provenance for every result <span class="pill pill--designed" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Designed</span>
+</li> </ul> </div> </div>
+<div class="panel" id="aud-panel-hardware" role="tabpanel" aria-labelledby="aud-tab-hardware" tabindex="0" data-astro-cid-cid7> <div class="nf-card tinted" data-astro-cid-cid7> <p class="nf-label" data-astro-cid-cid7>Startup tier · pricing at launch</p> <h3 data-astro-cid-cid7>You build the device. <em>We carry the evidence.</em>
+</h3> <p data-astro-cid-cid7>For neurotech teams that need traceable data, consent records and documentation their reviewers can follow.</p> <span class="nf-btn-wrap" data-astro-cid-cid14>
+<button type="button" class="nf-btn nf-btn--primary" disabled aria-describedby="btn-note-40" data-astro-cid-cid14>Join early access</button>
+<small class="note" id="btn-note-40" data-astro-cid-cid14>Early-access list opens soon</small>
+</span> </div> <div class="nf-card" data-astro-cid-cid7> <ul class="nf-checks" data-astro-cid-cid7> <li data-astro-cid-cid7>Consent and deletion records per US state <span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</li>
+<li data-astro-cid-cid7>Provenance for every parameter, version and input hash <span class="pill pill--designed" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Designed</span>
+</li>
+<li data-astro-cid-cid7>White-label SDK on the shared core <span class="pill pill--roadmap" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Roadmap</span>
+</li>
+<li data-astro-cid-cid7>Cloud deployment first; edge deployment on request <span class="pill pill--roadmap" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Roadmap</span>
+</li> </ul> </div> </div> </div> <script type="module" src="/_assets/AudienceTabs.astro_astro_type_script_index_0_lang.js">
+</script>  </div> </section> <section class="nf-section" id="security" aria-labelledby="h-sec" data-astro-cid-cid19> <div class="nf-wrap" data-astro-cid-cid19> <div class="sec-head" data-astro-cid-cid13> <p class="nf-label" data-astro-cid-cid13>
+<span class="nf-so" data-n="04" aria-hidden="true" data-astro-cid-cid10>
+</span> 04 · Compliance &amp; security</p> <div data-astro-cid-cid13> <h2 id="h-sec" data-astro-cid-cid13="true">Neural data is sensitive. <em>Our design starts there.</em>
+</h2> <p class="nf-lede" data-astro-cid-cid13>Controls listed with their current status. We hold no certifications and claim none.</p> </div> </div>  <div class="grid-wrap" data-astro-cid-cid12> <svg class="nf-sv" role="img" aria-label="Illustration of layered data protection: encryption, access control and audit logging." viewBox="0 0 480 150" preserveAspectRatio="xMinYMid meet" data-astro-cid-cid11> <rect class="frame" x="0.5" y="0.5" width="479" height="149" rx="6" data-astro-cid-cid11>
+</rect> <rect class="head" x="1" y="1" width="478" height="28" rx="5.5" data-astro-cid-cid11>
+</rect> <path class="rule" d="M0.5 29.5H479.5M0.5 69.5H479.5M0.5 109.5H479.5M72.5 0.5V149.5" data-astro-cid-cid11>
+</path> <g class="bars" data-astro-cid-cid11> <rect x="16" y="12" width="40" height="5" rx="2.5" data-astro-cid-cid11>
+</rect> <rect x="88" y="12" width="64" height="5" rx="2.5" data-astro-cid-cid11>
+</rect> <rect x="392" y="12" width="72" height="5" rx="2.5" data-astro-cid-cid11>
+</rect> </g> <!-- row 1: lock (encryption) --> <g class="glyph" transform="translate(26 36)" data-astro-cid-cid11> <rect x="3" y="11" width="16" height="12" rx="2" data-astro-cid-cid11>
+</rect> <path d="M6.5 11V7.5a4.5 4.5 0 0 1 9 0V11" data-astro-cid-cid11>
+</path> </g> <!-- row 2: key person (access control) --> <g class="glyph" transform="translate(26 76)" data-astro-cid-cid11> <circle cx="9" cy="8" r="4" data-astro-cid-cid11>
+</circle> <path d="M2 23c0-4 3.2-7 7-7s7 3 7 7M17 12l2 2 3.5-4" data-astro-cid-cid11>
+</path> </g> <!-- row 3: list (audit log) --> <g class="glyph" transform="translate(26 116)" data-astro-cid-cid11> <rect x="2" y="2" width="20" height="21" rx="2.5" data-astro-cid-cid11>
+</rect> <path d="M7 9h10M7 13h10M7 17h6" data-astro-cid-cid11>
+</path> </g> <g class="bars" data-astro-cid-cid11> <rect x="88" y="44" width="170" height="6" rx="3" data-astro-cid-cid11>
+</rect> <rect x="88" y="56" width="110" height="5" rx="2.5" class="soft" data-astro-cid-cid11>
+</rect> <rect x="88" y="84" width="150" height="6" rx="3" data-astro-cid-cid11>
+</rect> <rect x="88" y="96" width="126" height="5" rx="2.5" class="soft" data-astro-cid-cid11>
+</rect> <rect x="88" y="124" width="186" height="6" rx="3" data-astro-cid-cid11>
+</rect> <rect x="88" y="136" width="92" height="5" rx="2.5" class="soft" data-astro-cid-cid11>
+</rect> </g> <g class="ticks" data-astro-cid-cid11> <rect x="392" y="42" width="72" height="16" rx="3" data-astro-cid-cid11>
+</rect> <rect x="392" y="82" width="72" height="16" rx="3" class="plan" data-astro-cid-cid11>
+</rect> <rect x="392" y="122" width="72" height="16" rx="3" class="road" data-astro-cid-cid11>
+</rect> </g> </svg>  <table class="specs" data-astro-cid-cid12>   <tbody data-astro-cid-cid12> <tr data-astro-cid-cid12> <th scope="row" data-astro-cid-cid12>Encryption</th> <td class="desc" data-astro-cid-cid12>AES-256 at rest, TLS 1.3 in transit</td> <td class="st" data-astro-cid-cid12> <span class="pill pill--designed" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Designed</span> </td> </tr>
+<tr data-astro-cid-cid12> <th scope="row" data-astro-cid-cid12>Access control</th> <td class="desc" data-astro-cid-cid12>RBAC + audit logs</td> <td class="st" data-astro-cid-cid12> <span class="pill pill--designed" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Designed</span> </td> </tr>
+<tr data-astro-cid-cid12> <th scope="row" data-astro-cid-cid12>HIPAA</th> <td class="desc" data-astro-cid-cid12>Designed for HIPAA-aligned workflows. BAA available for enterprise (planned)</td> <td class="st" data-astro-cid-cid12> <span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span> </td> </tr>
+<tr data-astro-cid-cid12> <th scope="row" data-astro-cid-cid12>SOC 2 Type II</th> <td class="desc" data-astro-cid-cid12>SOC 2 Type II: on roadmap</td> <td class="st" data-astro-cid-cid12> <span class="pill pill--roadmap" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Roadmap</span> </td> </tr>
+<tr data-astro-cid-cid12> <th scope="row" data-astro-cid-cid12>Neural-data privacy</th> <td class="desc" data-astro-cid-cid12>Built to support emerging US state neural-data privacy laws (e.g. Colorado, California, Connecticut, Montana)</td> <td class="st" data-astro-cid-cid12> <span class="pill pill--designed" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Designed</span> </td> </tr>
+<tr data-astro-cid-cid12> <th scope="row" data-astro-cid-cid12>Data residency</th> <td class="desc" data-astro-cid-cid12>Data residency options (planned)</td> <td class="st" data-astro-cid-cid12> <span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span> </td> </tr>
+<tr data-astro-cid-cid12> <th scope="row" data-astro-cid-cid12>De-identification</th> <td class="desc" data-astro-cid-cid12>De-identification tooling to strip identifiers before sharing or export</td> <td class="st" data-astro-cid-cid12> <span class="pill pill--designed" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Designed</span> </td> </tr> </tbody> </table> <p class="legal" data-astro-cid-cid12>This is not legal advice. Customers remain responsible for their own regulatory obligations.</p> </div>  <p class="more" data-astro-cid-cid19>
+<a href="/security" data-astro-cid-cid19>Security overview</a>
+</p> </div> </section> <section class="nf-section" id="pricing" aria-labelledby="h-price" data-astro-cid-cid19> <div class="nf-wrap" data-astro-cid-cid19> <div class="sec-head" data-astro-cid-cid13> <p class="nf-label" data-astro-cid-cid13>
+<span class="nf-so" data-n="05" aria-hidden="true" data-astro-cid-cid10>
+</span> 05 · Pricing</p> <div data-astro-cid-cid13> <h2 id="h-price" data-astro-cid-cid13="true">Free for science. <em>Fair for startups.</em>
+</h2> <p class="nf-lede" data-astro-cid-cid13>No prices are final. We set them after discovery interviews, and early-access members hear first.</p> </div> </div>  <div class="plans" data-astro-cid-cid8> <article class="plan nf-card" aria-labelledby="plan-academic" data-astro-cid-cid8> <h3 class="nf-label" id="plan-academic" data-astro-cid-cid8>Academic</h3> <p class="price" data-astro-cid-cid8>Free</p> <p class="who" data-astro-cid-cid8>For individual researchers and students, with fair-use limits.</p> <ul class="nf-checks" data-astro-cid-cid8>
+<li data-astro-cid-cid8>Open-source Python SDK <span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</li>
+<li data-astro-cid-cid8>Local provenance for every run <span class="pill pill--designed" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Designed</span>
+</li>
+<li data-astro-cid-cid8>BIDS, NWB and LSL integrations <span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</li>
+</ul> <span class="nf-btn-wrap" data-astro-cid-cid14>
+<button type="button" class="nf-btn nf-btn--ghost" disabled aria-describedby="btn-note-41" data-astro-cid-cid14>Join the early-access list</button>
+<small class="note" id="btn-note-41" data-astro-cid-cid14>Opens soon</small>
+</span> </article>
+<article class="plan nf-card feat" aria-labelledby="plan-startup" data-astro-cid-cid8> <h3 class="nf-label" id="plan-startup" data-astro-cid-cid8>Startup</h3> <p class="price" data-astro-cid-cid8>Banded subscription</p> <p class="who" data-astro-cid-cid8>For seed-stage neurotech teams. Pricing at launch.</p> <ul class="nf-checks" data-astro-cid-cid8>
+<li data-astro-cid-cid8>Hosted pipelines and pipeline grids <span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</li>
+<li data-astro-cid-cid8>Consent and deletion ledger for core US states <span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</li>
+<li data-astro-cid-cid8>SSO <span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</li>
+</ul> <span class="nf-btn-wrap" data-astro-cid-cid14>
+<button type="button" class="nf-btn nf-btn--primary" disabled aria-describedby="btn-note-42" data-astro-cid-cid14>Join the early-access list</button>
+<small class="note" id="btn-note-42" data-astro-cid-cid14>Opens soon</small>
+</span> </article>
+<article class="plan nf-card" aria-labelledby="plan-enterprise" data-astro-cid-cid8> <h3 class="nf-label" id="plan-enterprise" data-astro-cid-cid8>Enterprise</h3> <p class="price" data-astro-cid-cid8>Custom</p> <p class="who" data-astro-cid-cid8>For organizations with regulated data and dedicated needs.</p> <ul class="nf-checks" data-astro-cid-cid8>
+<li data-astro-cid-cid8>BAA available for enterprise (planned) <span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</li>
+<li data-astro-cid-cid8>SSO and advanced RBAC <span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+</li>
+<li data-astro-cid-cid8>Single-tenant or on-prem deployment <span class="pill pill--roadmap" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Roadmap</span>
+</li>
+</ul> <span class="nf-btn-wrap" data-astro-cid-cid14>
+<button type="button" class="nf-btn nf-btn--ghost" disabled aria-describedby="btn-note-43" data-astro-cid-cid14>Join the early-access list</button>
+<small class="note" id="btn-note-43" data-astro-cid-cid14>Opens soon</small>
+</span> </article> </div>  <p class="more" data-astro-cid-cid19>
+<a href="/pricing" data-astro-cid-cid19>How pricing will work</a>
+</p> </div> </section> <section class="nf-section" id="research" aria-labelledby="h-res" data-astro-cid-cid19> <div class="nf-wrap" data-astro-cid-cid19> <div class="sec-head" data-astro-cid-cid13> <p class="nf-label" data-astro-cid-cid13>
+<span class="nf-so" data-n="06" aria-hidden="true" data-astro-cid-cid10>
+</span> 06 · Research</p> <div data-astro-cid-cid13> <h2 id="h-res" data-astro-cid-cid13="true">Whitepapers and <em>working notes.</em>
+</h2> <p class="nf-lede" data-astro-cid-cid13>Computational and methods work, published with its assumptions, code and status stated.</p> </div> </div>  <article class="paper nf-card" aria-labelledby="paper-somatosensory-closed-loop" data-astro-cid-cid18>
+<div class="body" data-astro-cid-cid18>
+<div class="meta" data-astro-cid-cid18>
+<span class="pill pill--in-preparation" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>In preparation</span>
+<span class="nf-label" data-astro-cid-cid18>Whitepaper · computational study</span>
+</div>
+<h3 id="paper-somatosensory-closed-loop" data-astro-cid-cid18="true">
+<a href="/research/somatosensory-closed-loop" data-astro-cid-cid18>Bidirectional closed-loop somatosensory feedback: a computational study</a>
+</h3>
+<p data-astro-cid-cid18>Modelling how patterned stimulation of somatosensory cortex could encode touch, pressure and proprioception.</p>
+<p class="banner banner--info" role="note" data-astro-cid-cid16>Computational/theoretical work; any clinical application requires IRB/FDA oversight</p> <a class="nf-btn nf-btn--ghost" href="/research/somatosensory-closed-loop" data-astro-cid-cid14>Read the preview</a>
+</div>
+</article>
+<div class="papers" data-astro-cid-cid18>
+<article class="nf-card card" aria-labelledby="paper-preprocessing-multiverse" data-astro-cid-cid18>
+<span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+<h3 id="paper-preprocessing-multiverse" data-astro-cid-cid18="true">How preprocessing choices change decoding results: a multiverse analysis on public EEG</h3>
+<p class="kind nf-label" data-astro-cid-cid18>Methods study</p>
+<p data-astro-cid-cid18>Running a grid of preprocessing pipelines on open EEG datasets to measure how decoding results move, with code and methods released alongside the results.</p>
+</article>
+<article class="nf-card card" aria-labelledby="paper-hipaa-aligned-reference-architecture" data-astro-cid-cid18>
+<span class="pill pill--planned" data-astro-cid-cid15>
+<span class="nf-visually-hidden" data-astro-cid-cid15>Status: </span>Planned</span>
+<h3 id="paper-hipaa-aligned-reference-architecture" data-astro-cid-cid18="true">A reference architecture for HIPAA-aligned neural data pipelines</h3>
+<p class="kind nf-label" data-astro-cid-cid18>Architecture note</p>
+<p data-astro-cid-cid18>How encryption, access control, audit logging and consent records fit together across ingest, storage and models.</p>
+</article>
+</div> <p class="more" data-astro-cid-cid19>
+<a href="/research" data-astro-cid-cid19>All research</a>
+</p> </div> </section> <section class="nf-section" id="contact" aria-labelledby="h-cta" data-astro-cid-cid19> <div class="nf-wrap" data-astro-cid-cid19> <div class="cta" data-astro-cid-cid9> <div data-astro-cid-cid9> <h2 id="h-cta" data-astro-cid-cid9>Help shape the data layer <em>for neurotech.</em>
+</h2> <p data-astro-cid-cid9>The early-access list opens soon. Until then, read the research or the neural-data law tracker.</p> </div> <div class="actions" data-astro-cid-cid9>
+<span class="nf-btn-wrap" data-astro-cid-cid14>
+<button type="button" class="nf-btn nf-btn--primary" disabled aria-describedby="btn-note-45" data-astro-cid-cid14>Join early access</button>
+<small class="note" id="btn-note-45" data-astro-cid-cid14>Early-access list opens soon</small>
+</span>
+<a class="nf-btn nf-btn--ghost" href="/law-tracker" data-astro-cid-cid14>Read the law tracker</a>
+</div> </div>  </div> </section>  </main> <footer class="site-foot" data-astro-cid-cid2> <div class="nf-wrap" data-astro-cid-cid2> <div class="foot" data-astro-cid-cid2> <div data-astro-cid-cid2> <a class="brand" href="/" data-astro-cid-cid2>
+<span class="nf-bm" data-astro-cid-cid0> <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true" focusable="false" data-astro-cid-cid0> <circle cx="13" cy="13" r="11.5" fill="none" stroke="currentColor" stroke-width="1.4" data-astro-cid-cid0>
+</circle> <circle cx="13" cy="13" r="3" fill="currentColor" data-astro-cid-cid0>
+</circle> <circle cx="13" cy="5.5" r="1.6" fill="currentColor" data-astro-cid-cid0>
+</circle> <circle cx="20.5" cy="13" r="1.6" fill="currentColor" data-astro-cid-cid0>
+</circle> <circle cx="5.5" cy="13" r="1.6" fill="currentColor" data-astro-cid-cid0>
+</circle> <circle cx="13" cy="20.5" r="1.6" fill="none" stroke="currentColor" stroke-width="1" data-astro-cid-cid0>
+</circle> </svg> <span class="nf-bm-name" data-astro-cid-cid0>{brand.legalName}</span> </span> </a> <p class="tag" data-astro-cid-cid2>Neural data infrastructure, from electrode to model. For research and development use.</p> </div> <nav aria-label="Footer" class="groups" data-astro-cid-cid2> <div data-astro-cid-cid2> <p class="nf-label" data-astro-cid-cid2>Product</p> <ul data-astro-cid-cid2>
+<li data-astro-cid-cid2>
+<a href="/platform" data-astro-cid-cid2>Platform</a>
+</li>
+<li data-astro-cid-cid2>
+<a href="/governance" data-astro-cid-cid2>Governance</a>
+</li>
+<li data-astro-cid-cid2>
+<a href="/sdks" data-astro-cid-cid2>SDKs</a>
+</li>
+<li data-astro-cid-cid2>
+<a href="/pricing" data-astro-cid-cid2>Pricing</a>
+</li>
+<li data-astro-cid-cid2>
+<span data-astro-cid-cid2>Docs <span class="pill pill--roadmap" data-astro-cid-cid15>Roadmap</span>
+</span>
+</li>
+</ul> </div>
+<div data-astro-cid-cid2> <p class="nf-label" data-astro-cid-cid2>Company</p> <ul data-astro-cid-cid2>
+<li data-astro-cid-cid2>
+<a href="/research" data-astro-cid-cid2>Research</a>
+</li>
+<li data-astro-cid-cid2>
+<a href="/security" data-astro-cid-cid2>Security</a>
+</li>
+<li data-astro-cid-cid2>
+<a href="/law-tracker" data-astro-cid-cid2>Neural-data law tracker</a>
+</li>
+</ul> </div>
+<div data-astro-cid-cid2> <p class="nf-label" data-astro-cid-cid2>Legal</p> <ul data-astro-cid-cid2>
+<li data-astro-cid-cid2>
+<a href="/legal/privacy/" data-astro-cid-cid2>Privacy</a>
+</li>
+<li data-astro-cid-cid2>
+<a href="/legal/terms/" data-astro-cid-cid2>Terms</a>
+</li>
+<li data-astro-cid-cid2>
+<a href="/legal/cookies/" data-astro-cid-cid2>Cookies</a>
+</li>
+<li data-astro-cid-cid2>
+<a href="/legal/company/" data-astro-cid-cid2>Company information</a>
+</li>
+</ul> </div> </nav> </div> <div class="fine" data-astro-cid-cid2>
+<span data-astro-cid-cid2>{brand.legalName} is in development. Nothing on this site is a product you can use today, and statuses show what is designed, planned or on the roadmap.</span>
+<span data-astro-cid-cid2>© 2026 {brand.legalName}</span>
+</div> </div> </footer>  </body>
+</html> 

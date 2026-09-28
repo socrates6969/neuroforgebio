@@ -1,0 +1,286 @@
+{
+  "meta": {
+    "title": "Security | {brand}",
+    "description": "How {brand} is designed to protect neural data: encryption, per-subject keys, access control, audit, deletion and honest status labels."
+  },
+  "heading": "Security at {brand}",
+  "intro": [
+    "Neural data is not like other data. You can reset a password, but you cannot reset a brain. A recording can identify the person it came from even after names are removed. That is why security is part of the product, not a feature."
+  ],
+  "note": {
+    "lead": "An honest note first:",
+    "body": "{brand} is in development. Nothing on this page describes a running service yet. Every item carries a status:"
+  },
+  "legend": [
+    { "status": "designed", "text": "specified in our architecture, not yet built." },
+    { "status": "planned", "text": "scheduled in our build plan, with tests defined." },
+    {
+      "status": "roadmap",
+      "text": "we intend to do it, and it depends on funding, customers or an outside party."
+    }
+  ],
+  "afterLegend": [
+    "We have no independent audit reports or third-party attestations today. When that changes, this page will say so and link to the evidence."
+  ],
+  "sections": [
+    {
+      "id": "data",
+      "heading": "How your neural data is protected",
+      "table": {
+        "headers": ["What", "How", "Status"],
+        "rows": [
+          {
+            "cells": [
+              "Encryption in transit",
+              "TLS 1.3 for every connection to our platform. Older protocols are refused"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Encryption at rest",
+              "AES-256-GCM, with keys held in a cloud key-management service. Every research subject's data has **its own key**"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Deletion you can verify",
+              "When a subject withdraws consent, we delete their data, destroy their key so that backup copies become unreadable, flag any model trained on it, and give you a signed deletion certificate. Copies you exported earlier cannot be recalled, so the certificate lists them for your follow-up"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Access control",
+              "Single sign-on with multi-factor authentication. **Administrators must use passkeys** (phishing-resistant sign-in). Roles limit who can see, export or train on data, and sensitive exports need a second approver"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Tenant separation",
+              "Each customer's data is separated in the application, in the database and by separate encryption keys"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Audit trail",
+              "Every read, export, consent change, admin action and deletion is logged in a tamper-evident, append-only log that your auditors can export and verify"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Pseudonymisation",
+              "We store subject codes, not names. Identifying fields in file headers are moved out of the working copy"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": [
+              "Data stays out of logs",
+              "Our logs never contain signal samples, subject codes or free-text notes"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Real data only in production",
+              "Development and test systems use synthetic or public data only"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Data location",
+              "One US region at launch; an EU region is planned. Your data stays in the region you choose"
+            ],
+            "status": [{ "status": "planned" }, { "status": "roadmap", "note": "EU" }]
+          },
+          {
+            "cells": [
+              "Healthcare customers (US)",
+              "Infrastructure for HIPAA-aligned workflows, and a business associate agreement (BAA) for enterprise customers"
+            ],
+            "status": [{ "status": "planned" }]
+          }
+        ]
+      },
+      "after": [
+        "**We never call neural data \"anonymous\".** Brain signals can identify people, so we protect pseudonymised recordings as personal data."
+      ]
+    },
+    {
+      "id": "never",
+      "heading": "What we will never do",
+      "bullets": [
+        {
+          "text": "**Control stimulation or any device.** Our platform, API and software kits only *receive* data from recording hardware. They cannot send commands to stimulators or any other device, and we test for that in every build."
+        },
+        {
+          "text": "**Sit in your real-time loop.** Closed-loop timing stays on your own hardware. Our cloud stores and analyses data; it never gates acquisition."
+        },
+        {
+          "text": "**Sell or share your data**, or use it to train our own models without your explicit, recorded permission."
+        },
+        {
+          "text": "**Load trackers on this website.** No third-party analytics, fonts or scripts, and a strict content security policy."
+        }
+      ]
+    },
+    {
+      "id": "software",
+      "heading": "Software you install",
+      "table": {
+        "headers": ["What", "Status"],
+        "rows": [
+          {
+            "cells": [
+              "Every release signed with Sigstore (keyless signing, public transparency log)"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": [
+              "A software bill of materials (CycloneDX) with each release, including the support status of each component"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": [
+              "Build provenance (SLSA) for each release, so you can check where and how it was built"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": [
+              "Vulnerability statements (VEX) that say whether known flaws affect our software"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": ["A stated support period for each software kit version"],
+            "status": [{ "status": "planned" }]
+          }
+        ]
+      },
+      "after": [
+        "This is the evidence device makers ask for when they use outside software in a regulated product. It is also why our core SDK is written in a memory-safe language."
+      ]
+    },
+    {
+      "id": "standards",
+      "heading": "Standards we build toward",
+      "body": [
+        "We use these frameworks to design and check our work. Using a framework is not the same as being audited against it."
+      ],
+      "table": {
+        "headers": ["Standard", "What it means for you", "Status"],
+        "rows": [
+          {
+            "cells": [
+              "OWASP ASVS 5.0, Level 2, with Level 3 for neural-data paths",
+              "A detailed checklist for application security, verified at each milestone"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "NIST Secure Software Development Framework (SP 800-218)",
+              "How we write, build, release and patch software"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": ["NIST Cybersecurity Framework 2.0", "How we run security as a company"],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "IEC 81001-5-1 (health software security lifecycle)",
+              "Lifecycle evidence for components you may use in a device"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": [
+              "GDPR Article 32 (security of processing)",
+              "Encryption, resilience, recovery and regular testing"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "EU Cyber Resilience Act",
+              "Security requirements, vulnerability handling and reporting for our software kits"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": [
+              "ISO/IEC 27001 and ISO/IEC 27701",
+              "Certification of our security and privacy management"
+            ],
+            "status": [{ "status": "roadmap" }]
+          },
+          {
+            "cells": ["SOC 2 Type II", "An independent auditor's report on our controls"],
+            "status": [{ "status": "roadmap" }]
+          }
+        ]
+      }
+    },
+    {
+      "id": "testing",
+      "heading": "Testing",
+      "bullets": [
+        {
+          "text": "Automated security tests on every code change: static analysis, dependency checks, secret scanning and fuzzing of the file readers.",
+          "status": "planned"
+        },
+        {
+          "text": "An external penetration test before the first customer data enters production, then every year.",
+          "status": "roadmap"
+        },
+        {
+          "text": "Recovery drills every quarter, with the measured recovery times recorded.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "incidents",
+      "heading": "If something goes wrong",
+      "body": [
+        "We keep a written incident response plan. If a security incident affects your data, we will tell you without undue delay, and in any case within 24 hours of confirming it. You can then meet your own legal deadlines, such as the 72-hour notification under the GDPR. We will tell you what happened, what data was involved and what we are doing about it."
+      ],
+      "status": "designed"
+    },
+    {
+      "id": "disclosure",
+      "heading": "Report a vulnerability",
+      "body": [
+        "If you think you have found a security problem in our website, platform or software, please tell us."
+      ],
+      "bullets": [
+        {
+          "text": "**Email:** [security@{domain}](mailto:security@{domain}) (an encrypted channel is on our roadmap)"
+        },
+        {
+          "text": "**What to include:** what you found, where, and how to reproduce it. Please do not include real people's data."
+        },
+        {
+          "text": "**Our commitment:** we reply within 3 business days, keep you updated, fix confirmed issues, and credit you if you wish."
+        },
+        {
+          "text": "**Good faith:** we will not pursue legal action against research done in good faith under our disclosure policy. That policy is: test only against your own accounts or data, avoid privacy harm and service disruption, never access or keep other people's neural data, and give us reasonable time to fix before you publish."
+        },
+        {
+          "text": "Machine-readable contact: [/.well-known/security.txt](/.well-known/security.txt)"
+        }
+      ]
+    }
+  ]
+}

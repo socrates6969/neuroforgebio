@@ -1,0 +1,115 @@
+{
+  "meta": {
+    "title": "Governance · {brand}",
+    "description": "Per-jurisdiction classification, a versioned consent ledger, deletion that follows data into derivatives and models, and use restrictions on models. Built and tested internally; not deployed yet."
+  },
+  "hero": {
+    "eyebrow": "Governance",
+    "heading": "Govern neural data <em>wherever it flows.</em>",
+    "lede": "Classification, consent and deletion, tracked on the same provenance graph as your pipelines, so a withdrawal reaches every derivative and model built from the data."
+  },
+  "banner": "Not legal advice. This is a research summary for product planning. Engage qualified counsel before relying on it.",
+  "sections": [
+    {
+      "id": "why-now",
+      "heading": "The laws exist, and <em>they disagree.</em>",
+      "body": [
+        "Three US states have added neural data to the sensitive data their privacy laws protect, and a peer-reviewed review reports a fourth (Montana). Their definitions differ. One EEG or EMG recording can be neural data in one state and not in another, so classification has to happen per channel and per derived feature."
+      ],
+      "evidence": [
+        {
+          "text": "Colorado (effective 7 Aug 2024), California (Ch. 887, 28 Sep 2024) and Connecticut (signed 24 Jun 2025; amendment sections effective July 1, 2026) have neural-data provisions.",
+          "source": "market/regulation.md §1",
+          "grade": "A"
+        },
+        {
+          "text": "A peer-reviewed review reports that Montana adopted SB 163 in May 2025 to regulate neurological data. We have not yet checked the statute text.",
+          "source": "market/regulation.md §1"
+        },
+        {
+          "text": "Colorado and California cover the central or peripheral nervous system; Connecticut covers the central nervous system only; California excludes data inferred from non-neural information.",
+          "source": "market/regulation.md §1",
+          "grade": "A"
+        },
+        {
+          "text": "No neural-specific privacy tool was found among the software tools reviewed.",
+          "source": "market/landscape.md §3"
+        }
+      ]
+    },
+    {
+      "id": "capabilities",
+      "heading": "What the governance layer <em>is built to do.</em>",
+      "body": [
+        "Each capability below is built and tested internally. None is deployed or available to customers yet."
+      ],
+      "items": [
+        {
+          "heading": "Per-jurisdiction classification",
+          "body": "Classify every channel and derived feature against the Colorado, California and Connecticut definitions, and record the reasoning. Montana is shown as not evaluated until its statute text is verified.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.2"
+        },
+        {
+          "heading": "Versioned consent ledger",
+          "body": "Capture opt-in consent with its version and scope, and keep an audit trail of every change.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.3"
+        },
+        {
+          "heading": "Deletion that follows the data",
+          "body": "Propagate consent withdrawal to raw data, derivatives and trained models, and flag models that need retraining.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.5"
+        },
+        {
+          "heading": "Limit-use flag",
+          "body": "Flag data that counts as sensitive personal information in California, where consumers have the right to limit its use.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.2; services/platform/tests/governance/test_gov_rules.py"
+        },
+        {
+          "heading": "Model use restrictions",
+          "body": "Attach use-restriction metadata to models, for example for emotion inference in EU workplace and education settings.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M6-REPORT.md step 6.2"
+        },
+        {
+          "heading": "Audit export",
+          "body": "Export the audit trail, including classification changes and deletion events, and signed deletion certificates for reviewers and counsel.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.5; services/platform/tests/governance/test_gov_audit_integrity.py"
+        }
+      ]
+    },
+    {
+      "id": "eu",
+      "heading": "EU rules <em>reach models too.</em>",
+      "body": [
+        "The EU AI Act restricts some uses of models regardless of how the data was collected, so use restrictions belong on the model record."
+      ],
+      "evidence": [
+        {
+          "text": "EU AI Act Art. 5(1)(f), applicable from 2 Feb 2025, bans AI that infers emotions in workplace and education settings, except for medical or safety reasons.",
+          "source": "market/regulation.md §5",
+          "sourceUrl": "https://artificialintelligenceact.eu/article/5",
+          "grade": "B"
+        }
+      ]
+    }
+  ],
+  "cta": [
+    {
+      "label": "Read the law tracker",
+      "href": "/law-tracker",
+      "variant": "primary"
+    },
+    {
+      "label": "Join early access",
+      "href": "/pricing#early-access",
+      "variant": "ghost",
+      "disabled": true,
+      "note": "Early-access list opens soon"
+    }
+  ]
+}

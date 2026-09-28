@@ -1,0 +1,6 @@
+{
+  "components": {
+    "pkg:npm/three": { "supportLevel": "maintained", "endOfSupport": "unknown" },
+    "vite": { "supportLevel": "maintained", "endOfSupport": "2027-06-30" }
+  }
+}

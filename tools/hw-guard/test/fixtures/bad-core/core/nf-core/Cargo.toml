@@ -1,0 +1,8 @@
+[package]
+name = "nf-core"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+serialport = "4"
+lsl = "0.1"

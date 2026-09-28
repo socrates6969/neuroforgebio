@@ -1,0 +1,377 @@
+---
+// Clinical HeroVisual: 2D canvas 10-20 EEG montage with synthetic traces (adapted from
+// design/option-1.html and design/assets/asset-1-clinical.html). Vanilla canvas, no libraries.
+// Loaded on idle; static frame under prefers-reduced-motion; paused off-screen or in hidden tabs.
+// Colours and the font are read from the theme tokens at runtime; the only text drawn is the
+// electrode names (diagram labels). All copy (label, caption) comes from packages/content.
+import type { SlotContract } from '../../contract.ts';
+type Props = SlotContract['HeroVisual'];
+const { label, caption } = Astro.props;
+---
+
+<div class="nf-hv">
+  <div class="nf-hv-stage" role="img" aria-label={label} data-nf-eeg>
+    <canvas aria-hidden="true"></canvas>
+  </div>
+  {caption && <p class="nf-hv-cap">{caption}</p>}
+</div>
+
+<style>
+  .nf-hv-stage {
+    position: relative;
+    height: clamp(420px, 46vw, 560px);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background-color: var(--color-bg);
+    /* hairline grid, visible before the canvas paints and with JS off */
+    background-image:
+      linear-gradient(var(--color-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+    background-size:
+      100% 64px,
+      64px 100%;
+  }
+  .nf-hv-stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .nf-hv-cap {
+    margin-top: 10px;
+    font: 400 12px/1.5 var(--font-mono);
+    color: var(--color-muted);
+  }
+  @media (max-width: 900px) {
+    .nf-hv-stage {
+      height: 680px;
+    }
+  }
+  @media (max-width: 420px) {
+    .nf-hv-stage {
+      height: 620px;
+    }
+  }
+</style>
+
+<script>
+  type RGB = [number, number, number];
+  type Pt = [number, number];
+
+  // 10-20 positions (unit head, nose up); last two are the ear references A1/A2.
+  const E: [string, number, number][] = [
+    ['Fp1', -0.247, 0.761], ['Fp2', 0.247, 0.761],
+    ['F7', -0.647, 0.47], ['F3', -0.335, 0.42], ['Fz', 0, 0.4], ['F4', 0.335, 0.42], ['F8', 0.647, 0.47],
+    ['T3', -0.8, 0], ['C3', -0.4, 0], ['Cz', 0, 0], ['C4', 0.4, 0], ['T4', 0.8, 0],
+    ['T5', -0.647, -0.47], ['P3', -0.335, -0.42], ['Pz', 0, -0.4], ['P4', 0.335, -0.42], ['T6', 0.647, -0.47],
+    ['O1', -0.247, -0.761], ['O2', 0.247, -0.761],
+    ['A1', -1.07, 0], ['A2', 1.07, 0],
+  ];
+  const NCH = 19;
+  const TAU = Math.PI * 2;
+
+  /** Parse a computed token value (#hex or rgb[a]) into RGB; fallback when unparsable. */
+  function rgbOf(v: string, fallback: RGB): RGB {
+    const s = v.trim();
+    const h = s.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+    if (h) {
+      const x = h[1].length === 3 ? [...h[1]].map((c) => c + c).join('') : h[1];
+      const n = parseInt(x, 16);
+      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+    }
+    const m = s.match(/rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)/i);
+    return m ? [+m[1], +m[2], +m[3]] : fallback;
+  }
+  const rgba = (c: RGB, a: number) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+
+  function mount(stage: HTMLElement) {
+    const cv = stage.querySelector('canvas');
+    const ctx = cv?.getContext('2d');
+    if (!cv || !ctx) return;
+    const RM = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    let C = { bg: [0, 0, 0] as RGB, surf: [0, 0, 0] as RGB, surf2: [0, 0, 0] as RGB, ink: [0, 0, 0] as RGB, acc: [0, 0, 0] as RGB, sec: [0, 0, 0] as RGB };
+    let FONT = 'sans-serif';
+    function readTokens() {
+      const cs = getComputedStyle(stage);
+      const tok = (n: string, f: RGB) => rgbOf(cs.getPropertyValue(n), f);
+      C = {
+        bg: tok('--color-bg', [247, 249, 251]),
+        surf: tok('--color-surface', [255, 255, 255]),
+        surf2: tok('--color-surface-2', [238, 243, 247]),
+        ink: tok('--color-ink', [11, 37, 64]),
+        acc: tok('--color-accent', [14, 124, 134]),
+        sec: tok('--color-secondary', [91, 141, 239]),
+      };
+      FONT = cs.getPropertyValue('--font-body').trim() || 'sans-serif';
+    }
+
+    let W = 1, H = 1;
+    let L = { R: 1, hx: 0, hy: 0, x0: 0, x1: 1, top: 0, gap: 1, portrait: false, er: 6.5, fs: 9, pos: [] as { x: number; y: number }[] };
+
+    function layout() {
+      const r = stage.getBoundingClientRect();
+      W = Math.max(1, r.width);
+      H = Math.max(1, r.height);
+      const DPR = Math.min(2, window.devicePixelRatio || 1);
+      cv!.width = Math.round(W * DPR);
+      cv!.height = Math.round(H * DPR);
+      ctx!.setTransform(DPR, 0, 0, DPR, 0, 0);
+      const portrait = W / H < 0.95;
+      let R, hx, hy, x0, x1, top, bot;
+      if (!portrait) {
+        R = Math.min(H * 0.33, W * 0.165);
+        hx = W * 0.05 + R * 1.25;
+        hy = H * 0.53;
+        x0 = hx + R * 1.25 + Math.max(70, W * 0.1);
+        x1 = W - Math.max(16, W * 0.04);
+        top = H * 0.1;
+        bot = H * 0.9;
+      } else {
+        R = Math.min(W * 0.28, H * 0.16);
+        hx = W * 0.5;
+        hy = H * 0.05 + R * 1.3;
+        x0 = Math.max(56, W * 0.16);
+        x1 = W - Math.max(16, W * 0.05);
+        top = hy + R * 1.25 + H * 0.07;
+        bot = H * 0.95;
+      }
+      const gap = (bot - top) / (NCH - 1);
+      L = {
+        R, hx, hy, x0, x1, top, gap, portrait,
+        er: Math.max(6.5, R * 0.082),
+        fs: Math.max(8, Math.min(11.5, gap * 0.62)),
+        pos: E.map((e) => ({ x: hx + e[1] * R, y: hy - e[2] * R })),
+      };
+    }
+
+    const rowY = (i: number) => L.top + i * L.gap;
+    // Synthetic signal: a sum of sines with an alpha-like posterior rhythm and frontal blink bumps.
+    function sig(ch: number, xn: number, t: number) {
+      const s = xn * 6 - t * 0.5;
+      const ph = ch * 1.37;
+      const post = ch >= 12 ? 1 : ch >= 7 ? 0.7 : 0.5;
+      const env = 0.6 + 0.4 * Math.sin(s * 0.9 + ph);
+      let v =
+        0.42 * post * env * Math.sin(s * TAU * 1.6 + ph) +
+        0.22 * Math.sin(s * TAU * 0.45 + ph * 2.1) +
+        0.12 * Math.sin(s * TAU * 3.7 + ph * 0.7) +
+        0.06 * Math.sin(s * TAU * 6.3 + ph * 1.9);
+      if (ch < 2) {
+        const f = s * 0.16 - Math.floor(s * 0.16) - 0.5;
+        v += 0.55 * Math.exp(-f * f * 260);
+      }
+      return v;
+    }
+    function bez(a: Pt, b: Pt, c: Pt, d: Pt, t: number): Pt {
+      const u = 1 - t;
+      return [
+        u * u * u * a[0] + 3 * u * u * t * b[0] + 3 * u * t * t * c[0] + t * t * t * d[0],
+        u * u * u * a[1] + 3 * u * u * t * b[1] + 3 * u * t * t * c[1] + t * t * t * d[1],
+      ];
+    }
+    function ctrl(i: number): [Pt, Pt, Pt, Pt] {
+      const e = L.pos[i];
+      const end: Pt = [L.x0 - 38, rowY(i)];
+      const p0: Pt = [e.x, e.y];
+      if (!L.portrait)
+        return [p0, [e.x + (end[0] - e.x) * 0.55, e.y], [end[0] - (end[0] - e.x) * 0.35, end[1]], end];
+      return [p0, [e.x, e.y + (end[1] - e.y) * 0.5], [end[0] - 24, end[1] - (end[1] - e.y) * 0.25], end];
+    }
+
+    function drawHead() {
+      const { R, hx, hy } = L;
+      const c = ctx!;
+      c.lineWidth = 1.4;
+      c.strokeStyle = rgba(C.ink, 0.85);
+      c.beginPath();
+      c.moveTo(hx - R * 0.13, hy - R * 0.992);
+      c.quadraticCurveTo(hx - R * 0.04, hy - R * 1.1, hx, hy - R * 1.14);
+      c.quadraticCurveTo(hx + R * 0.04, hy - R * 1.1, hx + R * 0.13, hy - R * 0.992);
+      c.stroke();
+      for (const s of [-1, 1]) {
+        c.beginPath();
+        c.ellipse(hx + s * R * 1.02, hy, R * 0.075, R * 0.19, 0, s < 0 ? Math.PI * 0.5 : -Math.PI * 0.5, s < 0 ? Math.PI * 1.5 : Math.PI * 0.5);
+        c.stroke();
+      }
+      c.fillStyle = rgba(C.surf, 1);
+      c.beginPath();
+      c.arc(hx, hy, R, 0, TAU);
+      c.fill();
+      c.stroke();
+      c.save();
+      c.setLineDash([2, 4]);
+      c.lineWidth = 0.8;
+      c.strokeStyle = rgba(C.ink, 0.22);
+      c.beginPath();
+      c.arc(hx, hy, R * 0.8, 0, TAU);
+      c.stroke();
+      c.beginPath();
+      c.moveTo(hx, hy - R);
+      c.lineTo(hx, hy + R);
+      c.moveTo(hx - R, hy);
+      c.lineTo(hx + R, hy);
+      c.stroke();
+      c.restore();
+    }
+
+    function draw(t: number) {
+      const c = ctx!;
+      c.fillStyle = rgba(C.bg, 1);
+      c.fillRect(0, 0, W, H);
+      const hl = Math.floor(t / 2.6) % NCH;
+      const hlA = Math.sin(Math.PI * ((t / 2.6) % 1));
+      // wires from electrodes to their trace rows, with a travelling sample
+      for (let i = 0; i < NCH; i++) {
+        const q = ctrl(i);
+        const on = i === hl;
+        c.strokeStyle = on ? rgba(C.acc, 0.25 + 0.5 * hlA) : rgba(C.sec, L.portrait ? 0.13 : 0.26);
+        c.lineWidth = on ? 1.3 : 0.9;
+        c.beginPath();
+        c.moveTo(q[0][0], q[0][1]);
+        c.bezierCurveTo(q[1][0], q[1][1], q[2][0], q[2][1], q[3][0], q[3][1]);
+        c.stroke();
+        c.fillStyle = rgba(C.sec, 0.6);
+        c.beginPath();
+        c.arc(q[3][0], q[3][1], 1.6, 0, TAU);
+        c.fill();
+        const ph = (t * 0.16 + i * 0.137) % 1;
+        const fade = Math.sin(Math.PI * ph);
+        for (let k = 0; k < 6; k++) {
+          const tt = ph - k * 0.014;
+          if (tt < 0) continue;
+          const p = bez(q[0], q[1], q[2], q[3], tt);
+          c.fillStyle = rgba(on ? C.acc : C.sec, (1 - k / 6) * 0.85 * fade);
+          c.beginPath();
+          c.arc(p[0], p[1], k === 0 ? 2.1 : 1.5, 0, TAU);
+          c.fill();
+        }
+      }
+      drawHead();
+      // electrodes
+      const er = L.er;
+      c.textAlign = 'center';
+      c.textBaseline = 'middle';
+      c.font = `600 ${Math.max(6.5, er * 0.78)}px ${FONT}`;
+      for (let i = 0; i < E.length; i++) {
+        const p0 = L.pos[i];
+        const ref = i >= NCH;
+        const on = i === hl;
+        if (on) {
+          c.fillStyle = rgba(C.acc, 0.14 * hlA);
+          c.beginPath();
+          c.arc(p0.x, p0.y, er * 1.9, 0, TAU);
+          c.fill();
+        }
+        c.fillStyle = ref ? rgba(C.surf2, 1) : on ? rgba(C.acc, 0.12 + 0.2 * hlA) : rgba(C.surf, 1);
+        c.strokeStyle = on ? rgba(C.acc, 1) : rgba(C.ink, ref ? 0.45 : 0.8);
+        c.lineWidth = on ? 1.6 : 1.1;
+        c.beginPath();
+        c.arc(p0.x, p0.y, er, 0, TAU);
+        c.fill();
+        c.stroke();
+        c.fillStyle = on ? rgba(C.acc, 1) : rgba(C.ink, ref ? 0.55 : 0.9);
+        c.fillText(E[i][0], p0.x, p0.y + 0.5);
+      }
+      // traces
+      const { x0, x1 } = L;
+      const span = x1 - x0;
+      const amp = L.gap * 0.42;
+      c.textAlign = 'left';
+      c.font = `500 ${L.fs}px ${FONT}`;
+      const step = span > 900 ? 2 : 1.5;
+      for (let i = 0; i < NCH; i++) {
+        const y0 = rowY(i);
+        const on = i === hl;
+        c.fillStyle = on ? rgba(C.acc, 1) : rgba(C.ink, 0.62);
+        c.fillText(E[i][0], x0 - 32, y0);
+        c.strokeStyle = rgba(C.ink, 0.07);
+        c.lineWidth = 1;
+        c.beginPath();
+        c.moveTo(x0, y0);
+        c.lineTo(x1, y0);
+        c.stroke();
+        c.strokeStyle = on ? rgba(C.acc, 0.55 + 0.45 * hlA) : rgba(C.ink, 0.72);
+        c.lineWidth = on ? 1.35 : 1;
+        c.beginPath();
+        for (let x = x0; x <= x1; x += step) {
+          const y = y0 - sig(i, (x - x0) / span, t) * amp;
+          if (x === x0) c.moveTo(x, y);
+          else c.lineTo(x, y);
+        }
+        c.stroke();
+      }
+      // fade the left edge of the traces into the background
+      const fw = Math.min(60, span * 0.12);
+      const g = c.createLinearGradient(x0, 0, x0 + fw, 0);
+      g.addColorStop(0, rgba(C.bg, 1));
+      g.addColorStop(1, rgba(C.bg, 0));
+      c.fillStyle = g;
+      c.fillRect(x0 - 1, L.top - L.gap, fw + 1, L.gap * (NCH + 1));
+      // unlabelled scale bar (the caption and aria-label carry the words)
+      const sbY = rowY(NCH - 1) + Math.max(16, L.gap * 1.1);
+      const secPx = Math.min(span / 12, span * 0.3);
+      if (sbY + 4 < H) {
+        c.strokeStyle = rgba(C.ink, 0.55);
+        c.lineWidth = 1.2;
+        c.beginPath();
+        c.moveTo(x1 - secPx, sbY);
+        c.lineTo(x1, sbY);
+        c.lineTo(x1, sbY - amp);
+        c.stroke();
+      }
+    }
+
+    let t = 4.2;
+    let raf = 0;
+    let running = false;
+    let last = 0;
+    let inView = false;
+    const frame = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000) || 0;
+      last = now;
+      t += dt;
+      draw(t);
+      raf = requestAnimationFrame(frame);
+    };
+    function start() {
+      if (running || RM.matches || document.hidden || !inView) return;
+      running = true;
+      last = performance.now();
+      raf = requestAnimationFrame(frame);
+    }
+    function stop() {
+      running = false;
+      cancelAnimationFrame(raf);
+    }
+    const redraw = () => {
+      layout();
+      draw(t);
+    };
+
+    readTokens();
+    redraw(); // first (static) frame, also the reduced-motion frame
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+    RM.addEventListener('change', () => {
+      if (RM.matches) {
+        stop();
+        draw(t);
+      } else start();
+    });
+    new IntersectionObserver((es) => {
+      inView = es.some((e) => e.isIntersecting);
+      if (inView) start();
+      else stop();
+    }).observe(stage);
+    new ResizeObserver(() => {
+      redraw();
+    }).observe(stage);
+    document.fonts?.ready.then(() => {
+      if (!running) draw(t);
+    });
+  }
+
+  const run = () => document.querySelectorAll<HTMLElement>('[data-nf-eeg]').forEach(mount);
+  if ('requestIdleCallback' in window) window.requestIdleCallback(run, { timeout: 2000 });
+  else setTimeout(run, 200);
+</script>

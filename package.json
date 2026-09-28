@@ -1,0 +1,26 @@
+{
+  "name": "neuroforgebio",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=22 <23"
+  },
+  "scripts": {
+    "lint": "node tools/dev/tasks.mjs lint",
+    "test": "node tools/dev/tasks.mjs test",
+    "fmt": "node tools/dev/tasks.mjs fmt",
+    "build:web": "pnpm --filter @nf/web build",
+    "build:web:clinical": "node tools/dev/tasks.mjs build-web clinical",
+    "build:web:cosmos": "node tools/dev/tasks.mjs build-web cosmos",
+    "test:web": "pnpm --filter @nf/web test",
+    "copy-lint": "node tools/copy-lint/cli.mjs",
+    "repo-guard": "node tools/repo-guard/cli.mjs"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": []
+  },
+  "devDependencies": {
+    "prettier": "3.9.9"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@nf/content",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "All website copy, the brand token and the content loader/validator.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./brand.json": "./brand.json"
+  },
+  "files": [
+    "brand.json",
+    "content",
+    "src"
+  ],
+  "scripts": {
+    "test": "node --experimental-strip-types --no-warnings --test \"test/*.test.mjs\""
+  },
+  "engines": {
+    "node": ">=22 <23"
+  }
+}

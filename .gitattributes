@@ -1,0 +1,21 @@
+# Force LF everywhere (autocrlf is on for some clones); binary types untouched.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.pdf binary
+*.edf binary
+*.bdf binary
+*.zip binary
+# Windows batch files need CRLF (cmd.exe label lookup)
+*.cmd text eol=crlf
+*.bat text eol=crlf
+# /arena WebAssembly: byte-exact (repo-guard hashes apps/web/src/assets/arena/pkg/ against security/arena-pkg.sha256).
+*.wasm binary

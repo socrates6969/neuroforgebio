@@ -1,0 +1,26 @@
+# Montana. market/regulation.md §1: the statute text was NOT opened. This rule is unverified and
+# has no predicate: the engine reports it as not evaluated, never as "not matched".
+schema: nf.jurisdiction-rules/v1
+jurisdiction: MT
+name: Montana
+rules:
+  - id: mt-sb-163-neural-data
+    title: Montana SB 163 (2025), neurotechnology data (statute text not opened)
+    instrument: SB 163 (2025)
+    status_text: >-
+      "adopted SB 163 in May 2025, a law aimed at protecting mental privacy via regulating specific
+      types of neurological data"
+    effective_date: null
+    citation:
+      source: Cabrera et al., Bioethics 2026, doi:10.1111/bioe.70062, PMC12797108
+      grade: A (secondary to the statute)
+      definition: null
+      research_ref: market/regulation.md §1 and "Open items"
+    predicate: null
+    obligations:
+      - id: sensitive_data_unverified
+        text: >-
+          Per the review cited above, extends consumer sensitive-data protections to
+          neurotechnology data. Not verified against the statute.
+    review_status: unverified
+    notes: Statute text not opened (legislature site is a JS app and LegiScan blocked).

@@ -1,0 +1,8 @@
+[
+  {
+    "term": "certified",
+    "phrase": "certified US recipients",
+    "reason": "EU-US Data Privacy Framework certification of third-party recipients; not a claim about us (nfb-legal draft privacy-policy.en.md, GDPR Chapter V transfers). Requested by nfb-web-sec 2026-09-26. Scoped to the privacy-policy pages; approved by nfb-security 2026-09-26.",
+    "paths": ["legal/privacy", "legal-website/privacy-policy"]
+  }
+]

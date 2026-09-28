@@ -1,0 +1,28 @@
+name: expr-injection
+on:
+  workflow_dispatch:
+    inputs:
+      x:
+        type: string
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ inputs.x }}"
+      - name: block scalar
+        run: |
+          echo start
+          echo "${{github.event.issue.title}}"
+      - name: folded scalar
+        run: >-
+          echo
+          ${{ github.head_ref }}
+      - name: env-mapped form is fine
+        env:
+          X: ${{ inputs.x }}
+          TITLE: ${{ github.event.issue.title }}
+        run: echo "$X $TITLE"
+      - name: other contexts are fine
+        run: echo "${{ matrix.theme }} ${{ github.ref }}"

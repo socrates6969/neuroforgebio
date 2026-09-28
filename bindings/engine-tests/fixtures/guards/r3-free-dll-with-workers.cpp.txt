@@ -1,0 +1,15 @@
+// Regression fixture for R3 (ENGINE-SDKS-REVIEW.md): freeing the DLL in ShutdownModule while a
+// UNeuroForgeStreamComponent worker thread may still be inside a native read (for example
+// nf_recording_read_f64) unmaps code a running thread is executing, which crashes. This file is
+// text only, read by review-guards.test.mjs to prove shutdownFreesDll() flags this pattern (and
+// finds no FreeDllHandle call in the real fix's ShutdownModule, which leaves the DLL loaded and
+// lets the OS release it at process exit).
+void FNeuroForgeModule::ShutdownModule()
+{
+	GAvailable = false;
+	if (DllHandle)
+	{
+		FPlatformProcess::FreeDllHandle(DllHandle);
+		DllHandle = nullptr;
+	}
+}

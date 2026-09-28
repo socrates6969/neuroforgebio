@@ -1,0 +1,10 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+  - 'tools/*'
+  # The SBOM scanner is isolated (APP-L5, nfb-security 2026-09-27): own lockfile, installed only in the
+  # SBOM CI steps with --ignore-scripts, never part of a developer install.
+  - '!tools/sbom-cdxgen'
+# Dependency lifecycle scripts (APP-L6): the allowlist is `pnpm.onlyBuiltDependencies` in the root
+# package.json, because pnpm 9 ignores onlyBuiltDependencies here. It is empty: no dependency needs its
+# install script (tools/repo-guard REVIEWED_UNBUILT). Changes need a security review.

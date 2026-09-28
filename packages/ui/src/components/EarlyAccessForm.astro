@@ -1,0 +1,29 @@
+---
+// Early-access form, rendered DISABLED until the endpoint and privacy policy exist (BUILD-GUIDE 4.7).
+// No action URL, no third-party form service.
+// Pass `labelledBy` (id of an existing heading) to render it without its own heading and body.
+interface Props { heading: string; body: string; emailLabel: string; emailPlaceholder: string; submitLabel: string; disabledNote: string; statusLabel?: string; labelledBy?: string }
+const { heading, body, emailLabel, emailPlaceholder, submitLabel, disabledNote, statusLabel, labelledBy } = Astro.props;
+---
+<form class="ea nf-card" aria-labelledby={labelledBy ?? 'ea-h'} aria-describedby="ea-note" data-disabled="true">
+  {!labelledBy && <h2 id="ea-h" set:html={heading} />}
+  {!labelledBy && <p class="body">{body}</p>}
+  <fieldset disabled>
+    <label for="ea-email">{emailLabel}</label>
+    <div class="row">
+      <input id="ea-email" name="email" type="email" autocomplete="email" placeholder={emailPlaceholder} />
+      <button class="nf-btn nf-btn--primary" type="submit">{submitLabel}</button>
+    </div>
+  </fieldset>
+  <p class="note" id="ea-note">{statusLabel && <strong>{statusLabel}: </strong>}{disabledNote}</p>
+</form>
+<style>
+  .ea { padding: 32px; max-width: 640px; }
+  .body { color: var(--color-muted); margin-top: 10px; }
+  fieldset { border: 0; padding: 0; margin: 20px 0 0; }
+  label { display: block; font: 500 13px var(--font-body); margin-bottom: 6px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  input { flex: 1 1 220px; min-width: 0; font: 400 15px var(--font-body); padding: 12px 14px; border-radius: var(--radius-card); border: 1px solid var(--color-line); background: var(--color-bg); color: var(--color-ink); }
+  fieldset[disabled] input, fieldset[disabled] button { opacity: .6; cursor: not-allowed; }
+  .note { margin-top: 12px; font: 400 12.5px/1.5 var(--font-mono); color: var(--color-muted); }
+</style>

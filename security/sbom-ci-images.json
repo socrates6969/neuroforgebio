@@ -1,0 +1,27 @@
+{
+  "$comment": "SEC-083: container images the SBOM generator does not discover, added to the repository SBOM by `sbom-props add --include` in ci.yml (job security). Each purl carries the digest pinned in services/platform/docker-compose.ci.yml (tools/sbom-props/test asserts they match). Support levels come from security/support-levels.json. bitnamilegacy/minio is approved for CI tests with synthetic data only and must be replaced before M5 closes (M2-REVIEW MinIO decision; docs/security/SEC-COVERAGE.md known gaps).",
+  "components": [
+    {
+      "type": "container",
+      "name": "bitnamilegacy/minio",
+      "version": "2025.7.23-debian-12-r5",
+      "purl": "pkg:oci/minio@sha256%3A6dabb4a2088c9a79908de3bc05f4586c23ad2182c8908e7e3acbf61c1467fb20?repository_url=docker.io/bitnamilegacy/minio&tag=2025.7.23-debian-12-r5",
+      "bom-ref": "ci-image:bitnamilegacy/minio",
+      "properties": [
+        { "name": "nfb:scope", "value": "ci-only" },
+        { "name": "nfb:source", "value": "services/platform/docker-compose.ci.yml" }
+      ]
+    },
+    {
+      "type": "container",
+      "name": "postgres",
+      "version": "16-alpine",
+      "purl": "pkg:oci/postgres@sha256%3A721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea?repository_url=docker.io/library/postgres&tag=16-alpine",
+      "bom-ref": "ci-image:postgres",
+      "properties": [
+        { "name": "nfb:scope", "value": "ci-only" },
+        { "name": "nfb:source", "value": "services/platform/docker-compose.ci.yml" }
+      ]
+    }
+  ]
+}

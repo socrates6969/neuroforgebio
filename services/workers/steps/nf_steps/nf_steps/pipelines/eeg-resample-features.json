@@ -1,0 +1,96 @@
+{
+  "schema": "nf.pipeline-version/v1",
+  "meta": {
+    "name": "eeg-resample-features",
+    "version": "1.0.0",
+    "description": "IIR band-pass, resample to 128 Hz, fixed-length 2 s epochs without baseline, relative band power."
+  },
+  "steps": [
+    {
+      "name": "bandpass",
+      "step": "nf_steps.filter@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": ["nf-step", "run"],
+      "params": {
+        "l_freq": 0.5,
+        "h_freq": 45.0,
+        "method": "iir",
+        "filter_length": "auto",
+        "l_trans_bandwidth": "auto",
+        "h_trans_bandwidth": "auto",
+        "phase": "zero",
+        "fir_window": "hamming",
+        "fir_design": "firwin",
+        "pad": "reflect_limited",
+        "iir_order": 4,
+        "iir_ftype": "butter"
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-9
+      }
+    },
+    {
+      "name": "resample",
+      "step": "nf_steps.resample@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": ["nf-step", "run"],
+      "params": {
+        "sfreq": 128.0,
+        "npad": "auto",
+        "window": "auto",
+        "method": "fft",
+        "pad": "auto"
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-9
+      }
+    },
+    {
+      "name": "epochs",
+      "step": "nf_steps.epochs@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": ["nf-step", "run"],
+      "params": {
+        "event_source": "fixed_length",
+        "event_codes": [],
+        "fixed_length_s": 2.0,
+        "tmin": 0.0,
+        "tmax": 1.9921875,
+        "baseline": null,
+        "detrend": null,
+        "decim": 1
+      },
+      "tolerance": {
+        "kind": "exact"
+      }
+    },
+    {
+      "name": "bandpower",
+      "step": "nf_steps.band_power@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": ["nf-step", "run"],
+      "params": {
+        "bands": [
+          ["delta", 1.0, 4.0],
+          ["theta", 4.0, 8.0],
+          ["alpha", 8.0, 13.0],
+          ["beta", 13.0, 30.0]
+        ],
+        "n_fft": 256,
+        "n_overlap": 64,
+        "n_per_seg": 128,
+        "window": "hamming",
+        "average": "mean",
+        "remove_dc": true,
+        "relative": true
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-9
+      }
+    }
+  ],
+  "seed": 7
+}

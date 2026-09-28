@@ -1,0 +1,100 @@
+{
+ "harness_now_vs_N2_run_card": {
+  "n_now": 17,
+  "n_ref": 17,
+  "mismatch": []
+ },
+ "harness_card_vs_N2_run_card": [],
+ "n1b_code_now_vs_card": [],
+ "n1b_code_card_vs_synthetic": [],
+ "prereg_now_eq_card": true,
+ "deviations_snapshot_sha_eq_card": true,
+ "card_hash": {
+  "run1_recomputed": "355d7d3020e1c49bd56d7f17b69cb327eac4f2a3375c371fea73cd77033e21d9",
+  "run2_recomputed": "355d7d3020e1c49bd56d7f17b69cb327eac4f2a3375c371fea73cd77033e21d9",
+  "run1_stored": "355d7d3020e1c49bd56d7f17b69cb327eac4f2a3375c371fea73cd77033e21d9",
+  "run2_stored": "355d7d3020e1c49bd56d7f17b69cb327eac4f2a3375c371fea73cd77033e21d9"
+ },
+ "N2_identity_vs_N2_results_json": {
+  "chb01": true,
+  "chb03": true,
+  "chb10": true
+ },
+ "verdict_json": {
+  "N1b": "FAIL",
+  "N1prime": "FAIL",
+  "steps": {
+   "1_tests": true,
+   "2_synthetic_dry_run": false,
+   "3_real_run_criteria": false,
+   "4_rerun_byte_identical": true
+  },
+  "N2": "not verifiable: code",
+  "run_criteria": {
+   "C3prime_i": true,
+   "C3prime_ii": true,
+   "N2_identity_byte_identical": true,
+   "NC-P_V1": true,
+   "NC-P_V2": true,
+   "NC-P_order_ok": true,
+   "PL-A_trip": false,
+   "PL-B_trip": false,
+   "PL-C_trip": true,
+   "hash_checks": true,
+   "segment_table_matches_prereg": true
+  }
+ }
+}
+NC-P True {'fA_up': 0.83999862762486, 'fA_lo': 0.01857967297277584, 'fE_up': 0.9953564778497419, 'fE_lo': 0.9999814291600744, 'n_ev': 23, 'n_deg': 7, 'n_wflag': 0} V1 True V2 True viol [] zeroTP_ev 14 flag99 11
+PL-A True {'fA_up': 3.28181939043598e-24, 'fA_lo': 1.0, 'fE_up': 0.012184526288655345, 'fE_lo': 0.9999999679989389, 'n_ev': 11, 'n_deg': 4, 'n_wflag': 0} V1 False V2 True viol [] zeroTP_ev 3 flag99 0
+order True [['draw_train_phantoms', 'fit_run_split', 'hash_scores_hyps', 'degeneracy_decided', 'draw_test_phantoms', 'seal_test_phantoms', 'score_observed', 'null_draws']]
+PL-A pairing True 0.24942854525879096
+PL-B {'fisher_up_recomputed': 0.5128983384039298, 'card': 0.5128983384039298, 'n_keep': 30, 'spec_all': True, 'tp_hist': [5, 8, 11, 5, 1], 'p_up_sorted': [0.029, 0.092, 0.096, 0.111, 0.111, 0.151, 0.175, 0.246, 0.272, 0.305, 0.31, 0.357, 0.368, 0.373, 0.394, 0.399, 0.432, 0.487, 0.656, 0.72, 0.726, 0.758, 0.83, 0.884, 0.954, 1.0, 1.0, 1.0, 1.0, 1.0]}
+{
+ "NC-P": {
+  "literal_fisher_up_T_E": 0.9953564778497419,
+  "incl_degenerate_as_p1": 0.9999827931176085,
+  "midp_fisher_up": 0.518044385386962,
+  "midp_fisher_lo": 0.7875404095955757,
+  "stouffer_up": 1.0,
+  "drop_zeroTP_INVALID_label_dependent": 0.12824902833387777,
+  "locked_arm_fisher_up": 0.9954355482885922,
+  "n_ev": 23,
+  "n_zeroTP_ev": 14
+ },
+ "PL-A": {
+  "literal_fisher_up_T_E": 0.012184526288655345,
+  "incl_degenerate_as_p1": 0.1138017165421666,
+  "midp_fisher_up": 0.00041442736728518407,
+  "midp_fisher_lo": 0.9970782465062659,
+  "stouffer_up": 0.9998755228393734,
+  "drop_zeroTP_INVALID_label_dependent": 0.0009042808818905654,
+  "locked_arm_fisher_up": 0.1485737778543819,
+  "n_ev": 11,
+  "n_zeroTP_ev": 3
+ },
+ "SYN-PL-A": {
+  "literal_fisher_up_T_E": 0.254741998614959,
+  "incl_degenerate_as_p1": 0.6787495519359343,
+  "midp_fisher_up": 0.010979614241840253,
+  "midp_fisher_lo": 0.9709061788011815,
+  "stouffer_up": 1.0,
+  "drop_zeroTP_INVALID_label_dependent": 0.0010800774446247878,
+  "locked_arm_fisher_up": 0.8142905364609603,
+  "n_ev": 11,
+  "n_zeroTP_ev": 7
+ },
+ "SYN-NC-P": {
+  "literal_fisher_up_T_E": 0.9999999999999994,
+  "incl_degenerate_as_p1": 1.0,
+  "midp_fisher_up": 0.7655201118047166,
+  "midp_fisher_lo": 0.9957236357978547,
+  "stouffer_up": 1.0,
+  "drop_zeroTP_INVALID_label_dependent": 0.0017174699083045784,
+  "locked_arm_fisher_up": 0.99999999827185,
+  "n_ev": 77,
+  "n_zeroTP_ev": 64
+ },
+ "PL-B_midp": 0.04854036950837954
+}
+PL-A per rep [('chb01', 0, 0.89, 20, 4, 14, 0.065), ('chb01', 1, 0.96, 14, 2, 12, 0.476), ('chb01', 2, 0.98, 12, 2, 10, 0.38), ('chb01', 3, 0.99, 9, 1, 8, 0.718), ('chb01', 4, 0.84, 15, 4, 9, 0.036), ('chb03', 0, 0.92, 9, 2, 7, 0.018), ('chb03', 1, 0.98, 0, 0, 0, 1.0), ('chb03', 2, 0.99, 0, 0, 0, 1.0), ('chb03', 3, 0.97, 4, 0, 4, 1.0), ('chb03', 4, 0.93, 1, 0, 1, 1.0), ('chb10', 0, 0.95, 5, 0, 5, 1.0), ('chb10', 1, 0.93, 9, 3, 6, 0.003), ('chb10', 2, 0.94, 5, 1, 4, 0.157), ('chb10', 3, 0.99, 0, 0, 0, 1.0), ('chb10', 4, 0.99, 0, 0, 0, 1.0)]

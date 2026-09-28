@@ -1,0 +1,34 @@
+---
+// Clinical SectionOrnament: numbered hairline (01, 02, ...) before a section eyebrow.
+// Decorative and aria-hidden. The number is CSS generated content from data-n, so both themes
+// render identical HTML text.
+import type { SlotContract } from '../../contract.ts';
+type Props = SlotContract['SectionOrnament'];
+const { index } = Astro.props;
+const n = typeof index === 'number' && index > 0 ? String(index).padStart(2, '0') : undefined;
+---
+
+<span class="nf-so" data-n={n} aria-hidden="true"></span>
+
+<style>
+  .nf-so {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 10px;
+    vertical-align: middle;
+    font: 500 11.5px/1 var(--font-mono);
+    letter-spacing: 0.08em;
+    color: var(--color-accent-ink);
+  }
+  .nf-so[data-n]::before {
+    content: attr(data-n);
+  }
+  .nf-so::after {
+    content: '';
+    display: inline-block;
+    width: 22px;
+    height: 1px;
+    background: var(--color-line);
+  }
+</style>

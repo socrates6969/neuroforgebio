@@ -1,0 +1,8 @@
+---
+const status = "live"; // frontmatter is code, not copy
+import Hero from '../components/Hero.astro';
+---
+<Hero title={t.hero.title} class={cond > 1 ? "a" : "b"} />
+<p>Versioned pipelines with provenance.</p>
+<p>{ok ? "Designed" : "Available now"}</p>
+<img src="/x.png" alt="A certified device" />

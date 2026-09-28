@@ -1,0 +1,30 @@
+# Opt-in pre-commit hooks (SEC-086). Nothing installs these automatically. See docs/security/pre-commit.md.
+#   uv tool install pre-commit   (or: pipx install pre-commit)
+#   pre-commit install           (per clone; `pre-commit uninstall` to remove)
+# The gitleaks hook builds gitleaks with Go; without Go, install the gitleaks binary and switch the id to
+# `gitleaks-system`. CI runs the same checks regardless (ci.yml: repo-guard + security jobs).
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: 83d9cd684c87d95d656c1458ef04895a7f1cbd8e # v8.30.1
+    hooks:
+      - id: gitleaks
+  - repo: local
+    hooks:
+      - id: repo-guard
+        name: repo-guard (secrets, neural recordings, files > 5 MB, dispatch-only workflows)
+        entry: node tools/repo-guard/cli.mjs
+        language: system
+        pass_filenames: false
+        always_run: true
+      - id: hw-guard
+        name: hw-guard (no stimulation/actuator API, inlet-only LSL; SEC-090/091)
+        entry: node tools/hw-guard/cli.mjs
+        language: system
+        pass_filenames: false
+        files: ^(proto|openapi|core|bindings|sdk)/
+      - id: ci-lint
+        name: ci-lint (SHA-pinned actions, frozen installs; SEC-080/089)
+        entry: node tools/ci-lint/cli.mjs
+        language: system
+        pass_filenames: false
+        files: ^\.github/workflows/

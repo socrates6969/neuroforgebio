@@ -1,0 +1,112 @@
+{
+  "order": 2,
+  "meta": {
+    "title": "C ABI · {brand}",
+    "description": "In development, not released: a stable C interface to the shared core for C, C++, Unity and Unreal. Written and tested on a feature branch, not merged."
+  },
+  "navLabel": "C ABI (in development)",
+  "eyebrow": "Docs · SDK",
+  "heading": "C ABI <em>(in development, not released).</em>",
+  "lede": "In development, not released: a stable C interface to the shared Rust core for C, C++, Unity and Unreal, with a header-only C++17 wrapper. It is written and tested on a feature branch and not merged, so there is nothing to install yet. This page summarises ABI version 1.2.0 as described in that branch's README and header.",
+  "status": "in-preparation",
+  "source": "bindings/c/README.md and bindings/c/include/{pkg}.h on branch feature/c-abi (commit 9b69b20, ABI 1.2.0, not yet on main); engine SDK status from branch feature/engine-sdks (commit 5db14b2).",
+  "sections": [
+    {
+      "id": "rules",
+      "heading": "Rules",
+      "body": [
+        "Every call returns an nf_status (NF_OK is 0) and sets a per-thread nf_last_error() on failure. Text and bytes come back in an nf_buf that you release with nf_buf_free; it is always NUL-terminated. Each handle has one constructor and one nf_*_free. Nothing panics across the boundary.",
+        "The library is compatible with the header when the major part of nf_abi_version() equals NF_ABI_VERSION_MAJOR and its minor part is at least NF_ABI_VERSION_MINOR. A breaking change bumps the major version.",
+        "Source: bindings/c/README.md and include/{pkg}.h (feature/c-abi, 9b69b20)."
+      ]
+    },
+    {
+      "id": "exposed",
+      "heading": "What is exposed (ABI 1.2)",
+      "body": [
+        "The contract of every function is written in the comments of the C header.",
+        "Source: bindings/c/README.md, \"What is exposed (ABI 1.2)\", and include/{pkg}.h (feature/c-abi, 9b69b20)."
+      ],
+      "items": [
+        {
+          "heading": "Version, errors, memory",
+          "body": "nf_abi_version, nf_core_version, nf_status_name, nf_last_error, nf_last_error_detail, nf_buf_free, dtype helpers."
+        },
+        {
+          "heading": "Hashing spec v1 and v2",
+          "body": "Canonical JSON, number formatting, blob, pipeline-version, chunk and provenance-batch IDs, chain verification, and the spec v2 hashes."
+        },
+        {
+          "heading": "Signature verification",
+          "body": "Ed25519 checks of stream chunks, device tokens, provenance-batch signatures, anchors and certificates."
+        },
+        {
+          "heading": "Local recordings",
+          "body": "Read-only: open, channel names and units, raw samples, physical values in double precision, timestamps. One read returns at most 1 GiB (2^30 bytes) of stored data; a larger range is rejected before anything is allocated."
+        },
+        {
+          "heading": "Chunk cache",
+          "body": "Read-only, hash-verified access to cached chunks."
+        },
+        {
+          "heading": "Provenance recorder",
+          "body": "Record, read the chain head, list pending batches, mark them synced."
+        },
+        {
+          "heading": "Streaming",
+          "body": "Device keys and tokens, the write-ahead buffer, the stream writer and the sender. Since ABI 1.2, nf_wal_open needs a persistent key (from an OS keystore, or a DPAPI-sealed file on Windows); nf_wal_open_ephemeral, with a key that dies with the process, is for tests only."
+        },
+        {
+          "heading": "API client",
+          "body": "Base-URL checks, requests and responses over a caller-supplied HTTP stack."
+        }
+      ]
+    },
+    {
+      "id": "transports",
+      "heading": "Bring your own network stack",
+      "body": [
+        "Transports (gRPC for ingest, HTTP for the API) and token stores are supplied by the caller as C callback tables (nf_ingest_transport, nf_http_transport, nf_token_source), so each engine uses its own network stack.",
+        "Not exposed, on purpose: anything that sends data or instructions to acquisition hardware, writing recordings or cache entries, raw signing and key export, raw write-ahead-log access, and the hashing-spec payload builders.",
+        "Source: bindings/c/README.md (feature/c-abi, 9b69b20)."
+      ]
+    },
+    {
+      "id": "build",
+      "heading": "Libraries and tests",
+      "body": [
+        "Builds produce a shared and a static library: a DLL with its import library and a static .lib with MSVC, a .so or .dylib and a static .a on Linux and macOS.",
+        "Rust tests recompute every frozen hashing test vector through the exported functions and cover NULL and error paths, recordings, the cache, provenance, streaming against a fake ingest server and the API client against a fake HTTP stack. A C test repeats the vectors, error paths, NULL safety and memory round-trips, and a C++ test covers the wrapper.",
+        "Source: bindings/c/README.md, \"Build\" and \"Tests\" (feature/c-abi, 9b69b20)."
+      ]
+    },
+    {
+      "id": "pending",
+      "heading": "Pending: ABI 1.2.1",
+      "body": [
+        "Further hardening is planned for ABI 1.2.1 and is not in 1.2.0: a stricter transport contract and caps on reply sizes (the engine transport code already refers to a 64 MiB reply ceiling of 1.2.1).",
+        "Source: bindings/transport-conformance/winhttp/include/nf_winhttp_transport.hpp (feature/engine-sdks, 5db14b2); lead review, 2026-09-27."
+      ]
+    },
+    {
+      "id": "engines",
+      "heading": "Unity and Unreal SDKs",
+      "body": [
+        "The engine SDKs are built on this C ABI (version 1.2). Recording reads are split into native calls of at most 64 MiB, under the 1 GiB cap, and opening the write-ahead buffer requires a persistent key. Neither SDK has a device-control or stimulation API.",
+        "Source: bindings/unity/README.md and bindings/unreal/DESIGN.md (feature/engine-sdks, 5db14b2)."
+      ],
+      "items": [
+        {
+          "heading": "Unity (C# package)",
+          "body": "In development, not released. The C# code is written against C ABI 1.2 but has not been compiled or run yet; its test suite is written but not run.",
+          "status": "in-preparation"
+        },
+        {
+          "heading": "Unreal (plugin)",
+          "body": "In development, not released. Its engine-free C++ core is compiled with MSVC and unit-tested; the Unreal module itself is written but not yet compiled in the editor.",
+          "status": "in-preparation"
+        }
+      ]
+    }
+  ]
+}

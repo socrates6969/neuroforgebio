@@ -1,0 +1,87 @@
+---
+// Primary navigation with a disclosure-style mobile menu (state logic: ../lib/menu.ts).
+// Without JS the links stay visible (wrapped) on small screens; the script enables collapsing.
+import type { UiCta, UiLink, StatusLabels } from '../types.ts';
+import Button from './Button.astro';
+import StatusPill from './StatusPill.astro';
+interface Props {
+  homeHref?: string; homeLabel: string; navLabel: string; items: UiLink[]; cta?: UiCta;
+  menuOpenLabel: string; menuCloseLabel: string; current?: string; statusLabels: StatusLabels;
+  /** lang of the menu items when it differs from the page (English nav on a Norwegian page). */
+  itemsLang?: string;
+}
+const { homeHref = '/', homeLabel, navLabel, items, cta, menuOpenLabel, menuCloseLabel, current = '', statusLabels, itemsLang } = Astro.props;
+const norm = (s: string) => s.replace(/\/+$/, '');
+const isCurrent = (href: string) => href !== '/' && (norm(current) === norm(href) || norm(current).startsWith(norm(href) + '/'));
+---
+<header class="site">
+  <div class="nf-wrap">
+    <nav class="nav" aria-label={navLabel} data-nf-nav>
+      <a class="brand" href={homeHref} aria-label={homeLabel}><slot name="brand" /></a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nf-navlist"
+        data-open-label={menuOpenLabel} data-close-label={menuCloseLabel}>{menuOpenLabel}</button>
+      <div class="menu" id="nf-navlist" lang={itemsLang}>
+        <ul>
+          {items.map((it) => (
+            <li>{it.status
+              ? <span class="soon">{it.label} <StatusPill status={it.status} label={statusLabels[it.status]} /></span>
+              : <a href={it.href} aria-current={isCurrent(it.href) ? 'page' : undefined}>{it.label}</a>}</li>
+          ))}
+        </ul>
+        {cta && <div class="right"><Button cta={cta} /></div>}
+      </div>
+    </nav>
+    <slot name="lang" />
+  </div>
+</header>
+<script>
+  import { reduceMenu, type MenuState } from '../lib/menu.ts';
+  for (const nav of document.querySelectorAll<HTMLElement>('[data-nf-nav]')) {
+    const btn = nav.querySelector<HTMLButtonElement>('.menu-btn');
+    if (!btn) continue;
+    nav.classList.add('enh');
+    let state: MenuState = { open: false };
+    const mq = window.matchMedia('(min-width: 961px)');
+    const apply = (next: MenuState, focusToggle: boolean) => {
+      state = next;
+      nav.classList.toggle('open', state.open);
+      btn.setAttribute('aria-expanded', String(state.open));
+      btn.textContent = (state.open ? btn.dataset.closeLabel : btn.dataset.openLabel) ?? '';
+      if (focusToggle) btn.focus();
+    };
+    const run = (t: { state: MenuState; focusToggle: boolean }) => {
+      if (t.state !== state || t.focusToggle) apply(t.state, t.focusToggle);
+    };
+    btn.addEventListener('click', () => run(reduceMenu(state, { type: 'toggle' })));
+    nav.addEventListener('keydown', (e) => run(reduceMenu(state, { type: 'key', key: e.key })));
+    nav.addEventListener('focusout', (e) => {
+      const to = e.relatedTarget;
+      run(reduceMenu(state, { type: 'focusout', insideMenu: to === null || (to instanceof Node && nav.contains(to)) }));
+    });
+    mq.addEventListener('change', () => run(reduceMenu(state, { type: 'resize', desktop: mq.matches })));
+  }
+</script>
+<style>
+  header.site > .nf-wrap { display: flex; align-items: center; gap: 16px; }
+  header.site .nav { flex: 1; min-width: 0; }
+  header.site { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--color-bg) 92%, transparent); backdrop-filter: saturate(1.2) blur(8px); border-bottom: 1px solid var(--color-line); }
+  .nav { display: flex; align-items: center; gap: 28px; min-height: 64px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--color-ink); font-weight: 600; letter-spacing: -.01em; font-size: 17px; white-space: nowrap; }
+  .menu { display: flex; align-items: center; gap: 28px; flex: 1; }
+  .menu ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0; padding: 0; }
+  .menu ul a, .soon { color: var(--color-muted); text-decoration: none; font-size: 14.5px; }
+  .menu ul a:hover, .menu ul a[aria-current="page"] { color: var(--color-ink); }
+  .right { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+  .right :global(.nf-btn) { padding: 10px 16px; font-size: 14px; }
+  .menu-btn { display: none; margin-left: auto; background: none; border: 1px solid var(--color-line); border-radius: var(--radius-card); padding: 8px 10px; font: 500 13px var(--font-mono); color: var(--color-ink); cursor: pointer; }
+  @media (max-width: 960px) {
+    .menu { flex-basis: 100%; flex-wrap: wrap; padding-bottom: 12px; }
+    .nav.enh .menu { display: none; }
+    .nav.enh .menu-btn { display: block; }
+    .nav.enh.open { padding: 14px 0; }
+    .nav.enh.open .menu { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+    .nav.enh.open .menu ul { flex-direction: column; gap: 0; }
+    .nav.enh.open .menu ul a, .nav.enh.open .soon { display: block; padding: 10px 0; border-top: 1px solid var(--color-line); }
+    .nav.enh.open .right { margin: 8px 0 4px; }
+  }
+</style>

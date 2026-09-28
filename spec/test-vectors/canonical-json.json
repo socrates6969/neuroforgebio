@@ -1,0 +1,121 @@
+{
+  "spec": "docs/spec/hashing.md \u00a73",
+  "cases": [
+    {
+      "name": "sort-keys-nested",
+      "note": "keys sorted at every level",
+      "input": "{\"b\":1,\"a\":2,\"c\":{\"z\":null,\"y\":[true,false]}}",
+      "canonical": "{\"a\":2,\"b\":1,\"c\":{\"y\":[true,false],\"z\":null}}",
+      "sha256": "4dae5a2c79ea51015c54e6c52bfa55020a94cbd6946fde3e5ef7251846d73fba"
+    },
+    {
+      "name": "whitespace",
+      "note": "insignificant whitespace removed",
+      "input": " {\n \"a\" : [ 1 , 2 ] ,\t\"b\":\"x y\" } ",
+      "canonical": "{\"a\":[1,2],\"b\":\"x y\"}",
+      "sha256": "7cbf9a1925627414ac77c5981864910898c7d4e7bfcb7a1f141c20abf7bd66df"
+    },
+    {
+      "name": "rfc8785-sort-order",
+      "note": "RFC 8785 \u00a73.2.3 example without U+FB33: UTF-16 code-unit order",
+      "input": "{\"\\u20ac\":\"Euro Sign\",\"\\r\":\"Carriage Return\",\"1\":\"One\",\"\\ud83d\\ude00\":\"Emoji: Grinning Face\",\"\\u0080\":\"Control\",\"\\u00f6\":\"Latin Small Letter O With Diaeresis\"}",
+      "canonical": "{\"\\r\":\"Carriage Return\",\"1\":\"One\",\"\u0080\":\"Control\",\"\u00f6\":\"Latin Small Letter O With Diaeresis\",\"\u20ac\":\"Euro Sign\",\"\ud83d\ude00\":\"Emoji: Grinning Face\"}",
+      "sha256": "9044f6b34e92c276de1aebc14fb1fcffa77bee065f936a90baa026a76d68d43f"
+    },
+    {
+      "name": "nfc-value",
+      "note": "e + U+0301 becomes U+00E9",
+      "input": "{\"name\":\"Caf\\u0065\\u0301\"}",
+      "canonical": "{\"name\":\"Caf\u00e9\"}",
+      "sha256": "659906f125d844f7081786e4a1cba739414e49a9b9061d80ce09c691b5f56602"
+    },
+    {
+      "name": "nfc-key",
+      "note": "A + U+030A becomes U+00C5",
+      "input": "{\"\\u0041\\u030a\":1}",
+      "canonical": "{\"\u00c5\":1}",
+      "sha256": "3511e6515fb12a08ba57db370f587800037cc69c6c255bac9e16fbcba6de497f"
+    },
+    {
+      "name": "nfc-composition-exclusion",
+      "note": "U+FB33 decomposes to U+05D3 U+05BC under NFC",
+      "input": "{\"\\ufb33\":\"x\"}",
+      "canonical": "{\"\u05d3\u05bc\":\"x\"}",
+      "sha256": "8f528fd0efe718be49c05559d6730c90faf9636efce00291fc0f2a2b16359538"
+    },
+    {
+      "name": "string-escapes",
+      "note": "short escapes; other controls as \\u00xx; '/', DEL, U+2028, non-ASCII literal",
+      "input": "\"\\u0000\\u001f\\b\\f\\n\\r\\t\\\"\\\\\\/\\u007f\\u2028\\u00e9\"",
+      "canonical": "\"\\u0000\\u001f\\b\\f\\n\\r\\t\\\"\\\\/\u007f\u2028\u00e9\"",
+      "sha256": "75debbbd45fc728929946c60a89245d4971a9aab53140a4f8ca68b1345c1afdd"
+    },
+    {
+      "name": "numbers",
+      "note": "RFC 8785 number form",
+      "input": "[1.0,-0,0.0,1e21,1E-7,100,123456789012345,0.1,-2.5e-3,9007199254740991]",
+      "canonical": "[1,0,0,1e+21,1e-7,100,123456789012345,0.1,-0.0025,9007199254740991]",
+      "sha256": "1c2aa4947886e1f4111a08395e71a9ccf4feecd03b54e126d8aed2c32b963070"
+    },
+    {
+      "name": "empty-containers",
+      "note": "empty object, array, string",
+      "input": "{\"a\":{},\"b\":[],\"c\":\"\"}",
+      "canonical": "{\"a\":{},\"b\":[],\"c\":\"\"}",
+      "sha256": "e052004170cc85d084722ffe760c499548014bfdbdf5275548b688255770dfc2"
+    },
+    {
+      "name": "array-order-kept",
+      "note": "arrays are not sorted",
+      "input": "[3,1,2,[\"b\",\"a\"]]",
+      "canonical": "[3,1,2,[\"b\",\"a\"]]",
+      "sha256": "02e209760efb252dcc2451da40a8453bc5c1cd7ceef162e4f82cdb0329448eee"
+    },
+    {
+      "name": "utf8-literal",
+      "note": "non-ASCII is emitted as UTF-8",
+      "input": "\"\\u65e5\\u672c\\u8a9e \\ud83e\\udde0\"",
+      "canonical": "\"\u65e5\u672c\u8a9e \ud83e\udde0\"",
+      "sha256": "ef2dcd10716441f54affde89a7e95c12fe36583ee8c3e0a460688f0b517e2f88"
+    },
+    {
+      "name": "literals",
+      "note": "literals",
+      "input": "[null,true,false]",
+      "canonical": "[null,true,false]",
+      "sha256": "37257214f22b92121c5ff4d7e29ed2d31b3f1129ee698e96e581ec05cb2e3cf7"
+    }
+  ],
+  "errors": [
+    {
+      "name": "duplicate-key",
+      "note": "duplicate key",
+      "input": "{\"a\":1,\"a\":2}"
+    },
+    {
+      "name": "duplicate-after-nfc",
+      "note": "keys equal after NFC",
+      "input": "{\"\\u00e9\":1,\"e\\u0301\":2}"
+    },
+    {
+      "name": "unsafe-integer",
+      "note": "integer literal above 2^53-1",
+      "input": "9007199254740992"
+    },
+    {
+      "name": "nan",
+      "note": "NaN is not JSON",
+      "input": "NaN"
+    },
+    {
+      "name": "infinity",
+      "note": "Infinity is not JSON",
+      "input": "[Infinity]"
+    },
+    {
+      "name": "lone-surrogate",
+      "note": "lone surrogate",
+      "input": "\"\\ud800\""
+    }
+  ]
+}

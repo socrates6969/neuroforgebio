@@ -1,0 +1,3 @@
+# One compile job at a time: the dev PC has ~3 GB free RAM (BRIEF.md). CI may override with CARGO_BUILD_JOBS.
+[build]
+jobs = 1

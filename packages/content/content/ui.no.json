@@ -1,0 +1,32 @@
+{
+  "statusLabels": {
+    "designed": "Designet",
+    "planned": "Planlagt",
+    "roadmap": "Veikart",
+    "in-preparation": "Under arbeid"
+  },
+  "buildStateLabels": {
+    "built-internal": "Bygget, testet internt"
+  },
+  "statusPill": "Status:",
+  "brandHomeLabel": "{brand}, forside",
+  "skipLink": "Hopp til innholdet",
+  "primaryNav": "Hovedmeny",
+  "footerNav": "Bunntekst",
+  "menuOpenLabel": "Åpne meny",
+  "menuCloseLabel": "Lukk meny",
+  "securityVisual": "Illustrasjon av databeskyttelse i flere lag: kryptering, tilgangsstyring og revisjonslogg.",
+  "languageSwitch": {
+    "label": "Språk",
+    "names": { "en": "English", "no": "Norsk" }
+  },
+  "legal": {
+    "heading": "Juridisk",
+    "privacy": "Personvernerklæring",
+    "terms": "Vilkår for bruk av nettstedet",
+    "cookies": "Erklæring om informasjonskapsler (cookies)",
+    "company": "Selskapsinformasjon"
+  },
+  "draftLabel": "Utkast",
+  "citation": "BibTeX-referanse"
+}

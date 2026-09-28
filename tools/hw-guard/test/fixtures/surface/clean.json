@@ -1,0 +1,24 @@
+{
+  "openapi": "3.1.0",
+  "info": { "description": "No stimulation or command surface exists (prose is not a name)." },
+  "paths": {
+    "/v1/recordings/{recording_id}/data": {
+      "get": {
+        "operationId": "readRecordingData",
+        "x-nf-action": "signal:read",
+        "parameters": [{ "name": "event_label", "in": "query", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "ok" } }
+      }
+    }
+  },
+  "webhooks": { "runFinished": { "post": { "responses": { "2XX": { "description": "ok" } } } } },
+  "components": {
+    "schemas": {
+      "Annotation": {
+        "type": "object",
+        "properties": { "annotation_text": { "type": "string" }, "event_onset_s": { "type": "number" } }
+      }
+    }
+  },
+  "x-nf-grpc": { "methods": ["StreamChunks", "GetStreamState", "FinishStream"] }
+}

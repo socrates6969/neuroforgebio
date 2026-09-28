@@ -1,0 +1,14 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [
+    ".astro/types.d.ts",
+    "src/**/*",
+    "../../packages/ui/src/**/*",
+    "../../packages/figures/src/**/*"
+  ],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "paths": { "@theme/*": ["../../packages/themes/clinical/*"] }
+  }
+}

@@ -1,0 +1,37 @@
+// Regression fixture for G2 (nfb-engine, chunked recording reads, 9b5a861): MaxStoredBytesPerCall
+// has no upper bound, and ReadRaw hands the whole request to a single native call instead of
+// splitting it into pieces no larger than the cap. The native core refuses a single read over
+// 1 GiB (ABI 1.2 hardening), so an unbounded caller-supplied value (or a huge `count`) makes the
+// native call fail outright instead of transparently paging through the recording. This file is
+// text only, read by review-guards.test.mjs to prove maxStoredBytesCapped() and readIsChunked()
+// both flag this pattern (and find the 1 GiB cap and the chunked loop in the real fix in
+// Recording.cs).
+namespace NeuroForge
+{
+    public sealed unsafe class Recording
+    {
+        private int _maxStoredBytesPerCall = 64 << 20;
+
+        public int MaxStoredBytesPerCall
+        {
+            get => _maxStoredBytesPerCall;
+            set
+            {
+                if (value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
+                _maxStoredBytesPerCall = value;
+            }
+        }
+
+        public int ReadRaw(long start, int count, Span<byte> dest)
+        {
+            int rows = RowsAvailable(start, count);
+            if (rows == 0) return 0;
+            int need = checked(rows * ChannelCount * ItemSize);
+            fixed (byte* d = dest)
+            {
+                Interop.Check(NativeMethods.nf_recording_read(_h, (ulong)start, (ulong)(start + rows), d, Interop.Size(need), out UIntPtr got));
+            }
+            return rows;
+        }
+    }
+}

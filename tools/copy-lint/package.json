@@ -1,0 +1,13 @@
+{
+  "name": "@nf/copy-lint",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Zero-dependency copy linter for banned status/medical/compliance terms (BLUEPRINT §2.6, §10).",
+  "bin": {
+    "copy-lint": "cli.mjs"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\""
+  }
+}

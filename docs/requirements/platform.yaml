@@ -1,0 +1,176 @@
+# Versioned requirements for the FDA Evidence Kit traceability matrix (BUILD-GUIDE 5.8,
+# BLUEPRINT §8.6). SCAFFOLD, NOT A SUBMISSION.
+#
+# Every requirement has an ID, a title, its source (BUILD-GUIDE step and/or SEC row) and either
+# >= 1 linked test or a `flag` that says why it has none. Test IDs:
+#   - pytest node IDs:   services/platform/tests/<dir>/<file>.py::<test function>
+#   - node:test cases:   node:<path to .mjs>::<exact test name>
+# The kit maps each test to its CI result (JUnit XML). Tests check that every linked test exists
+# (services/platform/tests/evidence/test_evidence_kit.py).
+schema: nf.requirements/v1
+component: nf-platform
+requirements:
+  - id: REQ-AUTH-001
+    title: Deny by default; every API route declares a reviewed action
+    source: BUILD-GUIDE 2.2; SEC-020
+    tests:
+      - services/platform/tests/core/test_core_authz_matrix.py::test_every_route_is_mapped
+      - services/platform/tests/core/test_core_authz_matrix.py::test_route_enumeration_catches_an_unmapped_route
+      - services/platform/tests/core/test_core_authz_matrix.py::test_matrix
+  - id: REQ-AUTH-002
+    title: Admin-class roles act only with phishing-resistant authentication
+    source: SEC-011
+    tests:
+      - services/platform/tests/core/test_core_authz_matrix.py::test_admin_roles_without_phishing_resistant_mfa_get_403_everywhere
+      - services/platform/tests/core/test_core_oidc.py::test_amr_phishing_resistance
+  - id: REQ-AUTH-003
+    title: OIDC tokens are accepted only with the IdP's asymmetric keys (no alg none, no HMAC)
+    source: BUILD-GUIDE 2.2
+    tests:
+      - services/platform/tests/core/test_core_oidc.py::test_alg_none_and_hmac_confusion_rejected
+      - services/platform/tests/core/test_core_oidc.py::test_wrong_signing_key
+  - id: REQ-AUTH-004
+    title: API keys are scoped, expire, and cannot carry admin-class roles
+    source: SEC-014
+    tests:
+      - services/platform/tests/core/test_core_api_keys.py::test_wrong_scope_is_403
+      - services/platform/tests/core/test_core_api_keys.py::test_expired_key_is_401
+      - services/platform/tests/core/test_core_api_keys.py::test_admin_class_roles_cannot_be_delegated
+  - id: REQ-TEN-001
+    title: Tenant isolation in the database (RLS) and the API
+    source: SEC-021
+    tests:
+      - services/platform/tests/core/test_core_tenant_isolation.py::test_rls_hides_other_tenant_rows
+      - services/platform/tests/core/test_core_tenant_isolation.py::test_api_other_tenant_objects_are_404
+  - id: REQ-AUD-001
+    title: Every data read is audited
+    source: BUILD-GUIDE 2.8
+    tests:
+      - services/platform/tests/core/test_core_audit.py::test_every_data_read_route_emits_an_event
+  - id: REQ-AUD-002
+    title: The audit log is append-only and its hourly batches are hash-chained
+    source: BUILD-GUIDE 2.8; SEC-103
+    tests:
+      - services/platform/tests/core/test_core_audit.py::test_audit_table_is_append_only_even_for_the_owner
+      - services/platform/tests/core/test_core_audit.py::test_modified_batch_fails_verification
+  - id: REQ-AUD-003
+    title: No credentials reach audit rows or logs
+    source: SEC-147
+    tests:
+      - services/platform/tests/core/test_core_audit.py::test_no_credentials_in_audit_rows_or_logs
+      - services/platform/tests/core/test_core_audit.py::test_event_with_secret_is_rejected
+  - id: REQ-ING-001
+    title: An upload whose bytes do not match the declared SHA-256 is rejected
+    source: BUILD-GUIDE 2.6
+    tests:
+      - services/platform/tests/ingest/test_uploads.py::test_hash_mismatch_rejects_the_upload
+  - id: REQ-ING-002
+    title: Non-production environments and synthetic-only tenants accept synthetic data only
+    source: SEC-071
+    tests:
+      - services/platform/tests/ingest/test_uploads.py::test_sec071_synthetic_only
+  - id: REQ-PROV-001
+    title: Provenance records are tamper-evident (signed chain + WORM anchor)
+    source: BUILD-GUIDE 3.1
+    tests:
+      - services/platform/tests/provenance/test_prov_tamper.py::test_tampering_fails_verification
+      - services/platform/tests/provenance/test_prov_tamper.py::test_removed_tail_is_caught_by_the_worm_anchor
+  - id: REQ-PROV-002
+    title: Lineage exports as PROV-JSON that validates, and every export is audited
+    source: BUILD-GUIDE 3.7
+    tests:
+      - services/platform/tests/provenance/test_prov_export.py::test_prov_json_validates_with_the_prov_library
+      - services/platform/tests/provenance/test_prov_export.py::test_export_is_audited_and_invalid_format_rejected
+  - id: REQ-PROV-003
+    title: Provenance of one tenant is invisible to another
+    source: BUILD-GUIDE 3.1; SEC-021
+    tests:
+      - services/platform/tests/provenance/test_prov_api.py::test_two_tenant_isolation
+  - id: REQ-PIPE-001
+    title: PipelineVersions are content-addressed and immutable once published
+    source: BUILD-GUIDE 3.2
+    tests:
+      - services/platform/tests/pipelines/test_pipelines_spec.py::test_frozen_vectors
+      - services/platform/tests/pipelines/test_pipelines_spec.py::test_publish_is_immutable_and_idempotent
+  - id: REQ-JOB-001
+    title: A killed worker's job is retried by another worker without duplicate outputs
+    source: BUILD-GUIDE 3.3
+    tests:
+      - services/platform/tests/jobs/test_jobs_kill.py::test_killed_worker_is_retried_by_another_without_duplicate_outputs
+  - id: REQ-JOB-002
+    title: Run outputs stay invisible until their provenance commit succeeds
+    source: BUILD-GUIDE 3.3
+    tests:
+      - services/platform/tests/jobs/test_jobs_runs.py::test_outputs_invisible_until_provenance_commit_succeeds
+  - id: REQ-GOV-001
+    title: Classification by the RuleSet never reports "not regulated"
+    source: BUILD-GUIDE 5.2
+    tests:
+      - services/platform/tests/governance/test_gov_rules.py::test_classification_table
+      - services/platform/tests/governance/test_gov_rules.py::test_api_never_says_not_regulated
+  - id: REQ-GOV-002
+    title: A changed rule needs a new RuleSet version and content hash
+    source: BUILD-GUIDE 5.2
+    tests:
+      - services/platform/tests/governance/test_gov_rules.py::test_rule_change_without_new_version_hash_is_refused
+  - id: REQ-GOV-003
+    title: The consent ledger is append-only and hash-chained
+    source: BUILD-GUIDE 5.3
+    tests:
+      - services/platform/tests/governance/test_gov_consent.py::test_update_delete_truncate_rejected_at_db_level
+      - services/platform/tests/governance/test_gov_consent.py::test_chain_verification_detects_a_modified_row
+  - id: REQ-GOV-004
+    title: One policy function gates every data-touching route and fails closed
+    source: BUILD-GUIDE 5.4; SEC-024; SEC-026
+    tests:
+      - services/platform/tests/governance/test_gov_policy.py::test_every_data_touching_route_calls_the_policy
+      - services/platform/tests/governance/test_gov_policy.py::test_policy_matrix
+      - services/platform/tests/governance/test_gov_policy.py::test_fail_closed_reveals_nothing
+  - id: REQ-GOV-005
+    title: A consent withdrawal propagates deletion through the lineage and yields a signed certificate
+    source: BUILD-GUIDE 5.5
+    tests:
+      - services/platform/tests/governance/test_gov_deletion.py::test_withdrawal_propagates_shreds_and_certifies
+  - id: REQ-GOV-006
+    title: phi=true tenants are placed only on BAA-listed services
+    source: BUILD-GUIDE 5.7
+    tests:
+      - services/platform/tests/governance/test_gov_phi_placement.py::test_phi_tenant_is_refused_on_non_listed_services
+      - services/platform/tests/governance/test_gov_phi_placement.py::test_phi_true_cannot_be_placed_on_the_env_services
+  - id: REQ-EVD-001
+    title: The FDA Evidence Kit regenerates byte-identically from the same inputs
+    source: BUILD-GUIDE 5.8
+    tests:
+      - services/platform/tests/evidence/test_evidence_kit.py::test_kit_regenerates_byte_identically
+  - id: REQ-EVD-002
+    title: Every requirement has at least one linked test or is flagged
+    source: BUILD-GUIDE 5.8
+    tests:
+      - services/platform/tests/evidence/test_evidence_kit.py::test_every_requirement_has_a_linked_test_or_is_flagged
+  - id: REQ-EVD-003
+    title: The evidence export is tenant-isolated, authorized, policy-checked and audited
+    source: BUILD-GUIDE 5.8; SEC-020; SEC-021
+    tests:
+      - services/platform/tests/evidence/test_evidence_kit.py::test_two_tenant_isolation
+      - services/platform/tests/evidence/test_evidence_kit.py::test_export_is_audited_and_policy_checked
+  - id: REQ-SBOM-001
+    title: Every CI SBOM component carries support-level and end-of-support properties
+    source: SEC-083
+    tests:
+      - "node:tools/sbom-props/test/sbom-props.test.mjs::raw SBOM without properties fails check"
+      - "node:tools/sbom-props/test/sbom-props.test.mjs::CLI add -o writes a valid SBOM; check passes"
+  - id: REQ-WEB-001
+    title: The public law tracker is generated from the RuleSet and marks unverified rules
+    source: BUILD-GUIDE 5.6
+    tests:
+      - "node:apps/web/test/law-tracker.test.mjs::dist: both builds render every rule of the RuleSet with its review badge"
+  - id: REQ-SEC-104
+    title: Security logs are reviewed weekly with a signed-off record
+    source: SEC-104
+    tests: []
+    flag: Process requirement (signed weekly review record, docs/compliance/access-review.md); no automated test.
+  - id: REQ-SEC-110
+    title: External penetration test before the first real customer data enters production
+    source: SEC-110
+    tests: []
+    flag: Owner action (external report + retest letter); no automated test.

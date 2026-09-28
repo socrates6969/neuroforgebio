@@ -1,0 +1,21 @@
+[package]
+name = "neuroforge-py"
+version = "0.1.0"
+description = "PyO3 binding of nf-core for the `neuroforge` Python package (BUILD-GUIDE 4.3)."
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lib]
+name = "_native"
+crate-type = ["cdylib"]
+# The extension is exercised from Python (bindings/python/tests); a Rust test binary would need
+# libpython at link time.
+test = false
+doctest = false
+
+[dependencies]
+nf-core = { path = "../../core/nf-core", features = ["stream"] }
+pyo3 = { version = "0.28", default-features = false, features = ["macros", "abi3-py312"] }
+serde_json = "1"

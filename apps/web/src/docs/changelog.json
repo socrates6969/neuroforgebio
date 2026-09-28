@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "title": "Changelog · {brand}",
+    "description": "Changes to the Python SDK, the shared core and the v1 API docs."
+  },
+  "eyebrow": "Docs",
+  "heading": "Changelog",
+  "lede": "Unreleased work is listed here until the first published release. Each release will state its end-of-support date and update channel.",
+  "entries": [
+    {
+      "version": "Unreleased (SDK 0.1.0, core 0.1.0)",
+      "status": "in-preparation",
+      "items": [
+        "Shared Rust core: canonical JSON and content IDs that reproduce every frozen test vector of hashing spec v1; Zarr v3 chunk reading and writing; a verified local chunk cache.",
+        "API client core: bearer tokens, retries with backoff for idempotent requests, RFC 9457 problem documents, HTTPS required outside the local machine.",
+        "Streaming: encrypted write-ahead buffer compatible with the stream prototype, signed chunks, device tokens, resume after network cuts.",
+        "Breaking (pre-release): streams are cut by time. Stream and open_stream now require sfreq (open_stream uses the rate the platform registered) and take chunk_ms (default 100 ms); a signed chunk shorter than 20 ms is refused. Streams without a nominal rate use Stream(irregular=True, chunk_samples=...). The platform limits new chunks to 150 per second per stream by default (burst 300); a backlog after an outage drains within that limit, so 60 s offline at 20 ms chunks catches up in under a minute.",
+        "Offline provenance recorder with a verified local hash chain.",
+        "Python SDK: nf.open, nf.pipelines.get(...).run, run.provenance with lineage and export, streaming helpers, an LSL inlet bridge, MNE interop.",
+        "Docs: four quickstarts executed in CI, API reference generated from the OpenAPI document."
+      ]
+    }
+  ]
+}

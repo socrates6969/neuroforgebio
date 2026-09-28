@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "title": "Neural Playground · {brand}",
+    "description": "An interactive replay of open monkey motor-cortex recordings, decoded into a cursor path on reaches the decoder never saw. Research demo; not a medical device; no hardware is controlled."
+  },
+  "hero": {
+    "eyebrow": "Research demo · open data",
+    "heading": "Neural <em>Playground</em>",
+    "lede": "Replay spikes recorded from neurons in a monkey's motor cortex while it reached for targets, and watch a simple decoder turn them into a cursor path. Every trace and score on this page comes from reaches the decoder never saw while it was being fitted."
+  },
+  "banner": "Research demo on open monkey motor-cortex data. Not a medical device. Offline replay of a past recording; no hardware is controlled.",
+  "controls": {
+    "heading": "Controls",
+    "trial": "Trial",
+    "trialOption": "Test reach",
+    "play": "Play",
+    "pause": "Pause",
+    "time": "Time in trial",
+    "seconds": "s",
+    "speed": "Playback speed",
+    "neurons": "Neurons used",
+    "neuronsUnit": "neurons",
+    "noise": "Added noise",
+    "noiseNone": "None",
+    "noiseUnit": "extra spikes per second per neuron",
+    "decoder": "Decoder",
+    "decoders": {
+      "ridge": "Ridge (Wiener) filter",
+      "kalman": "Kalman filter"
+    },
+    "autoAdvance": "Continue to the next trial"
+  },
+  "panels": {
+    "raster": {
+      "heading": "Recorded spikes",
+      "caption": "Each row is one neuron and each tick one spike. Faded rows are neurons the decoder does not use at this setting; tinted ticks are the added noise. The line marks the replay time.",
+      "label": "Spike raster of the selected trial"
+    },
+    "path": {
+      "heading": "Cursor path",
+      "caption": "The solid line is where the cursor actually went; the dashed line is the decoder's estimate from the spikes alone.",
+      "actual": "Actual path",
+      "decoded": "Decoded path",
+      "target": "Target",
+      "label": "Actual and decoded cursor paths of the selected trial"
+    },
+    "arm": {
+      "heading": "Simulated arm",
+      "caption": "A drawing of a two-joint arm that follows the decoded path. Graphics only: it is not connected to anything.",
+      "label": "Drawing of a two-joint arm following the decoded path"
+    }
+  },
+  "score": {
+    "heading": "How close is the decoded path?",
+    "testSet": "R² of decoded position, all held-out test reaches",
+    "velocity": "R² of decoded velocity, all held-out test reaches",
+    "trial": "Average gap between decoded and actual cursor, this trial only",
+    "trialUnit": "cm",
+    "explain": "R² is the share of the variation in the actual movement that the decoded movement accounts for. One is a perfect match; zero is no better than always guessing the average. A single short reach is judged by its average gap instead, because R² over one reach swings widely.",
+    "chartHeading": "Accuracy as neurons are removed",
+    "chartCaption": "Test-set R² of decoded position for both decoders at the current noise setting. Lines show the average over several random subsets of neurons and shaded bands their range; the dot marks the setting shown above.",
+    "chartLabel": "Line chart of decoding accuracy against the number of neurons used"
+  },
+  "how": {
+    "heading": "How it works",
+    "steps": [
+      {
+        "heading": "Record",
+        "body": "A grid of electrodes in the motor cortex picked up spikes from individual neurons while a monkey moved its hand to steer a cursor to targets that appeared one after another."
+      },
+      {
+        "heading": "Count",
+        "body": "Spikes are counted in short time bins: one count per neuron per bin. That table of counts is all the decoder sees."
+      },
+      {
+        "heading": "Fit",
+        "body": "A linear decoder learns how the counts relate to cursor position and velocity, using training reaches only. The ridge filter weighs the last half second of counts; the Kalman filter also assumes the cursor moves smoothly."
+      },
+      {
+        "heading": "Test",
+        "body": "The fitted decoder then runs on reaches it never saw. Those decoded paths and their scores are what this page shows."
+      }
+    ]
+  },
+  "limits": {
+    "heading": "What this demo does not show",
+    "items": [
+      "It is an offline replay of one recording session from one monkey. Nothing is decoded in real time, and no human brain data is used.",
+      "The decoders were fitted and tested within the same session. Implanted electrodes drift across days and months, which this demo does not model.",
+      "The added noise is random extra spikes, a simple stand-in for recording noise, not a model of any particular device.",
+      "The arm is a drawing. It is not connected to a robot, a prosthesis or any other hardware.",
+      "It is not a medical device and says nothing about anyone's health or thoughts."
+    ]
+  },
+  "data": {
+    "heading": "About the data and method",
+    "dataset": "Dataset",
+    "recording": "Recording",
+    "licence": "Licence",
+    "citation": "Citation",
+    "hash": "Pinned file checksum",
+    "split": "Train and test split",
+    "shown": "Trials shown",
+    "noise": "Noise",
+    "control": "Negative control",
+    "controlText": "the same ridge filter fitted to movements shifted by half the session scores a test R² of",
+    "reproduce": "Derived from MC_RTT (CC BY 4.0); changes were made: we excerpted twelve held-out reaches, counted spikes in fifty-millisecond bins, split the reaches into training, validation and test sets, decoded them with linear decoders, rounded positions to a tenth of a millimetre and, when you choose added noise, mixed in simulated random spikes. The dataset's creators do not endorse {brand}. The offline pipeline, the pinned file hash and the random seed are in the repository under tools/playground, so every number on this page can be recomputed from the public file.",
+    "tablesSummary": "All results on held-out test reaches",
+    "tablePosition": "R² of decoded position",
+    "tableVelocity": "R² of decoded velocity",
+    "rowHeader": "Decoder, neurons",
+    "noiseHeader": "Added noise (extra spikes per second per neuron)",
+    "terms": {
+      "version": "version",
+      "units": "sorted units",
+      "meanRate": "mean firing rate",
+      "rateUnit": "spikes per second per unit",
+      "training": "training",
+      "validation": "validation",
+      "test": "test reaches",
+      "bins": "ms time bins"
+    }
+  },
+  "still": {
+    "alt": "Still frame of the replay: a raster of recorded spikes, the actual cursor path as a solid line with the decoded path dashed beside it, and a drawn two-joint arm following the decoded path.",
+    "caption": "A frame of the replay on held-out test reaches, shown while the interactive version loads or when it cannot run. Every result is also listed in the tables below."
+  },
+  "noscript": "The interactive replay needs JavaScript. Every result is listed in the tables under “About the data and method”.",
+  "loading": "Loading the recording…",
+  "loadError": "The recording could not be loaded. The tables under “About the data and method” still list every result.",
+  "footer": {
+    "lead": "Research demo on open monkey motor-cortex data",
+    "tail": "Not a medical device. Offline replay; no hardware is controlled."
+  },
+  "interfaceLink": {
+    "label": "Watch the same recording drive an illustrative neural interface",
+    "href": "/interface/"
+  }
+}

@@ -1,0 +1,44 @@
+/*
+ * Clinical theme tokens (design/option-1.html :root; BLUEPRINT §2.2).
+ * Fonts are self-hosted from @fontsource (latin subset, only the weights packages/ui uses), so this
+ * theme ships no remote font request (DECISIONS.md D9). Licences: packages/themes/README.md.
+ */
+@import '@fontsource/ibm-plex-sans/latin-400.css';
+@import '@fontsource/ibm-plex-sans/latin-500.css';
+@import '@fontsource/ibm-plex-sans/latin-600.css';
+@import '@fontsource/ibm-plex-mono/latin-400.css';
+@import '@fontsource/ibm-plex-mono/latin-500.css';
+
+[data-theme='clinical'] {
+  --color-bg: #f7f9fb;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef3f7;
+  --color-ink: #0b2540;
+  --color-muted: #4a5b6e;
+  --color-accent: #0e7c86;
+  --color-accent-ink: #0a5f67;
+  --color-on-accent: #ffffff;
+  --color-secondary: #5b8def;
+  --color-line: #dde4ec;
+  --color-focus: #0e7c86;
+  --color-status-designed-bg: #e7f3f4;
+  --color-status-designed-ink: #0a5f67;
+  --color-status-planned-bg: #eaf0fd;
+  --color-status-planned-ink: #2f5bb5;
+  --color-status-roadmap-bg: #eef3f7;
+  --color-status-roadmap-ink: #4a5b6e;
+  --emphasis-paint: var(--color-accent-ink);
+  --font-display: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+  --radius-card: 6px;
+  --motion-duration: 150ms;
+  --motion-ease: linear;
+  --elevation-card: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme='clinical'] {
+    --motion-duration: 0ms;
+  }
+}

@@ -1,0 +1,5 @@
+# Third-party figure data (CC BY-NC-ND 4.0) must never ship: see THIRD_PARTY_NOTICE.md.
+# tests/test_ce_release_guard.py builds the wheel and sdist and fails if any of it is inside.
+global-exclude greenspon2025_*
+prune tests
+prune examples

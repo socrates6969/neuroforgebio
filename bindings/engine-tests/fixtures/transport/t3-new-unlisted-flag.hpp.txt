@@ -1,0 +1,22 @@
+// Fixture for T3 (nfb-security, extended ruling): a shipped header using a SECURITY_FLAG_IGNORE_*
+// identifier that was never one of the 3 originally enumerated (SECURITY_FLAG_IGNORE_CERT_REV_FAILED,
+// SECURITY_FLAG_IGNORE_UNKNOWN_CA, WINHTTP_OPTION_IGNORE_CERT_REVOCATION_OFFLINE).
+// SECURITY_FLAG_IGNORE_CERT_DATE_INVALID (accept an expired/not-yet-valid certificate) is just as
+// much a validation bypass. Proves the prefix-based match (any SECURITY_FLAG_IGNORE_<...>) catches
+// it even though it isn't literally on the old fixed list.
+#ifndef NF_WINHTTP_TRANSPORT_HPP
+#define NF_WINHTTP_TRANSPORT_HPP
+
+namespace nf {
+namespace transport {
+
+inline void relax_date_check(void *request) {
+    DWORD flags = SECURITY_FLAG_IGNORE_CERT_DATE_INVALID;
+    (void)flags;
+    (void)request;
+}
+
+}  // namespace transport
+}  // namespace nf
+
+#endif  // NF_WINHTTP_TRANSPORT_HPP

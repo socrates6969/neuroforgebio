@@ -1,0 +1,16 @@
+{
+  "$comment": "SEC-083 overrides for nfb:supportLevel / nfb:endOfSupport, keyed by purl without version (pkg:npm/three), full purl, or component name. Values: supportLevel maintained|unmaintained|abandoned|unknown; endOfSupport YYYY-MM-DD|unknown. Anything not listed gets unknown. Reviewed by the security role (CODEOWNERS).",
+  "components": {
+    "bitnamilegacy/minio": {
+      "supportLevel": "unmaintained",
+      "endOfSupport": "unknown",
+      "note": "Frozen community build (2025.7.23); CI-only test double for S3 + Object Lock, synthetic data only. Replace before M5 closes (M2-REVIEW)."
+    },
+    "pkg:oci/postgres": { "supportLevel": "maintained", "endOfSupport": "unknown" },
+    "arena_core_bg.wasm": {
+      "supportLevel": "maintained",
+      "endOfSupport": "unknown",
+      "note": "Our own /arena decoder (tools/arena-core, owner nfb-arena), built in CI by .github/workflows/arena-wasm.yml (EXC-150-1 / ADR 0014). Its crates.io dependencies keep the default unknown until reviewed individually."
+    }
+  }
+}

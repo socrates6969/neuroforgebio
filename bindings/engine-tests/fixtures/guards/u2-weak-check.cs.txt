@@ -1,0 +1,33 @@
+// Regression fixture for U2 (ENGINE-SDKS-REVIEW.md): a same-size sizeof(T) check alone, instead of
+// mapping typeof(T) to the writer/hash dtype and throwing on mismatch. Push<int> on a Float32
+// writer, or Push<float> on Int32 (both 4 bytes), is wrongly accepted and writes reinterpreted
+// bits into signed, hash-addressed chunks. This file is text only: it is never compiled or
+// imported, only read by review-guards.test.mjs to prove hasStrictDtypeCheck() returns false for
+// this pattern (and true for the real fix in Streaming.cs / Hashing.cs).
+namespace NeuroForge
+{
+    public sealed unsafe class StreamWriter
+    {
+        public Dtype Dtype { get; }
+        public int ChannelCount { get; }
+
+        public int Push<T>(ReadOnlySpan<T> samples, ReadOnlySpan<double> timestamps) where T : unmanaged
+        {
+            if (sizeof(T) != NeuroForgeCore.ItemSize(Dtype))
+                throw new ArgumentException("element size does not match the writer dtype");
+            if (samples.Length != checked((long)timestamps.Length * ChannelCount))
+                throw new ArgumentException("length mismatch");
+            return 0;
+        }
+    }
+
+    public static unsafe class Hashing
+    {
+        public static string ChunkId<T>(Dtype dtype, ulong[] shape, ReadOnlySpan<T> values) where T : unmanaged
+        {
+            if (sizeof(T) != NeuroForgeCore.ItemSize(dtype))
+                throw new ArgumentException("element size does not match dtype");
+            return "chunk:sha256:stub";
+        }
+    }
+}

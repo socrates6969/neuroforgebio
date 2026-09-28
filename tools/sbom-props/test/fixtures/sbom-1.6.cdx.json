@@ -1,0 +1,26 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "type": "application",
+      "name": "@nf/web",
+      "version": "0.0.0",
+      "bom-ref": "pkg:npm/%40nf/web@0.0.0"
+    }
+  },
+  "components": [
+    { "type": "library", "name": "three", "version": "0.160.0", "purl": "pkg:npm/three@0.160.0" },
+    {
+      "type": "library",
+      "name": "astro",
+      "version": "5.18.2",
+      "purl": "pkg:npm/astro@5.18.2",
+      "properties": [{ "name": "nfb:supportLevel", "value": "maintained" }],
+      "components": [
+        { "type": "library", "name": "vite", "version": "6.0.0", "purl": "pkg:npm/vite@6.0.0" }
+      ]
+    }
+  ]
+}

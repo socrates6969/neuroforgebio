@@ -1,0 +1,36 @@
+{
+  "name": "@nf/console",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Web console (BLUEPRINT §3.8, BUILD-GUIDE 3.8): React + TypeScript SPA over the platform API.",
+  "scripts": {
+    "build": "vite build && node scripts/postbuild.mjs",
+    "test": "node scripts/test.mjs",
+    "test:unit": "vitest run",
+    "gen-api": "node scripts/gen-api.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test:e2e": "playwright test -c e2e/playwright.config.ts"
+  },
+  "dependencies": {
+    "@nf/content": "workspace:*",
+    "@nf/themes": "workspace:*",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0",
+    "@testing-library/dom": "10.4.0",
+    "@testing-library/react": "16.3.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "jsdom": "26.1.0",
+    "typescript": "5.9.3",
+    "vite": "6.4.3",
+    "vitest": "3.2.4"
+  },
+  "engines": {
+    "node": ">=22 <23"
+  }
+}

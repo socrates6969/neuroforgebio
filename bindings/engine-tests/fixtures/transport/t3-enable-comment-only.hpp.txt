@@ -1,0 +1,4 @@
+// Regression fixture for T3: the revocation-enable flag is only named in a comment, never set.
+// TODO: pass WINHTTP_ENABLE_SSL_REVOCATION here once the proxy issue is fixed.
+DWORD features = 0;
+WinHttpSetOption(hr, WINHTTP_OPTION_ENABLE_FEATURE, &features, sizeof(features));

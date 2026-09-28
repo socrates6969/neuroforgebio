@@ -1,0 +1,22 @@
+# gitleaks configuration (SEC-086). Used by CI (`security` job, full history) and the opt-in pre-commit hook
+# (.pre-commit-config.yaml). tools/repo-guard runs the same class of checks with zero dependencies on every lint.
+title = "NeuroForge Bio gitleaks config"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Byte-exact test vectors, lockfiles and fixtures (hashes and synthetic data, no credentials)"
+paths = [
+  '''^spec/test-vectors/''',
+  '''(^|/)test/fixtures/''',
+  '''^tools/synth/tests/golden/''',
+  '''(^|/)pnpm-lock\.yaml$''',
+  '''(^|/)uv\.lock$''',
+  '''(^|/)Cargo\.lock$''',
+]
+
+[[allowlists]]
+description = "Documented, reviewed non-secret examples carry the repo-guard marker on the same line"
+regexTarget = "line"
+regexes = ['''repo-guard:allow-secret''']

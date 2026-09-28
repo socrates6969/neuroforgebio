@@ -1,0 +1,10 @@
+---
+interface Props { text: string; tone?: 'info' | 'caution'; id?: string }
+const { text, tone = 'info', id } = Astro.props;
+---
+<p class={`banner banner--${tone}`} role="note" id={id}>{text}</p>
+<style>
+  .banner { margin: 16px 0 0; padding: 12px 14px; border-left: 2px solid var(--color-secondary); background: var(--color-surface-2, color-mix(in srgb, var(--color-secondary) 8%, var(--color-surface))); font-size: 13.5px; color: var(--color-ink); border-radius: 0 var(--radius-card) var(--radius-card) 0; max-width: 80ch; }
+  .banner--caution { border-left-color: var(--color-accent); }
+  @media print { .banner { border: 1px solid; } }
+</style>

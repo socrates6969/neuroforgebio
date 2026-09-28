@@ -1,0 +1,57 @@
+{
+  "reviewed": false,
+  "meta": {
+    "title": "Priser · {brand}",
+    "description": "Gratis for enkeltforskere og studenter, abonnement i trinn for oppstartsselskaper, tilpasset for større virksomheter. Ingen endelige priser ennå."
+  },
+  "hero": {
+    "eyebrow": "Priser",
+    "heading": "Gratis for forskere. <em>Rettferdig for oppstartsselskaper.</em>",
+    "lede": "Ingen priser er endelige, og ingenting på denne siden er et tilbud. Vi setter prisene etter intervjuer med teamene som skal betale dem."
+  },
+  "sections": [
+    {
+      "id": "tiers",
+      "heading": "Tre nivåer, <em>én plattform.</em>",
+      "body": [
+        "Alle nivåer kjører på den samme proveniensgrafen. Høyere nivåer legger til drift, styring og kontrollene regulerte team trenger."
+      ],
+      "items": [
+        {
+          "heading": "Akademisk: gratis for enkeltpersoner",
+          "body": "For enkeltforskere og studenter, med grenser for rimelig bruk. Python-SDK-et (lisens avventer), lokal proveniens og integrasjoner med BIDS, NWB og LSL. Laboratorier og kjernefasiliteter er planlagt på en egen betalt plan; prising ved lansering.",
+          "status": "planned"
+        },
+        {
+          "heading": "Oppstart: abonnement i trinn",
+          "body": "For nevroteknologiselskaper i tidlig fase. Hostede løyper, samtykke- og sletteloggen for de sentrale amerikanske delstatene, og SSO. Et abonnement priset i trinn etter antall forsøkspersoner og enheter; prising ved lansering.",
+          "status": "planned"
+        },
+        {
+          "heading": "Virksomhet: tilpasset",
+          "body": "For organisasjoner med regulerte data. BAA tilgjengelig for virksomheter (planlagt), SSO og avansert rollebasert tilgangsstyring, og drift på egen instans eller lokalt på veikartet.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "why-no-prices",
+      "heading": "Hvorfor det <em>ikke finnes priser ennå.</em>",
+      "body": [
+        "Vi vil heller publisere en pris vi har testet enn en vi har gjettet. Medlemmer av tidlig tilgang ser prisene først og kan være med på å forme dem."
+      ]
+    },
+    {
+      "id": "early-access",
+      "heading": "Bli med på <em>listen for tidlig tilgang.</em>",
+      "body": [
+        "Listen for tidlig tilgang åpner snart. Vi samler ikke inn e-postadresser før personvernerklæringen vår er publisert."
+      ]
+    }
+  ],
+  "earlyAccessNote": {
+    "text": "Skjemaet for tidlig tilgang finnes foreløpig bare på engelsk.",
+    "linkLabel": "Se skjemaet på engelsk",
+    "href": "/pricing#early-access"
+  }
+}

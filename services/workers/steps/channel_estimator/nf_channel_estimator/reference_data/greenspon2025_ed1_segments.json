@@ -1,0 +1,393 @@
+{
+  "source": {
+    "citation": "Greenspon et al. 2025, Nature Biomedical Engineering, Extended Data Fig. 1 (PMC12176618), digitised (grade B); participants C1, P2, P3",
+    "file": "research/somatosensory/notes/published-derived/greenspon2025_ed1_extraction.json",
+    "sha256_lf": "100f45ce6eb1530d9f4ba719006def3a7a9cae4f016d9d7ae45fbb020b4ecb69"
+  },
+  "segments": [
+    {
+      "key": "palm:D5d-du+D5d-dr",
+      "surface": "palm",
+      "tag": "D5d-du+D5d-dr",
+      "cx": 136.57333890514,
+      "cy": 296.91349770162975,
+      "area_mm2": 95.72
+    },
+    {
+      "key": "palm:D5d-pu+D5d-pr",
+      "surface": "palm",
+      "tag": "D5d-pu+D5d-pr",
+      "cx": 154.121138996139,
+      "cy": 346.84797297297297,
+      "area_mm2": 82.88
+    },
+    {
+      "key": "palm:D5m-u+D5m-r",
+      "surface": "palm",
+      "tag": "D5m-u+D5m-r",
+      "cx": 181.54217148182664,
+      "cy": 406.307082945014,
+      "area_mm2": 171.68
+    },
+    {
+      "key": "palm:D5p-u+D5p-r",
+      "surface": "palm",
+      "tag": "D5p-u+D5p-r",
+      "cx": 225.96531120331952,
+      "cy": 488.32597510373444,
+      "area_mm2": 241.0
+    },
+    {
+      "key": "palm:P5-mcp",
+      "surface": "palm",
+      "tag": "P5-mcp",
+      "cx": 271.1843086259211,
+      "cy": 594.4965756393585,
+      "area_mm2": 461.4
+    },
+    {
+      "key": "palm:P0-du",
+      "surface": "palm",
+      "tag": "P0-du",
+      "cx": 330.6055056307587,
+      "cy": 735.0756834641489,
+      "area_mm2": 1054.92
+    },
+    {
+      "key": "palm:P0-pu",
+      "surface": "palm",
+      "tag": "P0-pu",
+      "cx": 383.5355803098422,
+      "cy": 883.062942069242,
+      "area_mm2": 1396.84
+    },
+    {
+      "key": "palm:D4d-du+D4d-dr",
+      "surface": "palm",
+      "tag": "D4d-du+D4d-dr",
+      "cx": 294.3755856324831,
+      "cy": 126.4612181155648,
+      "area_mm2": 153.68
+    },
+    {
+      "key": "palm:D4d-pu+D4d-pr",
+      "surface": "palm",
+      "tag": "D4d-pu+D4d-pr",
+      "cx": 299.939778557926,
+      "cy": 191.06400216041047,
+      "area_mm2": 148.12
+    },
+    {
+      "key": "palm:D4m-u+D4m-r",
+      "surface": "palm",
+      "tag": "D4m-u+D4m-r",
+      "cx": 316.4878428927681,
+      "cy": 272.2314526184539,
+      "area_mm2": 256.64
+    },
+    {
+      "key": "palm:W",
+      "surface": "palm",
+      "tag": "W",
+      "cx": 476.86279453645085,
+      "cy": 1062.690525857534,
+      "area_mm2": 2205.16
+    },
+    {
+      "key": "palm:D4p-u+D4p-r",
+      "surface": "palm",
+      "tag": "D4p-u+D4p-r",
+      "cx": 343.37740054869687,
+      "cy": 397.15980795610426,
+      "area_mm2": 466.56
+    },
+    {
+      "key": "palm:P4-mcp",
+      "surface": "palm",
+      "tag": "P4-mcp",
+      "cx": 372.7259637410825,
+      "cy": 540.2794685516068,
+      "area_mm2": 611.16
+    },
+    {
+      "key": "palm:P0-d",
+      "surface": "palm",
+      "tag": "P0-d",
+      "cx": 449.4153052450559,
+      "cy": 654.7348237317283,
+      "area_mm2": 697.8
+    },
+    {
+      "key": "palm:P3-mcp",
+      "surface": "palm",
+      "tag": "P3-mcp",
+      "cx": 486.9293300380736,
+      "cy": 515.7631420746777,
+      "area_mm2": 598.84
+    },
+    {
+      "key": "palm:D3p-u+D3p-r",
+      "surface": "palm",
+      "tag": "D3p-u+D3p-r",
+      "cx": 478.5576201536537,
+      "cy": 378.97909594425585,
+      "area_mm2": 447.76
+    },
+    {
+      "key": "palm:D3d-du+D3d-dr",
+      "surface": "palm",
+      "tag": "D3d-du+D3d-dr",
+      "cx": 470.67807080066524,
+      "cy": 74.48895224518888,
+      "area_mm2": 168.36
+    },
+    {
+      "key": "palm:D3d-pu+D3d-pr",
+      "surface": "palm",
+      "tag": "D3d-pu+D3d-pr",
+      "cx": 476.5396688884111,
+      "cy": 142.51709309825844,
+      "area_mm2": 186.04
+    },
+    {
+      "key": "palm:D3m-u+D3m-r",
+      "surface": "palm",
+      "tag": "D3m-u+D3m-r",
+      "cx": 479.2792883857273,
+      "cy": 242.99898918427172,
+      "area_mm2": 395.72
+    },
+    {
+      "key": "palm:P0-dr",
+      "surface": "palm",
+      "tag": "P0-dr",
+      "cx": 617.2969352174711,
+      "cy": 729.8977794090658,
+      "area_mm2": 1743.68
+    },
+    {
+      "key": "palm:P0-pr",
+      "surface": "palm",
+      "tag": "P0-pr",
+      "cx": 567.8342629765161,
+      "cy": 886.428180623157,
+      "area_mm2": 1125.88
+    },
+    {
+      "key": "palm:P2-mcp",
+      "surface": "palm",
+      "tag": "P2-mcp",
+      "cx": 598.5193996247655,
+      "cy": 530.5566228893058,
+      "area_mm2": 533.0
+    },
+    {
+      "key": "palm:D2p-u+D2p-r",
+      "surface": "palm",
+      "tag": "D2p-u+D2p-r",
+      "cx": 627.8041074249605,
+      "cy": 411.80625141051684,
+      "area_mm2": 354.48
+    },
+    {
+      "key": "palm:D2m-u+D2m-r",
+      "surface": "palm",
+      "tag": "D2m-u+D2m-r",
+      "cx": 664.1146672102742,
+      "cy": 296.29548466007543,
+      "area_mm2": 392.44
+    },
+    {
+      "key": "palm:D2d-pu+D2d-pr",
+      "surface": "palm",
+      "tag": "D2d-pu+D2d-pr",
+      "cx": 691.3686056708565,
+      "cy": 209.49546916106402,
+      "area_mm2": 136.84
+    },
+    {
+      "key": "palm:D2d-du+D2d-dr",
+      "surface": "palm",
+      "tag": "D2d-du+D2d-dr",
+      "cx": 706.4791929382093,
+      "cy": 154.58543505674652,
+      "area_mm2": 126.88
+    },
+    {
+      "key": "palm:D1p-u+D1p-r",
+      "surface": "palm",
+      "tag": "D1p-u+D1p-r",
+      "cx": 782.7810415321713,
+      "cy": 668.3610931783946,
+      "area_mm2": 371.76
+    },
+    {
+      "key": "palm:D1d-pu+D1d-pr",
+      "surface": "palm",
+      "tag": "D1d-pu+D1d-pr",
+      "cx": 849.0856332215631,
+      "cy": 592.6806809388703,
+      "area_mm2": 155.08
+    },
+    {
+      "key": "palm:D1d-du+D1d-dr",
+      "surface": "palm",
+      "tag": "D1d-du+D1d-dr",
+      "cx": 906.7909319899244,
+      "cy": 564.7682619647355,
+      "area_mm2": 127.04
+    },
+    {
+      "key": "dors:D1d-r+D1d-u",
+      "surface": "dors",
+      "tag": "D1d-r+D1d-u",
+      "cx": 210.58169692478697,
+      "cy": 584.0053723601334,
+      "area_mm2": 431.84
+    },
+    {
+      "key": "dors:D1p",
+      "surface": "dors",
+      "tag": "D1p",
+      "cx": 287.97517590323343,
+      "cy": 687.6021029330382,
+      "area_mm2": 505.96
+    },
+    {
+      "key": "dors:P-pr",
+      "surface": "dors",
+      "tag": "P-pr",
+      "cx": 464.98969757908577,
+      "cy": 808.5812669193286,
+      "area_mm2": 2585.8
+    },
+    {
+      "key": "dors:D2d-r+D2d-u",
+      "surface": "dors",
+      "tag": "D2d-r+D2d-u",
+      "cx": 354.50550265858783,
+      "cy": 180.51156176579696,
+      "area_mm2": 323.48
+    },
+    {
+      "key": "dors:D2m",
+      "surface": "dors",
+      "tag": "D2m",
+      "cx": 369.4197963429322,
+      "cy": 288.2899375889631,
+      "area_mm2": 365.32
+    },
+    {
+      "key": "dors:D2p",
+      "surface": "dors",
+      "tag": "D2p",
+      "cx": 401.4420868926242,
+      "cy": 402.87452925507483,
+      "area_mm2": 435.48
+    },
+    {
+      "key": "dors:P-dr",
+      "surface": "dors",
+      "tag": "P-dr",
+      "cx": 490.83352480639945,
+      "cy": 563.0039783848183,
+      "area_mm2": 1880.16
+    },
+    {
+      "key": "dors:W",
+      "surface": "dors",
+      "tag": "W",
+      "cx": 603.5781404817237,
+      "cy": 1063.702732890162,
+      "area_mm2": 2220.36
+    },
+    {
+      "key": "dors:D3d-r+D3d-u",
+      "surface": "dors",
+      "tag": "D3d-r+D3d-u",
+      "cx": 533.2210340775558,
+      "cy": 110.9508813160987,
+      "area_mm2": 340.4
+    },
+    {
+      "key": "dors:D3m",
+      "surface": "dors",
+      "tag": "D3m",
+      "cx": 533.9226723946374,
+      "cy": 242.31864306347677,
+      "area_mm2": 540.04
+    },
+    {
+      "key": "dors:D3p",
+      "surface": "dors",
+      "tag": "D3p",
+      "cx": 540.9791991679667,
+      "cy": 379.0688160859768,
+      "area_mm2": 461.52
+    },
+    {
+      "key": "dors:P-pu",
+      "surface": "dors",
+      "tag": "P-pu",
+      "cx": 671.162786047545,
+      "cy": 823.4631415241057,
+      "area_mm2": 1800.4
+    },
+    {
+      "key": "dors:P-du",
+      "surface": "dors",
+      "tag": "P-du",
+      "cx": 684.9953262341663,
+      "cy": 596.5902222694319,
+      "area_mm2": 1506.28
+    },
+    {
+      "key": "dors:D4p",
+      "surface": "dors",
+      "tag": "D4p",
+      "cx": 668.7607532020646,
+      "cy": 414.8856815140509,
+      "area_mm2": 418.48
+    },
+    {
+      "key": "dors:D4m",
+      "surface": "dors",
+      "tag": "D4m",
+      "cx": 684.3573480409054,
+      "cy": 288.7660576812593,
+      "area_mm2": 348.12
+    },
+    {
+      "key": "dors:D4d-r+D4d-u",
+      "surface": "dors",
+      "tag": "D4d-r+D4d-u",
+      "cx": 689.3950316069646,
+      "cy": 167.2291227681047,
+      "area_mm2": 360.68
+    },
+    {
+      "key": "dors:D5p",
+      "surface": "dors",
+      "tag": "D5p",
+      "cx": 784.834401876466,
+      "cy": 504.87365129007037,
+      "area_mm2": 255.8
+    },
+    {
+      "key": "dors:D5m",
+      "surface": "dors",
+      "tag": "D5m",
+      "cx": 821.6527015793848,
+      "cy": 422.1898586866168,
+      "area_mm2": 240.6
+    },
+    {
+      "key": "dors:D5d-r+D5d-u",
+      "surface": "dors",
+      "tag": "D5d-r+D5d-u",
+      "cx": 859.4379170056957,
+      "cy": 330.2281529698942,
+      "area_mm2": 245.8
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+A. curve CSV == notes/prereg values: True | bin centres == linspace(0,4,8) centres: True
+   2 mm point 11.8 vs paper '2 mm cortex ~ 10 mm skin'; slope bins1-3 [5.07880911 3.4965035 ] bins 4-6 [11.2084063  10.31468531]
+   arrays: {('BCI02', 'M'): 32, ('BCI02', 'L'): 32, ('BCI03', 'M'): 32, ('BCI03', 'L'): 32, ('CRS07', 'L'): 32, ('CRS07', 'M'): 32, ('CRS08', 'L'): 32, ('CRS08', 'M'): 32, ('CRS02', 'L'): 32, ('CRS02', 'M'): 32}
+   wiring identical to BCI02 medial: {('BCI02', 'M'): 0, ('BCI02', 'L'): 0, ('BCI03', 'M'): 0, ('BCI03', 'L'): 0, ('CRS07', 'L'): 0, ('CRS07', 'M'): 0, ('CRS08', 'L'): 0, ('CRS08', 'M'): 0, ('CRS02', 'L'): 32, ('CRS02', 'M'): 0}
+   V4 own area sampler quantiles 50/5/95: [ 2.504  0.305 11.195] mean 3.64
+
+B. Independent re-implementation, primary configuration (corr, iso, W20, disc, participant f), fitted theta
+
+[primary @ pre-registered LS fit] theta g,sf,l,sn = [7.598e+00 5.335e+00 1.254e+00 4.000e-03]  area_scale 1.0
+   bin means [ 4.71  7.62 10.97 14.33 17.92 21.95 26.13]  |dev|/tol [0.81 0.81 1.49 0.86 0.06 0.36 0.04] V1 False
+   pooled r 0.738, median per-array r 0.802  V2 True
+   C1: U_low med 26.9, U_high med 46.0 cm2 -> V3 bracket [18.9, 59.8] vs measured 12: FAIL
+   P2: U_low med 27.9, U_high med 45.9 cm2 -> V3 bracket [19.5, 59.7] vs measured 33: ok
+   P3: U_low med 23.8, U_high med 37.7 cm2 -> V3 bracket [16.7, 49.0] vs measured 30: ok
+   N_A p2.5/med/p97.5 [ 4.27  7.12 11.32]  K_low [ 5.08  8.31 13.01]  K_high [ 9.56 14.04 20.01]
+     C1: N_A med 7.75  K_low med 8.76  K_high med 15.25
+     P2: N_A med 7.62  K_low med 8.63  K_high med 15.10
+     P3: N_A med 6.20  K_low med 7.58  K_high med 12.24
+
+[independent-scatter control @ its fit] theta g,sf,l,sn = [7.143 0.    1.    3.265]  area_scale 1.0
+   bin means [ 6.29  7.85 10.42 13.67 17.45 21.63 25.62]  |dev|/tol [1.6  0.93 1.21 0.63 0.17 0.41 0.09] V1 False
+   pooled r 0.755, median per-array r 0.749  V2 True
+   C1: U_low med 27.9, U_high med 46.9 cm2 -> V3 bracket [19.5, 61.0] vs measured 12: FAIL
+   P2: U_low med 28.3, U_high med 46.6 cm2 -> V3 bracket [19.8, 60.5] vs measured 33: ok
+   P3: U_low med 23.5, U_high med 39.3 cm2 -> V3 bracket [16.5, 51.1] vs measured 30: ok
+   N_A p2.5/med/p97.5 [4.78 7.28 9.96]  K_low [ 6.2   8.51 10.89]  K_high [10.41 14.54 18.28]
+     C1: N_A med 7.72  K_low med 8.74  K_high med 15.29
+     P2: N_A med 7.79  K_low med 8.84  K_high med 15.39
+     P3: N_A med 6.19  K_low med 7.71  K_high med 12.30
+
+[post-hoc V1+V2 theta] theta g,sf,l,sn = [ 6.593 24.902 11.458  1.666]  area_scale 1.0
+   bin means [ 4.53  6.66  9.56 12.66 15.9  19.26 22.47]  |dev|/tol [0.72 0.33 0.78 0.29 0.51 0.8  0.39] V1 True
+   pooled r 0.739, median per-array r 0.841  V2 True
+   C1: U_low med 27.6, U_high med 45.2 cm2 -> V3 bracket [19.3, 58.8] vs measured 12: FAIL
+   P2: U_low med 25.2, U_high med 42.4 cm2 -> V3 bracket [17.6, 55.2] vs measured 33: ok
+   P3: U_low med 21.8, U_high med 34.8 cm2 -> V3 bracket [15.3, 45.2] vs measured 30: ok
+   N_A p2.5/med/p97.5 [ 3.73  6.42 10.34]  K_low [ 4.25  7.26 11.63]  K_high [ 8.57 12.52 18.06]
+     C1: N_A med 6.91  K_low med 7.74  K_high med 13.53
+     P2: N_A med 6.83  K_low med 7.47  K_high med 13.18
+     P3: N_A med 5.64  K_low med 6.75  K_high med 11.13
+
+C. C1 union lower bound when ALL 48 PF centroids coincide (union = largest PF), pooled area model:
+   median max-area 18.0 cm2 -> 0.7 x median = 12.6 cm2 vs measured 12 (P(max area <= 12/0.7=17.1) = 0.45)
+   f = 1.0 (64 PFs): median max 19.8 -> 0.7 x = 13.8
+   => with the pooled area distribution, C1's V3 lower bound is ~>= 0.7 x (largest of 48 PFs) regardless of the map fit;
+   area x0.5: C1 U_low median 17.8 -> lo 12.4 vs 12
+   area x0.35: C1 U_low median 15.4 -> lo 10.7 vs 12
+   units: median PF radius = sqrt(250/pi) = 8.92 mm; centroid spacing at 0.4 mm pitch ~ g*0.4 = 3.0 mm; palm 165 cm2 = disc radius 72.5 mm

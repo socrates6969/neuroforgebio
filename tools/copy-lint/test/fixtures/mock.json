@@ -1,0 +1,7 @@
+{
+  "dashboard": [
+    { "mock": true, "label": "Recordings", "value": 128 },
+    { "mock": true, "label": "Recordings", "value": 128, "note": "demo data" },
+    { "mock": false, "label": "Recordings", "value": 128 }
+  ]
+}

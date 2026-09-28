@@ -1,0 +1,6047 @@
+components:
+  responses:
+    Forbidden:
+      content: &id001
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      description: Authenticated but not allowed (role, scope, tenant, quota).
+    InternalError:
+      content: *id001
+      description: Unexpected error (a fixed body; details stay in the server log).
+    Invalid:
+      content: *id001
+      description: The request is not valid.
+    NotFound:
+      content: *id001
+      description: Not found (also for resources of another tenant).
+    OtherError:
+      content: *id001
+      description: Any other error status, e.g. 409 conflict, 410 gone, 413 too large.
+    TooManyRequests:
+      content: *id001
+      description: Rate limit or quota exceeded.
+      headers:
+        Retry-After:
+          schema:
+            minimum: 1
+            type: integer
+    Unauthorized:
+      content: *id001
+      description: Missing, invalid, expired or revoked credential.
+      headers:
+        WWW-Authenticate:
+          schema:
+            type: string
+  schemas:
+    AcceptedOut:
+      properties:
+        status:
+          const: pending-confirmation
+          default: pending-confirmation
+          title: Status
+          type: string
+      title: AcceptedOut
+      type: object
+    ApiKeyIn:
+      properties:
+        expires_in_days:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: 1..365, default 90
+          title: Expires In Days
+        name:
+          maxLength: 100
+          minLength: 1
+          title: Name
+          type: string
+        roles:
+          items:
+            type: string
+          minItems: 1
+          title: Roles
+          type: array
+        scopes:
+          items:
+            type: string
+          minItems: 1
+          title: Scopes
+          type: array
+      required:
+      - name
+      - roles
+      - scopes
+      title: ApiKeyIn
+      type: object
+    ApiKeyIssued:
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        expires_at:
+          format: date-time
+          title: Expires At
+          type: string
+        id:
+          format: uuid
+          title: Id
+          type: string
+        key:
+          description: Shown once. Store it in a secret manager.
+          title: Key
+          type: string
+        name:
+          title: Name
+          type: string
+        owner_id:
+          title: Owner Id
+          type: string
+        public_id:
+          title: Public Id
+          type: string
+        revoked_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Revoked At
+        roles:
+          items:
+            type: string
+          title: Roles
+          type: array
+        scopes:
+          items:
+            type: string
+          title: Scopes
+          type: array
+      required:
+      - id
+      - public_id
+      - name
+      - owner_id
+      - roles
+      - scopes
+      - created_at
+      - expires_at
+      - revoked_at
+      - key
+      title: ApiKeyIssued
+      type: object
+    ApiKeyOut:
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        expires_at:
+          format: date-time
+          title: Expires At
+          type: string
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        owner_id:
+          title: Owner Id
+          type: string
+        public_id:
+          title: Public Id
+          type: string
+        revoked_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Revoked At
+        roles:
+          items:
+            type: string
+          title: Roles
+          type: array
+        scopes:
+          items:
+            type: string
+          title: Scopes
+          type: array
+      required:
+      - id
+      - public_id
+      - name
+      - owner_id
+      - roles
+      - scopes
+      - created_at
+      - expires_at
+      - revoked_at
+      title: ApiKeyOut
+      type: object
+    ArtifactGovIn:
+      additionalProperties: false
+      properties:
+        derived_from_non_neural:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Derived From Non Neural
+        modalities:
+          anyOf:
+          - items:
+              enum:
+              - EEG
+              - iEEG
+              - ECoG
+              - SEEG
+              - LFP
+              - spikes
+              - MEG
+              - EMG
+              - ENG
+              - EOG
+              - ECG
+              - fNIRS
+              - other
+              type: string
+            type: array
+          - type: 'null'
+          title: Modalities
+        nervous_system:
+          anyOf:
+          - enum:
+            - central
+            - peripheral
+            - unknown
+            type: string
+          - type: 'null'
+          title: Nervous System
+        reason:
+          anyOf:
+          - maxLength: 500
+            type: string
+          - type: 'null'
+          title: Reason
+      title: ArtifactGovIn
+      type: object
+    ArtifactOut:
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        sha256:
+          title: Sha256
+          type: string
+        size_bytes:
+          title: Size Bytes
+          type: integer
+        step:
+          title: Step
+          type: string
+        visible_at:
+          format: date-time
+          title: Visible At
+          type: string
+      required:
+      - id
+      - step
+      - name
+      - sha256
+      - size_bytes
+      - visible_at
+      title: ArtifactOut
+      type: object
+    ArtifactRef:
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        sha256:
+          title: Sha256
+          type: string
+        step:
+          title: Step
+          type: string
+      required:
+      - id
+      - step
+      - name
+      - sha256
+      title: ArtifactRef
+      type: object
+    AuditBatchOut:
+      properties:
+        batch_id:
+          title: Batch Id
+          type: string
+        event_count:
+          title: Event Count
+          type: integer
+        object_key:
+          title: Object Key
+          type: string
+        period_end:
+          format: date-time
+          title: Period End
+          type: string
+        period_start:
+          format: date-time
+          title: Period Start
+          type: string
+        prev_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prev Id
+        seq:
+          title: Seq
+          type: integer
+      required:
+      - seq
+      - batch_id
+      - prev_id
+      - period_start
+      - period_end
+      - event_count
+      - object_key
+      title: AuditBatchOut
+      type: object
+    AuditEventOut:
+      properties:
+        action:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Action
+        actor_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Actor Id
+        actor_kind:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Actor Kind
+        auth_method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auth Method
+        details:
+          additionalProperties: true
+          title: Details
+          type: object
+        id:
+          format: uuid
+          title: Id
+          type: string
+        outcome:
+          title: Outcome
+          type: string
+        request_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Request Id
+        resource_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource Id
+        resource_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource Type
+        seq:
+          title: Seq
+          type: integer
+        ts:
+          format: date-time
+          title: Ts
+          type: string
+        type:
+          title: Type
+          type: string
+      required:
+      - seq
+      - id
+      - ts
+      - type
+      - action
+      - outcome
+      - actor_kind
+      - actor_id
+      - auth_method
+      - resource_type
+      - resource_id
+      - request_id
+      - details
+      title: AuditEventOut
+      type: object
+    BestOut:
+      properties:
+        mean:
+          title: Mean
+          type: number
+        params:
+          additionalProperties: true
+          title: Params
+          type: object
+        run_ids:
+          items:
+            format: uuid
+            type: string
+          title: Run Ids
+          type: array
+        variant:
+          title: Variant
+          type: integer
+      required:
+      - variant
+      - params
+      - mean
+      - run_ids
+      title: BestOut
+      type: object
+    BulkIn:
+      additionalProperties: false
+      properties:
+        modality:
+          anyOf:
+          - enum:
+            - EEG
+            - iEEG
+            - ECoG
+            - SEEG
+            - LFP
+            - spikes
+            - MEG
+            - EMG
+            - ENG
+            - EOG
+            - ECG
+            - fNIRS
+            - other
+            type: string
+          - type: 'null'
+          description: only channels of this modality
+          title: Modality
+        reason:
+          anyOf:
+          - maxLength: 500
+            type: string
+          - type: 'null'
+          title: Reason
+        recording_ids:
+          items:
+            format: uuid
+            type: string
+          maxItems: 1000
+          minItems: 1
+          title: Recording Ids
+          type: array
+        set:
+          $ref: '#/components/schemas/GovValues'
+      required:
+      - recording_ids
+      - set
+      title: BulkIn
+      type: object
+    CellOut:
+      properties:
+        artifact:
+          anyOf:
+          - $ref: '#/components/schemas/ArtifactRef'
+          - type: 'null'
+        params:
+          additionalProperties: true
+          description: '{"<step>.<param>": value}'
+          title: Params
+          type: object
+        pipeline_ref:
+          title: Pipeline Ref
+          type: string
+        pipeline_version_id:
+          title: Pipeline Version Id
+          type: string
+        prov_activity_id:
+          anyOf:
+          - format: uuid
+            type: string
+          - type: 'null'
+          description: the run's PROV activity node
+          title: Prov Activity Id
+        prov_node_id:
+          anyOf:
+          - format: uuid
+            type: string
+          - type: 'null'
+          description: PROV node of the artifact that carries the value
+          title: Prov Node Id
+        recording_id:
+          format: uuid
+          title: Recording Id
+          type: string
+        run_id:
+          format: uuid
+          title: Run Id
+          type: string
+        state:
+          title: State
+          type: string
+        value:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Value
+        variant:
+          title: Variant
+          type: integer
+      required:
+      - variant
+      - params
+      - pipeline_ref
+      - pipeline_version_id
+      - run_id
+      - recording_id
+      - state
+      - value
+      - prov_activity_id
+      - prov_node_id
+      - artifact
+      title: CellOut
+      type: object
+    ChannelEdit:
+      additionalProperties: false
+      properties:
+        derived_from_non_neural:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Derived From Non Neural
+        index:
+          minimum: 0.0
+          title: Index
+          type: integer
+        modality:
+          anyOf:
+          - enum:
+            - EEG
+            - iEEG
+            - ECoG
+            - SEEG
+            - LFP
+            - spikes
+            - MEG
+            - EMG
+            - ENG
+            - EOG
+            - ECG
+            - fNIRS
+            - other
+            type: string
+          - type: 'null'
+          title: Modality
+        nervous_system:
+          anyOf:
+          - enum:
+            - central
+            - peripheral
+            - unknown
+            type: string
+          - type: 'null'
+          title: Nervous System
+      required:
+      - index
+      title: ChannelEdit
+      type: object
+    ChannelEditsIn:
+      additionalProperties: false
+      properties:
+        changes:
+          items:
+            $ref: '#/components/schemas/ChannelEdit'
+          maxItems: 4096
+          minItems: 1
+          title: Changes
+          type: array
+        reason:
+          anyOf:
+          - maxLength: 500
+            type: string
+          - type: 'null'
+          title: Reason
+      required:
+      - changes
+      title: ChannelEditsIn
+      type: object
+    ChannelIn:
+      properties:
+        derived_from_non_neural:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Derived From Non Neural
+        device_ref:
+          anyOf:
+          - maxLength: 200
+            type: string
+          - type: 'null'
+          title: Device Ref
+        modality:
+          enum:
+          - EEG
+          - iEEG
+          - ECoG
+          - SEEG
+          - LFP
+          - spikes
+          - MEG
+          - EMG
+          - ENG
+          - EOG
+          - ECG
+          - fNIRS
+          - other
+          title: Modality
+          type: string
+        name:
+          maxLength: 100
+          minLength: 1
+          title: Name
+          type: string
+        nervous_system:
+          anyOf:
+          - enum:
+            - central
+            - peripheral
+            - unknown
+            type: string
+          - type: 'null'
+          title: Nervous System
+        sampling_rate:
+          description: Hz
+          exclusiveMinimum: 0.0
+          title: Sampling Rate
+          type: number
+        units:
+          maxLength: 20
+          minLength: 1
+          title: Units
+          type: string
+      required:
+      - name
+      - modality
+      - sampling_rate
+      - units
+      title: ChannelIn
+      type: object
+    ChannelOut:
+      properties:
+        derived_from_non_neural:
+          title: Derived From Non Neural
+          type: boolean
+        device_ref:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Device Ref
+        index:
+          title: Index
+          type: integer
+        modality:
+          title: Modality
+          type: string
+        name:
+          title: Name
+          type: string
+        nervous_system:
+          title: Nervous System
+          type: string
+        sampling_rate:
+          title: Sampling Rate
+          type: number
+        units:
+          title: Units
+          type: string
+      required:
+      - index
+      - name
+      - modality
+      - nervous_system
+      - derived_from_non_neural
+      - sampling_rate
+      - units
+      - device_ref
+      title: ChannelOut
+      type: object
+    CompleteIn:
+      properties:
+        sha256:
+          description: client SHA-256 (hex)
+          maxLength: 64
+          minLength: 64
+          title: Sha256
+          type: string
+      required:
+      - sha256
+      title: CompleteIn
+      type: object
+    ConfirmIn:
+      additionalProperties: false
+      properties:
+        token:
+          maxLength: 200
+          minLength: 20
+          title: Token
+          type: string
+      required:
+      - token
+      title: ConfirmIn
+      type: object
+    ConfirmedOut:
+      properties:
+        status:
+          const: confirmed
+          default: confirmed
+          title: Status
+          type: string
+      title: ConfirmedOut
+      type: object
+    ConsentDocIn:
+      additionalProperties: false
+      properties:
+        name:
+          maxLength: 200
+          minLength: 1
+          title: Name
+          type: string
+        sha256:
+          maxLength: 64
+          minLength: 64
+          title: Sha256
+          type: string
+        uri:
+          anyOf:
+          - maxLength: 500
+            type: string
+          - type: 'null'
+          title: Uri
+        version:
+          maxLength: 50
+          minLength: 1
+          title: Version
+          type: string
+      required:
+      - name
+      - version
+      - sha256
+      title: ConsentDocIn
+      type: object
+    ConsentDocOut:
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        sha256:
+          title: Sha256
+          type: string
+        uri:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Uri
+        version:
+          title: Version
+          type: string
+      required:
+      - id
+      - name
+      - version
+      - sha256
+      - uri
+      - created_at
+      title: ConsentDocOut
+      type: object
+    ConsentIn:
+      additionalProperties: false
+      properties:
+        document_id:
+          anyOf:
+          - format: uuid
+            type: string
+          - type: 'null'
+          title: Document Id
+        evidence_ref:
+          anyOf:
+          - maxLength: 500
+            type: string
+          - type: 'null'
+          description: e.g. the object key of the signed form
+          title: Evidence Ref
+        jurisdiction_basis:
+          anyOf:
+          - maxLength: 100
+            type: string
+          - type: 'null'
+          title: Jurisdiction Basis
+        kind:
+          default: grant
+          enum:
+          - grant
+          - withdraw
+          title: Kind
+          type: string
+        scopes:
+          items:
+            enum:
+            - collection
+            - processing
+            - sharing
+            - model_training
+            - commercial_use
+            type: string
+          minItems: 1
+          title: Scopes
+          type: array
+      required:
+      - scopes
+      title: ConsentIn
+      type: object
+    ConsentOut:
+      properties:
+        collector_id:
+          title: Collector Id
+          type: string
+        document_id:
+          anyOf:
+          - format: uuid
+            type: string
+          - type: 'null'
+          title: Document Id
+        document_sha256:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Document Sha256
+        evidence_ref:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Evidence Ref
+        id:
+          format: uuid
+          title: Id
+          type: string
+        jurisdiction_basis:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Jurisdiction Basis
+        kind:
+          title: Kind
+          type: string
+        prev_hash:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prev Hash
+        record_hash:
+          title: Record Hash
+          type: string
+        recorded_at:
+          format: date-time
+          title: Recorded At
+          type: string
+        scopes:
+          items:
+            type: string
+          title: Scopes
+          type: array
+        seq:
+          title: Seq
+          type: integer
+        subject_id:
+          format: uuid
+          title: Subject Id
+          type: string
+      required:
+      - id
+      - seq
+      - subject_id
+      - kind
+      - scopes
+      - document_id
+      - document_sha256
+      - jurisdiction_basis
+      - collector_id
+      - evidence_ref
+      - recorded_at
+      - prev_hash
+      - record_hash
+      title: ConsentOut
+      type: object
+    DatasetIn:
+      properties:
+        description:
+          anyOf:
+          - maxLength: 2000
+            type: string
+          - type: 'null'
+          title: Description
+        name:
+          maxLength: 200
+          minLength: 1
+          title: Name
+          type: string
+      required:
+      - name
+      title: DatasetIn
+      type: object
+    DatasetOut:
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        project_id:
+          format: uuid
+          title: Project Id
+          type: string
+      required:
+      - id
+      - name
+      - description
+      - created_at
+      - project_id
+      title: DatasetOut
+      type: object
+    DeletionOut:
+      properties:
+        aggregate_policy:
+          title: Aggregate Policy
+          type: string
+        certificate:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Certificate
+        duration_s:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Duration S
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+        finished_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Finished At
+        id:
+          format: uuid
+          title: Id
+          type: string
+        requested_at:
+          format: date-time
+          title: Requested At
+          type: string
+        started_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Started At
+        state:
+          title: State
+          type: string
+        subject_id:
+          format: uuid
+          title: Subject Id
+          type: string
+      required:
+      - id
+      - subject_id
+      - state
+      - aggregate_policy
+      - requested_at
+      - started_at
+      - finished_at
+      - duration_s
+      - error
+      - certificate
+      title: DeletionOut
+      type: object
+    DeliveryOut:
+      properties:
+        attempts:
+          title: Attempts
+          type: integer
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        delivered_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Delivered At
+        event_id:
+          format: uuid
+          title: Event Id
+          type: string
+        event_type:
+          title: Event Type
+          type: string
+        id:
+          format: uuid
+          title: Id
+          type: string
+        last_error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Last Error
+        last_status:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Last Status
+        next_attempt_at:
+          format: date-time
+          title: Next Attempt At
+          type: string
+        state:
+          enum:
+          - pending
+          - delivered
+          - failed
+          title: State
+          type: string
+      required:
+      - id
+      - event_id
+      - event_type
+      - state
+      - attempts
+      - next_attempt_at
+      - last_status
+      - last_error
+      - created_at
+      - delivered_at
+      title: DeliveryOut
+      type: object
+    DeviceIn:
+      properties:
+        name:
+          maxLength: 100
+          minLength: 1
+          title: Name
+          type: string
+        public_key:
+          description: Ed25519 public key, 32 bytes, base64
+          title: Public Key
+          type: string
+      required:
+      - name
+      - public_key
+      title: DeviceIn
+      type: object
+    DeviceOut:
+      properties:
+        alg:
+          title: Alg
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        public_key:
+          title: Public Key
+          type: string
+        revoked_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Revoked At
+      required:
+      - id
+      - name
+      - alg
+      - public_key
+      - created_at
+      - revoked_at
+      title: DeviceOut
+      type: object
+    EarlyAccessIn:
+      additionalProperties: false
+      properties:
+        email:
+          maxLength: 254
+          minLength: 3
+          title: Email
+          type: string
+        organisation:
+          anyOf:
+          - maxLength: 200
+            type: string
+          - type: 'null'
+          title: Organisation
+        role:
+          enum:
+          - researcher
+          - engineer
+          - clinician
+          - founder
+          - student
+          - other
+          title: Role
+          type: string
+        website:
+          anyOf:
+          - maxLength: 200
+            type: string
+          - type: 'null'
+          description: 'Honeypot: leave empty (hidden from people).'
+          title: Website
+      required:
+      - email
+      - role
+      title: EarlyAccessIn
+      type: object
+    EvidenceIn:
+      additionalProperties: false
+      properties:
+        node_id:
+          description: provenance node of the dataset/model to document
+          format: uuid
+          title: Node Id
+          type: string
+        release:
+          anyOf:
+          - maxLength: 64
+            pattern: ^[A-Za-z0-9][A-Za-z0-9._-]*$
+            type: string
+          - type: 'null'
+          description: release label
+          title: Release
+      required:
+      - node_id
+      title: EvidenceIn
+      type: object
+    FactorOut:
+      properties:
+        name:
+          title: Name
+          type: string
+        values:
+          items: {}
+          title: Values
+          type: array
+      required:
+      - name
+      - values
+      title: FactorOut
+      type: object
+    GovValues:
+      additionalProperties: false
+      properties:
+        derived_from_non_neural:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Derived From Non Neural
+        modality:
+          anyOf:
+          - enum:
+            - EEG
+            - iEEG
+            - ECoG
+            - SEEG
+            - LFP
+            - spikes
+            - MEG
+            - EMG
+            - ENG
+            - EOG
+            - ECG
+            - fNIRS
+            - other
+            type: string
+          - type: 'null'
+          title: Modality
+        nervous_system:
+          anyOf:
+          - enum:
+            - central
+            - peripheral
+            - unknown
+            type: string
+          - type: 'null'
+          title: Nervous System
+      title: GovValues
+      type: object
+    KeyVersionOut:
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        expires_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: Set while a rotation overlap runs.
+          title: Expires At
+        version:
+          title: Version
+          type: integer
+      required:
+      - version
+      - created_at
+      - expires_at
+      title: KeyVersionOut
+      type: object
+    LevelOut:
+      properties:
+        mean:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Mean
+        n:
+          title: N
+          type: integer
+        run_ids:
+          description: the runs this number is computed from
+          items:
+            format: uuid
+            type: string
+          title: Run Ids
+          type: array
+        value:
+          title: Value
+      required:
+      - mean
+      - n
+      - run_ids
+      - value
+      title: LevelOut
+      type: object
+    LineageOut:
+      properties:
+        depth:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Depth
+        direction:
+          enum:
+          - up
+          - down
+          title: Direction
+          type: string
+        edges:
+          items:
+            $ref: '#/components/schemas/ProvEdgeOut'
+          title: Edges
+          type: array
+        nodes:
+          items:
+            $ref: '#/components/schemas/ProvNodeOut'
+          title: Nodes
+          type: array
+        root:
+          format: uuid
+          title: Root
+          type: string
+        truncated:
+          description: True when the graph hit the node cap.
+          title: Truncated
+          type: boolean
+      required:
+      - root
+      - direction
+      - depth
+      - truncated
+      - nodes
+      - edges
+      title: LineageOut
+      type: object
+    MetricOut:
+      properties:
+        higher_is_better:
+          title: Higher Is Better
+          type: boolean
+        key:
+          title: Key
+          type: string
+        name:
+          title: Name
+          type: string
+        step:
+          title: Step
+          type: string
+      required:
+      - name
+      - step
+      - key
+      - higher_is_better
+      title: MetricOut
+      type: object
+    MetricSpec:
+      additionalProperties: false
+      properties:
+        higher_is_better:
+          default: true
+          title: Higher Is Better
+          type: boolean
+        key:
+          default: accuracy
+          description: key in that step's run-record info
+          title: Key
+          type: string
+        step:
+          description: pipeline step whose info holds it
+          maxLength: 100
+          minLength: 1
+          title: Step
+          type: string
+      required:
+      - step
+      title: MetricSpec
+      type: object
+    PartTargetOut:
+      properties:
+        auth:
+          title: Auth
+          type: string
+        expires_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Expires At
+        method:
+          title: Method
+          type: string
+        part_number:
+          title: Part Number
+          type: integer
+        url:
+          title: Url
+          type: string
+      required:
+      - part_number
+      - method
+      - url
+      - expires_at
+      - auth
+      title: PartTargetOut
+      type: object
+    PipelineVersionOut:
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          title: Created By
+          type: string
+        id:
+          description: pv:sha256:<64 hex>, the content address
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        ref:
+          description: name@version
+          title: Ref
+          type: string
+        spec:
+          additionalProperties: true
+          description: The published PipelineVersion document.
+          title: Spec
+          type: object
+        version:
+          title: Version
+          type: string
+      required:
+      - id
+      - name
+      - version
+      - ref
+      - spec
+      - created_by
+      - created_at
+      title: PipelineVersionOut
+      type: object
+    Problem:
+      additionalProperties: true
+      description: RFC 9457 problem details. Never contains stack traces, SQL, host names or credentials
+        (SEC-079).
+      properties:
+        detail:
+          type: string
+        errors:
+          description: 'Validation errors (422): location and message, never the input.'
+          items:
+            properties:
+              loc:
+                items:
+                  type: string
+                type: array
+              msg:
+                type: string
+            type: object
+          type: array
+        instance:
+          description: The request path.
+          type: string
+        request_id:
+          description: Also in the X-Request-Id header.
+          type: string
+        status:
+          maximum: 599
+          minimum: 400
+          type: integer
+        title:
+          type: string
+        type:
+          description: urn:nf:problem:<kind> or about:blank
+          type: string
+      required:
+      - type
+      - title
+      - status
+      type: object
+    ProjectIn:
+      properties:
+        description:
+          anyOf:
+          - maxLength: 2000
+            type: string
+          - type: 'null'
+          title: Description
+        name:
+          maxLength: 200
+          minLength: 1
+          title: Name
+          type: string
+      required:
+      - name
+      title: ProjectIn
+      type: object
+    ProjectOut:
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+      required:
+      - id
+      - name
+      - description
+      - created_at
+      title: ProjectOut
+      type: object
+    ProvEdgeOut:
+      properties:
+        dst:
+          format: uuid
+          title: Dst
+          type: string
+        rel:
+          enum:
+          - used
+          - wasGeneratedBy
+          - wasDerivedFrom
+          - wasAttributedTo
+          - wasAssociatedWith
+          - wasInformedBy
+          title: Rel
+          type: string
+        src:
+          format: uuid
+          title: Src
+          type: string
+      required:
+      - src
+      - rel
+      - dst
+      title: ProvEdgeOut
+      type: object
+    ProvExportOut:
+      anyOf:
+      - additionalProperties: true
+        type: object
+      - items:
+          additionalProperties: true
+          type: object
+        type: array
+      description: A PROV-JSON object (format=prov-json) or a list of OpenLineage RunEvents (openlineage).
+      title: ProvExportOut
+    ProvNodeDetailOut:
+      properties:
+        edges_in:
+          items:
+            $ref: '#/components/schemas/ProvEdgeOut'
+          title: Edges In
+          type: array
+        edges_out:
+          items:
+            $ref: '#/components/schemas/ProvEdgeOut'
+          title: Edges Out
+          type: array
+        node:
+          $ref: '#/components/schemas/ProvNodeOut'
+      required:
+      - node
+      - edges_out
+      - edges_in
+      title: ProvNodeDetailOut
+      type: object
+    ProvNodeOut:
+      properties:
+        attrs:
+          additionalProperties: true
+          title: Attrs
+          type: object
+        batch_seq:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Batch Seq
+        content_hash:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content Hash
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        depth:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: Hops from the root (lineage only).
+          title: Depth
+        id:
+          format: uuid
+          title: Id
+          type: string
+        kind:
+          enum:
+          - entity
+          - activity
+          - agent
+          title: Kind
+          type: string
+        node_hash:
+          title: Node Hash
+          type: string
+        ref_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ref Id
+        type:
+          description: raw_file, convert, recording, run, artifact, ...
+          title: Type
+          type: string
+      required:
+      - id
+      - kind
+      - type
+      - ref_id
+      - content_hash
+      - node_hash
+      - attrs
+      - batch_seq
+      - created_at
+      title: ProvNodeOut
+      type: object
+    QuotaItem:
+      properties:
+        limit:
+          title: Limit
+          type: integer
+        used:
+          title: Used
+          type: integer
+      required:
+      - limit
+      - used
+      title: QuotaItem
+      type: object
+    QuotasOut:
+      properties:
+        active_runs:
+          $ref: '#/components/schemas/QuotaItem'
+          description: Queued + running runs.
+        storage_bytes:
+          $ref: '#/components/schemas/QuotaItem'
+          description: Stored objects + uploads in flight.
+      required:
+      - storage_bytes
+      - active_runs
+      title: QuotasOut
+      type: object
+    ReceivedPartOut:
+      properties:
+        part_number:
+          title: Part Number
+          type: integer
+        sha256:
+          title: Sha256
+          type: string
+        size_bytes:
+          title: Size Bytes
+          type: integer
+      required:
+      - part_number
+      - size_bytes
+      - sha256
+      title: ReceivedPartOut
+      type: object
+    RecordingIn:
+      properties:
+        channels:
+          items:
+            $ref: '#/components/schemas/ChannelIn'
+          maxItems: 4096
+          title: Channels
+          type: array
+        duration_s:
+          anyOf:
+          - minimum: 0.0
+            type: number
+          - type: 'null'
+          title: Duration S
+        label:
+          maxLength: 200
+          minLength: 1
+          title: Label
+          type: string
+        source_format:
+          anyOf:
+          - maxLength: 40
+            type: string
+          - type: 'null'
+          title: Source Format
+      required:
+      - label
+      title: RecordingIn
+      type: object
+    RecordingOut:
+      properties:
+        channels:
+          default: []
+          items:
+            $ref: '#/components/schemas/ChannelOut'
+          title: Channels
+          type: array
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        duration_s:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Duration S
+        id:
+          format: uuid
+          title: Id
+          type: string
+        label:
+          title: Label
+          type: string
+        session_id:
+          format: uuid
+          title: Session Id
+          type: string
+        source_format:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Format
+        state:
+          title: State
+          type: string
+      required:
+      - id
+      - session_id
+      - label
+      - source_format
+      - state
+      - duration_s
+      - created_at
+      title: RecordingOut
+      type: object
+    ReportOut:
+      properties:
+        best:
+          anyOf:
+          - $ref: '#/components/schemas/BestOut'
+          - type: 'null'
+        cells:
+          items:
+            $ref: '#/components/schemas/CellOut'
+          title: Cells
+          type: array
+        complete:
+          title: Complete
+          type: boolean
+        factors:
+          items:
+            $ref: '#/components/schemas/FactorOut'
+          title: Factors
+          type: array
+        metric:
+          $ref: '#/components/schemas/MetricOut'
+        pipeline:
+          title: Pipeline
+          type: string
+        pipeline_version_id:
+          title: Pipeline Version Id
+          type: string
+        prov_node_id:
+          anyOf:
+          - format: uuid
+            type: string
+          - type: 'null'
+          title: Prov Node Id
+        sensitivity:
+          items:
+            $ref: '#/components/schemas/SensitivityOut'
+          title: Sensitivity
+          type: array
+        state:
+          title: State
+          type: string
+        sweep_id:
+          format: uuid
+          title: Sweep Id
+          type: string
+        variants:
+          items:
+            $ref: '#/components/schemas/VariantSummary'
+          title: Variants
+          type: array
+      required:
+      - sweep_id
+      - state
+      - complete
+      - pipeline
+      - pipeline_version_id
+      - metric
+      - factors
+      - cells
+      - variants
+      - sensitivity
+      - best
+      - prov_node_id
+      title: ReportOut
+      type: object
+    RotatedOut:
+      properties:
+        previous_valid_until:
+          description: Older secrets keep verifying until then (both signatures are sent).
+          format: date-time
+          title: Previous Valid Until
+          type: string
+        signing_secret:
+          description: 'Shown once: the new signing secret.'
+          title: Signing Secret
+          type: string
+        version:
+          title: Version
+          type: integer
+      required:
+      - signing_secret
+      - version
+      - previous_valid_until
+      title: RotatedOut
+      type: object
+    RunFinishedData:
+      additionalProperties: false
+      properties:
+        finished_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Finished At
+        pipeline_ref:
+          title: Pipeline Ref
+          type: string
+        pipeline_version_id:
+          title: Pipeline Version Id
+          type: string
+        prov_activity_id:
+          anyOf:
+          - format: uuid
+            type: string
+          - type: 'null'
+          default: null
+          description: PROV activity node of the run (succeeded runs).
+          title: Prov Activity Id
+        recording_id:
+          format: uuid
+          title: Recording Id
+          type: string
+        run_id:
+          format: uuid
+          title: Run Id
+          type: string
+        state:
+          enum:
+          - succeeded
+          - failed
+          - cancelled
+          title: State
+          type: string
+      required:
+      - run_id
+      - pipeline_ref
+      - pipeline_version_id
+      - recording_id
+      - state
+      - finished_at
+      title: RunFinishedData
+      type: object
+    RunFinishedEvent:
+      additionalProperties: false
+      description: Sent when a pipeline run reaches a terminal state.
+      properties:
+        api_version:
+          const: v1
+          default: v1
+          title: Api Version
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        data:
+          $ref: '#/components/schemas/RunFinishedData'
+        id:
+          description: Event ID; the same on every retry (deduplicate on it).
+          format: uuid
+          title: Id
+          type: string
+        tenant_id:
+          format: uuid
+          title: Tenant Id
+          type: string
+        type:
+          const: run.finished
+          title: Type
+          type: string
+      required:
+      - id
+      - type
+      - created_at
+      - tenant_id
+      - data
+      title: RunFinishedEvent
+      type: object
+    RunIn:
+      properties:
+        pipeline:
+          description: name@semver or pv:sha256:<64 hex>
+          maxLength: 300
+          minLength: 1
+          title: Pipeline
+          type: string
+        recording_id:
+          format: uuid
+          title: Recording Id
+          type: string
+      required:
+      - pipeline
+      - recording_id
+      title: RunIn
+      type: object
+    RunOut:
+      properties:
+        artifacts:
+          default: []
+          items:
+            $ref: '#/components/schemas/ArtifactOut'
+          title: Artifacts
+          type: array
+        attempt:
+          title: Attempt
+          type: integer
+        cancel_requested:
+          default: false
+          title: Cancel Requested
+          type: boolean
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+        finished_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Finished At
+        id:
+          format: uuid
+          title: Id
+          type: string
+        pipeline_ref:
+          title: Pipeline Ref
+          type: string
+        pipeline_version_id:
+          title: Pipeline Version Id
+          type: string
+        prov_activity_id:
+          anyOf:
+          - format: uuid
+            type: string
+          - type: 'null'
+          title: Prov Activity Id
+        prov_batch_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prov Batch Id
+        record:
+          additionalProperties: true
+          title: Record
+          type: object
+        recording_id:
+          format: uuid
+          title: Recording Id
+          type: string
+        seed:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Seed
+        started_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Started At
+        state:
+          title: State
+          type: string
+      required:
+      - id
+      - pipeline_ref
+      - pipeline_version_id
+      - recording_id
+      - state
+      - seed
+      - attempt
+      - error
+      - record
+      - prov_activity_id
+      - prov_batch_id
+      - created_at
+      - started_at
+      - finished_at
+      title: RunOut
+      type: object
+    RunStateEvent:
+      description: '``data`` of an ``event: run.state`` message.'
+      properties:
+        attempt:
+          title: Attempt
+          type: integer
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+        finished_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          format: date-time
+          title: Finished At
+        run_id:
+          format: uuid
+          title: Run Id
+          type: string
+        state:
+          title: State
+          type: string
+      required:
+      - run_id
+      - state
+      - attempt
+      - error
+      - finished_at
+      title: RunStateEvent
+      type: object
+    RunSummaryOut:
+      description: 'One row of ``GET /v1/runs`` (no run record, no artifacts: open the run for those).'
+      properties:
+        attempt:
+          title: Attempt
+          type: integer
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          title: Created By
+          type: string
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+        finished_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Finished At
+        id:
+          format: uuid
+          title: Id
+          type: string
+        pipeline_ref:
+          title: Pipeline Ref
+          type: string
+        pipeline_version_id:
+          title: Pipeline Version Id
+          type: string
+        recording_id:
+          format: uuid
+          title: Recording Id
+          type: string
+        started_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Started At
+        state:
+          title: State
+          type: string
+      required:
+      - id
+      - pipeline_ref
+      - pipeline_version_id
+      - recording_id
+      - state
+      - attempt
+      - error
+      - created_by
+      - created_at
+      - started_at
+      - finished_at
+      title: RunSummaryOut
+      type: object
+    SensitivityOut:
+      properties:
+        factor:
+          title: Factor
+          type: string
+        levels:
+          items:
+            $ref: '#/components/schemas/LevelOut'
+          title: Levels
+          type: array
+        range:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: max - min of the level means
+          title: Range
+      required:
+      - factor
+      - levels
+      - range
+      title: SensitivityOut
+      type: object
+    SessionIn:
+      properties:
+        label:
+          maxLength: 200
+          minLength: 1
+          title: Label
+          type: string
+        started_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Started At
+      required:
+      - label
+      title: SessionIn
+      type: object
+    SessionOut:
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        id:
+          format: uuid
+          title: Id
+          type: string
+        label:
+          title: Label
+          type: string
+        started_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Started At
+        subject_id:
+          format: uuid
+          title: Subject Id
+          type: string
+      required:
+      - id
+      - subject_id
+      - label
+      - started_at
+      - created_at
+      title: SessionOut
+      type: object
+    StreamChannelIn:
+      properties:
+        derived_from_non_neural:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Derived From Non Neural
+        modality:
+          enum:
+          - EEG
+          - iEEG
+          - ECoG
+          - SEEG
+          - LFP
+          - spikes
+          - MEG
+          - EMG
+          - ENG
+          - EOG
+          - ECG
+          - fNIRS
+          - other
+          title: Modality
+          type: string
+        name:
+          maxLength: 100
+          minLength: 1
+          title: Name
+          type: string
+        nervous_system:
+          anyOf:
+          - enum:
+            - central
+            - peripheral
+            - unknown
+            type: string
+          - type: 'null'
+          title: Nervous System
+        offset:
+          default: 0.0
+          title: Offset
+          type: number
+        scale:
+          default: 1.0
+          title: Scale
+          type: number
+        units:
+          maxLength: 20
+          minLength: 1
+          title: Units
+          type: string
+      required:
+      - name
+      - modality
+      - units
+      title: StreamChannelIn
+      type: object
+    StreamIn:
+      properties:
+        channels:
+          items:
+            $ref: '#/components/schemas/StreamChannelIn'
+          maxItems: 4096
+          minItems: 1
+          title: Channels
+          type: array
+        device_id:
+          format: uuid
+          title: Device Id
+          type: string
+        dtype:
+          enum:
+          - int16
+          - int32
+          - float32
+          - float64
+          title: Dtype
+          type: string
+        label:
+          maxLength: 200
+          minLength: 1
+          title: Label
+          type: string
+        sfreq:
+          exclusiveMinimum: 0.0
+          maximum: 100000.0
+          title: Sfreq
+          type: number
+        synthetic:
+          default: false
+          title: Synthetic
+          type: boolean
+      required:
+      - label
+      - device_id
+      - sfreq
+      - dtype
+      - channels
+      title: StreamIn
+      type: object
+    StreamOut:
+      properties:
+        ack_timing:
+          default: none
+          description: 'SEC-093: acknowledgements carry no timing guarantee; never block acquisition on
+            them'
+          title: Ack Timing
+          type: string
+        grpc_service:
+          description: Fully qualified gRPC service to stream chunks to.
+          title: Grpc Service
+          type: string
+        next_seq:
+          title: Next Seq
+          type: integer
+        recording_id:
+          format: uuid
+          title: Recording Id
+          type: string
+        recording_state:
+          title: Recording State
+          type: string
+        stream_id:
+          format: uuid
+          title: Stream Id
+          type: string
+        token_audience:
+          default: nf-ingest/v1
+          title: Token Audience
+          type: string
+      required:
+      - stream_id
+      - recording_id
+      - recording_state
+      - next_seq
+      title: StreamOut
+      type: object
+    SubjectIn:
+      properties:
+        label:
+          description: Pseudonymous study code
+          maxLength: 100
+          minLength: 1
+          title: Label
+          type: string
+      required:
+      - label
+      title: SubjectIn
+      type: object
+    SubjectOut:
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        dataset_id:
+          format: uuid
+          title: Dataset Id
+          type: string
+        id:
+          format: uuid
+          title: Id
+          type: string
+        label:
+          title: Label
+          type: string
+      required:
+      - id
+      - dataset_id
+      - label
+      - created_at
+      title: SubjectOut
+      type: object
+    SweepOut:
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          title: Created By
+          type: string
+        grid:
+          additionalProperties:
+            items: {}
+            type: array
+          title: Grid
+          type: object
+        id:
+          format: uuid
+          title: Id
+          type: string
+        metric:
+          $ref: '#/components/schemas/MetricSpec'
+        name:
+          title: Name
+          type: string
+        pipeline:
+          title: Pipeline
+          type: string
+        pipeline_version_id:
+          title: Pipeline Version Id
+          type: string
+        prov_node_id:
+          anyOf:
+          - format: uuid
+            type: string
+          - type: 'null'
+          title: Prov Node Id
+        recording_ids:
+          items:
+            format: uuid
+            type: string
+          title: Recording Ids
+          type: array
+        run_ids:
+          items:
+            format: uuid
+            type: string
+          title: Run Ids
+          type: array
+        run_states:
+          additionalProperties:
+            type: integer
+          title: Run States
+          type: object
+        state:
+          description: queued | running | succeeded | partial | failed
+          title: State
+          type: string
+        variants:
+          items:
+            $ref: '#/components/schemas/VariantOut'
+          title: Variants
+          type: array
+      required:
+      - id
+      - name
+      - state
+      - run_states
+      - pipeline
+      - pipeline_version_id
+      - recording_ids
+      - grid
+      - metric
+      - variants
+      - run_ids
+      - prov_node_id
+      - created_by
+      - created_at
+      title: SweepOut
+      type: object
+    SweepRequest:
+      additionalProperties: false
+      properties:
+        grid:
+          additionalProperties:
+            items: {}
+            type: array
+          description: '{"<step>.<param>": [value, ...]}; the cartesian product gives the variants'
+          maxProperties: 4
+          minProperties: 1
+          title: Grid
+          type: object
+        metric:
+          $ref: '#/components/schemas/MetricSpec'
+        name:
+          anyOf:
+          - maxLength: 200
+            minLength: 1
+            type: string
+          - type: 'null'
+          title: Name
+        pipeline:
+          description: 'base PipelineVersion: name@semver or pv ID'
+          maxLength: 300
+          minLength: 1
+          title: Pipeline
+          type: string
+        recording_ids:
+          items:
+            format: uuid
+            type: string
+          maxItems: 32
+          minItems: 1
+          title: Recording Ids
+          type: array
+      required:
+      - pipeline
+      - recording_ids
+      - grid
+      - metric
+      title: SweepRequest
+      type: object
+    SweepSummaryOut:
+      description: One row of ``GET /v1/sweeps`` (open the sweep for states, variants and run IDs).
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          title: Created By
+          type: string
+        id:
+          format: uuid
+          title: Id
+          type: string
+        n_runs:
+          title: N Runs
+          type: integer
+        n_variants:
+          title: N Variants
+          type: integer
+        name:
+          title: Name
+          type: string
+        pipeline_ref:
+          title: Pipeline Ref
+          type: string
+        pipeline_version_id:
+          title: Pipeline Version Id
+          type: string
+        prov_node_id:
+          anyOf:
+          - format: uuid
+            type: string
+          - type: 'null'
+          title: Prov Node Id
+      required:
+      - id
+      - name
+      - pipeline_ref
+      - pipeline_version_id
+      - n_variants
+      - n_runs
+      - prov_node_id
+      - created_by
+      - created_at
+      title: SweepSummaryOut
+      type: object
+    TenantPolicyIn:
+      additionalProperties: false
+      properties:
+        aggregate_on_withdrawal:
+          enum:
+          - rerun
+          - tombstone
+          title: Aggregate On Withdrawal
+          type: string
+        block_deployments_on_retrain:
+          default: true
+          title: Block Deployments On Retrain
+          type: boolean
+      required:
+      - aggregate_on_withdrawal
+      title: TenantPolicyIn
+      type: object
+    UploadIn:
+      properties:
+        filename:
+          maxLength: 200
+          minLength: 1
+          title: Filename
+          type: string
+        part_size:
+          anyOf:
+          - exclusiveMinimum: 0.0
+            type: integer
+          - type: 'null'
+          title: Part Size
+        session_id:
+          format: uuid
+          title: Session Id
+          type: string
+        size_bytes:
+          exclusiveMinimum: 0.0
+          title: Size Bytes
+          type: integer
+        synthetic:
+          default: false
+          description: 'SEC-071: true for synthetic or licence-checked public data (required outside prod
+            and for synthetic-only tenants)'
+          title: Synthetic
+          type: boolean
+      required:
+      - session_id
+      - filename
+      - size_bytes
+      title: UploadIn
+      type: object
+    UploadOut:
+      properties:
+        completed_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Completed At
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        dataset_id:
+          format: uuid
+          title: Dataset Id
+          type: string
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+        filename:
+          title: Filename
+          type: string
+        id:
+          format: uuid
+          title: Id
+          type: string
+        n_parts:
+          title: N Parts
+          type: integer
+        part_size:
+          title: Part Size
+          type: integer
+        parts:
+          items:
+            $ref: '#/components/schemas/PartTargetOut'
+          title: Parts
+          type: array
+        received_parts:
+          items:
+            $ref: '#/components/schemas/ReceivedPartOut'
+          title: Received Parts
+          type: array
+        recording_ids:
+          items:
+            type: string
+          title: Recording Ids
+          type: array
+        server_sha256:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Server Sha256
+        session_id:
+          format: uuid
+          title: Session Id
+          type: string
+        size_bytes:
+          title: Size Bytes
+          type: integer
+        state:
+          title: State
+          type: string
+        synthetic:
+          title: Synthetic
+          type: boolean
+      required:
+      - id
+      - dataset_id
+      - session_id
+      - filename
+      - size_bytes
+      - part_size
+      - n_parts
+      - state
+      - synthetic
+      - parts
+      - received_parts
+      - server_sha256
+      - error
+      - recording_ids
+      - created_at
+      - completed_at
+      title: UploadOut
+      type: object
+    VariantOut:
+      properties:
+        params:
+          additionalProperties: true
+          description: '{"<step>.<param>": value}'
+          title: Params
+          type: object
+        pipeline_ref:
+          title: Pipeline Ref
+          type: string
+        pipeline_version_id:
+          title: Pipeline Version Id
+          type: string
+        variant:
+          title: Variant
+          type: integer
+      required:
+      - variant
+      - params
+      - pipeline_ref
+      - pipeline_version_id
+      title: VariantOut
+      type: object
+    VariantSummary:
+      properties:
+        mean:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Mean
+        n:
+          title: N
+          type: integer
+        params:
+          additionalProperties: true
+          description: '{"<step>.<param>": value}'
+          title: Params
+          type: object
+        pipeline_ref:
+          title: Pipeline Ref
+          type: string
+        pipeline_version_id:
+          title: Pipeline Version Id
+          type: string
+        run_ids:
+          description: the runs this number is computed from
+          items:
+            format: uuid
+            type: string
+          title: Run Ids
+          type: array
+        variant:
+          title: Variant
+          type: integer
+      required:
+      - mean
+      - n
+      - run_ids
+      - variant
+      - params
+      - pipeline_ref
+      - pipeline_version_id
+      title: VariantSummary
+      type: object
+    WebhookIn:
+      properties:
+        description:
+          anyOf:
+          - maxLength: 200
+            type: string
+          - type: 'null'
+          title: Description
+        event_types:
+          items:
+            const: run.finished
+            type: string
+          maxItems: 1
+          minItems: 1
+          title: Event Types
+          type: array
+        url:
+          description: https URL with a public DNS name (private, loopback, link-local and metadata addresses
+            are refused, SEC-076)
+          maxLength: 2048
+          minLength: 12
+          title: Url
+          type: string
+      required:
+      - url
+      - event_types
+      title: WebhookIn
+      type: object
+    WebhookIssued:
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          title: Created By
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        disabled_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Disabled At
+        event_types:
+          items:
+            type: string
+          title: Event Types
+          type: array
+        id:
+          format: uuid
+          title: Id
+          type: string
+        key_versions:
+          description: Signing keys currently valid.
+          items:
+            $ref: '#/components/schemas/KeyVersionOut'
+          title: Key Versions
+          type: array
+        signing_secret:
+          description: Shown once. HMAC-SHA-256 key for NF-Webhook-Signature (use its UTF-8 bytes).
+          title: Signing Secret
+          type: string
+        url:
+          title: Url
+          type: string
+      required:
+      - id
+      - url
+      - description
+      - event_types
+      - created_by
+      - created_at
+      - disabled_at
+      - key_versions
+      - signing_secret
+      title: WebhookIssued
+      type: object
+    WebhookOut:
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          title: Created By
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        disabled_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Disabled At
+        event_types:
+          items:
+            type: string
+          title: Event Types
+          type: array
+        id:
+          format: uuid
+          title: Id
+          type: string
+        key_versions:
+          description: Signing keys currently valid.
+          items:
+            $ref: '#/components/schemas/KeyVersionOut'
+          title: Key Versions
+          type: array
+        url:
+          title: Url
+          type: string
+      required:
+      - id
+      - url
+      - description
+      - event_types
+      - created_by
+      - created_at
+      - disabled_at
+      - key_versions
+      title: WebhookOut
+      type: object
+    WhoAmIOut:
+      properties:
+        auth_method:
+          title: Auth Method
+          type: string
+        id:
+          title: Id
+          type: string
+        kind:
+          description: user | api_key | device | service
+          title: Kind
+          type: string
+        mfa_phishing_resistant:
+          title: Mfa Phishing Resistant
+          type: boolean
+        roles:
+          description: 'Effective roles: admin-class roles count only after a phishing-resistant login.'
+          items:
+            type: string
+          title: Roles
+          type: array
+        scopes:
+          items:
+            type: string
+          title: Scopes
+          type: array
+        tenant_id:
+          title: Tenant Id
+          type: string
+      required:
+      - id
+      - tenant_id
+      - kind
+      - roles
+      - scopes
+      - mfa_phishing_resistant
+      - auth_method
+      title: WhoAmIOut
+      type: object
+    WindowJsonOut:
+      description: '``nf-window/1`` JSON form: header + ``data[channel][sample]`` in stored units
+
+        (physical = value * scale + offset).'
+      properties:
+        byte_order:
+          title: Byte Order
+          type: string
+        channels:
+          items:
+            type: string
+          title: Channels
+          type: array
+        chunk_id:
+          title: Chunk Id
+          type: string
+        data:
+          items:
+            items:
+              type: number
+            type: array
+          title: Data
+          type: array
+        decimation:
+          title: Decimation
+          type: integer
+        dtype:
+          title: Dtype
+          type: string
+        kind:
+          enum:
+          - samples
+          - mean
+          - min
+          - max
+          title: Kind
+          type: string
+        level:
+          title: Level
+          type: integer
+        offset:
+          items:
+            type: number
+          title: Offset
+          type: array
+        order:
+          title: Order
+          type: string
+        physical:
+          title: Physical
+          type: string
+        scale:
+          items:
+            type: number
+          title: Scale
+          type: array
+        sfreq:
+          title: Sfreq
+          type: number
+        shape:
+          items:
+            type: integer
+          maxItems: 2
+          minItems: 2
+          title: Shape
+          type: array
+        start_index:
+          title: Start Index
+          type: integer
+        start_s:
+          title: Start S
+          type: number
+        units:
+          items:
+            type: string
+          title: Units
+          type: array
+      required:
+      - byte_order
+      - channels
+      - chunk_id
+      - decimation
+      - dtype
+      - kind
+      - level
+      - offset
+      - order
+      - physical
+      - scale
+      - sfreq
+      - shape
+      - start_index
+      - start_s
+      - units
+      - data
+      title: WindowJsonOut
+      type: object
+    WithdrawalIn:
+      additionalProperties: false
+      properties:
+        evidence_ref:
+          anyOf:
+          - maxLength: 500
+            type: string
+          - type: 'null'
+          title: Evidence Ref
+      title: WithdrawalIn
+      type: object
+  securitySchemes:
+    apiKey:
+      bearerFormat: nfb_live_<public id>_<secret>
+      description: Scoped, expiring API key (SEC-014). Revocation is effective at once for new requests
+        and within 60 s for open streams (SEC-017).
+      scheme: bearer
+      type: http
+    oidc:
+      description: 'User access token from the identity provider (Authorization: Bearer).'
+      openIdConnectUrl: https://id.example.invalid/.well-known/openid-configuration
+      type: openIdConnect
+info:
+  description: 'Platform API v1. Data flows device -> SDK -> platform only: no operation, event or field
+    sends anything to acquisition hardware (SEC-090). Errors are RFC 9457 application/problem+json. Only
+    additive changes within v1; deprecations carry Deprecation and Sunset headers.'
+  title: Platform API
+  version: 1.0.0
+openapi: 3.1.0
+paths:
+  /v1/api-keys:
+    get:
+      operationId: listApiKeys
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiKeyOut'
+                title: Response Listapikeys
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: List Api Keys
+      x-nf-action: apikey:read
+    post:
+      operationId: createApiKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiKeyIn'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyIssued'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Create Api Key
+      x-nf-action: apikey:create
+  /v1/api-keys/{key_id}:
+    delete:
+      operationId: revokeApiKey
+      parameters:
+      - in: path
+        name: key_id
+        required: true
+        schema:
+          format: uuid
+          title: Key Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Revoke Api Key
+      x-nf-action: apikey:revoke
+  /v1/artifacts/{node_id}/governance:
+    get:
+      operationId: getArtifactGovernance
+      parameters:
+      - in: path
+        name: node_id
+        required: true
+        schema:
+          format: uuid
+          title: Node Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Artifact Governance
+      x-nf-action: governance:read
+      x-nf-api-key-scope: metadata:read
+    put:
+      operationId: putArtifactGovernance
+      parameters:
+      - in: path
+        name: node_id
+        required: true
+        schema:
+          format: uuid
+          title: Node Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtifactGovIn'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Put Artifact Governance
+      x-nf-action: governance:write
+  /v1/audit/batches:
+    get:
+      operationId: listAuditBatches
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AuditBatchOut'
+                title: Response Listauditbatches
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: List Audit Batches
+      x-nf-action: audit:read
+  /v1/audit/events:
+    get:
+      operationId: listAuditEvents
+      parameters:
+      - in: query
+        name: after_seq
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: After Seq
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AuditEventOut'
+                title: Response Listauditevents
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: List Audit Events
+      x-nf-action: audit:read
+  /v1/classifications:
+    get:
+      description: 'Classification per channel of a recording (plus the recording''s strictest summary),
+        or per
+
+        derived artifact (``node_id``, inherited through the lineage).'
+      operationId: classifications
+      parameters:
+      - in: query
+        name: recording_id
+        required: false
+        schema:
+          anyOf:
+          - format: uuid
+            type: string
+          - type: 'null'
+          title: Recording Id
+      - in: query
+        name: node_id
+        required: false
+        schema:
+          anyOf:
+          - format: uuid
+            type: string
+          - type: 'null'
+          title: Node Id
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Classifications
+      x-nf-action: classification:read
+      x-nf-api-key-scope: metadata:read
+  /v1/consent-documents:
+    get:
+      operationId: listConsentDocuments
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          maximum: 500
+          minimum: 1
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ConsentDocOut'
+                title: Response Listconsentdocuments
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: List Consent Documents
+      x-nf-action: consent:read
+      x-nf-api-key-scope: metadata:read
+    post:
+      operationId: createConsentDocument
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsentDocIn'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsentDocOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Create Consent Document
+      x-nf-action: consent:create
+  /v1/datasets/{dataset_id}:
+    get:
+      operationId: getDataset
+      parameters:
+      - in: path
+        name: dataset_id
+        required: true
+        schema:
+          format: uuid
+          title: Dataset Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Dataset
+      x-nf-action: dataset:read
+      x-nf-api-key-scope: metadata:read
+  /v1/datasets/{dataset_id}/subjects:
+    get:
+      operationId: listSubjects
+      parameters:
+      - in: path
+        name: dataset_id
+        required: true
+        schema:
+          format: uuid
+          title: Dataset Id
+          type: string
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SubjectOut'
+                title: Response Listsubjects
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: List Subjects
+      x-nf-action: subject:read
+      x-nf-api-key-scope: metadata:read
+    post:
+      operationId: createSubject
+      parameters:
+      - in: path
+        name: dataset_id
+        required: true
+        schema:
+          format: uuid
+          title: Dataset Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubjectIn'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Create Subject
+      x-nf-action: subject:create
+      x-nf-api-key-scope: metadata:write
+  /v1/datasets/{dataset_id}/uploads:
+    post:
+      operationId: createUpload
+      parameters:
+      - in: path
+        name: dataset_id
+        required: true
+        schema:
+          format: uuid
+          title: Dataset Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadIn'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Create Upload
+      x-nf-action: upload:create
+      x-nf-api-key-scope: data:write
+  /v1/deletion-jobs/{deletion_id}:
+    get:
+      operationId: getDeletion
+      parameters:
+      - in: path
+        name: deletion_id
+        required: true
+        schema:
+          format: uuid
+          title: Deletion Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletionOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Get Deletion
+      x-nf-action: withdrawal:read
+  /v1/devices:
+    get:
+      operationId: listDevices
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DeviceOut'
+                title: Response Listdevices
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: List Devices
+      x-nf-action: device:read
+      x-nf-api-key-scope: data:write
+    post:
+      description: 'SEC-016: the key pair is generated on the device; only the public key is registered.'
+      operationId: registerDevice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceIn'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Register Device
+      x-nf-action: device:create
+      x-nf-api-key-scope: data:write
+  /v1/exports/fda-evidence:
+    post:
+      operationId: exportFdaEvidence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvidenceIn'
+        required: true
+      responses:
+        '200':
+          content:
+            application/zip: {}
+          description: the kit (zip)
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Export Fda Evidence
+      x-nf-action: evidence:export
+  /v1/governance/certificate-key:
+    get:
+      operationId: certificateKey
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                title: Response Certificatekey
+                type: object
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Certificate Key
+      x-nf-action: withdrawal:read
+  /v1/governance/channels/bulk:
+    post:
+      operationId: bulkEdit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkIn'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Bulk Edit
+      x-nf-action: governance:write
+  /v1/governance/modality-defaults:
+    get:
+      operationId: modalityDefaults
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Modalitydefaults
+                type: object
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Modality Defaults
+      x-nf-action: governance:read
+      x-nf-api-key-scope: metadata:read
+  /v1/governance/tenant-policy:
+    get:
+      operationId: getTenantPolicy
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Gettenantpolicy
+                type: object
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Tenant Policy
+      x-nf-action: governance:read
+      x-nf-api-key-scope: metadata:read
+    put:
+      operationId: putTenantPolicy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TenantPolicyIn'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Puttenantpolicy
+                type: object
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Put Tenant Policy
+      x-nf-action: governance:admin
+  /v1/health:
+    get:
+      operationId: health
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                title: Response Health
+                type: object
+          description: Successful Response
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security: []
+      summary: Health
+      x-nf-action: public
+  /v1/jurisdiction-rules:
+    get:
+      operationId: jurisdictionRules
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Jurisdictionrules
+                type: object
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Jurisdiction Rules
+      x-nf-action: classification:read
+      x-nf-api-key-scope: metadata:read
+  /v1/pipelines:
+    post:
+      operationId: publishPipeline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              title: Body
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineVersionOut'
+          description: Identical re-publish
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineVersionOut'
+          description: Published
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Publish Pipeline
+      x-nf-action: pipeline:create
+      x-nf-api-key-scope: metadata:write
+  /v1/pipelines/{pipeline_ref}:
+    get:
+      operationId: getPipeline
+      parameters:
+      - in: path
+        name: pipeline_ref
+        required: true
+        schema:
+          title: Pipeline Ref
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineVersionOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Pipeline
+      x-nf-action: pipeline:read
+      x-nf-api-key-scope: metadata:read
+  /v1/projects:
+    get:
+      operationId: listProjects
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProjectOut'
+                title: Response Listprojects
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: List Projects
+      x-nf-action: project:read
+      x-nf-api-key-scope: metadata:read
+    post:
+      operationId: createProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectIn'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Create Project
+      x-nf-action: project:create
+      x-nf-api-key-scope: metadata:write
+  /v1/projects/{project_id}:
+    get:
+      operationId: getProject
+      parameters:
+      - in: path
+        name: project_id
+        required: true
+        schema:
+          format: uuid
+          title: Project Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Project
+      x-nf-action: project:read
+      x-nf-api-key-scope: metadata:read
+  /v1/projects/{project_id}/datasets:
+    get:
+      operationId: listDatasets
+      parameters:
+      - in: path
+        name: project_id
+        required: true
+        schema:
+          format: uuid
+          title: Project Id
+          type: string
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DatasetOut'
+                title: Response Listdatasets
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: List Datasets
+      x-nf-action: dataset:read
+      x-nf-api-key-scope: metadata:read
+    post:
+      operationId: createDataset
+      parameters:
+      - in: path
+        name: project_id
+        required: true
+        schema:
+          format: uuid
+          title: Project Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatasetIn'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Create Dataset
+      x-nf-action: dataset:create
+      x-nf-api-key-scope: metadata:write
+  /v1/provenance/{node_id}:
+    get:
+      operationId: getNode
+      parameters:
+      - in: path
+        name: node_id
+        required: true
+        schema:
+          format: uuid
+          title: Node Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvNodeDetailOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Node
+      x-nf-action: provenance:read
+      x-nf-api-key-scope: metadata:read
+  /v1/provenance/{node_id}/export:
+    get:
+      operationId: exportLineage
+      parameters:
+      - in: path
+        name: node_id
+        required: true
+        schema:
+          format: uuid
+          title: Node Id
+          type: string
+      - in: query
+        name: format
+        required: true
+        schema:
+          enum:
+          - prov-json
+          - openlineage
+          title: Format
+          type: string
+      - description: up = ancestry, down = descendants
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: up
+          description: up = ancestry, down = descendants
+          enum:
+          - up
+          - down
+          title: Direction
+          type: string
+      - description: 'max hops (default: unbounded)'
+        in: query
+        name: depth
+        required: false
+        schema:
+          anyOf:
+          - maximum: 1000
+            minimum: 0
+            type: integer
+          - type: 'null'
+          description: 'max hops (default: unbounded)'
+          title: Depth
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvExportOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Export Lineage
+      x-nf-action: provenance:export
+      x-nf-api-key-scope: metadata:read
+  /v1/provenance/{node_id}/lineage:
+    get:
+      operationId: getLineage
+      parameters:
+      - in: path
+        name: node_id
+        required: true
+        schema:
+          format: uuid
+          title: Node Id
+          type: string
+      - description: up = ancestry, down = descendants
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: up
+          description: up = ancestry, down = descendants
+          enum:
+          - up
+          - down
+          title: Direction
+          type: string
+      - description: 'max hops (default: unbounded)'
+        in: query
+        name: depth
+        required: false
+        schema:
+          anyOf:
+          - maximum: 1000
+            minimum: 0
+            type: integer
+          - type: 'null'
+          description: 'max hops (default: unbounded)'
+          title: Depth
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineageOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Lineage
+      x-nf-action: provenance:read
+      x-nf-api-key-scope: metadata:read
+  /v1/public/early-access:
+    options:
+      operationId: earlyAccessPreflight
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+          description: No Origin header.
+        '403':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+          description: Origin not allowed (CORS).
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security: []
+      summary: Early Access Preflight
+      x-nf-action: public
+      x-nf-status: disabled
+    post:
+      operationId: joinEarlyAccess
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EarlyAccessIn'
+        required: true
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedOut'
+          description: Successful Response
+        '403':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+          description: Origin not allowed (CORS).
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security: []
+      summary: Join Early Access
+      x-nf-action: public
+      x-nf-status: disabled
+  /v1/public/early-access/confirm:
+    options:
+      operationId: earlyAccessConfirmPreflight
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+          description: No Origin header.
+        '403':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+          description: Origin not allowed (CORS).
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security: []
+      summary: Early Access Confirm Preflight
+      x-nf-action: public
+      x-nf-status: disabled
+    post:
+      operationId: confirmEarlyAccess
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmIn'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfirmedOut'
+          description: Successful Response
+        '403':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+          description: Origin not allowed (CORS).
+        '404':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+          description: Unknown or expired token.
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security: []
+      summary: Confirm Early Access
+      x-nf-action: public
+      x-nf-status: disabled
+  /v1/quotas:
+    get:
+      operationId: getQuotas
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuotasOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Quotas
+      x-nf-action: quota:read
+      x-nf-api-key-scope: metadata:read
+  /v1/recordings/{recording_id}:
+    get:
+      operationId: getRecording
+      parameters:
+      - in: path
+        name: recording_id
+        required: true
+        schema:
+          format: uuid
+          title: Recording Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordingOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Recording
+      x-nf-action: recording:read
+      x-nf-api-key-scope: metadata:read
+  /v1/recordings/{recording_id}/channels:
+    patch:
+      operationId: editChannels
+      parameters:
+      - in: path
+        name: recording_id
+        required: true
+        schema:
+          format: uuid
+          title: Recording Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChannelEditsIn'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Edit Channels
+      x-nf-action: governance:write
+  /v1/recordings/{recording_id}/data:
+    get:
+      description: 'Read the window ``[start, end)`` seconds of a recording (step 2.4).
+
+
+        Decrypted server-side with the subject''s DEK. Response format ``nf-window/1`` (see
+
+        ``nf_platform.ingest.recording_store``): a header (channels, units, scale/offset, dtype,
+
+        shape [channels, samples], level, decimation, sfreq, start_s, chunk_id) plus the samples,
+
+        as JSON (``format=json``, at most ``window_json_max_values`` values) or as
+
+        ``application/vnd.nf.window.v1`` bytes (``format=binary``, at most ``window_max_values``).
+
+        Larger windows get 422 ``window-too-large``: use a pyramid ``level`` or a shorter window.
+
+        Quarantined recordings: 403 except for owner/admin/data-steward.'
+      operationId: readRecordingData
+      parameters:
+      - in: path
+        name: recording_id
+        required: true
+        schema:
+          format: uuid
+          title: Recording Id
+          type: string
+      - description: window start [s]
+        in: query
+        name: start
+        required: true
+        schema:
+          description: window start [s]
+          minimum: 0
+          title: Start
+          type: number
+      - description: window end [s], exclusive
+        in: query
+        name: end
+        required: true
+        schema:
+          description: window end [s], exclusive
+          exclusiveMinimum: 0
+          title: End
+          type: number
+      - description: comma-separated names or indices
+        in: query
+        name: channels
+        required: false
+        schema:
+          anyOf:
+          - maxLength: 65536
+            type: string
+          - type: 'null'
+          description: comma-separated names or indices
+          title: Channels
+      - in: query
+        name: level
+        required: false
+        schema:
+          default: 0
+          maximum: 11
+          minimum: 0
+          title: Level
+          type: integer
+      - in: query
+        name: kind
+        required: false
+        schema:
+          default: mean
+          enum:
+          - mean
+          - min
+          - max
+          title: Kind
+          type: string
+      - in: query
+        name: format
+        required: false
+        schema:
+          default: json
+          enum:
+          - json
+          - binary
+          title: Format
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WindowJsonOut'
+            application/vnd.nf.window.v1:
+              schema:
+                format: binary
+                type: string
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Read Recording Data
+      x-nf-action: signal:read
+      x-nf-api-key-scope: data:read
+  /v1/runs:
+    get:
+      description: Runs of the caller's tenant, newest first (M3 open issue 5).
+      operationId: listRuns
+      parameters:
+      - in: query
+        name: state
+        required: false
+        schema:
+          anyOf:
+          - enum:
+            - queued
+            - running
+            - succeeded
+            - failed
+            - cancelled
+            type: string
+          - type: 'null'
+          title: State
+      - in: query
+        name: recording_id
+        required: false
+        schema:
+          anyOf:
+          - format: uuid
+            type: string
+          - type: 'null'
+          title: Recording Id
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/RunSummaryOut'
+                title: Response Listruns
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: List Runs
+      x-nf-action: run:read
+      x-nf-api-key-scope: data:read
+    post:
+      operationId: createRun
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunIn'
+        required: true
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Create Run
+      x-nf-action: run:create
+      x-nf-api-key-scope: data:write
+  /v1/runs/{run_id}:
+    get:
+      operationId: getRun
+      parameters:
+      - in: path
+        name: run_id
+        required: true
+        schema:
+          format: uuid
+          title: Run Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Run
+      x-nf-action: run:read
+      x-nf-api-key-scope: data:read
+  /v1/runs/{run_id}/cancel:
+    post:
+      operationId: cancelRun
+      parameters:
+      - in: path
+        name: run_id
+        required: true
+        schema:
+          format: uuid
+          title: Run Id
+          type: string
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Cancel Run
+      x-nf-action: run:cancel
+      x-nf-api-key-scope: data:write
+  /v1/runs/{run_id}/events:
+    get:
+      operationId: streamRunEvents
+      parameters:
+      - in: path
+        name: run_id
+        required: true
+        schema:
+          format: uuid
+          title: Run Id
+          type: string
+      - description: close after this many seconds (default 300)
+        in: query
+        name: wait_s
+        required: false
+        schema:
+          default: 300.0
+          description: close after this many seconds (default 300)
+          maximum: 3600
+          minimum: 0
+          title: Wait S
+          type: number
+      responses:
+        '200':
+          content:
+            text/event-stream:
+              schema:
+                type: string
+              x-nf-event-data: '#/components/schemas/RunStateEvent'
+          description: text/event-stream of run.state events (then end, timeout or error).
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Stream Run Events
+      x-nf-action: run:read
+      x-nf-api-key-scope: data:read
+  /v1/sessions/{session_id}:
+    get:
+      operationId: getSession
+      parameters:
+      - in: path
+        name: session_id
+        required: true
+        schema:
+          format: uuid
+          title: Session Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Session
+      x-nf-action: session:read
+      x-nf-api-key-scope: metadata:read
+  /v1/sessions/{session_id}/recordings:
+    get:
+      operationId: listRecordings
+      parameters:
+      - in: path
+        name: session_id
+        required: true
+        schema:
+          format: uuid
+          title: Session Id
+          type: string
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/RecordingOut'
+                title: Response Listrecordings
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: List Recordings
+      x-nf-action: recording:read
+      x-nf-api-key-scope: metadata:read
+    post:
+      operationId: createRecording
+      parameters:
+      - in: path
+        name: session_id
+        required: true
+        schema:
+          format: uuid
+          title: Session Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordingIn'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordingOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Create Recording
+      x-nf-action: recording:create
+      x-nf-api-key-scope: metadata:write
+  /v1/sessions/{session_id}/streams:
+    post:
+      operationId: openStream
+      parameters:
+      - in: path
+        name: session_id
+        required: true
+        schema:
+          format: uuid
+          title: Session Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreamIn'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Open Stream
+      x-nf-action: stream:create
+      x-nf-api-key-scope: data:write
+  /v1/subjects/{subject_id}:
+    get:
+      operationId: getSubject
+      parameters:
+      - in: path
+        name: subject_id
+        required: true
+        schema:
+          format: uuid
+          title: Subject Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Subject
+      x-nf-action: subject:read
+      x-nf-api-key-scope: metadata:read
+  /v1/subjects/{subject_id}/consents:
+    get:
+      operationId: getConsents
+      parameters:
+      - in: path
+        name: subject_id
+        required: true
+        schema:
+          format: uuid
+          title: Subject Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Getconsents
+                type: object
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Consents
+      x-nf-action: consent:read
+      x-nf-api-key-scope: metadata:read
+    post:
+      operationId: addConsent
+      parameters:
+      - in: path
+        name: subject_id
+        required: true
+        schema:
+          format: uuid
+          title: Subject Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsentIn'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsentOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Add Consent
+      x-nf-action: consent:create
+  /v1/subjects/{subject_id}/sessions:
+    get:
+      operationId: listSessions
+      parameters:
+      - in: path
+        name: subject_id
+        required: true
+        schema:
+          format: uuid
+          title: Subject Id
+          type: string
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SessionOut'
+                title: Response Listsessions
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: List Sessions
+      x-nf-action: session:read
+      x-nf-api-key-scope: metadata:read
+    post:
+      operationId: createSession
+      parameters:
+      - in: path
+        name: subject_id
+        required: true
+        schema:
+          format: uuid
+          title: Subject Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionIn'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Create Session
+      x-nf-action: session:create
+      x-nf-api-key-scope: metadata:write
+  /v1/subjects/{subject_id}/withdrawals:
+    post:
+      operationId: withdraw
+      parameters:
+      - in: path
+        name: subject_id
+        required: true
+        schema:
+          format: uuid
+          title: Subject Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WithdrawalIn'
+        required: true
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletionOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Withdraw
+      x-nf-action: withdrawal:create
+  /v1/sweeps:
+    get:
+      description: Sweeps of the caller's tenant, newest first (M3 open issue 5).
+      operationId: listSweeps
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SweepSummaryOut'
+                title: Response Listsweeps
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: List Sweeps
+      x-nf-action: sweep:read
+      x-nf-api-key-scope: data:read
+    post:
+      operationId: createSweep
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SweepRequest'
+        required: true
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SweepOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Create Sweep
+      x-nf-action: sweep:create
+      x-nf-api-key-scope: data:write
+  /v1/sweeps/{sweep_id}:
+    get:
+      operationId: getSweep
+      parameters:
+      - in: path
+        name: sweep_id
+        required: true
+        schema:
+          format: uuid
+          title: Sweep Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SweepOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Sweep
+      x-nf-action: sweep:read
+      x-nf-api-key-scope: data:read
+  /v1/sweeps/{sweep_id}/report:
+    get:
+      operationId: getSweepReport
+      parameters:
+      - in: path
+        name: sweep_id
+        required: true
+        schema:
+          format: uuid
+          title: Sweep Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Sweep Report
+      x-nf-action: sweep:read
+      x-nf-api-key-scope: data:read
+  /v1/uploads/{upload_id}:
+    get:
+      operationId: getUpload
+      parameters:
+      - in: path
+        name: upload_id
+        required: true
+        schema:
+          format: uuid
+          title: Upload Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Get Upload
+      x-nf-action: upload:read
+      x-nf-api-key-scope: data:write
+  /v1/uploads/{upload_id}/complete:
+    post:
+      operationId: completeUpload
+      parameters:
+      - in: path
+        name: upload_id
+        required: true
+        schema:
+          format: uuid
+          title: Upload Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompleteIn'
+        required: true
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Complete Upload
+      x-nf-action: upload:create
+      x-nf-api-key-scope: data:write
+  /v1/uploads/{upload_id}/parts/{part_number}:
+    put:
+      description: 'Local signed-URL shim: the part body is sealed under the subject DEK before storage.'
+      operationId: putUploadPart
+      parameters:
+      - in: path
+        name: upload_id
+        required: true
+        schema:
+          format: uuid
+          title: Upload Id
+          type: string
+      - in: path
+        name: part_number
+        required: true
+        schema:
+          maximum: 10000
+          minimum: 1
+          title: Part Number
+          type: integer
+      requestBody:
+        content:
+          application/octet-stream: {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReceivedPartOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Put Upload Part
+      x-nf-action: upload:create
+      x-nf-api-key-scope: data:write
+  /v1/webhooks:
+    get:
+      operationId: listWebhooks
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WebhookOut'
+                title: Response Listwebhooks
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: List Webhooks
+      x-nf-action: webhook:read
+    post:
+      operationId: createWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookIn'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookIssued'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Create Webhook
+      x-nf-action: webhook:create
+  /v1/webhooks/{webhook_id}:
+    delete:
+      operationId: deleteWebhook
+      parameters:
+      - in: path
+        name: webhook_id
+        required: true
+        schema:
+          format: uuid
+          title: Webhook Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Delete Webhook
+      x-nf-action: webhook:delete
+    get:
+      operationId: getWebhook
+      parameters:
+      - in: path
+        name: webhook_id
+        required: true
+        schema:
+          format: uuid
+          title: Webhook Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Get Webhook
+      x-nf-action: webhook:read
+  /v1/webhooks/{webhook_id}/deliveries:
+    get:
+      operationId: listWebhookDeliveries
+      parameters:
+      - in: path
+        name: webhook_id
+        required: true
+        schema:
+          format: uuid
+          title: Webhook Id
+          type: string
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Offset
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DeliveryOut'
+                title: Response Listwebhookdeliveries
+                type: array
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: List Webhook Deliveries
+      x-nf-action: webhook:read
+  /v1/webhooks/{webhook_id}/rotate-secret:
+    post:
+      operationId: rotateWebhookSecret
+      parameters:
+      - in: path
+        name: webhook_id
+        required: true
+        schema:
+          format: uuid
+          title: Webhook Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RotatedOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Invalid'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      summary: Rotate Webhook Secret
+      x-nf-action: webhook:update
+  /v1/whoami:
+    get:
+      operationId: whoami
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhoAmIOut'
+          description: Successful Response
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/OtherError'
+      security:
+      - oidc: []
+      - apiKey: []
+      summary: Whoami
+      x-nf-action: self:read
+servers:
+- url: https://api.example.invalid
+webhooks:
+  runFinished:
+    post:
+      description: Sent when a pipeline run reaches a terminal state. Verify NF-Webhook-Signature over
+        the raw body before parsing (SEC-045).
+      operationId: runFinished
+      parameters:
+      - in: header
+        name: NF-Webhook-Id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - in: header
+        name: NF-Webhook-Timestamp
+        required: true
+        schema:
+          type: integer
+      - description: t=<unix seconds>,v1=<hex HMAC-SHA-256 of '<t>.' + body>[,v1=...] (one v1 per valid
+          signing secret)
+        in: header
+        name: NF-Webhook-Signature
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunFinishedEvent'
+        required: true
+      responses:
+        2XX:
+          description: Received. Anything else is retried with backoff.
+      summary: run.finished event

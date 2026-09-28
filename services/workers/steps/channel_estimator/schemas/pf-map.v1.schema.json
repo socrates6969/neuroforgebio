@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.invalid/nf/pf-map/v1",
+  "title": "Projected-field map (nf.pf-map/v1)",
+  "description": "Per-electrode projected-field labels of one implant. A PF electrode needs a palm_segment or a dorsum_segment; a non-PF electrode has neither. Research use only.",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "nf.pf-map/v1"
+    },
+    "map_id": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "electrodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "electrode_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "array_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "has_pf": {
+            "type": "boolean",
+            "default": true
+          },
+          "palm_segment": {
+            "type": "string",
+            "pattern": "^([A-Za-z0-9][A-Za-z0-9+\\-]{0,63})?$",
+            "default": ""
+          },
+          "dorsum_segment": {
+            "type": "string",
+            "pattern": "^([A-Za-z0-9][A-Za-z0-9+\\-]{0,63})?$",
+            "default": ""
+          },
+          "x_mm": {
+            "type": ["number", "null"]
+          },
+          "y_mm": {
+            "type": ["number", "null"]
+          },
+          "dominant_segment": {
+            "type": ["string", "null"],
+            "description": "optional check value: palm:<tag> or dors:<tag> (palm first)"
+          }
+        },
+        "required": ["electrode_id", "array_id"],
+        "additionalProperties": false
+      },
+      "maxItems": 4096
+    }
+  },
+  "required": ["schema", "electrodes"],
+  "additionalProperties": false
+}

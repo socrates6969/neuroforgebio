@@ -1,0 +1,60 @@
+---
+// Four-step pipeline list plus an optional illustrative code sample.
+import type { Status, StatusLabels } from '../types.ts';
+import StatusPill from './StatusPill.astro';
+interface Step { id: string; number: string; kicker: string; heading: string; body: string; tags: string[]; status?: Status }
+interface Code { heading: string; body: string; lines: string[]; note: string; label: string; eyebrow?: string }
+interface Props { steps: Step[]; code?: Code; statusLabels: StatusLabels; statusPrefix?: string }
+const { steps, code, statusLabels, statusPrefix } = Astro.props;
+const codeText = code ? code.lines.join(String.fromCharCode(10)) : '';
+---
+<ol class="pipe">
+  {steps.map((s) => (
+    <li class="step" id={`step-${s.id}`}>
+      <span class="node" aria-hidden="true"></span>
+      <span class="num">{s.number} / {s.kicker}</span>
+      <h3>{s.heading}</h3>
+      <p>{s.body}</p>
+      {s.tags.length > 0 && <ul>{s.tags.map((t) => <li>{t}</li>)}</ul>}
+      {s.status && <p class="st"><StatusPill status={s.status} label={statusLabels[s.status]} prefix={statusPrefix} /></p>}
+    </li>
+  ))}
+</ol>
+{code && (
+  <div class="code">
+    <div class="explain">
+      {code.eyebrow && <p class="nf-label">{code.eyebrow}</p>}
+      <h3>{code.heading}</h3>
+      <p>{code.body}</p>
+    </div>
+    <pre aria-label={code.label} tabindex="0"><code>{codeText}</code><span class="cnote">{code.note}</span></pre>
+  </div>
+)}
+<style>
+  .pipe { list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--color-line); border-radius: var(--radius-card); background: var(--color-surface); box-shadow: var(--elevation-card); }
+  .pipe::before { content: ""; position: absolute; left: 0; right: 0; top: 58px; height: 1px; background: linear-gradient(90deg, var(--color-accent), var(--color-secondary)); opacity: .55; }
+  .step { padding: 28px 24px 30px; border-left: 1px solid var(--color-line); position: relative; }
+  .step:first-child { border-left: 0; }
+  .num { font: 500 13px var(--font-mono); color: var(--color-accent-ink); display: flex; align-items: center; height: 28px; }
+  .node { position: absolute; top: 53px; left: 24px; width: 11px; height: 11px; border-radius: 50%; background: var(--color-bg); border: 2px solid var(--color-accent); z-index: 1; }
+  h3 { margin-top: 38px; }
+  .step > p { color: var(--color-muted); font-size: 14.5px; margin-top: 10px; }
+  .step ul { list-style: none; margin: 16px 0 0; padding: 0; font: 400 12.5px/1.9 var(--font-mono); color: var(--color-ink); }
+  .step ul li::before { content: "— "; color: var(--color-muted); }
+  .step .st { margin-top: 14px; }
+  @media (max-width: 960px) {
+    .pipe { grid-template-columns: 1fr 1fr; }
+    .step:nth-child(3) { border-left: 0; }
+    .step:nth-child(n+3) { border-top: 1px solid var(--color-line); }
+    .pipe::before, .node { display: none; }
+    h3 { margin-top: 14px; }
+  }
+  @media (max-width: 560px) { .pipe { grid-template-columns: 1fr; } .step { border-left: 0; } .step + .step { border-top: 1px solid var(--color-line); } }
+  .code { margin-top: 28px; display: grid; grid-template-columns: 1fr 1.3fr; border: 1px solid var(--color-line); border-radius: var(--radius-card); overflow: hidden; background: var(--color-surface); }
+  .explain { padding: 28px; border-right: 1px solid var(--color-line); }
+  .explain h3 { margin-top: 12px; }
+  .explain p:not(.nf-label) { color: var(--color-muted); font-size: 14.5px; margin-top: 10px; }
+  pre { margin: 0; padding: 24px 26px; background: var(--color-ink); color: var(--color-bg); font: 400 13.5px/1.75 var(--font-mono); overflow-x: auto; white-space: pre; }
+  .cnote { display: block; margin-top: 14px; opacity: .8; }
+  @media (max-width: 800px) { .code { grid-template-columns: 1fr; } .explain { border-right: 0; border-bottom: 1px solid var(--color-line); } }
+</style>

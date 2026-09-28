@@ -1,0 +1,17 @@
+# Native plug-ins are built from bindings/c, not committed.
+/Plugins/**/*.dll
+/Plugins/**/*.so
+/Plugins/**/*.dylib
+/Plugins/**/*.bundle
+# Unity-generated state of the test project
+/Samples~/SdkTestProject/Library/
+/Samples~/SdkTestProject/Logs/
+/Samples~/SdkTestProject/Temp/
+/Samples~/SdkTestProject/UserSettings/
+/Samples~/SdkTestProject/ProjectSettings/
+/Samples~/SdkTestProject/obj/
+/Samples~/SdkTestProject/*.csproj
+/Samples~/SdkTestProject/*.sln
+# .NET build output of the test projects
+/Tests~/**/bin/
+/Tests~/**/obj/

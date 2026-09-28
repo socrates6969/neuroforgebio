@@ -1,0 +1,48 @@
+/*
+ * Cosmos theme tokens (design/option-3.html :root; BLUEPRINT §2.2).
+ * Glass surfaces are translucent white over --color-bg; the contrast test composites them.
+ * Fonts are self-hosted from @fontsource (latin subset, only the weights packages/ui uses), so this
+ * theme ships no remote font request (DECISIONS.md D9). Licences: packages/themes/README.md.
+ */
+@import '@fontsource/space-grotesk/latin-400.css';
+@import '@fontsource/space-grotesk/latin-500.css';
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-500.css';
+
+[data-theme='cosmos'] {
+  --color-bg: #05010f;
+  --color-surface: rgba(255, 255, 255, 0.04);
+  --color-surface-2: rgba(255, 255, 255, 0.07);
+  --color-ink: #ede9fe;
+  --color-muted: #a5a0c0;
+  --color-accent: #8b5cf6;
+  --color-accent-ink: #b79cff;
+  --color-on-accent: #05010f;
+  --color-secondary: #22d3ee;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-focus: #22d3ee;
+  --color-status-designed-bg: rgba(139, 92, 246, 0.18);
+  --color-status-designed-ink: #c4b5fd;
+  --color-status-planned-bg: rgba(34, 211, 238, 0.12);
+  --color-status-planned-ink: #67e8f9;
+  --color-status-roadmap-bg: rgba(255, 255, 255, 0.06);
+  --color-status-roadmap-ink: #a5a0c0;
+  --emphasis-paint: linear-gradient(100deg, #b79cff 0%, #22d3ee 50%, #f472b6 100%);
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+  --radius-card: 20px;
+  --motion-duration: 300ms;
+  --motion-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --elevation-card:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 30px 60px -40px rgba(139, 92, 246, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme='cosmos'] {
+    --motion-duration: 0ms;
+  }
+}

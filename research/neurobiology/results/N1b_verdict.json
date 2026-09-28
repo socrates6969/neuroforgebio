@@ -1,0 +1,117 @@
+{
+ "N1b_verdict": "FAIL",
+ "N1prime_parts": {
+  "N1b": "FAIL",
+  "a": "PASS",
+  "c": "PASS",
+  "d": "PASS",
+  "e": "PASS"
+ },
+ "N1prime_verdict": "FAIL",
+ "N2": {
+  "label": "N1b FAILED or N2 identity differs; final for chb01/03/10 (N2 \u00a78)",
+  "status": "not verifiable: code"
+ },
+ "provenance": {
+  "harness_hash_check": {
+   "all_match_N2_run_card": true,
+   "mismatches": [],
+   "n_files": 17,
+   "sha256": {
+    "edf_reader.py": "f5a62fb9a277b37bfa05a17bcfd5ff3f2ca2613907173c7774ada288d3c27ddf",
+    "nfharness/__init__.py": "9efc7a844dc73e533957c92f644c38cd96df0851b52c58a7448e14a89df2937d",
+    "nfharness/card.py": "83b6bedde5bfd01607b4d6f778f8d4739aa1e51f27631a38142ffa98b1f3ee2c",
+    "nfharness/config.py": "dfca97f440fe098a5c966d245c4dc5401c745623e0383d3b40c5977263498632",
+    "nfharness/data.py": "243c9db3912886620f82b955fd5f3cd03f17ac938b2ea0ad1be9313f38b5a9e0",
+    "nfharness/errors.py": "7133afc13a2561096d54bb58c15463ccf07774868e5fc55fc15d883958c4b6aa",
+    "nfharness/features.py": "29acae0789a5e5a297ad489d962ce26f81bdd38bb41c3e82074a6581ad96f32e",
+    "nfharness/labels.py": "4679d0fabe44b4d313862321d9d2b3c7dd713370b2635563a321f35978f23a27",
+    "nfharness/model.py": "08305ee1f64f8c7b237e6592bddbfa93e5b7b200e0bfe895e5e520a5094ca10a",
+    "nfharness/pipeline.py": "76a2773a9e7bc94cb261d3a2acf3ca2261561bb60d3d0330886fba3ffebc202b",
+    "nfharness/postprocess.py": "faa04421f2167935c72ed102c9c9e63750ad7775a56045212559e230e68244c9",
+    "nfharness/provenance.py": "ade7554aa6990c5a27b27d171087c88dfb02378eb4a63a0279cf816302570b6b",
+    "nfharness/scoring.py": "b23ed292bed2235e67cb09e7a7698f44ff2e16c6e16680ef4ec98e42bfffc1ef",
+    "nfharness/splits.py": "1fcecb0af87f00709dc84a99fbc7f243444e342ff210031aae8e50660161ec29",
+    "nfharness/stats.py": "5dc8cf597a76e5b5251cb6ba73139d7fd939d2eee37b8b2f8a7055464e3eb4ee",
+    "nfharness/windows.py": "2898848e8984f84cef5ce637b6c810068e8a7db1b2e50e7eb62e7e67480cb36f",
+    "run_n2.py": "964716ccb7e5ec2cb8a435895fc5239075093865640555cde87927157e8dd6b8"
+   }
+  },
+  "n1b_code_sha256": {
+   "n1b/__init__.py": "e2c2d3760f93d8899cab2feea6b98516e577ed1413150d4c419b0af2d230a2c1",
+   "n1b/c3prime.py": "f4ffcd985acca260259e631837fbff74895f7cf8b5e84a5cd9828f0ce870fe7f",
+   "n1b/figures.py": "0c7633f2d46e43dad2b9ff4e5f6d8be3c32ff204634e4f02ec5d0506360493d2",
+   "n1b/ncp.py": "4ea3638183310c93c825f2c0dd1092d81300d28c8fc13e02b744c165f6cf4a90",
+   "n1b/sampler.py": "b9d653b3a49643638f926266a743b41ef0d9b246b873a3c25a9784661c027533",
+   "n1b/segments.py": "a75cfb3891c36f38d1cb9cfe3027d50bd706fb81a1f8b8b9d8b56950344835d3",
+   "n1b/synth.py": "3f851e5b00548f16c97af8f1389638a03306755810f0e4cf2d32420aed0f90a5",
+   "n1b/vault.py": "441a6038fda45e8031d5e11e3b0d6b5fe9a11316c6253cdd26c25e6ffabe3942",
+   "run_n1b.py": "1d68c49a9a9f38b9a5661c3a571c58c37305366c120506439cae3bfe7bc8b3d5",
+   "tests/test_n1b.py": "4ff191a218bdf991afc0a3b591f3058a1af2881b4f97eef0ba9c0996c0965f58"
+  },
+  "prereg_sha256": {
+   "N1_harness_controls.md": "27db9d27f5b6ac2e0f49826c6b3eb9625b8e1633434ae70cf62a7e10f09fc93b",
+   "N1b_negative_controls_v2.md": "a67b251734d59097b0cd516162e054ecb72737f27344868a45b3c40f1d7fc4a6",
+   "N2_baseline_detection.md": "ed929ae0e5182827352928225cf40865a8bee5f6b5da089be5a6600e6678e21c"
+  }
+ },
+ "rerun_identity": {
+  "hashes": {
+   "run1": {
+    "recomputed": "355d7d3020e1c49bd56d7f17b69cb327eac4f2a3375c371fea73cd77033e21d9",
+    "stored": "355d7d3020e1c49bd56d7f17b69cb327eac4f2a3375c371fea73cd77033e21d9"
+   },
+   "run2": {
+    "recomputed": "355d7d3020e1c49bd56d7f17b69cb327eac4f2a3375c371fea73cd77033e21d9",
+    "stored": "355d7d3020e1c49bd56d7f17b69cb327eac4f2a3375c371fea73cd77033e21d9"
+   }
+  },
+  "identical": true
+ },
+ "run_criteria": {
+  "C3prime_i": true,
+  "C3prime_ii": true,
+  "N2_identity_byte_identical": true,
+  "NC-P_V1": true,
+  "NC-P_V2": true,
+  "NC-P_order_ok": true,
+  "PL-A_trip": false,
+  "PL-B_trip": false,
+  "PL-C_trip": true,
+  "hash_checks": true,
+  "segment_table_matches_prereg": true
+ },
+ "runtime": {
+  "finished_utc": "2026-09-26T18:16:48.781874+00:00",
+  "wall_s": 8.427862167358398
+ },
+ "status_label": "RESEARCH USE ONLY. NOT A MEDICAL DEVICE. No clinical claims. Software intended for diagnosis, monitoring or treatment decisions may be a medical device under EU MDR 2017/745 (e.g. Rule 11) or FDA SaMD rules. Any clinical use requires regulatory clearance and clinical validation (IRB/ethics approval).",
+ "steps": {
+  "1_tests": true,
+  "2_synthetic_dry_run": false,
+  "3_real_run_criteria": false,
+  "4_rerun_byte_identical": true
+ },
+ "synthetic_dry_run": {
+  "KS_T_A_p_up": {
+   "n": 100,
+   "pass_ge_0.01": true,
+   "pvalue": 0.7014671084084265,
+   "statistic": 0.06899999999999995
+  },
+  "KS_T_E_p_up_descriptive": {
+   "n": 77,
+   "pvalue": 1.4148572414093602e-59,
+   "statistic": 0.8311688311688312
+  },
+  "PASS": false,
+  "PL-A_trips": false
+ },
+ "tests": {
+  "PASS": true,
+  "failed_or_error": 0,
+  "passed": 68,
+  "returncode": 0,
+  "summary": "68 passed in 7.72s"
+ }
+}

@@ -1,0 +1,46 @@
+# SOUP / OTS entries for OUR components (BUILD-GUIDE 5.8; BLUEPRINT §8.6): what a customer
+# building device software would list if they embed one of our components. SCAFFOLD, NOT A
+# SUBMISSION. Versions are read from each manifest when the kit is generated; third-party
+# components are in the SBOM. support_level uses the SEC-083 vocabulary.
+schema: nf.soup/v1
+components:
+  - id: nf-core
+    name: nf-core (Rust SDK core)
+    manifest: core/nf-core/Cargo.toml
+    purpose: Canonical hashing used by the SDKs (docs/spec/hashing.md). Currently a stub.
+    support_level: maintained
+    requirements: []
+    known_anomalies: See release-notes/known-anomalies.md.
+  - id: nf-platform
+    name: nf-platform (API, governance, provenance)
+    manifest: services/platform/pyproject.toml
+    purpose: >-
+      Data platform: storage, conversion, audit, provenance, consent and policy. Designed as a
+      non-device data function (no diagnosis or treatment suggestion; market/regulation.md §4).
+    support_level: maintained
+    requirements: [REQ-AUTH-001, REQ-TEN-001, REQ-AUD-001, REQ-PROV-001, REQ-GOV-004]
+    known_anomalies: See release-notes/known-anomalies.md.
+  - id: nf-steps
+    name: nf-steps (pipeline step library)
+    manifest: services/workers/steps/nf_steps/pyproject.toml
+    purpose: Versioned preprocessing steps executed by pipeline runs.
+    support_level: maintained
+    requirements: [REQ-PIPE-001, REQ-JOB-002]
+    known_anomalies: See release-notes/known-anomalies.md.
+  - id: nf-runner
+    name: nf-runner (pipeline worker)
+    manifest: services/workers/runner/pyproject.toml
+    purpose: Executes queued pipeline runs in a sandbox and records their provenance.
+    support_level: maintained
+    requirements: [REQ-JOB-001, REQ-JOB-002]
+    known_anomalies: See release-notes/known-anomalies.md.
+  - id: nf-train
+    name: nf-train (toy decoder training, SISA sharded mode)
+    manifest: services/workers/steps/nf_train/pyproject.toml
+    purpose: >-
+      Trains the toy decoder of registry models; the optional SISA mode keeps shard/slice
+      checkpoints so a consent withdrawal retrains only the affected shard. Not certified
+      unlearning. Not intended for real-time or safety-critical control.
+    support_level: maintained
+    requirements: [REQ-SISA-001, REQ-SISA-002, REQ-SOUP-001]
+    known_anomalies: See release-notes/known-anomalies.md.

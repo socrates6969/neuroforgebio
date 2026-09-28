@@ -1,0 +1,20 @@
+{
+ "note": "POST-HOC supplement, not a prereg criterion",
+ "dprime_bio": 0.5421700618098774,
+ "dprime_bio_CI95": [
+  0.5013169904515214,
+  0.5788792177755522
+ ],
+ "dprime_lin": 0.016987459104064472,
+ "dprime_lin_CI95": [
+  -0.01459414554393825,
+  0.05298040389950942
+ ],
+ "diff_CI95": [
+  0.4787169913472208,
+  0.5576592261050812
+ ],
+ "frac_boot_lin_le_0": 0.143,
+ "lin_step_signal_D2_mean_uA": 7.5266713595072225,
+ "per_sample_noise_sd_at_lin_event_uA": 143.8979355574323
+}

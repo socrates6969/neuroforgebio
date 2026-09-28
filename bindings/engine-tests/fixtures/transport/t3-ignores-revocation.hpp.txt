@@ -1,0 +1,11 @@
+// Regression fixture for T3 (nfb-security, WinHTTP transport packaging): the transport never
+// enables revocation checking and additionally carries two of the flags that weaken or bypass
+// certificate validation, including the test-only "ignore unknown CA" escape hatch. This file is
+// text only, read by transport-guards.test.mjs to prove transportRevocationConfig() flags this
+// pattern. The real nf_winhttp_transport.hpp at b976337 also lacked the revocation-enable flag
+// (fixed in 5db14b2). This fixture
+// additionally proves the forbidden-flags arm of the same guard, which the real file does not trip
+// today.
+DWORD flags = SECURITY_FLAG_IGNORE_CERT_REV_FAILED | SECURITY_FLAG_IGNORE_UNKNOWN_CA;
+if (!WinHttpSetOption(hr, WINHTTP_OPTION_SECURITY_FLAGS, &flags, sizeof(flags)))
+    throw TransportError("WinHttpSetOption(SECURITY_FLAGS)", GetLastError());

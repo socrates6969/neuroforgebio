@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clinical Montage Hero</title>
+<style>
+  html,body{margin:0;height:100%;background:#F7F9FB;overflow:hidden}
+  #stage{position:absolute;inset:0}
+  canvas{display:block;width:100%;height:100%}
+</style>
+</head>
+<body>
+<div id="stage" role="img" aria-label="Top-down 10-20 EEG electrode montage on a stylised head, with thin signal traces flowing from each electrode into neatly stacked channel lines. Illustrative synthetic signals.">
+  <canvas id="c" aria-hidden="true"></canvas>
+</div>
+<script>
+(function(){
+  'use strict';
+  var stage = document.getElementById('stage');
+  var cv = document.getElementById('c');
+  var ctx = cv.getContext('2d');
+  var RM = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : {matches:false};
+  var C = {bg:'#F7F9FB', ink:'#0B2540', acc:'#0E7C86', sec:'#5B8DEF'};
+  var FONT = 'Inter, "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif';
+
+  // Standard 10-20 positions on a unit head (x right, y toward nose). Perimeter ring at r = 0.8.
+  var E = [
+    ['Fp1',-0.247,0.761],['Fp2',0.247,0.761],
+    ['F7',-0.647,0.470],['F3',-0.335,0.420],['Fz',0,0.40],['F4',0.335,0.420],['F8',0.647,0.470],
+    ['T3',-0.80,0],['C3',-0.40,0],['Cz',0,0],['C4',0.40,0],['T4',0.80,0],
+    ['T5',-0.647,-0.470],['P3',-0.335,-0.420],['Pz',0,-0.40],['P4',0.335,-0.420],['T6',0.647,-0.470],
+    ['O1',-0.247,-0.761],['O2',0.247,-0.761],
+    ['A1',-1.07,0],['A2',1.07,0]
+  ];
+  var NCH = 19; // A1/A2 are references
+
+  var W=1,H=1,DPR=1,L={};
+
+  function layout(){
+    var r = stage.getBoundingClientRect();
+    W = Math.max(1, r.width); H = Math.max(1, r.height);
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    var portrait = W/H < 0.95;
+    var R, hx, hy, x0, x1, top, bot;
+    if(!portrait){
+      R = Math.min(H*0.33, W*0.165);
+      hx = W*0.05 + R*1.25; hy = H*0.53;
+      x0 = hx + R*1.25 + Math.max(70, W*0.10);
+      x1 = W - Math.max(16, W*0.04);
+      top = H*0.13; bot = H*0.90;
+    } else {
+      R = Math.min(W*0.28, H*0.16);
+      hx = W*0.5; hy = H*0.05 + R*1.3;
+      x0 = Math.max(56, W*0.16);
+      x1 = W - Math.max(16, W*0.05);
+      top = hy + R*1.25 + H*0.07; bot = H*0.95;
+    }
+    var gap = (bot-top)/(NCH-1);
+    L = {R:R,hx:hx,hy:hy,x0:x0,x1:x1,top:top,gap:gap,portrait:portrait,
+         er:Math.max(6.5, R*0.082), fs:Math.max(8, Math.min(11.5, gap*0.62))};
+    L.pos = E.map(function(e){ return {x:hx + e[1]*R, y:hy - e[2]*R}; });
+  }
+
+  function rowY(i){ return L.top + i*L.gap; }
+
+  function sig(ch, xn, t){
+    var s = xn*6 - t*0.5, ph = ch*1.37, TAU = 6.283185307;
+    var post = ch>=12 ? 1 : (ch>=7 ? 0.7 : 0.5);
+    var env = 0.6 + 0.4*Math.sin(s*0.9 + ph);
+    var v = 0.42*post*env*Math.sin(s*TAU*1.6 + ph)
+          + 0.22*Math.sin(s*TAU*0.45 + ph*2.1)
+          + 0.12*Math.sin(s*TAU*3.7 + ph*0.7)
+          + 0.06*Math.sin(s*TAU*6.3 + ph*1.9);
+    if(ch<2){ var f = s*0.16 - Math.floor(s*0.16) - 0.5; v += 0.55*Math.exp(-f*f*260); }
+    return v;
+  }
+
+  function bez(a,b,c,d,t){
+    var u=1-t;
+    return [u*u*u*a[0]+3*u*u*t*b[0]+3*u*t*t*c[0]+t*t*t*d[0],
+            u*u*u*a[1]+3*u*u*t*b[1]+3*u*t*t*c[1]+t*t*t*d[1]];
+  }
+  function ctrl(i){
+    var e = L.pos[i], end = [L.x0 - 38, rowY(i)], p0=[e.x,e.y];
+    var p1, p2;
+    if(!L.portrait){ p1=[e.x+(end[0]-e.x)*0.55, e.y]; p2=[end[0]-(end[0]-e.x)*0.35, end[1]]; }
+    else { p1=[e.x, e.y+(end[1]-e.y)*0.5]; p2=[end[0]-24, end[1]-(end[1]-e.y)*0.25]; }
+    return [p0,p1,p2,end];
+  }
+  function rgba(hex,a){
+    var n=parseInt(hex.slice(1),16);
+    return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')';
+  }
+
+  function drawHead(){
+    var R=L.R, hx=L.hx, hy=L.hy;
+    ctx.lineWidth = 1.4; ctx.strokeStyle = rgba(C.ink,0.85);
+    // nose
+    ctx.beginPath();
+    ctx.moveTo(hx - R*0.13, hy - R*0.992);
+    ctx.quadraticCurveTo(hx - R*0.04, hy - R*1.10, hx, hy - R*1.14);
+    ctx.quadraticCurveTo(hx + R*0.04, hy - R*1.10, hx + R*0.13, hy - R*0.992);
+    ctx.stroke();
+    // ears
+    [-1,1].forEach(function(s){
+      ctx.beginPath();
+      ctx.ellipse(hx + s*R*1.02, hy, R*0.075, R*0.19, 0, s<0?Math.PI*0.5:-Math.PI*0.5, s<0?Math.PI*1.5:Math.PI*0.5);
+      ctx.stroke();
+    });
+    // head
+    ctx.fillStyle = '#FFFFFF';
+    ctx.beginPath(); ctx.arc(hx,hy,R,0,Math.PI*2); ctx.fill(); ctx.stroke();
+    // guides
+    ctx.save();
+    ctx.setLineDash([2,4]); ctx.lineWidth = 0.8; ctx.strokeStyle = rgba(C.ink,0.22);
+    ctx.beginPath(); ctx.arc(hx,hy,R*0.8,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(hx,hy-R); ctx.lineTo(hx,hy+R); ctx.moveTo(hx-R,hy); ctx.lineTo(hx+R,hy); ctx.stroke();
+    ctx.restore();
+  }
+
+  function draw(t){
+    ctx.fillStyle = C.bg; ctx.fillRect(0,0,W,H);
+    var hl = Math.floor(t/2.6) % NCH;
+    var hlA = Math.sin(Math.PI*((t/2.6)%1)); // soft fade in/out
+
+    // header + scale
+    ctx.font = '600 '+Math.max(9,L.fs*0.95)+'px '+FONT;
+    ctx.fillStyle = rgba(C.ink,0.55); ctx.textBaseline='alphabetic'; ctx.textAlign='left';
+    var hdrY = L.top - Math.max(18, L.gap*1.3);
+    ctx.fillText('10–20 MONTAGE  ·  19 CH + REF  ·  256 Hz', L.x0 - 38, hdrY);
+
+    // connectors
+    var i, c, k;
+    for(i=0;i<NCH;i++){
+      c = ctrl(i);
+      var on = i===hl;
+      ctx.strokeStyle = on ? rgba(C.acc, 0.25 + 0.5*hlA) : rgba(C.sec, L.portrait ? 0.13 : 0.26);
+      ctx.lineWidth = on ? 1.3 : 0.9;
+      ctx.beginPath(); ctx.moveTo(c[0][0],c[0][1]);
+      ctx.bezierCurveTo(c[1][0],c[1][1],c[2][0],c[2][1],c[3][0],c[3][1]); ctx.stroke();
+      // end tick
+      ctx.fillStyle = rgba(C.sec,0.6);
+      ctx.beginPath(); ctx.arc(c[3][0],c[3][1],1.6,0,Math.PI*2); ctx.fill();
+      // particle with short tail
+      var ph = (t*0.16 + i*0.137) % 1;
+      var fade = Math.sin(Math.PI*ph);
+      for(k=0;k<6;k++){
+        var tt = ph - k*0.014; if(tt<0) continue;
+        var p = bez(c[0],c[1],c[2],c[3],tt);
+        ctx.fillStyle = rgba(on?C.acc:C.sec, (1-k/6)*0.85*fade);
+        ctx.beginPath(); ctx.arc(p[0],p[1], k===0?2.1:1.5, 0, Math.PI*2); ctx.fill();
+      }
+    }
+
+    drawHead();
+
+    // electrodes
+    var er = L.er;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.font = '600 '+Math.max(6.5, er*0.78)+'px '+FONT;
+    for(i=0;i<E.length;i++){
+      var p0 = L.pos[i], ref = i>=NCH, on2 = i===hl;
+      if(on2){
+        ctx.fillStyle = rgba(C.acc, 0.14*hlA);
+        ctx.beginPath(); ctx.arc(p0.x,p0.y,er*1.9,0,Math.PI*2); ctx.fill();
+      }
+      ctx.fillStyle = ref ? '#EEF2F6' : (on2 ? rgba(C.acc, 0.12+0.2*hlA) : '#FFFFFF');
+      ctx.strokeStyle = on2 ? C.acc : rgba(C.ink, ref?0.45:0.8);
+      ctx.lineWidth = on2 ? 1.6 : 1.1;
+      ctx.beginPath(); ctx.arc(p0.x,p0.y,er,0,Math.PI*2); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = on2 ? C.acc : rgba(C.ink, ref?0.55:0.9);
+      ctx.fillText(E[i][0], p0.x, p0.y+0.5);
+    }
+
+    // channel rows
+    var x0=L.x0, x1=L.x1, span=x1-x0, amp=L.gap*0.42;
+    ctx.textAlign='left'; ctx.textBaseline='middle';
+    ctx.font = '500 '+L.fs+'px '+FONT;
+    var step = span > 900 ? 2 : 1.5;
+    for(i=0;i<NCH;i++){
+      var y0 = rowY(i), on3 = i===hl;
+      ctx.fillStyle = on3 ? C.acc : rgba(C.ink,0.62);
+      ctx.fillText(E[i][0], x0-32, y0);
+      ctx.strokeStyle = rgba(C.ink,0.07); ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y0); ctx.stroke();
+      ctx.strokeStyle = on3 ? rgba(C.acc, 0.55+0.45*hlA) : rgba(C.ink,0.72);
+      ctx.lineWidth = on3 ? 1.35 : 1;
+      ctx.beginPath();
+      for(var x=x0; x<=x1; x+=step){
+        var v = sig(i,(x-x0)/span,t);
+        if(x===x0) ctx.moveTo(x, y0 - v*amp); else ctx.lineTo(x, y0 - v*amp);
+      }
+      ctx.stroke();
+    }
+    // soft fade at the start of the rows (signal "arriving")
+    var g = ctx.createLinearGradient(x0,0,x0+Math.min(60,span*0.12),0);
+    g.addColorStop(0, rgba(C.bg,1)); g.addColorStop(1, rgba(C.bg,0));
+    ctx.fillStyle = g; ctx.fillRect(x0-1, L.top-L.gap, Math.min(60,span*0.12)+1, L.gap*(NCH+1));
+
+    // scale bars
+    var sbY = rowY(NCH-1) + Math.max(16, L.gap*1.1), secPx = span/12; // 1 s: scroll is 0.5 of 6 units per second
+    secPx = Math.min(secPx, span*0.3);
+    ctx.strokeStyle = rgba(C.ink,0.55); ctx.lineWidth=1.2;
+    ctx.beginPath(); ctx.moveTo(x1-secPx, sbY); ctx.lineTo(x1, sbY);
+    ctx.moveTo(x1, sbY); ctx.lineTo(x1, sbY - amp); ctx.stroke();
+    ctx.fillStyle = rgba(C.ink,0.55); ctx.font='500 '+Math.max(8,L.fs*0.9)+'px '+FONT;
+    ctx.textAlign='right'; ctx.textBaseline='top';
+    if(sbY + 14 < H) ctx.fillText('1 s  ·  50 µV  ·  illustrative signal', x1 - secPx - 8, sbY - 5);
+  }
+
+  // ---- loop ----
+  var t = 4.2, raf = 0, running = false, last = 0, inView = true;
+  function frame(now){
+    var dt = Math.min(0.05, (now-last)/1000) || 0; last = now; t += dt;
+    draw(t); raf = requestAnimationFrame(frame);
+  }
+  function start(){
+    if(running || RM.matches || document.hidden || !inView) return;
+    running = true; last = performance.now(); raf = requestAnimationFrame(frame);
+  }
+  function stop(){ running = false; cancelAnimationFrame(raf); }
+  document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+  var onRM = function(){ if(RM.matches){ stop(); draw(t); } else start(); };
+  if(RM.addEventListener) RM.addEventListener('change', onRM); else if(RM.addListener) RM.addListener(onRM);
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ inView = es[0].isIntersecting; inView ? start() : stop(); }).observe(stage);
+  }
+  if('ResizeObserver' in window){ new ResizeObserver(function(){ layout(); draw(t); }).observe(stage); }
+  else window.addEventListener('resize', function(){ layout(); draw(t); });
+
+  layout(); draw(t); start();
+})();
+</script>
+</body>
+</html>

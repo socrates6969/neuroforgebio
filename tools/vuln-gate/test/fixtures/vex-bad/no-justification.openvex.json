@@ -1,0 +1,14 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://example.invalid/vex/bad",
+  "author": "fixture",
+  "timestamp": "2026-09-26T00:00:00Z",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": { "name": "CVE-2099-0001" },
+      "products": [{ "@id": "pkg:npm/fixture-lib" }],
+      "status": "not_affected"
+    }
+  ]
+}

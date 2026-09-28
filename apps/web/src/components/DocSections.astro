@@ -1,0 +1,42 @@
+---
+// Sections of a docs page: prose, optional status items, and code blocks rendered verbatim
+// (the same lines tools/doc-snippets/run.py executes in CI, or a verbatim excerpt of the file named
+// under the block). No syntax highlighter: it would
+// need inline style attributes, which the CSP forbids (SEC-150a).
+import StatusPill from '@nf/ui/components/StatusPill.astro';
+import { codeText, overview, quickstarts, type DocSection } from '../lib/docs.ts';
+import { statusLabels, statusPrefix } from '../lib/site.ts';
+
+interface Props { sections: DocSection[] }
+const { sections } = Astro.props;
+const nav = overview.nav;
+const qsOf = (ref: string) => quickstarts.find((q) => q.slug === ref.split('#')[0]);
+---
+{sections.map((s) => (
+  <section id={s.id} aria-labelledby={`h-${s.id}`}>
+    <h2 id={`h-${s.id}`}>{s.heading}</h2>
+    {s.body.map((p) => <p class="body">{p}</p>)}
+    {s.items && (
+      <ul class="items">
+        {s.items.map((it) => (
+          <li class="nf-card">
+            <h3>{it.heading}</h3>
+            <p>{it.body}</p>
+            {it.status && <StatusPill status={it.status} label={statusLabels[it.status]} prefix={statusPrefix} />}
+          </li>
+        ))}
+      </ul>
+    )}
+    {s.code && (
+      <pre class="code" tabindex="0" aria-label={`${s.code.language} code: ${s.heading}`} data-language={s.code.language}><code>{codeText(s.code)}</code></pre>
+    )}
+    {s.code?.source && <p class="src">{nav.source}: <code>{s.code.source}</code></p>}
+    {s.code?.doctest && <p class="src">{nav.doctest}: <a href={`/docs/quickstart/${qsOf(s.code.doctest)?.slug}/`}>{qsOf(s.code.doctest)?.navLabel}</a></p>}
+  </section>
+))}
+<style>
+  .src { margin-top: 8px; font-size: 14px; color: var(--color-muted); overflow-wrap: anywhere; }
+  .items { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .items h3 { font-size: 17px; }
+  .items p { margin: 8px 0 10px; color: var(--color-muted); font-size: 15px; }
+</style>

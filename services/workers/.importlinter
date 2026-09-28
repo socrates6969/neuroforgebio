@@ -1,0 +1,44 @@
+; Module boundaries of the pipeline workers (BUILD-GUIDE 3.3/3.4; M3-CONTRACTS §1).
+; Run: .venv/Scripts/lint-imports --config services/workers/.importlinter  (also run by
+; services/workers/runner/tests/test_runner_imports.py). Packages must be importable (repo pytest paths).
+[importlinter]
+root_packages =
+    nf_runner
+    nf_steps
+    nf_train
+    nf_platform
+include_external_packages = False
+
+[importlinter:contract:workers-no-api]
+name = workers use nf_platform but never its API layer or app
+type = forbidden
+source_modules =
+    nf_runner
+    nf_steps
+    nf_train
+forbidden_modules =
+    nf_platform.api
+    nf_platform.app
+allow_indirect_imports = False
+
+[importlinter:contract:steps-standalone]
+name = the step library (container image) depends on neither the platform nor the runner
+type = forbidden
+source_modules =
+    nf_steps
+forbidden_modules =
+    nf_platform
+    nf_runner
+
+[importlinter:contract:train-core-standalone]
+; m6-sisa (6.4): the decoder and the SISA core are pure NumPy; only nf_train.platform talks to the platform.
+name = the nf_train core (decoder, sisa, toydata, evaluate) depends on neither the platform nor the runner
+type = forbidden
+source_modules =
+    nf_train.decoder
+    nf_train.sisa
+    nf_train.toydata
+    nf_train.evaluate
+forbidden_modules =
+    nf_platform
+    nf_runner

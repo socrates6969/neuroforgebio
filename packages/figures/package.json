@@ -1,0 +1,18 @@
+{
+  "name": "@nf/figures",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Interactive research figure islands with a hash-pinned figure manifest.",
+  "exports": {
+    "./*": "./src/*",
+    "./manifests/*": "./manifests/*"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\"",
+    "verify": "node scripts/verify.mjs manifests/somatosensory-closed-loop.figures.json"
+  },
+  "engines": {
+    "node": ">=22 <23"
+  }
+}

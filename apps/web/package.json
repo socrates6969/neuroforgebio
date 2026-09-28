@@ -1,0 +1,35 @@
+{
+  "name": "@nf/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Marketing site and whitepapers; one codebase, two build-time themes (THEME=clinical|cosmos).",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:clinical": "node scripts/build.mjs clinical",
+    "build:cosmos": "node scripts/build.mjs cosmos",
+    "test": "node scripts/test.mjs",
+    "linkcheck": "node scripts/linkcheck.mjs dist/clinical dist/cosmos",
+    "size": "node scripts/js-size.mjs",
+    "test:e2e": "playwright test",
+    "lhci": "npx -y @lhci/cli@0.15.1 autorun --config=lighthouserc.cjs"
+  },
+  "dependencies": {
+    "@nf/content": "workspace:*",
+    "@nf/figures": "workspace:*",
+    "@nf/themes": "workspace:*",
+    "@nf/ui": "workspace:*",
+    "astro": "5.18.2",
+    "three": "0.160.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0",
+    "js-yaml": "4.3.2",
+    "sharp": "0.34.5",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=22 <23"
+  }
+}

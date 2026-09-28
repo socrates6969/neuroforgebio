@@ -1,0 +1,23 @@
+<!-- Row 7a PASSING fixture: aria-valuetext is present at render (still updated on every change by
+     the page's script -- that's row 7b, checked separately against the script source). -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <label>
+      <span>Neurons used: <output data-out>32</output></span>
+      <input
+        type="range"
+        data-neurons
+        min="0"
+        max="5"
+        step="1"
+        value="5"
+        aria-valuetext="32 units"
+        disabled
+      />
+    </label>
+  </body>
+</html>

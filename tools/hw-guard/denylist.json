@@ -1,0 +1,26 @@
+{
+  "$comment": "SEC-090 name denylist, shared by tools/hw-guard (lint) and the services surface test (services/platform/tests/security/test_hw_guard_surface.py). Names are split into lower-case words (camelCase, snake_case, kebab, dots, slashes). 'prefixes': any word starting with the prefix; 'words': exact words; 'sequences': adjacent word pairs. Adding terms needs security review; removing or narrowing any term needs the owner's written OK (SECURITY-REQUIREMENTS §G).",
+  "prefixes": ["stim", "pulse", "actuat"],
+  "words": ["command", "commands"],
+  "sequences": [
+    ["amplitude", "set"],
+    ["set", "amplitude"],
+    ["trigger", "out"],
+    ["trigger", "output"],
+    ["write", "register"],
+    ["write", "reg"]
+  ],
+  "terms": {
+    "stim": "stim*",
+    "pulse": "pulse*",
+    "actuat": "actuat*",
+    "command": "command",
+    "commands": "command",
+    "amplitude set": "amplitude_set",
+    "set amplitude": "amplitude_set",
+    "trigger out": "trigger_out",
+    "trigger output": "trigger_out",
+    "write register": "write_register",
+    "write reg": "write_register"
+  }
+}

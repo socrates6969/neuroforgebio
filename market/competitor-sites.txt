@@ -1,0 +1,19 @@
+# 15 most relevant competitor / similar-business websites for the design team
+# All URLs returned HTTP 200 on 2026-09-26 (curl check). Title/description = the site's own <title>/meta.
+# Format: URL | category | why it is relevant for design
+
+https://neuropype.io/ | Direct software analogue (real-time EEG pipelines, academic-free/startup tiers) | Closest commercial product to ours; dev-tool + science positioning
+https://intheon.io/ | Parent of NeuroPype/NeuroScale (middleware platform) | B2B neurotech middleware messaging
+https://www.emotiv.com/ | EEG hardware + EmotivPRO SaaS | Hardware+software pricing page layout, research audience
+https://flywheel.io/ | Regulated medical-imaging research data platform (21 CFR Part 11) | Enterprise compliance-grade data platform for pharma; closest "analytics platform" look
+https://www.catalystneuro.com/ | NWB conversion services / neurophysiology data software | Science-credible services site; stats-led social proof
+https://dandiarchive.org/ | Neurophysiology data archive (NWB) | Researcher UX for dataset browsing
+https://openneuro.org/ | BIDS data sharing platform | Dataset-centric UI conventions
+https://brainlife.io/ | Cloud neuroimaging apps platform | Open-science platform aesthetic
+https://brainflow.org/ | Device-agnostic biosensor SDK | Developer-docs style for a hardware-agnostic SDK
+https://labstreaminglayer.org/ | Real-time streaming standard | Minimal technical docs site
+https://mne.tools/ | M/EEG analysis library | Scientific Python docs conventions our users know
+https://synchron.com/ | Implant BCI (clinical) | Premium medtech brand, patient-centred tone ("Still you.")
+https://paradromics.com/ | Implant BCI (clinical) | Clinical-study + newsroom structure, technical depth
+https://www.precisionneuro.io/ | Implant BCI (FDA 510(k) cleared) | Clean high-end medtech visual language
+https://openbci.com/ | Open-source biosensing hardware | Maker/open-source community look, developer onboarding

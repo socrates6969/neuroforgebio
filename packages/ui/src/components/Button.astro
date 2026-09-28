@@ -1,0 +1,18 @@
+---
+// Link-styled CTA; a disabled CTA renders as a disabled <button> plus its note (e.g. early access).
+import type { UiCta } from '../types.ts';
+interface Props { cta: UiCta; class?: string }
+const { cta, class: cls = '' } = Astro.props;
+const klass = `nf-btn nf-btn--${cta.variant} ${cls}`.trim();
+// Unique per render (a page can show the same disabled CTA twice). Ids only, never visible text.
+const g = globalThis as unknown as { __nfBtnNote?: number };
+g.__nfBtnNote = (g.__nfBtnNote ?? 0) + 1;
+const noteId = cta.note ? `btn-note-${g.__nfBtnNote}` : undefined;
+---
+{cta.disabled
+  ? <span class="nf-btn-wrap"><button type="button" class={klass} disabled aria-describedby={noteId}>{cta.label}</button>{cta.note && <small class="note" id={noteId}>{cta.note}</small>}</span>
+  : <a class={klass} href={cta.href}>{cta.label}</a>}
+<style>
+  .nf-btn-wrap { display: inline-flex; flex-direction: column; gap: 6px; }
+  .note { font: 400 12px/1.4 var(--font-mono); color: var(--color-muted); }
+</style>

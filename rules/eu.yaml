@@ -1,0 +1,35 @@
+# EU. Facts and quotes from market/regulation.md §5 (NOT LEGAL ADVICE). AI Act Art. 5(1)(f) is a
+# model use restriction handled by the model registry (M6), not a channel rule.
+schema: nf.jurisdiction-rules/v1
+jurisdiction: EU
+name: European Union
+rules:
+  - id: eu-gdpr-art9-flag
+    title: GDPR personal data; Art. 9 special-category flag for neural data
+    instrument: GDPR
+    status_text: >-
+      "Neural data is personal data. Where it reveals health, or is processed to uniquely identify
+      someone, it falls under Art. 9 special categories."
+    # market/regulation.md states no date for this rule: none is invented here.
+    effective_date: null
+    citation:
+      source: >-
+        "Mental privacy: navigating risks, rights and regulation", EMBO Rep 2025,
+        doi:10.1038/s44319-025-00505-6, PMC12287510
+      grade: A
+      definition: null
+      research_ref: market/regulation.md §5
+    predicate:
+      all:
+        - attr: nervous_system
+          in: [central, peripheral]
+    obligations:
+      - id: personal_data
+        text: Neural data is personal data under the GDPR.
+      - id: gdpr_art9_flag
+        text: >-
+          Art. 9 special category where the data reveals health or is processed to uniquely
+          identify someone. That depends on the purpose, which the platform does not know: the
+          flag asks the data steward to decide.
+        flag: gdpr_art9
+    review_status: draft

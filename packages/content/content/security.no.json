@@ -1,0 +1,289 @@
+{
+  "meta": {
+    "title": "Sikkerhet | {brand}",
+    "description": "Slik er {brand} utformet for å beskytte nevrale data: kryptering, tilgangsstyring, revisjonslogg, sletting og ærlige statusmerker."
+  },
+  "heading": "Sikkerhet hos {brand}",
+  "intro": [
+    "Nevrale data er ikke som andre data. Et passord kan byttes, men ikke en hjerne. Et opptak kan identifisere personen det kommer fra, også etter at navnet er fjernet. Derfor ser vi sikkerhet som en del av produktet, ikke som en tilleggsfunksjon."
+  ],
+  "note": {
+    "lead": "Først en ærlig merknad:",
+    "body": "{brand} er under utvikling. Ingenting på denne siden beskriver en tjeneste som er i drift ennå. Hvert punkt har en status:"
+  },
+  "legend": [
+    { "status": "designed", "text": "beskrevet i arkitekturen vår, ikke bygget ennå." },
+    { "status": "planned", "text": "lagt inn i byggeplanen vår, med definerte tester." },
+    {
+      "status": "roadmap",
+      "text": "noe vi har tenkt å gjøre, og som avhenger av finansiering, kunder eller en ekstern part."
+    }
+  ],
+  "afterLegend": [
+    "Vi har i dag ingen uavhengige revisjonsrapporter eller tredjepartsbekreftelser. Når det endrer seg, sier denne siden det og lenker til dokumentasjonen."
+  ],
+  "sections": [
+    {
+      "id": "data",
+      "heading": "Slik beskyttes de nevrale dataene dine",
+      "table": {
+        "headers": ["Hva", "Hvordan", "Status"],
+        "rows": [
+          {
+            "cells": [
+              "Kryptering under overføring",
+              "TLS 1.3 på alle forbindelser til plattformen. Eldre protokoller avvises"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Kryptering av lagrede data",
+              "AES-256-GCM, med nøkler i en skybasert nøkkeltjeneste. Data fra hver forsøksperson har **sin egen nøkkel**"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Sletting du kan kontrollere",
+              "Når en forsøksperson trekker samtykket, sletter vi dataene, ødelegger nøkkelen slik at sikkerhetskopier blir uleselige, merker modeller som er trent på dataene, og gir deg et signert slettebevis. Kopier du har eksportert tidligere kan ikke hentes tilbake, så beviset lister dem opp for din oppfølging"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Tilgangsstyring",
+              "Felles pålogging (SSO) med flerfaktorautentisering. **Administratorer må bruke passnøkler** (passkeys, pålogging som tåler phishing). Roller begrenser hvem som kan se, eksportere eller trene modeller på data, og sensitive eksporter krever godkjenning fra en person til"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Atskillelse mellom kunder",
+              "Hver kundes data holdes atskilt i applikasjonen, i databasen og med egne krypteringsnøkler"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Revisjonsspor",
+              "All lesing, eksport, endring av samtykke, administratorhandling og sletting logges i en logg som bare kan utvides og som avslører endringer. Revisorene dine kan eksportere og kontrollere den"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Pseudonymisering",
+              "Vi lagrer koder for forsøkspersoner, ikke navn. Identifiserende felt i filhoder flyttes ut av arbeidskopien"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": [
+              "Data holdes utenfor logger",
+              "Loggene våre inneholder aldri signalverdier, personkoder eller fritekstnotater"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Ekte data bare i produksjon",
+              "Utviklings- og testsystemer bruker bare syntetiske eller offentlige data"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "Hvor data lagres",
+              "Én amerikansk region ved oppstart; en EU-region er planlagt. Dataene blir i regionen du velger"
+            ],
+            "status": [{ "status": "planned" }, { "status": "roadmap", "note": "EU" }]
+          },
+          {
+            "cells": [
+              "Helsekunder (USA)",
+              "Infrastruktur for arbeidsflyter tilpasset HIPAA, og databehandleravtale etter HIPAA (BAA) for bedriftskunder"
+            ],
+            "status": [{ "status": "planned" }]
+          }
+        ]
+      },
+      "after": [
+        "**Vi kaller aldri nevrale data «anonyme».** Hjernesignaler kan identifisere mennesker, så vi beskytter pseudonymiserte opptak som personopplysninger."
+      ]
+    },
+    {
+      "id": "never",
+      "heading": "Dette gjør vi aldri",
+      "bullets": [
+        {
+          "text": "**Styre stimulering eller andre enheter.** Plattformen, API-et og programvaresettene våre *mottar* bare data fra opptaksutstyr. De kan ikke sende kommandoer til stimulatorer eller andre enheter, og vi tester for dette i hvert bygg."
+        },
+        {
+          "text": "**Stå i sanntidssløyfen din.** Tidskritisk lukket sløyfe skjer på ditt eget utstyr. Skyen vår lagrer og analyserer data og styrer aldri datainnsamlingen."
+        },
+        {
+          "text": "**Selge eller dele dataene dine**, eller bruke dem til å trene egne modeller uten din uttrykkelige, registrerte tillatelse."
+        },
+        {
+          "text": "**Laste sporingsverktøy på dette nettstedet.** Ingen analyse, fonter eller skript fra tredjeparter, og en streng innholdssikkerhetspolicy (CSP)."
+        }
+      ]
+    },
+    {
+      "id": "software",
+      "heading": "Programvare du installerer",
+      "table": {
+        "headers": ["Hva", "Status"],
+        "rows": [
+          {
+            "cells": [
+              "Hver utgivelse signeres med Sigstore (nøkkelfri signering, offentlig åpenhetslogg)"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": [
+              "En programvarestykkliste (SBOM, CycloneDX) følger hver utgivelse, med støttestatus for hver komponent"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": [
+              "Byggeproveniens (SLSA) for hver utgivelse, slik at du kan kontrollere hvor og hvordan den ble bygget"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": [
+              "Sårbarhetserklæringer (VEX) som sier om kjente feil påvirker programvaren vår"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": ["En oppgitt støtteperiode for hver versjon av programvaresettene"],
+            "status": [{ "status": "planned" }]
+          }
+        ]
+      },
+      "after": [
+        "Dette er dokumentasjonen produsenter av medisinsk utstyr ber om når de bruker programvare fra andre i et regulert produkt. Det er også grunnen til at kjernen i programvaresettene er skrevet i et minnesikkert språk."
+      ]
+    },
+    {
+      "id": "standards",
+      "heading": "Standarder vi bygger etter",
+      "body": [
+        "Vi bruker disse rammeverkene til å utforme og kontrollere arbeidet vårt. Å bruke et rammeverk er ikke det samme som å være revidert etter det."
+      ],
+      "table": {
+        "headers": ["Standard", "Hva det betyr for deg", "Status"],
+        "rows": [
+          {
+            "cells": [
+              "OWASP ASVS 5.0, nivå 2, med nivå 3 for nevrale data",
+              "En detaljert sjekkliste for applikasjonssikkerhet, kontrollert ved hver milepæl"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "NIST Secure Software Development Framework (SP 800-218)",
+              "Hvordan vi skriver, bygger, gir ut og retter programvare"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "NIST Cybersecurity Framework 2.0",
+              "Hvordan vi driver sikkerhetsarbeidet i selskapet"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "IEC 81001-5-1 (sikkerhet i livsløpet for helseprogramvare)",
+              "Livsløpsdokumentasjon for komponenter du kan bruke i medisinsk utstyr"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": [
+              "GDPR artikkel 32 (sikkerhet ved behandlingen)",
+              "Kryptering, robusthet, gjenoppretting og jevnlig testing"
+            ],
+            "status": [{ "status": "designed" }]
+          },
+          {
+            "cells": [
+              "EUs Cyber Resilience Act (forordningen om cyberrobusthet)",
+              "Sikkerhetskrav, sårbarhetshåndtering og rapportering for programvaresettene våre"
+            ],
+            "status": [{ "status": "planned" }]
+          },
+          {
+            "cells": [
+              "ISO/IEC 27001 og ISO/IEC 27701",
+              "Sertifisering av styringssystemet for informasjonssikkerhet og personvern"
+            ],
+            "status": [{ "status": "roadmap" }]
+          },
+          {
+            "cells": ["SOC 2 Type II", "En uavhengig revisors rapport om kontrollene våre"],
+            "status": [{ "status": "roadmap" }]
+          }
+        ]
+      }
+    },
+    {
+      "id": "testing",
+      "heading": "Testing",
+      "bullets": [
+        {
+          "text": "Automatiske sikkerhetstester ved hver kodeendring: statisk analyse, kontroll av avhengigheter, søk etter hemmeligheter og fuzzing av filleserne.",
+          "status": "planned"
+        },
+        {
+          "text": "En ekstern penetrasjonstest før de første kundedataene tas inn i produksjon, deretter hvert år.",
+          "status": "roadmap"
+        },
+        {
+          "text": "Gjenopprettingsøvelser hvert kvartal, med målte gjenopprettingstider registrert.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "incidents",
+      "heading": "Hvis noe går galt",
+      "body": [
+        "Vi har en skriftlig plan for håndtering av sikkerhetshendelser. Hvis en sikkerhetshendelse berører dataene dine, varsler vi deg uten ugrunnet opphold, og i alle tilfeller innen 24 timer etter at hendelsen er bekreftet. Da kan du overholde dine egne lovpålagte frister, for eksempel varsling innen 72 timer etter GDPR. Vi forteller hva som skjedde, hvilke data som var berørt og hva vi gjør med det."
+      ],
+      "status": "designed"
+    },
+    {
+      "id": "disclosure",
+      "heading": "Meld fra om en sårbarhet",
+      "body": [
+        "Tror du at du har funnet et sikkerhetsproblem på nettstedet, i plattformen eller i programvaren vår? Gi oss beskjed."
+      ],
+      "bullets": [
+        {
+          "text": "**E-post:** [security@{domain}](mailto:security@{domain}) (en kryptert kanal står på veikartet)"
+        },
+        {
+          "text": "**Ta med:** hva du fant, hvor, og hvordan det kan gjenskapes. Ikke send oss data om ekte personer."
+        },
+        {
+          "text": "**Dette lover vi:** vi svarer innen 3 virkedager, holder deg oppdatert, retter bekreftede feil og krediterer deg hvis du ønsker det."
+        },
+        {
+          "text": "**God tro:** vi går ikke rettslig til verks mot undersøkelser gjort i god tro etter retningslinjene våre for sårbarhetsvarsling. Retningslinjene er: test bare mot dine egne kontoer eller data, unngå skade på personvern og drift, ikke åpne eller behold andres nevrale data, og gi oss rimelig tid til å rette feilen før du publiserer."
+        },
+        {
+          "text": "Maskinlesbar kontakt: [/.well-known/security.txt](/.well-known/security.txt)"
+        }
+      ]
+    }
+  ]
+}

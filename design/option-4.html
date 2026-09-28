@@ -1,0 +1,945 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NeuroForge Journal</title>
+<meta name="description" content="Design option 4 — Editorial science journal. NeuroForge (working name): the data layer for brain-computer interfaces.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F1; --paper-2:#F4EFE3; --ink:#1A1A1A; --muted:#5C5A55; --rule:#D9D3C5;
+    --accent:#B3261E; --navy:#1F3A5F;
+    --serif:"Fraunces","Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+    --max:1200px; --gutter:clamp(16px,4vw,48px);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.6;
+    font-variation-settings:"opsz" 14;overflow-x:hidden}
+  img,svg{max-width:100%}
+  a{color:var(--navy);text-decoration-thickness:1px;text-underline-offset:3px}
+  a:hover{color:var(--accent)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .skip{position:absolute;left:-9999px;top:8px;background:var(--ink);color:var(--paper);padding:8px 14px;font-family:var(--sans);font-size:14px;z-index:100}
+  .skip:focus{left:8px;color:var(--paper)}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+  /* ---------- labels ---------- */
+  .label{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .label.red{color:var(--accent)}
+  .mono{font-family:var(--mono)}
+
+  /* ---------- masthead ---------- */
+  .topstrip{border-bottom:1px solid var(--rule);font-family:var(--sans);font-size:12.5px;color:var(--muted)}
+  .topstrip .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+  .topstrip a{color:var(--muted);text-decoration:none}
+  .topstrip a:hover{color:var(--accent)}
+  .masthead{padding:28px 0 0;text-align:center}
+  .masthead .issue{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;color:var(--muted);display:flex;justify-content:space-between;border-top:3px double var(--ink);border-bottom:1px solid var(--ink);padding:7px 0;margin-top:14px}
+  .brand{display:inline-block;text-decoration:none;color:var(--ink)}
+  .brand .name{font-family:var(--serif);font-weight:600;font-size:clamp(44px,8vw,88px);line-height:1;letter-spacing:-.02em;font-variation-settings:"opsz" 144}
+  .brand .name em{font-style:italic;font-weight:400;color:var(--accent)}
+  .brand .wn{display:block;font-family:var(--sans);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+  nav.primary{border-bottom:1px solid var(--rule)}
+  nav.primary .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+  nav.primary ul{list-style:none;margin:0;padding:0;display:flex;gap:4px 22px;flex-wrap:wrap}
+  nav.primary a{font-family:var(--sans);font-size:14.5px;font-weight:500;color:var(--ink);text-decoration:none;padding:4px 0;border-bottom:1px solid transparent}
+  nav.primary a:hover{border-bottom-color:var(--accent);color:var(--ink)}
+  .navcta{display:flex;gap:10px;align-items:center}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-weight:600;font-size:14.5px;text-decoration:none;padding:10px 18px;border:1px solid var(--ink);border-radius:0;cursor:pointer;background:transparent;color:var(--ink);transition:background .15s,color .15s}
+  .btn:hover{background:var(--ink);color:var(--paper)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.primary:hover{background:#8E1D17;border-color:#8E1D17;color:#fff}
+  .btn.ghost{border-color:transparent;padding-left:4px;padding-right:4px}
+  .btn.ghost:hover{background:transparent;color:var(--accent)}
+
+  /* ---------- article head / hero ---------- */
+  .article-head{display:grid;grid-template-columns:1fr;gap:24px;padding:48px 0 28px}
+  @media (min-width:960px){.article-head{grid-template-columns:7fr 5fr;gap:56px;align-items:end}}
+  .kicker{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+  .kicker .dot{width:6px;height:6px;background:var(--accent);border-radius:50%}
+  h1{font-weight:500;font-size:clamp(38px,6.2vw,72px);line-height:1.02;letter-spacing:-.022em;margin:0;font-variation-settings:"opsz" 144}
+  h1 em{font-style:italic;font-weight:400;color:var(--accent)}
+  .standfirst{font-size:clamp(19px,2vw,22px);line-height:1.5;color:#2E2C29;margin:0 0 22px;font-variation-settings:"opsz" 36}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+  .formats{font-family:var(--mono);font-size:13px;color:var(--muted);border-top:1px solid var(--rule);padding-top:12px}
+  .formats b{color:var(--ink);font-weight:500}
+  .byline{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:18px}
+
+  figure{margin:0}
+  .fig1{border-top:1px solid var(--ink);border-bottom:1px solid var(--rule);padding:18px 0 14px;margin-bottom:8px}
+  .fig1 .plate-box{position:relative;width:100%;aspect-ratio:1280/800;background:var(--paper)}
+  #plate{position:absolute;inset:0;width:100%;height:100%;display:block}
+  #plate .serif{font-family:var(--serif)}
+  #plate .draw{stroke-dasharray:1 2;stroke-dashoffset:1;animation:draw var(--dur,2.2s) cubic-bezier(.55,.08,.3,1) var(--delay,0s) forwards}
+  #plate .fade{opacity:0;animation:fade var(--dur,1.2s) ease var(--delay,0s) forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes fade{to{opacity:1}}
+  .paused #plate *{animation-play-state:paused!important}
+  @media (prefers-reduced-motion: reduce){
+    #plate .draw{animation:none;stroke-dashoffset:0}
+    #plate .fade{animation:none;opacity:1}
+  }
+  figcaption{font-family:var(--mono);font-size:13px;line-height:1.55;color:var(--muted);margin-top:10px;max-width:78ch}
+  figcaption b{color:var(--ink);font-weight:500}
+
+  /* ---------- sections ---------- */
+  section{padding:64px 0;border-top:1px solid var(--rule)}
+  .sec-head{display:grid;grid-template-columns:1fr;gap:6px 40px;margin-bottom:36px}
+  @media (min-width:960px){.sec-head{grid-template-columns:200px 1fr}}
+  .sec-head .num{font-family:var(--mono);font-size:13px;color:var(--accent);padding-top:10px;border-top:2px solid var(--accent);align-self:start;width:max-content;min-width:60px}
+  h2{font-weight:500;font-size:clamp(30px,4vw,46px);line-height:1.08;letter-spacing:-.015em;margin:0 0 10px;font-variation-settings:"opsz" 96}
+  h2 em{font-style:italic;color:var(--accent);font-weight:400}
+  .dek{color:var(--muted);font-size:19px;margin:0;max-width:62ch}
+  h3{font-weight:600;font-size:22px;line-height:1.25;margin:0 0 8px;font-variation-settings:"opsz" 36}
+
+  /* intro with drop cap */
+  .intro{columns:1;column-gap:48px;column-rule:1px solid var(--rule)}
+  @media (min-width:760px){.intro{columns:2}}
+  @media (min-width:1100px){.intro{columns:3}}
+  .intro p{margin:0 0 1em;hyphens:auto;text-align:justify;text-justify:inter-word}
+  .intro p:first-child::first-letter{float:left;font-size:5.1em;line-height:.82;padding:6px 10px 0 0;font-weight:600;color:var(--accent);font-variation-settings:"opsz" 144}
+  .pull{break-inside:avoid;font-size:24px;line-height:1.3;font-style:italic;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);padding:14px 0;margin:6px 0 18px;text-align:left!important}
+
+  /* methods */
+  .methods{display:grid;grid-template-columns:1fr;gap:0}
+  .method{display:grid;grid-template-columns:1fr;gap:10px 40px;padding:28px 0;border-top:1px solid var(--rule)}
+  .method:first-child{border-top:0;padding-top:0}
+  @media (min-width:960px){.method{grid-template-columns:200px 1fr 260px}}
+  .method .sect{font-family:var(--serif);font-size:44px;line-height:1;color:var(--accent);font-weight:400;font-style:italic}
+  .method .sect small{display:block;font-family:var(--sans);font-style:normal;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+  .method p{margin:0 0 .6em}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;padding:0;list-style:none}
+  .tags li{font-family:var(--mono);font-size:12.5px;border:1px solid var(--rule);padding:2px 8px;background:var(--paper-2)}
+  aside.margin{font-family:var(--sans);font-size:13.5px;line-height:1.55;color:var(--muted);border-left:1px solid var(--accent);padding-left:14px;align-self:start}
+  aside.margin b{color:var(--ink);font-weight:600}
+  .listing{margin-top:40px;display:grid;grid-template-columns:1fr;gap:10px 40px}
+  @media (min-width:960px){.listing{grid-template-columns:200px 1fr}}
+  pre{margin:0;background:var(--ink);color:#F2EEE4;font-family:var(--mono);font-size:14px;line-height:1.7;padding:20px 22px;overflow-x:auto;border-left:4px solid var(--accent)}
+  pre .c{color:#B7B2A6}
+  pre .k{color:#F3A89F}
+  pre .s{color:#C9DDB0}
+  pre:focus-visible{outline-offset:2px}
+
+  /* correspondence */
+  .corr{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--ink)}
+  @media (min-width:860px){.corr{grid-template-columns:1fr 1fr}}
+  .letter{padding:32px clamp(20px,3vw,40px)}
+  .letter + .letter{border-top:1px solid var(--ink)}
+  @media (min-width:860px){.letter + .letter{border-top:0;border-left:1px solid var(--ink)}}
+  .letter .to{font-family:var(--mono);font-size:13px;color:var(--muted);margin-bottom:14px}
+  .letter h3{font-size:28px;font-style:italic;font-weight:400}
+  .letter ol{margin:16px 0 22px;padding-left:1.3em}
+  .letter li{margin-bottom:8px}
+  .letter li::marker{font-family:var(--mono);color:var(--accent);font-size:.85em}
+  .letter .sig{font-style:italic;color:var(--muted);border-top:1px solid var(--rule);padding-top:12px;margin-top:6px}
+
+  /* statement box */
+  .statement{border:1px solid var(--ink);background:var(--paper-2);padding:clamp(22px,3.5vw,40px);position:relative}
+  .statement::before{content:"";position:absolute;inset:5px;border:1px solid var(--rule);pointer-events:none}
+  .statement h2{font-size:clamp(26px,3vw,34px)}
+  .stmt-grid{display:grid;grid-template-columns:1fr;gap:0 40px;margin-top:22px}
+  @media (min-width:760px){.stmt-grid{grid-template-columns:1fr 1fr}}
+  .stmt-grid dl{margin:0}
+  .stmt-grid div{display:grid;grid-template-columns:1fr;padding:12px 0;border-top:1px solid var(--rule)}
+  .stmt-grid dt{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+  .stmt-grid dd{margin:0;font-size:17px}
+  .status{display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;padding:1px 7px;border:1px solid currentColor;margin-left:6px;vertical-align:2px;white-space:nowrap}
+  .status.live{color:#2D5A3A}
+  .status.plan{color:var(--navy)}
+  .status.road{color:var(--accent)}
+  .stmt-note{font-family:var(--sans);font-size:13px;color:var(--muted);margin:22px 0 0}
+
+  /* subscription table */
+  .table-wrap{overflow-x:auto;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+  table{width:100%;border-collapse:collapse;min-width:640px}
+  caption{text-align:left;font-family:var(--mono);font-size:13px;color:var(--muted);padding:0 0 12px;caption-side:bottom;padding-top:12px}
+  th,td{text-align:left;vertical-align:top;padding:16px 14px;border-bottom:1px solid var(--rule)}
+  thead th{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--ink)}
+  tbody th{font-weight:600;font-size:22px;font-variation-settings:"opsz" 36;width:22%}
+  tbody th small{display:block;font-family:var(--sans);font-weight:400;font-size:13px;color:var(--muted);margin-top:4px}
+  td.price{font-family:var(--mono);font-size:15px;white-space:nowrap}
+  td ul{margin:0;padding-left:1.1em}
+  td li{margin-bottom:3px;font-size:16.5px}
+  tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
+  .table-cta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:24px}
+
+  /* research / abstract page */
+  .abstract-page{display:grid;grid-template-columns:1fr;gap:36px;background:#fff;border:1px solid var(--rule);box-shadow:0 1px 0 var(--rule),0 18px 40px -28px rgba(26,26,26,.35);padding:clamp(22px,4vw,52px)}
+  @media (min-width:1000px){.abstract-page{grid-template-columns:1fr 1fr;gap:48px}}
+  .abstract-page .journal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:var(--muted);border-bottom:1px solid var(--ink);padding-bottom:8px;margin-bottom:18px}
+  .abstract-page h3{font-size:clamp(24px,2.6vw,32px);font-weight:500;line-height:1.15;margin-bottom:10px;font-variation-settings:"opsz" 72}
+  .authors{font-family:var(--sans);font-size:14.5px;margin:0 0 4px}
+  .affil{font-family:var(--sans);font-size:13px;color:var(--muted);margin:0 0 18px}
+  .abs-label{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin:0 0 6px}
+  .abs{font-size:17px;margin:0 0 16px;text-align:justify;hyphens:auto}
+  .kw{font-family:var(--sans);font-size:13.5px;color:var(--muted);margin:0 0 18px}
+  .kw b{color:var(--ink)}
+  .ethics{font-family:var(--sans);font-size:13px;line-height:1.5;color:#3D3B37;background:var(--paper);border-left:3px solid var(--accent);padding:10px 12px;margin:0 0 20px}
+  .fig2 .controls{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 10px;font-family:var(--sans);font-size:13px}
+  .seg{display:inline-flex;border:1px solid var(--ink)}
+  .seg button,.chan{font:inherit;font-weight:500;background:transparent;color:var(--ink);border:0;padding:6px 12px;cursor:pointer}
+  .seg button + button{border-left:1px solid var(--ink)}
+  .seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  .chans{display:inline-flex;gap:6px;flex-wrap:wrap}
+  .chan{border:1px solid var(--rule);font-family:var(--mono);font-size:12.5px;padding:5px 9px;display:inline-flex;align-items:center;gap:6px}
+  .chan .sw{width:14px;height:2px;background:currentColor;display:inline-block}
+  .chan[aria-pressed="false"]{color:#8A867D;text-decoration:line-through}
+  .chan[aria-pressed="false"] .sw{opacity:.35}
+  .fig2-box{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);background:var(--paper);position:relative}
+  #fig2{display:block;width:100%;height:auto;touch-action:pan-y}
+  #fig2 .trace{fill:none;stroke-width:1.2;stroke-linejoin:round;transition:opacity .25s}
+  #fig2 .raw{stroke-width:.9;opacity:.9}
+  #fig2 .hidden{opacity:0}
+  .readout{font-family:var(--mono);font-size:12.5px;color:var(--muted);min-height:1.6em;margin-top:8px}
+  .cards{display:grid;grid-template-columns:1fr;gap:0;margin-top:40px;border-top:1px solid var(--ink)}
+  @media (min-width:760px){.cards{grid-template-columns:1fr 1fr}}
+  .card{padding:22px 0;border-bottom:1px solid var(--rule)}
+  @media (min-width:760px){.card{padding:24px 28px 24px 0}.card + .card{padding-left:28px;border-left:1px solid var(--rule)}}
+  .card h3{font-size:22px;font-weight:500}
+  .card p{margin:0;color:var(--muted);font-size:16.5px}
+
+  /* footer */
+  footer{border-top:3px double var(--ink);margin-top:24px;padding:36px 0 44px;font-family:var(--sans);font-size:14px;color:var(--muted)}
+  .foot{display:grid;grid-template-columns:1fr;gap:24px}
+  @media (min-width:760px){.foot{grid-template-columns:1.4fr 1fr}}
+  .foot .fname{font-family:var(--serif);font-size:30px;color:var(--ink);font-weight:600;line-height:1}
+  .foot .fname em{color:var(--accent);font-weight:400}
+  .foot ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:flex-start}
+  @media (min-width:760px){.foot ul{justify-content:flex-end}}
+  .foot a{color:var(--ink);text-decoration:none}
+  .foot a:hover{color:var(--accent);text-decoration:underline}
+  .colophon{font-family:var(--mono);font-size:12px;border-top:1px solid var(--rule);margin-top:26px;padding-top:14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  @media (max-width:520px){
+    body{font-size:17px}
+    .masthead .issue{font-size:11px}
+    .masthead .issue span:nth-child(2){display:none}
+    nav.primary .wrap{justify-content:center}
+    nav.primary ul{justify-content:center}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <div class="topstrip">
+    <div class="wrap">
+      <span>Design concept 4 of 6 — not a live product</span>
+      <span><a href="#research">Whitepapers</a> · <a href="#docs">Docs</a> · <a href="#signin">Sign in</a></span>
+    </div>
+  </div>
+  <div class="masthead">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="NeuroForge, working name — home">
+        <span class="name">Neuro<em>Forge</em></span>
+        <span class="wn">(working name) · Neural data infrastructure</span>
+      </a>
+      <div class="issue" aria-label="Issue information">
+        <span>Vol. 1 · Issue 1 · 2026</span>
+        <span>The data layer for brain-computer interfaces</span>
+        <span>Open access for academia</span>
+      </div>
+    </div>
+  </div>
+  <nav class="primary" aria-label="Primary">
+    <div class="wrap">
+      <ul>
+        <li><a href="#platform">Platform</a></li>
+        <li><a href="#neuro-ai">Neuro-AI</a></li>
+        <li><a href="#sdks">SDKs</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#docs" id="docs">Docs</a></li>
+      </ul>
+      <div class="navcta">
+        <a class="btn ghost" href="#signin" id="signin">Sign in</a>
+        <a class="btn primary" href="#pricing">Start free</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- ============ HERO / ARTICLE HEAD ============ -->
+  <div class="wrap" id="top">
+    <div class="article-head">
+      <div>
+        <div class="kicker"><span class="dot" aria-hidden="true"></span><span class="label red">Research Article · Infrastructure</span></div>
+        <h1>The data layer for <em>brain-computer</em> interfaces.</h1>
+      </div>
+      <div>
+        <p class="standfirst">Hardware-agnostic ingest, automated neuro-cleaning, and Neuro-AI models — so your team ships decoders, not data pipelines.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#pricing">Start free (academic)</a>
+          <a class="btn" href="#contact">Book a demo</a>
+        </div>
+        <p class="formats">Works with <b>BIDS</b> · <b>LSL</b> · <b>EDF/BDF</b> · <b>NWB</b> · <b>XDF</b></p>
+      </div>
+    </div>
+
+    <figure class="fig1">
+      <div class="plate-box">
+        <svg id="plate" viewBox="0 0 1280 800" preserveAspectRatio="xMidYMid meet" role="img"
+             aria-label="Scientific-plate style engraving of a lateral brain view with fine contour lines. A red pathway runs from scalp sensors to four numbered callouts: 1 ingest, 2 clean, 3 model, 4 SDK."
+             xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <figcaption><b>Figure 1 | Signal pathway from sensor to model.</b> Scalp or implanted sensors stream into (1) ingest, (2) automated cleaning, (3) Neuro-AI inference and (4) SDK delivery. Schematic illustration; anatomy stylised, not to scale.</figcaption>
+    </figure>
+  </div>
+
+  <!-- ============ INTRO ============ -->
+  <section aria-labelledby="intro-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="num">Editorial</span>
+        <div>
+          <h2 id="intro-h">Picks and shovels for <em>neurotech</em>.</h2>
+          <p class="dek">Every BCI team rebuilds the same plumbing. We think that plumbing should be shared, versioned and citable.</p>
+        </div>
+      </div>
+      <div class="intro">
+        <p>Neural recordings arrive in a dozen formats, from a dozen devices, at sampling rates that punish naive storage. Before a single decoder is trained, most teams spend months writing converters, filters and artifact heuristics that live in one student's notebook and die with their graduation.</p>
+        <p class="pull">“Your team should ship decoders, not data pipelines.”</p>
+        <p>NeuroForge is a hardware-agnostic data layer for electroencephalography, electrocorticography and microelectrode arrays. It ingests streams and files through open standards, cleans them with transparent, versioned pipelines, and hands the result to models — ours, the community’s, or yours.</p>
+        <p>We are building for two readers at once: the laboratory that needs reproducibility and a free tier, and the seed-stage hardware company that needs a production data stack and a compliance story before its first enterprise pilot. The platform is intended for research and development use.</p>
+        <p>This page is a design concept. Where it shows numbers in interface mock-ups, they are demo data or targets, and are labelled as such.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ METHODS ============ -->
+  <section id="platform" aria-labelledby="methods-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="num">Methods</span>
+        <div>
+          <h2 id="methods-h">From electrode to model, in <em>four</em> sections.</h2>
+          <p class="dek">Each stage is a documented, versioned step with provenance — the kind of pipeline you can describe in a methods section and a reviewer can reproduce.</p>
+        </div>
+      </div>
+
+      <div class="methods">
+        <article class="method" aria-labelledby="m1">
+          <div class="sect" aria-hidden="true">§1<small>Ingest</small></div>
+          <div>
+            <h3 id="m1">Ingest</h3>
+            <p>Hardware-agnostic connectors for EEG, ECoG and microelectrode arrays, backed by low-latency time-series storage built for high channel counts and long sessions.</p>
+            <ul class="tags" aria-label="Supported formats">
+              <li>BIDS</li><li>Lab Streaming Layer</li><li>EDF/BDF</li><li>NWB</li><li>XDF</li>
+            </ul>
+          </div>
+          <aside class="margin" aria-label="Margin note on ingest"><b>Marginalia.</b> Open standards first: a recording that enters as BIDS can always leave as BIDS. No proprietary lock-in on your raw data.</aside>
+        </article>
+
+        <article class="method" aria-labelledby="m2">
+          <div class="sect" aria-hidden="true">§2<small>Clean</small></div>
+          <div>
+            <h3 id="m2">Clean</h3>
+            <p>Automated neuro-cleaning: filtering, independent component analysis (ICA), artifact rejection, re-referencing and normalization. Every run is versioned and reproducible, with full provenance attached to the output.</p>
+            <ul class="tags" aria-label="Cleaning steps">
+              <li>band-pass / notch</li><li>ICA</li><li>artifact rejection</li><li>re-reference</li><li>normalize</li>
+            </ul>
+          </div>
+          <aside class="margin" aria-label="Margin note on cleaning"><b>Marginalia.</b> Pipelines are data, not scripts: parameters, library versions and input hashes are stored with each result.</aside>
+        </article>
+
+        <article class="method" id="neuro-ai" aria-labelledby="m3">
+          <div class="sect" aria-hidden="true">§3<small>Neuro-AI</small></div>
+          <div>
+            <h3 id="m3">Neuro-AI model marketplace</h3>
+            <p>Models for motor-intent decoding and cognitive-state estimation, plus bring-your-own-model hosting. Benchmarks are published with methods, on public datasets.</p>
+            <ul class="tags" aria-label="Model families">
+              <li>motor intent</li><li>cognitive state</li><li>bring your own</li>
+            </ul>
+          </div>
+          <aside class="margin" aria-label="Margin note on models"><b>Marginalia.</b> No leaderboard without a methods section: each benchmark ships with its dataset, split and evaluation code.</aside>
+        </article>
+
+        <article class="method" id="sdks" aria-labelledby="m4">
+          <div class="sect" aria-hidden="true">§4<small>SDKs</small></div>
+          <div>
+            <h3 id="m4">SDKs</h3>
+            <p>Python, C++, Unity and Unreal. Stream in, get predictions out — from a notebook, an embedded device, or a game engine running an experiment.</p>
+            <ul class="tags" aria-label="SDK languages">
+              <li>Python</li><li>C++</li><li>Unity</li><li>Unreal</li>
+            </ul>
+          </div>
+          <aside class="margin" aria-label="Margin note on SDKs"><b>Marginalia.</b> The same API surface across languages, so a prototype in Python becomes a C++ build without a rewrite of the data model.</aside>
+        </article>
+      </div>
+
+      <div class="listing">
+        <div><span class="label">Listing 1</span></div>
+        <figure>
+          <pre tabindex="0" aria-label="Illustrative Python code example"><span class="k">import</span> neuroforge <span class="k">as</span> nf
+stream = nf.connect(<span class="s">"lsl://headset-01"</span>)
+clean  = stream.pipeline(<span class="s">"ica-default"</span>).run()
+intent = nf.models.get(<span class="s">"motor-intent/v1"</span>).predict(clean)</pre>
+          <figcaption><b>Listing 1 | Four lines, four sections.</b> Illustrative API — subject to change.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CORRESPONDENCE ============ -->
+  <section aria-labelledby="corr-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="num">Correspondence</span>
+        <div>
+          <h2 id="corr-h">Two readers, <em>one</em> platform.</h2>
+          <p class="dek">Whether you publish papers or ship devices, the data layer is the same.</p>
+        </div>
+      </div>
+      <div class="corr">
+        <article class="letter" aria-labelledby="c1">
+          <div class="to">To: laboratories, students &amp; research groups</div>
+          <h3 id="c1">For researchers</h3>
+          <ol>
+            <li>A free academic tier for labs and students.</li>
+            <li>BIDS-native storage and ingest.</li>
+            <li>Reproducible, versioned cleaning pipelines.</li>
+            <li>Export to MNE- and EEGLAB-compatible formats.</li>
+            <li>Citation-ready provenance for every derived dataset.</li>
+          </ol>
+          <a class="btn primary" href="#pricing">Start free (academic)</a>
+          <p class="sig">— with respect to your methods section.</p>
+        </article>
+        <article class="letter" aria-labelledby="c2">
+          <div class="to">To: BCI &amp; neurotech hardware companies</div>
+          <h3 id="c2">For hardware companies</h3>
+          <ol>
+            <li>A white-label SDK your customers use under your brand.</li>
+            <li>A device connector program for your hardware.</li>
+            <li>Cloud and edge deployment.</li>
+            <li>Compliance handled, so you can focus on the device.</li>
+            <li>Usage-based pricing that grows with you.</li>
+          </ol>
+          <a class="btn" href="#contact" id="contact">Talk to us</a>
+          <p class="sig">— with respect to your roadmap.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPLIANCE ============ -->
+  <section aria-labelledby="stmt-h">
+    <div class="wrap">
+      <div class="statement">
+        <span class="label red">Compliance &amp; security</span>
+        <h2 id="stmt-h">Data Availability &amp; Ethics Statement</h2>
+        <p class="dek">Neural data is among the most personal data there is. The platform is designed around that fact. Status is stated plainly for each item.</p>
+        <div class="stmt-grid">
+          <dl>
+            <div><dt>Encryption</dt><dd>AES-256 at rest, TLS 1.3 in transit <span class="status live">design baseline</span></dd></div>
+            <div><dt>Access control</dt><dd>Role-based access control and audit logs <span class="status live">design baseline</span></dd></div>
+            <div><dt>Health data</dt><dd>Designed for HIPAA-aligned workflows; BAA for enterprise <span class="status plan">planned</span></dd></div>
+            <div><dt>De-identification</dt><dd>De-identification tooling for recordings and metadata <span class="status live">design baseline</span></dd></div>
+          </dl>
+          <dl>
+            <div><dt>Attestation</dt><dd>SOC 2 Type II <span class="status road">roadmap</span></dd></div>
+            <div><dt>Neural-data privacy</dt><dd>Built to support emerging US state neural-data privacy laws (e.g. Colorado, California, Connecticut, Montana)</dd></div>
+            <div><dt>Data residency</dt><dd>Regional data residency options <span class="status plan">planned</span></dd></div>
+            <div><dt>Intended use</dt><dd>Research and development. Not a medical device; no diagnostic or therapeutic claims.</dd></div>
+          </dl>
+        </div>
+        <p class="stmt-note">No certification is claimed on this page. Statements describe design intent for a product under development; this is not legal advice.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section id="pricing" aria-labelledby="price-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="num">Subscription</span>
+        <div>
+          <h2 id="price-h">Subscription <em>rates</em>.</h2>
+          <p class="dek">Free for academia, usage-based for startups, custom for enterprise. Final prices are published at launch.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <caption>Table 1 | Subscription tiers. Prices to be announced at launch; tiers subject to change.</caption>
+          <thead>
+            <tr><th scope="col">Tier</th><th scope="col">Rate</th><th scope="col">For</th><th scope="col">Includes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Academic<small>Labs &amp; students</small></th>
+              <td class="price">Free</td>
+              <td>University labs, students and non-profit research groups</td>
+              <td><ul><li>Ingest, cleaning and SDKs</li><li>Fair-use limits</li><li>Community support</li></ul></td>
+            </tr>
+            <tr>
+              <th scope="row">Startup<small>Seed-stage BCI teams</small></th>
+              <td class="price">Usage-based<br><span style="color:var(--muted)">Pricing at launch</span></td>
+              <td>Seed-stage BCI hardware teams moving toward production</td>
+              <td><ul><li>Everything in Academic</li><li>Device connector program</li><li>White-label SDK</li></ul></td>
+            </tr>
+            <tr>
+              <th scope="row">Enterprise<small>Scale &amp; compliance</small></th>
+              <td class="price">Custom</td>
+              <td>Organizations with compliance and deployment requirements</td>
+              <td><ul><li>BAA (planned) and SSO</li><li>Dedicated support</li><li>On-prem / edge deployment</li></ul></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-cta">
+        <a class="btn primary" href="#top">Join the early-access list</a>
+        <span class="label">No card required · academic tier free</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESEARCH ============ -->
+  <section id="research" aria-labelledby="res-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="num">Research</span>
+        <div>
+          <h2 id="res-h">Whitepapers &amp; <em>preprints</em>.</h2>
+          <p class="dek">Our research programme, stated with its status. Nothing here is a clinical result.</p>
+        </div>
+      </div>
+
+      <article class="abstract-page" aria-labelledby="paper-h">
+        <div>
+          <div class="journal"><span>NeuroForge Research · Whitepaper 01</span><span>Status: <span class="status road" style="margin-left:0">In preparation</span></span></div>
+          <h3 id="paper-h">Bidirectional closed-loop somatosensory feedback: a computational study</h3>
+          <p class="authors">NeuroForge Research (working name)</p>
+          <p class="affil">Computational &amp; theoretical programme</p>
+          <p class="abs-label">Abstract</p>
+          <p class="abs">Modelling how patterned stimulation of somatosensory cortex could encode touch, pressure and proprioception. The work is computational and theoretical, relying on models, simulation and published datasets.</p>
+          <p class="kw"><b>Keywords:</b> somatosensory cortex · closed-loop BCI · sensory encoding · proprioception · computational model</p>
+          <p class="ethics"><b>Ethics note.</b> Computational/theoretical work; any clinical application requires IRB/FDA oversight.</p>
+          <a class="btn primary" href="#research">Read preview</a>
+        </div>
+
+        <figure class="fig2">
+          <div class="controls" role="group" aria-label="Figure 2 controls">
+            <span class="seg" role="group" aria-label="Signal view">
+              <button type="button" data-view="raw" aria-pressed="false">Raw</button>
+              <button type="button" data-view="clean" aria-pressed="true">Cleaned</button>
+              <button type="button" data-view="both" aria-pressed="false">Overlay</button>
+            </span>
+            <span class="chans" role="group" aria-label="Toggle channels" id="chans"></span>
+          </div>
+          <div class="fig2-box">
+            <svg id="fig2" viewBox="0 0 560 330" role="img" aria-labelledby="fig2-t fig2-d">
+              <title id="fig2-t">Figure 2: synthetic multichannel traces before and after cleaning</title>
+              <desc id="fig2-d">Four synthetic channels, Fz, Cz, Pz and Oz, over two seconds. The raw view shows line noise and a blink artifact; the cleaned view shows the same signals after filtering and artifact removal. Use the buttons to switch views and hide channels.</desc>
+            </svg>
+          </div>
+          <div class="readout" id="readout">Hover or tap the figure to read values.</div>
+          <figcaption><b>Figure 2 | Before and after cleaning (synthetic).</b> Illustrative demo data generated in the browser; not a recording and not a study result.</figcaption>
+        </figure>
+      </article>
+
+      <div class="cards">
+        <article class="card" aria-labelledby="p2">
+          <div class="label">Whitepaper 02 <span class="status plan">Planned</span></div>
+          <h3 id="p2">Benchmarking automated artifact rejection on public EEG datasets</h3>
+          <p>A methods-first comparison of cleaning pipelines on openly available recordings.</p>
+        </article>
+        <article class="card" aria-labelledby="p3">
+          <div class="label">Whitepaper 03 <span class="status plan">Planned</span></div>
+          <h3 id="p3">A reference architecture for HIPAA-aligned neural data pipelines</h3>
+          <p>Encryption, access control and provenance patterns for neural data at rest and in motion.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="fname">Neuro<em>Forge</em></div>
+        <p style="margin:10px 0 0">NeuroForge (working name) — design concept, not a live product.</p>
+      </div>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="#docs">Docs</a></li>
+          <li><a href="#status">Status</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#privacy">Privacy</a></li>
+          <li><a href="#careers">Careers</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="colophon"><span>© 2026 · Vol. 1 · Issue 1</span><span>Set in Fraunces, Inter &amp; IBM Plex Mono</span></div>
+  </div>
+</footer>
+
+<script>
+/* ---------- Figure 1: engraving plate (adapted from assets/asset-4-editorial.html) ---------- */
+(function(){
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg';
+  var svg = document.getElementById('plate');
+  var INK = '#1A1A1A', RED = '#B3261E', PAPER = '#FBF8F1';
+
+  function el(tag, attrs, parent, text){
+    var e = document.createElementNS(NS, tag);
+    for(var k in attrs) if(Object.prototype.hasOwnProperty.call(attrs,k)) e.setAttribute(k, attrs[k]);
+    if(text != null) e.textContent = text;
+    (parent || svg).appendChild(e);
+    return e;
+  }
+  function f(n){ return Math.round(n*10)/10; }
+  function crPath(pts, closed){
+    var n = pts.length, d = 'M' + f(pts[0][0]) + ',' + f(pts[0][1]);
+    var segs = closed ? n : n-1;
+    for(var i=0;i<segs;i++){
+      var p0 = pts[closed ? (i-1+n)%n : Math.max(0,i-1)], p1 = pts[i], p2 = pts[(i+1)%n],
+          p3 = pts[closed ? (i+2)%n : Math.min(n-1,i+2)];
+      d += ' C' + f(p1[0]+(p2[0]-p0[0])/6) + ',' + f(p1[1]+(p2[1]-p0[1])/6) + ' ' +
+           f(p2[0]-(p3[0]-p1[0])/6) + ',' + f(p2[1]-(p3[1]-p1[1])/6) + ' ' + f(p2[0]) + ',' + f(p2[1]);
+    }
+    return d + (closed ? 'Z' : '');
+  }
+  function crSample(pts, per){
+    var n = pts.length, out = [];
+    for(var i=0;i<n;i++){
+      var p0=pts[(i-1+n)%n], p1=pts[i], p2=pts[(i+1)%n], p3=pts[(i+2)%n];
+      for(var s=0;s<per;s++){
+        var t=s/per, t2=t*t, t3=t2*t;
+        out.push([0.5*((2*p1[0])+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3),
+                  0.5*((2*p1[1])+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3)]);
+      }
+    }
+    return out;
+  }
+  function inPoly(x,y,poly){
+    var c=false;
+    for(var i=0,j=poly.length-1;i<poly.length;j=i++){
+      var xi=poly[i][0], yi=poly[i][1], xj=poly[j][0], yj=poly[j][1];
+      if(((yi>y)!==(yj>y)) && (x < (xj-xi)*(y-yi)/(yj-yi)+xi)) c=!c;
+    }
+    return c;
+  }
+  function h2(x,y){ var n = (Math.imul(x,374761393) + Math.imul(y,668265263))|0; n = Math.imul(n^(n>>>13),1274126177); n ^= n>>>16; return (n>>>0)/4294967295; }
+  function vn2(x,y){
+    var xi=Math.floor(x), yi=Math.floor(y), xf=x-xi, yf=y-yi;
+    xf=xf*xf*(3-2*xf); yf=yf*yf*(3-2*yf);
+    var a=h2(xi,yi), b=h2(xi+1,yi), c=h2(xi,yi+1), d=h2(xi+1,yi+1);
+    return a + (b-a)*xf + (c-a)*yf + (a-b-c+d)*xf*yf;
+  }
+
+  var BRAIN = [[250,360],[268,270],[338,196],[450,150],[570,138],[690,155],[790,205],[858,285],[880,370],
+               [852,430],[780,462],[660,472],[560,500],[452,492],[378,458],[386,428],[312,416]];
+  var CEREB = [[690,466],[752,452],[824,462],[862,494],[852,532],[790,550],[722,542],[684,510]];
+  var STEM = 'M618,470 C628,520 622,562 612,614 L668,614 C668,568 676,526 694,484 Z';
+  var brainPoly = crSample(BRAIN, 14);
+  var brainD = crPath(BRAIN, true), cerebD = crPath(CEREB, true);
+
+  var defs = el('defs', {});
+  var cp1 = el('clipPath', {id:'clipBrain'}, defs); el('path', {d:brainD}, cp1);
+  var cp2 = el('clipPath', {id:'clipCereb'}, defs); el('path', {d:cerebD}, cp2);
+  var cp3 = el('clipPath', {id:'clipStem'}, defs); el('path', {d:STEM}, cp3);
+  var rg1 = el('radialGradient', {id:'rg1', cx:0.5, cy:0.5, r:0.5}, defs);
+  el('stop', {offset:0, 'stop-color':'#fff', 'stop-opacity':0.95}, rg1); el('stop', {offset:1, 'stop-color':'#fff', 'stop-opacity':0}, rg1);
+  var mask = el('mask', {id:'shade', maskUnits:'userSpaceOnUse', x:0, y:0, width:1280, height:800}, defs);
+  el('rect', {x:0,y:0,width:1280,height:800,fill:'#000'}, mask);
+  el('ellipse', {cx:760, cy:470, rx:300, ry:200, fill:'url(#rg1)'}, mask);
+  el('ellipse', {cx:470, cy:500, rx:190, ry:110, fill:'url(#rg1)'}, mask);
+  el('ellipse', {cx:280, cy:420, rx:120, ry:120, fill:'url(#rg1)', opacity:0.6}, mask);
+  var grain = el('filter', {id:'grain', x:0, y:0, width:'100%', height:'100%'}, defs);
+  el('feTurbulence', {type:'fractalNoise', baseFrequency:0.9, numOctaves:2, seed:7, result:'n'}, grain);
+  el('feColorMatrix', {type:'matrix', values:'0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 0 0.22  0 0 0 0.09 0'}, grain);
+
+  el('rect', {x:0,y:0,width:1280,height:800,fill:PAPER});
+  el('rect', {x:0,y:0,width:1280,height:800,filter:'url(#grain)', opacity:0.6});
+  el('rect', {x:24,y:24,width:1232,height:752,fill:'none',stroke:INK,'stroke-width':0.9,'stroke-opacity':0.8});
+  el('rect', {x:30,y:30,width:1220,height:740,fill:'none',stroke:INK,'stroke-width':0.4,'stroke-opacity':0.6});
+
+  var hdr = el('g', {'class':'serif fade', style:'--delay:0s', fill:INK});
+  el('text', {x:52, y:62, 'font-size':12.5, 'letter-spacing':3.2}, hdr, 'PLATE I');
+  el('text', {x:1228, y:62, 'font-size':12, 'letter-spacing':2.6, 'text-anchor':'end', 'fill-opacity':0.75}, hdr, 'NEUROFORGE (WORKING NAME) · SIGNAL ATLAS');
+  el('line', {x1:52, y1:76, x2:1228, y2:76, stroke:INK, 'stroke-width':0.5, 'stroke-opacity':0.6}, hdr);
+
+  var gStem = el('g', {});
+  el('path', {d:STEM, fill:PAPER, stroke:INK, 'stroke-width':1.1, pathLength:1, 'class':'draw', style:'--delay:0.6s;--dur:1.6s'}, gStem);
+  var stemLines = '';
+  for(var k=0;k<5;k++){ var sx=622+k*12; stemLines += 'M'+sx+',474 C'+(sx+8)+',524 '+(sx-4)+',566 '+(sx-8-k*1.2)+',614 '; }
+  el('path', {d:stemLines, fill:'none', stroke:INK, 'stroke-width':0.45, 'stroke-opacity':0.7, 'clip-path':'url(#clipStem)', pathLength:1, 'class':'draw', style:'--delay:1.2s;--dur:1.8s'}, gStem);
+
+  var gCb = el('g', {});
+  el('path', {d:cerebD, fill:PAPER, stroke:INK, 'stroke-width':1.1, pathLength:1, 'class':'draw', style:'--delay:0.7s;--dur:1.6s'}, gCb);
+  var fol = '';
+  for(k=0;k<22;k++){ var fy = 452 + k*5.6; fol += 'M660,'+f(fy)+' Q780,'+f(fy+16+k*0.35)+' 900,'+f(fy-2)+' '; }
+  el('path', {d:fol, fill:'none', stroke:INK, 'stroke-width':0.5, 'stroke-opacity':0.75, 'clip-path':'url(#clipCereb)', pathLength:1, 'class':'draw', style:'--delay:1.3s;--dur:2s'}, gCb);
+
+  var gBr = el('g', {});
+  el('path', {d:brainD, fill:PAPER, stroke:'none'}, gBr);
+
+  // gyri: zero-crossings of band-limited noise via marching squares
+  var WAVES = [];
+  for(var q=0;q<28;q++){ var ang=h2(q,11)*Math.PI*2, lam=30+h2(q,23)*12, kk=2*Math.PI/lam; WAVES.push([Math.cos(ang)*kk, Math.sin(ang)*kk*1.15, h2(q,37)*Math.PI*2]); }
+  var WN = 1/Math.sqrt(WAVES.length/2);
+  var BX0=236, BY0=126, CS=4, NX=Math.ceil((896-BX0)/CS), NY=Math.ceil((512-BY0)/CS);
+  var val = new Float32Array((NX+1)*(NY+1)), ins = new Uint8Array((NX+1)*(NY+1));
+  for(var j=0;j<=NY;j++) for(var i=0;i<=NX;i++){
+    var x = BX0+i*CS, y = BY0+j*CS, idx = j*(NX+1)+i;
+    var wx = x + 26*(vn2(y*0.01+3.1, x*0.01)-0.5), wy = y + 26*(vn2(x*0.01+8.7, y*0.01)-0.5), sum = 0;
+    for(var q2=0;q2<WAVES.length;q2++) sum += Math.cos(WAVES[q2][0]*wx + WAVES[q2][1]*wy + WAVES[q2][2]);
+    val[idx] = sum*WN;
+    ins[idx] = inPoly(x,y,brainPoly) ? 1 : 0;
+  }
+  var CASES = {1:[[3,2]],2:[[2,1]],3:[[3,1]],4:[[0,1]],5:[[0,3],[2,1]],6:[[0,2]],7:[[0,3]],8:[[0,3]],9:[[0,2]],10:[[0,1],[3,2]],11:[[0,1]],12:[[3,1]],13:[[2,1]],14:[[3,2]]};
+  function edgePt(e, i, j, lv){
+    var x=BX0+i*CS, y=BY0+j*CS, a=val[j*(NX+1)+i], b=val[j*(NX+1)+i+1], c=val[(j+1)*(NX+1)+i+1], d=val[(j+1)*(NX+1)+i], t;
+    if(e===0){ t=(lv-a)/(b-a); return [x+t*CS, y]; }
+    if(e===1){ t=(lv-b)/(c-b); return [x+CS, y+t*CS]; }
+    if(e===2){ t=(lv-d)/(c-d); return [x+t*CS, y+CS]; }
+    t=(lv-a)/(d-a); return [x, y+t*CS];
+  }
+  var BANDS = 6, LEVELS = [[0,0.9,0.95],[-0.55,0.45,0.5],[0.55,0.45,0.5]];
+  var gGyri = el('g', {'clip-path':'url(#clipBrain)', fill:'none', stroke:INK, 'stroke-linecap':'round'}, gBr);
+  LEVELS.forEach(function(L, li){
+    var paths = []; for(var b=0;b<BANDS;b++) paths.push('');
+    for(var j=0;j<NY;j++) for(var i=0;i<NX;i++){
+      var i00=j*(NX+1)+i;
+      if(!(ins[i00]||ins[i00+1]||ins[i00+NX+1]||ins[i00+NX+2])) continue;
+      var lv=L[0], cs = (val[i00]>lv?8:0)|(val[i00+1]>lv?4:0)|(val[i00+NX+2]>lv?2:0)|(val[i00+NX+1]>lv?1:0);
+      var segs = CASES[cs]; if(!segs) continue;
+      var band = Math.min(BANDS-1, Math.floor(i/NX*BANDS));
+      for(var s=0;s<segs.length;s++){
+        var p=edgePt(segs[s][0],i,j,lv), q=edgePt(segs[s][1],i,j,lv);
+        paths[band] += 'M'+f(p[0])+','+f(p[1])+'L'+f(q[0])+','+f(q[1]);
+      }
+    }
+    paths.forEach(function(d, b){
+      if(!d) return;
+      el('path', {d:d, 'stroke-width':L[1], 'stroke-opacity':L[2], pathLength:1, 'class':'draw',
+                  style:'--delay:'+(0.9+b*0.28+li*0.15).toFixed(2)+'s;--dur:2.4s'}, gGyri);
+    });
+  });
+
+  var hatch = '';
+  for(var c=BX0-420; c<900; c+=4.2){ hatch += 'M'+f(c)+',512 L'+f(c+280)+',126 '; }
+  var gH = el('g', {'clip-path':'url(#clipBrain)'}, gBr);
+  el('path', {d:hatch, fill:'none', stroke:INK, 'stroke-width':0.38, 'stroke-opacity':0.55, mask:'url(#shade)', 'class':'fade', style:'--delay:2.6s;--dur:1.6s'}, gH);
+
+  var SULCI = [
+    'M386,436 C450,418 520,404 580,378 S650,338 672,316',
+    'M606,142 C592,190 616,222 590,262 S570,326 548,372',
+    'M440,472 C500,454 560,442 620,420 S684,392 704,370',
+    'M806,214 C792,244 812,262 796,294',
+    'M338,236 C392,222 450,232 520,214'
+  ];
+  SULCI.forEach(function(d,i){
+    el('path', {d:d, fill:'none', stroke:INK, 'stroke-width':1.35, 'stroke-linecap':'round', 'clip-path':'url(#clipBrain)',
+                pathLength:1, 'class':'draw', style:'--delay:'+(1.6+i*0.18).toFixed(2)+'s;--dur:1.6s'}, gBr);
+  });
+  el('path', {d:brainD, fill:'none', stroke:INK, 'stroke-width':1.5, pathLength:1, 'class':'draw', style:'--delay:0.2s;--dur:2.2s'}, gBr);
+  var cx0=565, cy0=325;
+  var inner = BRAIN.map(function(p){ return [cx0+(p[0]-cx0)*0.975, cy0+(p[1]-cy0)*0.965]; });
+  el('path', {d:crPath(inner,true), fill:'none', stroke:INK, 'stroke-width':0.45, 'stroke-opacity':0.6, pathLength:1, 'class':'draw', style:'--delay:0.5s;--dur:2.4s'}, gBr);
+
+  var scalpPts = BRAIN.slice(0,9).map(function(p){ return [cx0+(p[0]-cx0)*1.095, cy0+(p[1]-cy0)*1.12]; });
+  el('path', {d:crPath(scalpPts,false), fill:'none', stroke:INK, 'stroke-width':0.8, 'stroke-dasharray':'1.5 4.5', 'stroke-linecap':'round', 'class':'fade', style:'--delay:2.2s'});
+  var sensors = [2,3,4,5,6].map(function(i){ return scalpPts[i]; });
+
+  var NODE_X = 1062, NODE_Y = [172, 322, 472, 622];
+  var gPath = el('g', {fill:'none', stroke:RED});
+  sensors.forEach(function(p, i){
+    var d = 'M'+f(p[0])+','+f(p[1])+' C'+f(p[0]+30)+','+f(p[1]-54+i*4)+' '+(880+i*8)+','+(92+i*6)+' '+(NODE_X-17)+','+NODE_Y[0];
+    el('path', {d:d, 'stroke-width':i===2?1.3:0.7, 'stroke-opacity':i===2?1:0.7, pathLength:1, 'class':'draw', style:'--delay:'+(3.0+i*0.08).toFixed(2)+'s;--dur:1.6s'}, gPath);
+  });
+  for(var n=0;n<3;n++){
+    el('path', {d:'M'+NODE_X+','+(NODE_Y[n]+17)+' L'+NODE_X+','+(NODE_Y[n+1]-21), 'stroke-width':1.1, pathLength:1, 'class':'draw', style:'--delay:'+(4.2+n*0.35).toFixed(2)+'s;--dur:0.6s'}, gPath);
+    el('path', {d:'M'+(NODE_X-4)+','+(NODE_Y[n+1]-27)+' L'+NODE_X+','+(NODE_Y[n+1]-20)+' L'+(NODE_X+4)+','+(NODE_Y[n+1]-27), 'stroke-width':1.1, 'class':'fade', style:'--delay:'+(4.6+n*0.35).toFixed(2)+'s;--dur:0.4s'}, gPath);
+  }
+  var gSens = el('g', {'class':'fade', style:'--delay:2.6s'});
+  sensors.forEach(function(p, i){
+    el('circle', {cx:f(p[0]), cy:f(p[1]), r:i===2?7.5:5.5, fill:PAPER, stroke:i===2?RED:INK, 'stroke-width':1.1}, gSens);
+    el('circle', {cx:f(p[0]), cy:f(p[1]), r:i===2?2.6:1.8, fill:i===2?RED:INK}, gSens);
+  });
+
+  var CALL = [['Ingest','hardware-agnostic streams'],['Clean','automated artifact removal'],['Model','neuro-AI inference'],['SDK','Python · C++ · Unity / Unreal']];
+  CALL.forEach(function(cl, i){
+    var y = NODE_Y[i], g = el('g', {'class':'serif fade', style:'--delay:'+(3.9+i*0.35).toFixed(2)+'s;--dur:0.9s'});
+    el('circle', {cx:NODE_X, cy:y, r:16, fill:PAPER, stroke:RED, 'stroke-width':1.3}, g);
+    el('text', {x:NODE_X, y:y+5.5, 'text-anchor':'middle', 'font-size':16, fill:RED}, g, String(i+1));
+    el('text', {x:NODE_X+30, y:y-3, 'font-size':17, fill:INK, 'letter-spacing':1.6}, g, cl[0].toUpperCase());
+    el('text', {x:NODE_X+30, y:y+16, 'font-size':12, 'font-style':'italic', fill:INK, 'fill-opacity':0.72}, g, cl[1]);
+    var gx = NODE_X-78, gl = el('g', {fill:'none', stroke:INK, 'stroke-width':0.8, 'stroke-linecap':'round'}, g), d='', t;
+    if(i===0){ for(t=0;t<=44;t+=2){ d += (t?'L':'M')+(gx+t)+','+f(y+Math.sin(t*0.9)*4+Math.sin(t*2.3)*3); } el('path',{d:d},gl); }
+    if(i===1){ for(t=0;t<=44;t+=2){ d += (t?'L':'M')+(gx+t)+','+f(y+Math.sin(t*0.28)*6); } el('path',{d:d},gl); }
+    if(i===2){
+      var A=[[gx,y-9],[gx,y],[gx,y+9]], B=[[gx+22,y-5],[gx+22,y+5]], Cc=[[gx+44,y]];
+      A.forEach(function(a){ B.forEach(function(b){ d+='M'+a[0]+','+a[1]+'L'+b[0]+','+b[1]; }); });
+      B.forEach(function(b){ d+='M'+b[0]+','+b[1]+'L'+Cc[0][0]+','+Cc[0][1]; });
+      el('path',{d:d,'stroke-width':0.5},gl);
+      A.concat(B,Cc).forEach(function(p){ el('circle',{cx:p[0],cy:p[1],r:2.2,fill:PAPER},gl); });
+    }
+    if(i===3){ el('text', {x:gx+22, y:y+6, 'text-anchor':'middle', 'font-size':18, fill:INK, stroke:'none', 'font-family':'Georgia,serif'}, gl, '{ }'); }
+  });
+
+  var LAB = [
+    ['Lobus frontalis', 92, 250, 'start', [212,248], [318,292]],
+    ['Lobus parietalis', 824, 172, 'start', [820,168], [724,222]],
+    ['Lobus occipitalis', 904, 414, 'start', [900,410], [860,398]],
+    ['Lobus temporalis', 226, 566, 'start', [350,560], [452,486]],
+    ['Cerebellum', 890, 586, 'start', [886,582], [822,522]],
+    ['Truncus encephali', 590, 660, 'end', [594,656], [630,596]]
+  ];
+  var gLab = el('g', {'class':'serif fade', style:'--delay:3.2s;--dur:1.2s'});
+  LAB.forEach(function(l){
+    el('line', {x1:l[4][0], y1:l[4][1], x2:l[5][0], y2:l[5][1], stroke:INK, 'stroke-width':0.5, 'stroke-opacity':0.8}, gLab);
+    el('circle', {cx:l[5][0], cy:l[5][1], r:1.6, fill:INK}, gLab);
+    el('text', {x:l[1], y:l[2], 'text-anchor':l[3], 'font-size':13.5, 'font-style':'italic', fill:INK, 'fill-opacity':0.8}, gLab, l[0]);
+  });
+
+  var cap = el('g', {'class':'serif fade', style:'--delay:0.4s;--dur:1.4s', 'text-anchor':'middle', fill:INK});
+  el('text', {x:640, y:736, 'font-size':21, 'font-style':'italic'}, cap, 'Fig. 1 — Signal pathway from sensor to model.');
+  el('text', {x:640, y:758, 'font-size':11.5, 'letter-spacing':1.2, 'fill-opacity':0.6}, cap, 'SCHEMATIC ILLUSTRATION · ANATOMY STYLISED, NOT TO SCALE');
+
+  document.addEventListener('visibilitychange', function(){ document.documentElement.classList.toggle('paused', document.hidden); });
+  if(document.hidden) document.documentElement.classList.add('paused');
+})();
+
+/* ---------- Figure 2: interactive synthetic traces ---------- */
+(function(){
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg';
+  var svg = document.getElementById('fig2');
+  var readout = document.getElementById('readout');
+  var chansBox = document.getElementById('chans');
+  var W = 560, H = 330, L = 52, R = 14, T = 20, B = 40, N = 400, SEC = 2;
+  var CH = [
+    {name:'Fz', color:'#1F3A5F', alpha:0.6, blink:1.0},
+    {name:'Cz', color:'#B3261E', alpha:0.9, blink:0.55},
+    {name:'Pz', color:'#2D5A3A', alpha:1.2, blink:0.25},
+    {name:'Oz', color:'#6B4E16', alpha:1.6, blink:0.1}
+  ];
+  var view = 'clean', hidden = {};
+
+  // deterministic PRNG so the figure is stable between loads
+  var seed = 42;
+  function rnd(){ seed = (seed*1664525 + 1013904223) >>> 0; return seed/4294967296; }
+
+  var laneH = (H - T - B) / CH.length;
+  CH.forEach(function(ch, c){
+    ch.clean = []; ch.raw = [];
+    var ph1 = rnd()*6.28, ph2 = rnd()*6.28, lp = 0;
+    for(var i=0;i<N;i++){
+      var t = i/N*SEC;
+      lp = lp*0.85 + (rnd()-0.5)*0.35;                             // pink-ish background
+      var s = ch.alpha*0.55*Math.sin(2*Math.PI*10*t + ph1)*(0.7+0.3*Math.sin(2*Math.PI*0.9*t))  // alpha
+            + 0.25*Math.sin(2*Math.PI*5.5*t + ph2) + lp;
+      var blink = ch.blink*3.2*Math.exp(-Math.pow((t-0.78)/0.07,2));  // eye blink artifact
+      var line = 0.45*Math.sin(2*Math.PI*50*t + c);                    // 50 Hz line noise
+      var drift = 0.6*(t-1);                                           // slow drift
+      ch.clean.push(s);
+      ch.raw.push(s + blink + line + drift*(0.5+c*0.2));
+    }
+  });
+
+  function el(tag, attrs, parent, text){
+    var e = document.createElementNS(NS, tag);
+    for(var k in attrs) e.setAttribute(k, attrs[k]);
+    if(text != null) e.textContent = text;
+    (parent || svg).appendChild(e);
+    return e;
+  }
+  function X(i){ return L + (W-L-R)*i/(N-1); }
+  function pathFor(arr, c){
+    var mid = T + laneH*(c+0.5), sc = laneH*0.2, d = '';
+    for(var i=0;i<arr.length;i++){
+      var y = Math.max(T+laneH*c+2, Math.min(T+laneH*(c+1)-2, mid - arr[i]*sc));
+      d += (i?'L':'M') + X(i).toFixed(1) + ',' + y.toFixed(1);
+    }
+    return d;
+  }
+
+  // axes & grid
+  var g = el('g', {'font-family':'IBM Plex Mono, monospace', 'font-size':10.5, fill:'#5C5A55'});
+  for(var s=0;s<=4;s++){
+    var gx = L + (W-L-R)*s/4;
+    el('line', {x1:gx, y1:T, x2:gx, y2:H-B, stroke:'#D9D3C5', 'stroke-width':s===0?1:0.6, 'stroke-dasharray':s===0?'':'2 3'}, g);
+    el('text', {x:gx, y:H-B+16, 'text-anchor':'middle'}, g, (s*SEC/4).toFixed(1));
+  }
+  el('text', {x:(L+W-R)/2, y:H-8, 'text-anchor':'middle'}, g, 'time (s)');
+  el('line', {x1:L, y1:H-B, x2:W-R, y2:H-B, stroke:'#1A1A1A', 'stroke-width':0.8}, g);
+  // blink region marker
+  el('rect', {x:X(0.64*N/SEC), y:T, width:X(0.92*N/SEC)-X(0.64*N/SEC), height:H-T-B, fill:'#B3261E', 'fill-opacity':0.05, id:'blinkBand'}, g);
+  el('text', {x:X(0.78*N/SEC), y:T-6, 'text-anchor':'middle', fill:'#B3261E', id:'blinkLbl'}, g, 'blink artifact');
+
+  var layers = el('g', {});
+  CH.forEach(function(ch, c){
+    el('text', {x:L-10, y:T+laneH*(c+0.5)+4, 'text-anchor':'end', 'font-family':'IBM Plex Mono, monospace', 'font-size':12, fill:ch.color, 'font-weight':500, id:'lbl-'+c}, g, ch.name);
+    ch.rawEl = el('path', {d:pathFor(ch.raw, c), 'class':'trace raw', stroke:'#8A867D'}, layers);
+    ch.cleanEl = el('path', {d:pathFor(ch.clean, c), 'class':'trace', stroke:ch.color}, layers);
+  });
+  var cursor = el('line', {x1:0, y1:T, x2:0, y2:H-B, stroke:'#1A1A1A', 'stroke-width':0.8, visibility:'hidden'});
+
+  function render(){
+    CH.forEach(function(ch, c){
+      var off = !!hidden[c];
+      ch.rawEl.classList.toggle('hidden', off || view === 'clean');
+      ch.cleanEl.classList.toggle('hidden', off || view === 'raw');
+      document.getElementById('lbl-'+c).setAttribute('opacity', off ? 0.3 : 1);
+    });
+    var showBlink = view !== 'clean';
+    document.getElementById('blinkBand').setAttribute('visibility', showBlink ? 'visible' : 'hidden');
+    document.getElementById('blinkLbl').setAttribute('visibility', showBlink ? 'visible' : 'hidden');
+  }
+
+  // view buttons
+  var viewBtns = document.querySelectorAll('.seg button');
+  Array.prototype.forEach.call(viewBtns, function(b){
+    b.addEventListener('click', function(){
+      view = b.getAttribute('data-view');
+      Array.prototype.forEach.call(viewBtns, function(o){ o.setAttribute('aria-pressed', String(o === b)); });
+      render();
+    });
+  });
+  // channel toggles
+  CH.forEach(function(ch, c){
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'chan'; b.setAttribute('aria-pressed', 'true');
+    b.setAttribute('aria-label', 'Show channel ' + ch.name);
+    b.style.color = ch.color;
+    b.innerHTML = '<span class="sw" aria-hidden="true"></span>' + ch.name;
+    b.addEventListener('click', function(){
+      hidden[c] = !hidden[c];
+      b.setAttribute('aria-pressed', String(!hidden[c]));
+      render();
+    });
+    chansBox.appendChild(b);
+  });
+
+  // hover readout
+  function onMove(ev){
+    var pt = svg.getBoundingClientRect();
+    var sx = (ev.clientX - pt.left) / pt.width * W;
+    if(sx < L || sx > W-R){ cursor.setAttribute('visibility','hidden'); return; }
+    var i = Math.round((sx - L)/(W-L-R)*(N-1));
+    cursor.setAttribute('x1', X(i)); cursor.setAttribute('x2', X(i)); cursor.setAttribute('visibility','visible');
+    var src = view === 'raw' ? 'raw' : 'clean';
+    var parts = CH.filter(function(_, c){ return !hidden[c]; }).map(function(ch){ return ch.name + ' ' + (ch[src][i] >= 0 ? '+' : '') + ch[src][i].toFixed(2); });
+    readout.textContent = 't = ' + (i/N*SEC).toFixed(3) + ' s · ' + src + ' · ' + (parts.join(' · ') || 'no channels shown') + ' (a.u., demo data)';
+  }
+  svg.addEventListener('pointermove', onMove);
+  svg.addEventListener('pointerdown', onMove);
+  svg.addEventListener('pointerleave', function(){ cursor.setAttribute('visibility','hidden'); });
+
+  render();
+})();
+</script>
+</body>
+</html>

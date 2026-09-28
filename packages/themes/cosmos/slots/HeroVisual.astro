@@ -1,0 +1,726 @@
+---
+// Cosmos HeroVisual: point-cloud brain (adapted from design/option-3.html and
+// design/assets/asset-3-cosmos.html) over a server-rendered SVG fallback.
+// The SVG is the visual with JS off, WebGL missing, reduced motion, Save-Data or low memory.
+// three.js (npm three@0.160.0, self-hosted, never a CDN) is fetched with a dynamic import() only
+// when ALL hold: the hero intersects the viewport, WebGL is available, reduced motion is off,
+// Save-Data is off and navigator.deviceMemory is not <= 2. The render loop pauses off-screen and
+// in hidden tabs; everything is disposed on pagehide. CSP-safe: bundled module script only.
+import type { SlotContract } from '../../contract.ts';
+type Props = SlotContract['HeroVisual'];
+const { label, caption } = Astro.props;
+const locals = Astro.locals as Record<string, number | undefined>;
+locals.nfCosmosIds = (locals.nfCosmosIds ?? 0) + 1;
+const gid = `nf-hv-g${locals.nfCosmosIds}`;
+---
+
+<div class="nf-hv">
+  <div class="nf-hv-stage" role="img" aria-label={label} data-nf-cosmos>
+    <svg class="nf-hv-fb" viewBox="0 0 400 300" aria-hidden="true" focusable="false">
+      <defs>
+        <radialGradient id={gid} cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" class="g0"></stop>
+          <stop offset="1" class="g1"></stop>
+        </radialGradient>
+      </defs>
+      <ellipse cx="200" cy="150" rx="190" ry="140" fill={`url(#${gid})`}></ellipse>
+      <path
+        class="outline"
+        d="M110 170c-30-60 20-120 90-115 70-5 120 55 90 115-15 30-60 45-90 40-30 5-75-10-90-40z"
+      ></path>
+      <path
+        class="gyri"
+        d="M200 60v170M140 100c20 10 30 30 20 50M260 100c-20 10-30 30-20 50M130 170c25-5 40 5 50 20M270 170c-25-5-40 5-50 20"
+      ></path>
+      <g class="stars">
+        <circle cx="46" cy="52" r="1.4"></circle><circle cx="352" cy="40" r="1.2"></circle>
+        <circle cx="372" cy="232" r="1.5"></circle><circle cx="30" cy="238" r="1.1"></circle>
+        <circle cx="318" cy="118" r="1"></circle><circle cx="84" cy="134" r="1"></circle>
+      </g>
+    </svg>
+  </div>
+  {caption && <p class="nf-hv-cap">{caption}</p>}
+</div>
+
+<style>
+  .nf-hv-stage {
+    position: relative;
+    height: clamp(360px, 44vw, 560px);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    isolation: isolate;
+    background: radial-gradient(
+      ellipse 60% 60% at 50% 48%,
+      color-mix(in srgb, var(--color-accent) 16%, var(--color-bg)) 0%,
+      color-mix(in srgb, var(--color-accent) 6%, var(--color-bg)) 45%,
+      var(--color-bg) 85%
+    );
+  }
+  .nf-hv-fb {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: min(80%, 520px);
+    height: 100%;
+    opacity: 0.8;
+    transition: opacity var(--motion-duration) var(--motion-ease);
+  }
+  .nf-hv-stage :global(canvas) {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 900ms var(--motion-ease);
+  }
+  .nf-hv-stage.is-gl :global(canvas) {
+    opacity: 1;
+  }
+  .nf-hv-stage.is-gl .nf-hv-fb {
+    opacity: 0;
+  }
+  .g0 {
+    stop-color: var(--color-accent);
+    stop-opacity: 0.5;
+  }
+  .g1 {
+    stop-color: var(--color-accent);
+    stop-opacity: 0;
+  }
+  .outline {
+    fill: none;
+    stroke: var(--color-accent-ink);
+    stroke-width: 1.4;
+    opacity: 0.75;
+  }
+  .gyri {
+    fill: none;
+    stroke: var(--color-secondary);
+    stroke-width: 1;
+    opacity: 0.6;
+  }
+  .stars circle {
+    fill: var(--color-ink);
+    opacity: 0.5;
+  }
+  .nf-hv-cap {
+    margin-top: 10px;
+    font: 400 12px/1.5 var(--font-mono);
+    color: var(--color-muted);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nf-hv-fb,
+    .nf-hv-stage :global(canvas) {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  type Dispose = () => void;
+  type Nav = Navigator & { connection?: { saveData?: boolean }; deviceMemory?: number };
+
+  const RM = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function hasWebGL(): boolean {
+    try {
+      const c = document.createElement('canvas');
+      const gl = (c.getContext('webgl2') || c.getContext('webgl')) as WebGLRenderingContext | null;
+      if (!gl) return false;
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  /** Every condition except visibility (which the IntersectionObserver supplies). */
+  function eligible(): boolean {
+    if (RM.matches) return false;
+    const nav = navigator as Nav;
+    if (nav.connection?.saveData) return false;
+    if (typeof nav.deviceMemory === 'number' && nav.deviceMemory <= 2) return false;
+    return hasWebGL();
+  }
+
+  /** Build the scene inside `stage`. Resolves to a dispose function, or null on failure. */
+  async function mountBrain(stage: HTMLElement): Promise<Dispose | null> {
+    const {
+      AdditiveBlending,
+      BufferAttribute,
+      BufferGeometry,
+      Color,
+      Float32BufferAttribute,
+      Group,
+      Line,
+      LineBasicMaterial,
+      MathUtils,
+      PerspectiveCamera,
+      Points,
+      Scene,
+      ShaderMaterial,
+      Vector3,
+      WebGLRenderer,
+    } = await import('three');
+
+    let renderer: InstanceType<typeof WebGLRenderer>;
+    try {
+      renderer = new WebGLRenderer({ antialias: false, alpha: true, powerPreference: 'low-power' });
+    } catch {
+      return null;
+    }
+    const cleanups: Dispose[] = [];
+    const listen = (
+      target: EventTarget,
+      type: string,
+      fn: EventListener,
+      opts?: AddEventListenerOptions,
+    ) => {
+      target.addEventListener(type, fn, opts);
+      cleanups.push(() => target.removeEventListener(type, fn, opts));
+    };
+
+    renderer.setClearColor(0x000000, 0);
+    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    renderer.domElement.setAttribute('aria-hidden', 'true');
+    stage.appendChild(renderer.domElement);
+
+    // palette from the theme tokens (third hue is the design's pink, not a token)
+    const cs = getComputedStyle(stage);
+    const tokenColor = (name: string, fallback: string) => {
+      const v = cs.getPropertyValue(name).trim();
+      return new Color(/^#[0-9a-f]{6}$/i.test(v) ? v : fallback);
+    };
+    const VIO = tokenColor('--color-accent', '#8b5cf6');
+    const CYA = tokenColor('--color-secondary', '#22d3ee');
+    const LIL = tokenColor('--color-accent-ink', '#b79cff');
+    const PNK = new Color('#f472b6');
+    const tmp = new Color();
+
+    const FOV = 38;
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(FOV, 1, 0.1, 60);
+    const group = new Group();
+    group.rotation.x = 0.18;
+    scene.add(group);
+
+    // ---------- seeded helpers (deterministic cloud) ----------
+    let seed = 1337;
+    const rnd = () => {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      return seed / 4294967296;
+    };
+    const h3 = (x: number, y: number, z: number) => {
+      let n = Math.imul(x, 73856093) ^ Math.imul(y, 19349663) ^ Math.imul(z, 83492791);
+      n = Math.imul(n ^ (n >>> 13), 1274126177);
+      n ^= n >>> 16;
+      return (n >>> 0) / 4294967295;
+    };
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+    const vn = (x: number, y: number, z: number) => {
+      const xi = Math.floor(x);
+      const yi = Math.floor(y);
+      const zi = Math.floor(z);
+      let xf = x - xi;
+      let yf = y - yi;
+      let zf = z - zi;
+      xf = xf * xf * (3 - 2 * xf);
+      yf = yf * yf * (3 - 2 * yf);
+      zf = zf * zf * (3 - 2 * zf);
+      return lerp(
+        lerp(
+          lerp(h3(xi, yi, zi), h3(xi + 1, yi, zi), xf),
+          lerp(h3(xi, yi + 1, zi), h3(xi + 1, yi + 1, zi), xf),
+          yf,
+        ),
+        lerp(
+          lerp(h3(xi, yi, zi + 1), h3(xi + 1, yi, zi + 1), xf),
+          lerp(h3(xi, yi + 1, zi + 1), h3(xi + 1, yi + 1, zi + 1), xf),
+          yf,
+        ),
+        zf,
+      );
+    };
+    const fbm = (x: number, y: number, z: number) =>
+      vn(x, y, z) * 0.55 +
+      vn(x * 2.03, y * 2.03, z * 2.03) * 0.3 +
+      vn(x * 4.1, y * 4.1, z * 4.1) * 0.15;
+    const ss = (a: number, b: number, x: number) => {
+      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+      return t * t * (3 - 2 * t);
+    };
+
+    const P: number[] = [];
+    const COL: number[] = [];
+    const SIZE: number[] = [];
+    const SEED: number[] = [];
+    const cortexIdx: number[] = [];
+    const push = (x: number, y: number, z: number, col: InstanceType<typeof Color>, size: number) => {
+      P.push(x, y, z);
+      COL.push(col.r, col.g, col.b);
+      SIZE.push(size);
+      SEED.push(rnd());
+    };
+    const paletteAt = (_x: number, y: number, z: number, bright: number) => {
+      tmp.copy(PNK).lerp(VIO, ss(-0.9, 0.05, z)).lerp(CYA, ss(0.15, 1.0, z) * 0.9);
+      tmp.lerp(CYA, ss(0.2, 0.7, y) * 0.15);
+      return tmp.multiplyScalar(bright);
+    };
+
+    // cortex: two hemispheres with fbm "gyri" ridges
+    const HEMI_OFF = 0.24;
+    for (let i = 0; i < 9000; i++) {
+      const side = i % 2 ? 1 : -1;
+      const u = rnd() * 2 - 1;
+      const th = rnd() * Math.PI * 2;
+      const s = Math.sqrt(1 - u * u);
+      const nx = s * Math.cos(th);
+      const ny = u;
+      const nz = s * Math.sin(th);
+      let x = nx * 0.55;
+      let y = ny * (ny > 0 ? 0.66 : 0.46);
+      let z = nz * 1.02;
+      if (nx * side < 0) x *= 0.35;
+      const front = Math.max(0, z);
+      y -= front * front * 0.12;
+      x *= 1 - front * 0.1;
+      if (ny < 0 && nx * side > 0) y -= 0.14 * Math.exp(-((z - 0.2) ** 2) / 0.12) * -ny;
+      const f = fbm(x * 3.6 + side * 9.1, y * 3.6, z * 3.6);
+      const ridge = Math.abs(Math.sin(f * 20.0));
+      if (rnd() > 0.04 + 0.96 * ridge * ridge * ridge) {
+        i--;
+        continue;
+      }
+      const d = 0.9 + 0.1 * ridge;
+      x *= d;
+      y *= d;
+      z *= d;
+      x += side * HEMI_OFF;
+      cortexIdx.push(P.length / 3);
+      push(x, y + 0.08, z, paletteAt(x, y, z, 0.25 + 0.75 * ridge * ridge), 0.016 + 0.014 * ridge);
+    }
+    // cerebellum
+    for (let i = 0; i < 1100; i++) {
+      const u = rnd() * 2 - 1;
+      const th = rnd() * Math.PI * 2;
+      const s = Math.sqrt(1 - u * u);
+      const x = s * Math.cos(th) * 0.5;
+      const y = u * 0.22 - 0.46;
+      const z = s * Math.sin(th) * 0.3 - 0.66;
+      const fol = Math.abs(Math.sin((y + 0.46) * 60 + Math.cos(x * 6) * 0.8));
+      push(x, y, z, paletteAt(x, y, z - 0.2, 0.25 + 0.6 * fol), 0.018 + 0.012 * fol);
+    }
+    // brainstem
+    for (let i = 0; i < 350; i++) {
+      const a = rnd() * Math.PI * 2;
+      const t = rnd();
+      const r = 0.11 * (1 - t * 0.25);
+      const x = Math.cos(a) * r;
+      const z = Math.sin(a) * r - 0.3 - t * 0.12;
+      const y = -0.3 - t * 0.62;
+      push(x, y, z, paletteAt(x, y, -0.5, 0.35), 0.018);
+    }
+    // interior haze
+    for (let i = 0; i < 700; i++) {
+      const side = rnd() < 0.5 ? -1 : 1;
+      let x: number;
+      let y: number;
+      let z: number;
+      do {
+        x = rnd() * 2 - 1;
+        y = rnd() * 2 - 1;
+        z = rnd() * 2 - 1;
+      } while (x * x + y * y + z * z > 1);
+      x = x * 0.42 + side * HEMI_OFF;
+      y *= 0.48;
+      z *= 0.85;
+      push(x, y + 0.06, z, paletteAt(x, y, z, 0.22), 0.02);
+    }
+    // distant dust
+    for (let i = 0; i < 700; i++) {
+      const u = rnd() * 2 - 1;
+      const th = rnd() * Math.PI * 2;
+      const s = Math.sqrt(1 - u * u);
+      const r = 3.5 + rnd() * 7;
+      const c = [VIO, CYA, PNK][i % 3];
+      push(
+        s * Math.cos(th) * r,
+        u * r * 0.6,
+        s * Math.sin(th) * r,
+        tmp.copy(c).multiplyScalar(0.25 + rnd() * 0.35),
+        0.03 + rnd() * 0.03,
+      );
+    }
+
+    const vert = `
+      attribute float aSize; attribute vec3 aColor; attribute float aSeed;
+      uniform float uTime; uniform float uScale; uniform float uTwinkle;
+      varying vec3 vColor; varying float vA;
+      void main(){
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        float tw = 1.0 - uTwinkle + uTwinkle * (0.55 + 0.45 * sin(uTime * 1.4 + aSeed * 6.2831));
+        vColor = aColor; vA = tw;
+        gl_PointSize = max(1.0, aSize * uScale / -mv.z);
+        gl_Position = projectionMatrix * mv;
+      }`;
+    const frag = `
+      uniform float uOpacity;
+      varying vec3 vColor; varying float vA;
+      void main(){
+        vec2 c = gl_PointCoord - 0.5;
+        float d = length(c);
+        float a = smoothstep(0.5, 0.0, d);
+        a = a * a * (0.6 + 0.4 * smoothstep(0.22, 0.0, d));
+        gl_FragColor = vec4(vColor, a * vA * uOpacity);
+      }`;
+    const uniforms = {
+      uTime: { value: 0 },
+      uScale: { value: 500 },
+      uTwinkle: { value: 1 },
+      uOpacity: { value: 0.72 },
+    };
+    const mat = new ShaderMaterial({
+      uniforms,
+      vertexShader: vert,
+      fragmentShader: frag,
+      transparent: true,
+      depthWrite: false,
+      blending: AdditiveBlending,
+    });
+    const geo = new BufferGeometry();
+    geo.setAttribute('position', new Float32BufferAttribute(P, 3));
+    geo.setAttribute('aColor', new Float32BufferAttribute(COL, 3));
+    geo.setAttribute('aSize', new Float32BufferAttribute(SIZE, 1));
+    geo.setAttribute('aSeed', new Float32BufferAttribute(SEED, 1));
+    group.add(new Points(geo, mat));
+    const posArr = geo.attributes.position.array as Float32Array;
+
+    // firing pulses: short quadratic arcs between cortex points
+    const NP = 8;
+    const SEG = 40;
+    const pulseMat = new ShaderMaterial({
+      uniforms: {
+        uTime: uniforms.uTime,
+        uScale: uniforms.uScale,
+        uTwinkle: { value: 0 },
+        uOpacity: { value: 1 },
+      },
+      vertexShader: vert,
+      fragmentShader: frag,
+      transparent: true,
+      depthWrite: false,
+      blending: AdditiveBlending,
+    });
+    const pGeo = new BufferGeometry();
+    const pPos = new Float32Array(NP * 6);
+    const pCol = new Float32Array(NP * 6);
+    const pSize = new Float32Array(NP * 2);
+    pGeo.setAttribute('position', new BufferAttribute(pPos, 3));
+    pGeo.setAttribute('aColor', new BufferAttribute(pCol, 3));
+    pGeo.setAttribute('aSize', new BufferAttribute(pSize, 1));
+    pGeo.setAttribute('aSeed', new BufferAttribute(new Float32Array(NP * 2), 1));
+    const pPoints = new Points(pGeo, pulseMat);
+    pPoints.frustumCulled = false;
+    group.add(pPoints);
+
+    type V3 = InstanceType<typeof Vector3>;
+    type Pulse = {
+      line: InstanceType<typeof Line>;
+      g: InstanceType<typeof BufferGeometry>;
+      m: InstanceType<typeof LineBasicMaterial>;
+      active: boolean;
+      p: number;
+      dur: number;
+      a: V3;
+      b: V3;
+      c: V3;
+      col: InstanceType<typeof Color>;
+    };
+    const pulses: Pulse[] = [];
+    const PCOLS = [CYA, PNK, LIL, CYA];
+    for (let k = 0; k < NP; k++) {
+      const g = new BufferGeometry();
+      g.setAttribute('position', new BufferAttribute(new Float32Array(SEG * 3), 3));
+      const m = new LineBasicMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.8,
+        blending: AdditiveBlending,
+        depthWrite: false,
+      });
+      const line = new Line(g, m);
+      line.frustumCulled = false;
+      line.visible = false;
+      group.add(line);
+      pulses.push({
+        line,
+        g,
+        m,
+        active: false,
+        p: 0,
+        dur: 1,
+        a: new Vector3(),
+        b: new Vector3(),
+        c: new Vector3(),
+        col: CYA,
+      });
+    }
+    const va = new Vector3();
+    const vb = new Vector3();
+    const hv = new Vector3();
+    const bezierAt = (q: Pulse, t: number, out: V3) => {
+      const u = 1 - t;
+      return out.set(
+        u * u * q.a.x + 2 * u * t * q.c.x + t * t * q.b.x,
+        u * u * q.a.y + 2 * u * t * q.c.y + t * t * q.b.y,
+        u * u * q.a.z + 2 * u * t * q.c.z + t * t * q.b.z,
+      );
+    };
+    function spawn(q: Pulse, p0 = 0) {
+      va.fromArray(posArr, cortexIdx[(rnd() * cortexIdx.length) | 0] * 3);
+      let found = false;
+      for (let tries = 0; tries < 30 && !found; tries++) {
+        vb.fromArray(posArr, cortexIdx[(rnd() * cortexIdx.length) | 0] * 3);
+        const d = va.distanceTo(vb);
+        if (d > 0.3 && d < 0.8) found = true;
+      }
+      if (!found) return;
+      q.a.copy(va);
+      q.b.copy(vb);
+      q.c.copy(va).add(vb).multiplyScalar(0.5);
+      q.c.multiplyScalar(1.0 + (0.35 * (0.6 + rnd() * 0.4)) / Math.max(0.4, q.c.length()));
+      const arr = q.g.attributes.position.array as Float32Array;
+      for (let s = 0; s < SEG; s++) {
+        bezierAt(q, s / (SEG - 1), hv);
+        arr[s * 3] = hv.x;
+        arr[s * 3 + 1] = hv.y;
+        arr[s * 3 + 2] = hv.z;
+      }
+      q.g.attributes.position.needsUpdate = true;
+      q.col = PCOLS[(rnd() * PCOLS.length) | 0];
+      q.m.color.copy(q.col);
+      q.dur = 0.9 + rnd() * 0.7;
+      q.p = p0;
+      q.active = true;
+      q.line.visible = true;
+    }
+    function updatePulses(dt: number) {
+      const TAIL = 0.35;
+      for (let k = 0; k < NP; k++) {
+        const q = pulses[k];
+        const hi = k * 2;
+        const fi = hi + 1;
+        if (!q.active) {
+          pSize[hi] = 0;
+          pSize[fi] = 0;
+          continue;
+        }
+        q.p += dt / q.dur;
+        if (q.p > 1 + TAIL + 0.4) {
+          q.active = false;
+          q.line.visible = false;
+          pSize[hi] = 0;
+          pSize[fi] = 0;
+          continue;
+        }
+        const head = Math.min(1, q.p);
+        const tail = Math.max(0, q.p - TAIL);
+        const s0 = Math.floor(tail * (SEG - 1));
+        const s1 = Math.ceil(head * (SEG - 1));
+        q.g.setDrawRange(s0, Math.max(0, s1 - s0 + 1));
+        q.m.opacity = 0.95 * (q.p < 1 ? 1 : Math.max(0, 1 - (q.p - 1) / (TAIL + 0.4)));
+        bezierAt(q, head, hv);
+        pPos.set([hv.x, hv.y, hv.z], hi * 3);
+        pCol.set([q.col.r, q.col.g, q.col.b], hi * 3);
+        pSize[hi] = q.p < 1 ? 0.13 : 0;
+        pPos.set([q.b.x, q.b.y, q.b.z], fi * 3);
+        const fl = q.p >= 1 ? Math.max(0, 1 - (q.p - 1) / 0.5) : 0;
+        pSize[fi] = 0.22 * fl;
+        if (q.p >= 1)
+          pCol.set([q.col.r * 0.6 + 0.4, q.col.g * 0.6 + 0.4, q.col.b * 0.6 + 0.4], fi * 3);
+        else pCol.set([1, 1, 1], fi * 3);
+      }
+      pGeo.attributes.position.needsUpdate = true;
+      pGeo.attributes.aColor.needsUpdate = true;
+      pGeo.attributes.aSize.needsUpdate = true;
+    }
+
+    // sizing: the brain sits centred in the stage box
+    let baseDist = 3.4;
+    function resize() {
+      const w = Math.max(1, stage.clientWidth);
+      const h = Math.max(1, stage.clientHeight);
+      renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      const asp = w / h;
+      baseDist = asp >= 1.15 ? 3.3 : 3.1 * Math.min(2.0, 1.1 / asp);
+      uniforms.uScale.value =
+        (h * renderer.getPixelRatio()) / (2 * Math.tan(MathUtils.degToRad(FOV) / 2));
+    }
+
+    // gentle pointer parallax
+    let tx = 0;
+    let ty = 0;
+    let cx = 0;
+    let cy = 0;
+    listen(
+      window,
+      'pointermove',
+      ((e: PointerEvent) => {
+        tx = (e.clientX / Math.max(1, window.innerWidth)) * 2 - 1;
+        ty = (e.clientY / Math.max(1, window.innerHeight)) * 2 - 1;
+      }) as EventListener,
+      { passive: true },
+    );
+    listen(document, 'pointerleave', () => {
+      tx = 0;
+      ty = 0;
+    });
+
+    let time = 0;
+    let spawnIn = 0.3;
+    const place = () => {
+      camera.position.set(cx * 0.55, 0.28 - cy * 0.35, baseDist);
+      camera.lookAt(0, -0.06, 0);
+    };
+    function step(dt: number) {
+      time += dt;
+      uniforms.uTime.value = time;
+      group.rotation.y += dt * 0.075;
+      cx += (tx - cx) * Math.min(1, dt * 2.2);
+      cy += (ty - cy) * Math.min(1, dt * 2.2);
+      place();
+      spawnIn -= dt;
+      if (spawnIn <= 0) {
+        const free = pulses.find((q) => !q.active);
+        if (free) spawn(free);
+        spawnIn = 0.22 + rnd() * 0.7;
+      }
+      updatePulses(dt);
+      renderer.render(scene, camera);
+    }
+    function renderStatic() {
+      group.rotation.y = -0.55;
+      uniforms.uTime.value = 2.0;
+      pulses.forEach((q, k) => {
+        if (k < 5) spawn(q, 0.55 + k * 0.08);
+      });
+      updatePulses(0);
+      cx = cy = 0;
+      place();
+      renderer.render(scene, camera);
+    }
+
+    // loop control: runs only while visible, tab shown and motion allowed
+    let raf = 0;
+    let running = false;
+    let last = 0;
+    let inView = true;
+    const frame = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000) || 0;
+      last = now;
+      step(dt);
+      raf = requestAnimationFrame(frame);
+    };
+    const start = () => {
+      if (running || RM.matches || document.hidden || !inView) return;
+      running = true;
+      last = performance.now();
+      raf = requestAnimationFrame(frame);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+    cleanups.push(stop);
+    listen(document, 'visibilitychange', () => (document.hidden ? stop() : start()));
+    listen(RM, 'change', () => {
+      if (RM.matches) {
+        stop();
+        renderStatic();
+      } else start();
+    });
+    const io = new IntersectionObserver((es) => {
+      inView = es.some((e) => e.isIntersecting);
+      if (inView) start();
+      else stop();
+    });
+    io.observe(stage);
+    cleanups.push(() => io.disconnect());
+    const ro = new ResizeObserver(() => {
+      resize();
+      if (!running) {
+        place();
+        renderer.render(scene, camera);
+      }
+    });
+    ro.observe(stage);
+    cleanups.push(() => ro.disconnect());
+
+    resize();
+    group.rotation.y = -0.55;
+    place();
+    renderer.render(scene, camera);
+    stage.classList.add('is-gl');
+    start();
+
+    return () => {
+      for (const c of cleanups.splice(0)) c();
+      stage.classList.remove('is-gl');
+      geo.dispose();
+      pGeo.dispose();
+      mat.dispose();
+      pulseMat.dispose();
+      for (const q of pulses) {
+        q.g.dispose();
+        q.m.dispose();
+      }
+      renderer.dispose();
+      renderer.forceContextLoss();
+      renderer.domElement.remove();
+    };
+  }
+
+  // ---------- per-stage lifecycle ----------
+  const mounted = new Map<HTMLElement, Dispose>();
+  const pending = new Set<HTMLElement>();
+  let watcher: IntersectionObserver | null = null;
+
+  function watch() {
+    watcher?.disconnect();
+    watcher = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        const stage = e.target as HTMLElement;
+        if (!e.isIntersecting || mounted.has(stage) || pending.has(stage)) continue;
+        if (!eligible()) continue; // SVG fallback stays; re-checked on the next intersection
+        watcher?.unobserve(stage);
+        pending.add(stage);
+        mountBrain(stage)
+          .then((dispose) => {
+            if (dispose) mounted.set(stage, dispose);
+          })
+          .catch(() => {
+            /* keep the SVG fallback */
+          })
+          .finally(() => pending.delete(stage));
+      }
+    });
+    document
+      .querySelectorAll<HTMLElement>('[data-nf-cosmos]')
+      .forEach((s) => watcher?.observe(s));
+  }
+
+  window.addEventListener('pagehide', () => {
+    watcher?.disconnect();
+    for (const [, dispose] of mounted) dispose();
+    mounted.clear();
+  });
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) watch();
+  });
+  watch();
+</script>

@@ -1,0 +1,49 @@
+{
+  "slug": "somatosensory-closed-loop",
+  "meta": {
+    "title": "Bidirectional closed-loop somatosensory feedback: a computational study · {brand}",
+    "description": "A computational study in preparation. No results are reported yet; research is ongoing."
+  },
+  "title": "Bidirectional closed-loop somatosensory feedback: a computational study",
+  "status": "in-preparation",
+  "kind": "Whitepaper · computational study",
+  "banner": "Computational/theoretical work; any clinical application requires IRB/FDA oversight",
+  "statusNote": "In preparation. Research is ongoing and no results are reported on this page yet. Any figure shown is labelled preliminary until it passes our verification gate, and each is traceable to the code and result file that produced it.",
+  "intro": [
+    "This study asks, in simulation only, how patterned stimulation of somatosensory cortex could encode touch, pressure and proprioception in a closed loop with a decoder.",
+    "The work is computational and theoretical. It uses published data and models, proposes no stimulation settings, and involves no human or animal experiments."
+  ],
+  "abstractPlaceholder": "Abstract to follow. Each question below has a written analysis plan in our repository, and results will be reported together with any deviations from, and disclosures about, that plan.",
+  "questions": [
+    {
+      "heading": "Latency budget",
+      "body": "How much feedback delay a simulated precision grip can tolerate before artificial slip feedback stops helping.",
+      "source": "research/somatosensory/prereg/P1b_grip_latency_budget_v2.md"
+    },
+    {
+      "heading": "Encoding",
+      "body": "Whether biomimetic encoding carries more usable information than linear encoding at matched charge, in a model.",
+      "source": "research/somatosensory/prereg/P2b_biomimetic_dprime_difference.md"
+    },
+    {
+      "heading": "Calibration",
+      "body": "Whether a Bayesian adaptive method needs fewer trials than a staircase to calibrate per-electrode detection thresholds in simulated observers.",
+      "source": "research/somatosensory/prereg/P3_psi_vs_staircase_calibration.md"
+    },
+    {
+      "heading": "Capacity",
+      "body": "How much pooling across electrodes can raise the number of distinguishable intensity levels, in theory.",
+      "source": "research/somatosensory/prereg/P4_pooling_capacity.md"
+    }
+  ],
+  "citationNote": "A citation block and DOI will be added when a preprint exists.",
+  "evidenceLegend": "Evidence grades: A = peer-reviewed or primary legal text; B = reputable secondary source; C = preprint or theory; D = company marketing.",
+  "printNote": "Printed from {origin}. Status: in preparation. Check the web page for the current version.",
+  "figures": {
+    "p4-capacity-heatmap": {
+      "title": "Capacity of a pooled amplitude channel (theory)",
+      "caption": "Capacity C in bits per symbol of a single pooled amplitude channel in the model, by Weber fraction w (rows) and number of pooled electrodes M (columns), at full spatial summation (kappa = 0).",
+      "note": "Theory computed from published psychophysical summary numbers. Preliminary."
+    }
+  }
+}

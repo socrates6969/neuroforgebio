@@ -1,0 +1,95 @@
+---
+// Clinical SecurityVisual: spec-sheet ornament. Three hairline table rows (encryption, access
+// control, audit log) drawn as glyphs and placeholder bars; no text of its own. Labelled by
+// the content-supplied `label`.
+import type { SlotContract } from '../../contract.ts';
+type Props = SlotContract['SecurityVisual'];
+const { label } = Astro.props;
+---
+
+<svg class="nf-sv" role="img" aria-label={label} viewBox="0 0 480 150" preserveAspectRatio="xMinYMid meet">
+  <rect class="frame" x="0.5" y="0.5" width="479" height="149" rx="6"></rect>
+  <rect class="head" x="1" y="1" width="478" height="28" rx="5.5"></rect>
+  <path class="rule" d="M0.5 29.5H479.5M0.5 69.5H479.5M0.5 109.5H479.5M72.5 0.5V149.5"></path>
+  <g class="bars">
+    <rect x="16" y="12" width="40" height="5" rx="2.5"></rect>
+    <rect x="88" y="12" width="64" height="5" rx="2.5"></rect>
+    <rect x="392" y="12" width="72" height="5" rx="2.5"></rect>
+  </g>
+  <!-- row 1: lock (encryption) -->
+  <g class="glyph" transform="translate(26 36)">
+    <rect x="3" y="11" width="16" height="12" rx="2"></rect>
+    <path d="M6.5 11V7.5a4.5 4.5 0 0 1 9 0V11"></path>
+  </g>
+  <!-- row 2: key person (access control) -->
+  <g class="glyph" transform="translate(26 76)">
+    <circle cx="9" cy="8" r="4"></circle>
+    <path d="M2 23c0-4 3.2-7 7-7s7 3 7 7M17 12l2 2 3.5-4"></path>
+  </g>
+  <!-- row 3: list (audit log) -->
+  <g class="glyph" transform="translate(26 116)">
+    <rect x="2" y="2" width="20" height="21" rx="2.5"></rect>
+    <path d="M7 9h10M7 13h10M7 17h6"></path>
+  </g>
+  <g class="bars">
+    <rect x="88" y="44" width="170" height="6" rx="3"></rect>
+    <rect x="88" y="56" width="110" height="5" rx="2.5" class="soft"></rect>
+    <rect x="88" y="84" width="150" height="6" rx="3"></rect>
+    <rect x="88" y="96" width="126" height="5" rx="2.5" class="soft"></rect>
+    <rect x="88" y="124" width="186" height="6" rx="3"></rect>
+    <rect x="88" y="136" width="92" height="5" rx="2.5" class="soft"></rect>
+  </g>
+  <g class="ticks">
+    <rect x="392" y="42" width="72" height="16" rx="3"></rect>
+    <rect x="392" y="82" width="72" height="16" rx="3" class="plan"></rect>
+    <rect x="392" y="122" width="72" height="16" rx="3" class="road"></rect>
+  </g>
+</svg>
+
+<style>
+  .nf-sv {
+    display: block;
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    margin: 0 0 24px;
+  }
+  .frame {
+    fill: var(--color-surface);
+    stroke: var(--color-line);
+  }
+  .head {
+    fill: var(--color-surface-2);
+  }
+  .rule {
+    fill: none;
+    stroke: var(--color-line);
+  }
+  .glyph {
+    fill: none;
+    stroke: var(--color-ink);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .bars rect {
+    fill: var(--color-line);
+  }
+  .bars rect.soft {
+    fill: var(--color-surface-2);
+  }
+  .ticks rect {
+    fill: var(--color-status-designed-bg);
+    stroke: var(--color-accent);
+    stroke-opacity: 0.35;
+  }
+  .ticks rect.plan {
+    fill: var(--color-status-planned-bg);
+    stroke: var(--color-secondary);
+  }
+  .ticks rect.road {
+    fill: var(--color-status-roadmap-bg);
+    stroke: var(--color-line);
+    stroke-opacity: 1;
+  }
+</style>

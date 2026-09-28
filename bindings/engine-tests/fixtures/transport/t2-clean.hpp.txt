@@ -1,0 +1,18 @@
+// Fixture for T2 (nfb-engine literal-reading ruling): a "shipped" header that never names the
+// test-only trust-bypass header, in code, in a comment, or in a diagnostic string. Proves the T2
+// checker passes a genuinely clean file (not a vacuous always-fail).
+#ifndef NF_WINHTTP_TRANSPORT_HPP
+#define NF_WINHTTP_TRANSPORT_HPP
+
+namespace nf {
+namespace transport {
+
+class WinHttpTransport {
+public:
+    WinHttpTransport() = default;
+};
+
+}  // namespace transport
+}  // namespace nf
+
+#endif  // NF_WINHTTP_TRANSPORT_HPP

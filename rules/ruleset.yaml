@@ -1,0 +1,13 @@
+# RuleSet manifest (BUILD-GUIDE 5.2, BLUEPRINT §8.2). NOT LEGAL ADVICE: every rule is a draft (or
+# unverified) until counsel review, which is an owner action. Changing any rule requires a new
+# version AND a new content_sha256 (the loader refuses a mismatch). Recompute with:
+#   .venv/Scripts/python -m nf_platform.governance.rules_hash
+schema: nf.ruleset/v1
+version: 1
+files:
+  - co.yaml
+  - ca.yaml
+  - ct.yaml
+  - mt.yaml
+  - eu.yaml
+content_sha256: 010f3375cde198e3306361643f5a0e0d016486c27b8e400e3e0b7e5885f86751

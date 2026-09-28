@@ -1,0 +1,16 @@
+<!-- Row 7 PASSING fixture: a bare range with no companion value display -- no <output>, nothing
+     named by aria-describedby/aria-controls, no script writing its value anywhere. What a sighted
+     user perceives is the thumb position, which the native value already conveys, so no
+     aria-valuetext is required. Expected: 1 range, 0 with a companion, 0 findings. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <label>
+      <span>Playback volume</span>
+      <input type="range" data-volume min="0" max="100" step="1" value="50" />
+    </label>
+  </body>
+</html>

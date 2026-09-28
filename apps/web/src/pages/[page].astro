@@ -1,0 +1,31 @@
+---
+// /platform /governance /sdks /pricing (generic content pages). /security has its own page.
+import Base from '../layouts/Base.astro';
+import PageBody from '../components/PageBody.astro';
+import EarlyAccessForm from '@nf/ui/components/EarlyAccessForm.astro';
+import { genericPages, site, statusLabels } from '../lib/site.ts';
+
+export function getStaticPaths() {
+  return Object.keys(genericPages).map((page) => ({ params: { page } }));
+}
+const key = Astro.params.page as keyof typeof genericPages;
+const page = genericPages[key];
+const ea = site.earlyAccess;
+const hasEaSection = page.sections.some((s) => s.id === 'early-access');
+---
+<Base title={page.meta.title} description={page.meta.description}>
+  <PageBody page={page}>
+    {key === 'pricing' && hasEaSection && (
+      <EarlyAccessForm slot="section-early-access" labelledBy="h-early-access" heading={ea.heading} body={ea.body} emailLabel={ea.emailLabel}
+        emailPlaceholder={ea.emailPlaceholder} submitLabel={ea.submitLabel} disabledNote={ea.disabledNote} statusLabel={statusLabels[ea.status]} />
+    )}
+  </PageBody>
+  {key === 'pricing' && !hasEaSection && (
+    <section class="nf-section" id="early-access" aria-labelledby="ea-h">
+      <div class="nf-wrap">
+        <EarlyAccessForm heading={ea.heading} body={ea.body} emailLabel={ea.emailLabel} emailPlaceholder={ea.emailPlaceholder}
+          submitLabel={ea.submitLabel} disabledNote={ea.disabledNote} statusLabel={statusLabels[ea.status]} />
+      </div>
+    </section>
+  )}
+</Base>

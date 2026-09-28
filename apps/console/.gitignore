@@ -1,0 +1,2 @@
+# e2e synthetic fixtures (tools/synth output): data files are never committed
+e2e/.out/

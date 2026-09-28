@@ -1,0 +1,32 @@
+<!-- Row 2 PLANTED FAILURES for the text triggers (no <pre>, no scroller):
+       .facts -- `auto 1fr` grid; a <dd> holds a 64-hex sha256 in <code>: one 71-character token with
+                 no break opportunity (the hash case);
+       .tags  -- flex row; a white-space:nowrap label of 55 characters: under nowrap the spaces don't
+                 break either, so the whole label is one unbreakable run (the nowrap case);
+       .links -- flex row; link text that is a 48-character URL with no break opportunity ("/" is not
+                 counted as one, and a hyphen followed by a digit isn't either).
+     None of the items has min-width:0. Expected: 3 findings, selectors .facts, .tags, .links. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      .facts[data-astro-cid-t0k3n5aa]{display:grid;grid-template-columns:auto 1fr;gap:4px 12px}
+      .tags[data-astro-cid-t0k3n5aa]{display:flex;gap:8px}
+      .label[data-astro-cid-t0k3n5aa]{white-space:nowrap}
+      .links[data-astro-cid-t0k3n5aa]{display:flex;flex-wrap:wrap;gap:8px}
+    </style>
+  </head>
+  <body>
+    <dl class="facts" data-astro-cid-t0k3n5aa>
+      <dt data-astro-cid-t0k3n5aa>sha256</dt>
+      <dd data-astro-cid-t0k3n5aa><code data-astro-cid-t0k3n5aa>sha256:2f78db62bd4d68b9bc737444f72bc2dfe475d7390dd7a54848aaf6a6a6ba8da5</code></dd>
+    </dl>
+    <div class="tags" data-astro-cid-t0k3n5aa>
+      <span class="label" data-astro-cid-t0k3n5aa>Built, tested internally on the reference recording set</span>
+    </div>
+    <ul class="links" data-astro-cid-t0k3n5aa>
+      <li data-astro-cid-t0k3n5aa>Source: <a href="https://lovdata.no/dokument/NL/lov/2024-12-13-76">https://lovdata.no/dokument/NL/lov/2024-12-13-76</a></li>
+    </ul>
+  </body>
+</html>

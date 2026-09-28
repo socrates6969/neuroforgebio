@@ -1,0 +1,37 @@
+<!-- Row 2 PLANTED FAILURE mirroring the real bug (docs/hive/A11Y-AUDIT.md; gallery.astro before
+     its fix): `.blocks { display: grid }` wraps every gallery block in a <section> with no
+     min-width:0, and one section renders PipelineSteps, whose `.code` grid holds an overflow-x:auto
+     <pre> with a long unbroken code line. The <pre> scrolls, but its min-content width still
+     propagates up and widens the .blocks track (7px overflow at 360px, cosmos). The CSS is the real
+     Astro 5.18.2 build output (attribute-scoped, minified; web-integration dist/clinical/_assets,
+     2026-09-27) with only the fix removed: `.blocks>section` has no `min-width:0`.
+     Expected: exactly one finding, on ".blocks". PipelineSteps' own `.code` grid is NOT a finding:
+     its <pre> item is itself a scroll container, so that item's automatic minimum is 0. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      .blocks[data-astro-cid-sahthylw]{display:grid;gap:64px;padding-top:48px}.blocks[data-astro-cid-sahthylw]>section[data-astro-cid-sahthylw]{scroll-margin-top:80px}
+      .code[data-astro-cid-jzv32bf7]{margin-top:28px;display:grid;grid-template-columns:1fr 1.3fr;border:1px solid var(--color-line);border-radius:var(--radius-card);overflow:hidden;background:var(--color-surface)}pre[data-astro-cid-jzv32bf7]{margin:0;padding:24px 26px;background:var(--color-ink);color:var(--color-bg);font:400 13.5px/1.75 var(--font-mono);overflow-x:auto;white-space:pre}
+    </style>
+  </head>
+  <body>
+    <div class="nf-wrap blocks" data-astro-cid-sahthylw>
+      <section id="g-Hero" data-astro-cid-sahthylw>
+        <h2 data-astro-cid-sahthylw>Hero</h2>
+        <p data-astro-cid-sahthylw>Short copy that wraps normally at any width.</p>
+      </section>
+      <section id="g-PipelineSteps" data-astro-cid-sahthylw>
+        <div class="code" data-astro-cid-jzv32bf7>
+          <div class="explain" data-astro-cid-jzv32bf7>
+            <h3 data-astro-cid-jzv32bf7>Illustrative example</h3>
+            <p data-astro-cid-jzv32bf7>Every step records its provenance.</p>
+          </div>
+          <pre aria-label="Illustrative Python example" tabindex="0" data-astro-cid-jzv32bf7><code data-astro-cid-jzv32bf7>import examplepkg as nf            # Illustrative API, subject to change
+result = nf.pipelines.get("eeg-basic@1.0.0").run(nf.open("sub-01_task-motor_eeg.edf"), record_provenance=True)</code></pre>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

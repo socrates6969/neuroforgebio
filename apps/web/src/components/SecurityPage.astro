@@ -1,0 +1,78 @@
+---
+// /security and /no/security (SEC-158): one page for both themes, from
+// docs/inputs/security/website-security-page.md via @nf/content (security.<locale>.json).
+// Anchors: #data #never #software #standards #testing #incidents #disclosure.
+// Tables use the shared ComplianceGrid; the theme ornament is the SecurityVisual slot.
+import ComplianceGrid from '@nf/ui/components/ComplianceGrid.astro';
+import StatusPill from '@nf/ui/components/StatusPill.astro';
+import SectionOrnament from '@theme/slots/SectionOrnament.astro';
+import SecurityVisual from '@theme/slots/SecurityVisual.astro';
+import { getContent } from '@nf/content';
+import { inline } from '../lib/inline.ts';
+import { localiseHref, type Locale } from '../lib/i18n.ts';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const { security: s, ui } = getContent(locale);
+const md = (t: string) => inline(t, { mapHref: (h) => localiseHref(h, locale) });
+const labels = ui.statusLabels;
+const prefix = ui.statusPill;
+---
+<section class="nf-section head" aria-labelledby="h-page">
+  <div class="nf-wrap">
+    <h1 id="h-page">{s.heading}</h1>
+    {s.intro.map((p) => <p class="lede" set:html={md(p)} />)}
+    <div class="note" role="note">
+      <p><strong>{s.note.lead}</strong> <Fragment set:html={md(s.note.body)} /></p>
+      <ul class="legend">
+        {s.legend.map((l) => <li><StatusPill status={l.status} label={labels[l.status]} />: <Fragment set:html={md(l.text)} /></li>)}
+      </ul>
+      {s.afterLegend.map((p) => <p set:html={md(p)} />)}
+    </div>
+    <div class="visual"><SecurityVisual label={ui.securityVisual} /></div>
+  </div>
+</section>
+{s.sections.map((sec, i) => (
+  <section class="nf-section sec" id={sec.id} aria-labelledby={`h-${sec.id}`}>
+    <div class="nf-wrap grid">
+      <div class="side"><SectionOrnament index={i + 1} /></div>
+      <div class="main">
+        <h2 id={`h-${sec.id}`}>{sec.heading}</h2>
+        {sec.body?.map((p) => <p class="body" set:html={md(p)} />)}
+        {sec.status && <p class="st"><StatusPill status={sec.status} label={labels[sec.status]} prefix={prefix} /></p>}
+        {sec.table && (
+          <div class="table" tabindex="0">
+            <ComplianceGrid headers={sec.table.headers} labelledBy={`h-${sec.id}`} statusLabels={labels} statusPrefix={prefix}
+              rows={sec.table.rows.map((r) => ({ controlHtml: md(r.cells[0]), descriptionHtml: r.cells[1] ? md(r.cells[1]) : undefined, status: r.status }))} />
+          </div>
+        )}
+        {sec.bullets && (
+          <ul class="bullets">
+            {sec.bullets.map((b) => (
+              <li><Fragment set:html={md(b.text)} />{b.status && <> <StatusPill status={b.status} label={labels[b.status]} prefix={prefix} /></>}</li>
+            ))}
+          </ul>
+        )}
+        {sec.after?.map((p) => <p class="body" set:html={md(p)} />)}
+      </div>
+    </div>
+  </section>
+))}
+<style>
+  .head { padding-bottom: 24px; }
+  .head h1 { max-width: 22ch; }
+  .lede { margin-top: 18px; font-size: 18px; max-width: 68ch; color: var(--color-ink); }
+  .note { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--color-accent); background: var(--color-surface); border-radius: 0 var(--radius-card) var(--radius-card) 0; max-width: 80ch; }
+  .note p + p, .note ul + p { margin-top: 12px; }
+  .legend { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+  .visual { margin-top: 32px; }
+  .sec { padding: 40px 0; border-top: 1px solid var(--color-line); }
+  .grid { display: grid; grid-template-columns: 220px 1fr; gap: 32px; }
+  .main { max-width: 900px; min-width: 0; }
+  .body { color: var(--color-muted); margin-top: 14px; font-size: 16.5px; max-width: 68ch; }
+  .st { margin-top: 14px; }
+  .table { margin-top: 20px; overflow-x: auto; }
+  .bullets { margin: 16px 0 0; padding-left: 20px; display: grid; gap: 10px; max-width: 72ch; color: var(--color-muted); }
+  .bullets :global(strong) { color: var(--color-ink); }
+  @media (max-width: 800px) { .grid { grid-template-columns: 1fr; gap: 8px; } }
+</style>

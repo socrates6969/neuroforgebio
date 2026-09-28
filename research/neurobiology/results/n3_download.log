@@ -1,0 +1,21 @@
+{'n_files': 16, 'edf_bytes': 549440512, 'edf_bytes_equal_prereg': True, 'all_bytes': 549445142, 'raw_bytes_now': 1512831657, 'raw_bytes_after': 2062274867, 'cap': 2100000000.0}
+chb23/chb23-summary.txt cached yes
+{'n_files': 16, 'edf_bytes': 549440512, 'edf_bytes_equal_prereg': True, 'all_bytes': 549445142, 'raw_bytes_now': 1512831657, 'raw_bytes_after': 2062274867, 'cap': 2100000000.0}
+chb23/chb23-summary.txt cached yes
+chb23/chb23_06.edf downloaded (ranged) yes
+chb23/chb23_06.edf.seizures downloaded (ranged) yes
+chb23/chb23_08.edf downloaded (ranged) yes
+chb23/chb23_08.edf.seizures downloaded (ranged) yes
+chb23/chb23_09.edf downloaded (ranged) yes
+chb23/chb23_09.edf.seizures downloaded (ranged) yes
+chb24/chb24-summary.txt downloaded (ranged) yes
+chb24/chb24_01.edf downloaded (ranged) yes
+chb24/chb24_01.edf.seizures downloaded (ranged) yes
+chb24/chb24_03.edf downloaded (ranged) yes
+chb24/chb24_03.edf.seizures downloaded (ranged) yes
+chb24/chb24_04.edf downloaded (ranged) yes
+chb24/chb24_04.edf.seizures downloaded (ranged) yes
+chb24/chb24_06.edf downloaded (ranged) yes
+chb24/chb24_06.edf.seizures downloaded (ranged) yes
+DONE 16 files, 549445142 bytes, raw total now 2062274867 bytes, all SHA256-verified
+EXIT 0

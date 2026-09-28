@@ -1,0 +1,25 @@
+{
+ "data_decision_2.4": "B: cycle cap raised to >= 2.07 GB (relayed by the queen to the coder-verifier; hard abort at 2.10e9 bytes total raw data)",
+ "planned_download": {
+  "chb23": [
+   "chb23_06.edf",
+   "chb23_08.edf",
+   "chb23_09.edf"
+  ],
+  "chb24": [
+   "chb24_01.edf",
+   "chb24_03.edf",
+   "chb24_04.edf",
+   "chb24_06.edf"
+  ],
+  "edf_bytes": 549440512,
+  "plus": ".edf.seizures of each + chbNN-summary.txt",
+  "raw_bytes_after_planned": 2062274867,
+  "raw_bytes_before": 1512829725
+ },
+ "prereg": "prereg/N3_harness_validation_fresh.md",
+ "prereg_sha256": "954e4abba139cde8d9a37e0ae43190416389315719d7d7451d26b394e87fc32b",
+ "status_label": "RESEARCH USE ONLY. NOT A MEDICAL DEVICE. No clinical claims.",
+ "what": "N3 prereg lock record, written BEFORE any N3 EDF was downloaded (prereg header + \u00a72.4)",
+ "written_utc": "2026-09-26T19:30:54.203170+00:00"
+}

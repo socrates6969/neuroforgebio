@@ -1,0 +1,89 @@
+== (2) independent recount from CSV ==
+wired Counter({'C1': 64, 'P2': 64, 'P3': 64}) PF Counter({'C1': 62, 'P2': 62, 'P3': 62})
+C1 R1: {'D1': 8, 'D2': 34, 'D3': 13, 'D4': 7}  K_digit m1/2/3=4/4/4  matches JSON: True
+C1 R3: {'D1': 7, 'D2': 27, 'D3': 11, 'D4': 6, 'MIXED': 11}  K_digit m1/2/3=4/4/4  matches JSON: True
+C1 ray: {'D1': 8, 'D2': 34, 'D3': 13, 'D4': 7}  K_digit m1/2/3=4/4/4  matches JSON: True
+   K_terr(m2)=4 (JSON 4);  N_eff,digit=2.6732 (JSON 2.6732);  N_eff,seg=5.1528 (JSON 5.1528)
+   LateralSensory: {'D1': 8, 'D2': 23} K_digit(m2)=2
+   MedialSensory: {'D2': 11, 'D3': 13, 'D4': 7} K_digit(m2)=3
+P2 R1: {'D1': 9, 'D2': 2, 'PALM': 51}  K_digit m1/2/3=2/2/1  matches JSON: True
+P2 R3: {'D2': 2, 'MIXED': 60}  K_digit m1/2/3=1/1/0  matches JSON: True
+P2 ray: {'D1': 9, 'D2': 22, 'D3': 1, 'D4': 15, 'D5': 15}  K_digit m1/2/3=5/4/4  matches JSON: True
+   K_terr(m2)=3 (JSON 3);  N_eff,digit=1.4311 (JSON 1.4311);  N_eff,seg=4.1156 (JSON 4.1156)
+   LateralSensory: {'D1': 9, 'D2': 1, 'PALM': 21} K_digit(m2)=1
+   MedialSensory: {'D2': 1, 'PALM': 30} K_digit(m2)=0
+P3 R1: {'D1': 5, 'D2': 12, 'D3': 23, 'D4': 4, 'PALM': 18}  K_digit m1/2/3=4/4/4  matches JSON: True
+P3 R3: {'D1': 1, 'D2': 11, 'D3': 17, 'D4': 3, 'MIXED': 30}  K_digit m1/2/3=4/3/3  matches JSON: True
+P3 ray: {'D1': 5, 'D2': 29, 'D3': 24, 'D4': 4}  K_digit m1/2/3=4/4/4  matches JSON: True
+   K_terr(m2)=5 (JSON 5);  N_eff,digit=3.7033 (JSON 3.7033);  N_eff,seg=6.2403 (JSON 6.2403)
+   LateralSensory: {'D1': 5, 'D2': 9, 'D3': 1, 'PALM': 15} K_digit(m2)=2
+   MedialSensory: {'D2': 3, 'D3': 22, 'D4': 4, 'PALM': 3} K_digit(m2)=3
+count/K mismatches vs JSON: 0
+
+== (2) P_att(L; p) by 2^5 subset enumeration (not the DP) vs JSON exact ==
+C1 n=[8, 34, 13, 7, 0] p=0.62: L2=1.000000 L3=0.999912 L4=0.979690 L5=0.000000 L6=0.000000
+P2 n=[9, 2, 0, 0, 0] p=0.62: L2=0.383404 L3=0.000000 L4=0.000000 L5=0.000000 L6=0.000000
+P3 n=[5, 12, 23, 4, 0] p=0.62: L2=0.999998 L3=0.988574 L4=0.781745 L5=0.000000 L6=0.000000
+max |enum - JSON exact| over 3 x 6 p x 5 L: 2.22e-16
+P2 L2 closed form: q_D1*q_D2 + ... ; q_D2 = 0.62^2 = 0.3844; q_D1 = 0.997409
+
+JHU left strict counts: {'orange': 14, 'MIXED': 35, 'red': 2, 'yellow': 5, 'green': 6}  JSON: {'orange': 14, 'MIXED': 35, 'red': 2, 'yellow': 5, 'green': 6}
+JHU P_att(p=0.62) L2/3/4: [0.998547, 0.935858, 0.344914]
+
+== (3) C3: exact probability that the 3-SE rule (SE at exact P, N=20000) flags a CORRECT implementation ==
+n comparisons = 108; expected false alarms = 0.260; P(>=1) = 0.231; P(>=2) = 0.027
+   highest per-test false-alarm prob: P3 p=0.62 L=2 exact=0.9999979 P(flag)=0.0416
+   highest per-test false-alarm prob: C1 p=0.47 L=2 exact=0.9999861 P(flag)=0.0323
+   highest per-test false-alarm prob: P3 p=0.54 L=2 exact=0.9999511 P(flag)=0.0176
+   highest per-test false-alarm prob: P3 p=0.64 L=2 exact=0.9999991 P(flag)=0.0171
+   highest per-test false-alarm prob: C1 p=0.64 L=3 exact=0.9999542 P(flag)=0.0143
+   reported failure P3 p=0.62 L=2: exact 0.9999979 MC 0.99995 |d|/SE(exact P)=4.645 |d|/SE(MC P)=0.958  two-sided binomial tail P(|d| >= obs) = 0.0416 (one side)
+   reported failure JHU p=0.64 L=4: exact 0.3753221 MC 0.38565 |d|/SE(exact P)=3.016 |d|/SE(MC P)=3.001  two-sided binomial tail P(|d| >= obs) = 0.0013 (one side)
+own MC 1e6: P3 L2 p0.62 = 0.999997 (enum 0.9999979)
+own MC 1e6: JHU L4 p0.64 = 0.37509 +/- 0.00048 (enum 0.37532)
+
+== (4) P2 labels ==
+P2 PALM-by-R1 palm tags: {'P2-mcp': 20, 'P3-mcp': 1, 'P5-mcp': 15, 'P4-mcp': 15}
+  their dorsum territory: {None: 34, 'D2': 15, 'D3': 1, 'D5': 1}
+  P2 electrodes with EMPTY palm segment: 1
+   LateralSensory  ch 1 r0c0 palm=P2-mcp           dors=-          dist p/d=1.0/0.0 R1=PALM
+   LateralSensory  ch 8 r0c2 palm=P2-mcp           dors=-          dist p/d=0.1/0.0 R1=PALM
+   LateralSensory  ch21 r0c4 palm=P2-mcp           dors=D2m        dist p/d=2.2/2.0 R1=PALM
+   LateralSensory  ch27 r0c5 palm=P2-mcp           dors=D2m        dist p/d=0.1/2.4 R1=PALM
+   LateralSensory  ch13 r1c1 palm=P2-mcp           dors=-          dist p/d=0.1/0.0 R1=PALM
+   LateralSensory  ch17 r1c3 palm=P2-mcp           dors=D2m        dist p/d=0.1/0.6 R1=PALM
+   LateralSensory  ch28 r1c5 palm=P2-mcp           dors=D2m        dist p/d=0.1/0.6 R1=PALM
+   LateralSensory  ch 3 r2c0 palm=P3-mcp           dors=-          dist p/d=1.0/0.0 R1=PALM
+   LateralSensory  ch10 r2c2 palm=P2-mcp           dors=-          dist p/d=1.9/0.0 R1=PALM
+   LateralSensory  ch23 r2c4 palm=P2-mcp           dors=D2p        dist p/d=1.0/1.6 R1=PALM
+   LateralSensory  ch18 r3c3 palm=P2-mcp           dors=D2p        dist p/d=1.0/1.2 R1=PALM
+   LateralSensory  ch30 r3c5 palm=P2-mcp           dors=D2m        dist p/d=0.1/1.5 R1=PALM
+   LateralSensory  ch 5 r4c0 palm=P2-mcp           dors=D2p        dist p/d=1.4/2.2 R1=PALM
+   LateralSensory  ch15 r4c1 palm=P2-mcp           dors=D3m        dist p/d=1.4/2.3 R1=PALM
+   LateralSensory  ch12 r4c2 palm=P2-mcp           dors=D2p        dist p/d=0.1/1.2 R1=PALM
+   LateralSensory  ch24 r4c4 palm=P2-mcp           dors=D2p        dist p/d=0.1/1.6 R1=PALM
+   LateralSensory  ch 2 r5c1 palm=P2-mcp           dors=D2p        dist p/d=0.1/1.2 R1=PALM
+   LateralSensory  ch20 r5c3 palm=P2-mcp           dors=D2p        dist p/d=0.1/1.2 R1=PALM
+   LateralSensory  ch29 r5c5 palm=D1d-pu+D1d-pr    dors=D2m        dist p/d=2.1/2.4 R1=D1
+   LateralSensory  ch 7 r6c0 palm=P2-mcp           dors=D2p        dist p/d=0.1/2.2 R1=PALM
+   LateralSensory  ch14 r6c2 palm=P2-mcp           dors=D2p        dist p/d=0.1/1.6 R1=PALM
+   LateralSensory  ch25 r6c4 palm=D1d-pu+D1d-pr    dors=D2m        dist p/d=1.6/0.6 R1=D1
+   LateralSensory  ch 4 r7c1 palm=D1d-pu+D1d-pr    dors=D2p        dist p/d=1.6/2.2 R1=D1
+   LateralSensory  ch19 r7c3 palm=D1d-pu+D1d-pr    dors=D2m        dist p/d=1.6/2.7 R1=D1
+
+== (4) digitisation: committed extraction JSON vs CSV vs re-run ==
+CSV vs committed JSON label mismatches over 384 surface-cells: 0
+P2 colour margin (nearest vs 2nd) min/median: 14.2/34.7; max dist 4.5
+re-run vs committed: 384 cells, label differences: 0 []
+segment-table differences: 0
+
+== (5) verdict logic recomputed ==
+L5: crit1 False ({'C1': 4, 'P2': 2, 'P3': 4}); min P_att 0.0000 -> crit2 False; R3 >=L in 0/3 -> crit4 False; verified ignoring crit3/5: False
+L4: crit1 False ({'C1': 4, 'P2': 2, 'P3': 4}); min P_att 0.0000 -> crit2 False; R3 >=L in 1/3 -> crit4 False; verified ignoring crit3/5: False
+L3: crit1 False ({'C1': 4, 'P2': 2, 'P3': 4}); min P_att 0.0000 -> crit2 False; R3 >=L in 2/3 -> crit4 True; verified ignoring crit3/5: False
+L2: crit1 True ({'C1': 4, 'P2': 2, 'P3': 4}); min P_att 0.3834 -> crit2 False; R3 >=L in 2/3 -> crit4 True; verified ignoring crit3/5: False
+
+== (1) relabelling x=0.10, independent re-implementation (3 nearest same-surface segment centroids) ==
+C1: P_rel L2/3/4 = 1.000/1.000/1.000  JSON 1.000/1.000/1.000
+P2: P_rel L2/3/4 = 0.984/0.213/0.005  JSON 0.980/0.206/0.006
+P3: P_rel L2/3/4 = 1.000/1.000/1.000  JSON 1.000/1.000/1.000

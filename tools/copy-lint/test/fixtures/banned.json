@@ -1,0 +1,8 @@
+{
+  "hero": {
+    "title": "Automated neuro-cleaning",
+    "status": "live"
+  },
+  "compliance": ["HIPAA compliant hosting", "SOC 2 Type II compliant"],
+  "links": { "href": "https://live.example.com/certified" }
+}

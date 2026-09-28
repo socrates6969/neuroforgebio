@@ -1,0 +1,344 @@
+---
+// Neural Playground: offline replay of open monkey motor-cortex recordings (DANDI 000129, MC_RTT)
+// decoded into a cursor path. Research demo; no hardware is controlled. Every number comes from the
+// precomputed asset written by tools/playground (test reaches only); copy lives in @nf/content.
+// The server render carries the complete results tables, so the page is useful without JavaScript;
+// src/scripts/playground.ts adds the canvas replay (fetches the same asset as a hashed file).
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import JsonLd from '../components/JsonLd.astro';
+import SectionHead from '@nf/ui/components/SectionHead.astro';
+import Banner from '@nf/ui/components/Banner.astro';
+import { canonicalUrl, content, organizationJsonLd } from '../lib/site.ts';
+import { datasetSchema, parseDatasetCitation, webApplicationSchema } from '../lib/jsonld.ts';
+import raw from '../assets/playground/mc-rtt-playground.json';
+// The @theme alias resolves to one theme per build, so only this theme's still is emitted.
+import still from '@theme/stills/playground-still.jpg';
+import { formatR2, parsePlayground } from '../lib/playground-data.mjs';
+
+const pg = content.pages.playground;
+// Static still of the replay (tools/playground/render-stills.mjs), shown until the script takes over.
+// Responsive widths for the <noscript> <Picture>.
+const stillWidths = [640, 1280, still.width].filter((w, i, a) => w <= still.width && a.indexOf(w) === i);
+// .nf-wrap: max 1200px with 24px side padding (16px at <=420px), so the stage is at most 1152px
+const stillSizes = '(max-width: 420px) calc(100vw - 32px), (max-width: 1200px) calc(100vw - 48px), 1152px';
+const c = pg.controls;
+const model = parsePlayground(raw);
+const ds = model.dataset;
+const m = model.method;
+const lastCount = model.neuronCounts.length - 1;
+const first = model.decoders[0];
+const start = model.results[first][lastCount][0];
+const decoderName = (d: string) => (c.decoders as Record<string, string>)[d] ?? d;
+const noiseLabel = (hz: number) => (hz === 0 ? c.noiseNone : `+${hz}`);
+const secs = (ms: number) => (ms / 1000).toFixed(2);
+const licenceUrl = ds.licence === 'CC-BY-4.0' ? 'https://creativecommons.org/licenses/by/4.0/' : undefined;
+const doiUrl = `https://doi.org/${ds.doi}`;
+const dandiUrl = `https://dandiarchive.org/dandiset/${ds.dandiset}/${ds.version}`;
+const speeds = [0.25, 0.5, 1];
+const w = pg.data.terms;
+// JSON-LD (web-seo T5b, docs/hive/SEO-JSONLD-PLAYGROUND-INTERFACE-PROPOSAL.md): every field below is
+// read from the same validated `ds` (dataset) object the page already cites above, never invented.
+// No accuracy numbers in the JSON-LD; isBasedOn cites the DOI, it never claims this page shows the
+// raw, unmodified dataset (the CC-BY notice in pg.data.reproduce already states what was changed).
+// Trimmed per web-queen/nfb-playground (perf budget, T5b review): no alternateName/sameAs (the DOI in
+// identifier/url already resolves the dataset; the DANDI page is one click from there via the page's
+// own visible dandiUrl link) and no WebApplication.description (already carried by this page's own
+// meta/og description tags, so repeating it in JSON-LD is optional weight, not new information).
+// creator/datePublished/name are derived from ds.citation (not hardcoded), so a re-pointed dataset
+// version can never silently drift from the visible citation; no Dataset node if it doesn't parse.
+const cited = parseDatasetCitation(ds.citation);
+const datasetNode =
+  licenceUrl && cited
+    ? datasetSchema({
+        name: cited.name,
+        creatorName: cited.creatorName,
+        datePublished: cited.datePublished,
+        licenseUrl: licenceUrl,
+        doiUrl,
+        citation: ds.citation,
+        description:
+          'Spike times and cursor paths from a monkey motor-cortex recording, used in derived form (binned and decoded) by this demo.',
+      })
+    : undefined;
+const webAppNode = webApplicationSchema({
+  title: pg.meta.title,
+  url: canonicalUrl('/playground/'),
+  brand: content.brand.name,
+  isBasedOnUrl: doiUrl,
+});
+const schema = datasetNode ? [organizationJsonLd, datasetNode, webAppNode] : [organizationJsonLd, webAppNode];
+---
+<Base title={pg.meta.title} description={pg.meta.description}>
+  <JsonLd schema={schema} />
+  <section class="nf-section head" aria-labelledby="h-pg">
+    <div class="nf-wrap">
+      <SectionHead id="h-pg" level={1} eyebrow={pg.hero.eyebrow} heading={pg.hero.heading} lede={pg.hero.lede} />
+      <Banner text={pg.banner} tone="caution" id="pg-disclaimer" />
+      <p class="to-3d"><a class="nf-btn nf-btn--ghost" href={pg.interfaceLink.href}>{pg.interfaceLink.label}</a></p>
+    </div>
+  </section>
+
+  <section class="nf-section demo" aria-label={c.heading}>
+    <div class="nf-wrap">
+      <div class="pg" data-playground
+        data-play={c.play} data-pause={c.pause} data-seconds={c.seconds}
+        data-neurons-unit={c.neuronsUnit} data-noise-unit={c.noiseUnit} data-load-error={pg.loadError}
+        data-chart-label={pg.score.chartLabel}>
+        <noscript><p class="pg-status">{pg.noscript}</p></noscript>
+        <p class="pg-status" data-pg-status hidden>{pg.loading}</p>
+
+        <p class="rec-credit" aria-hidden="true">{pg.footer.lead} ({ds.shortName}, DANDI {ds.dandiset}, {ds.licence}). {pg.footer.tail}</p>
+        {/* JS off only: inside <noscript> the still is never fetched when the script runs. */}
+        <noscript>
+          <figure class="still-fig" data-pg-still>
+            <Picture src={still} formats={['avif']} fallbackFormat="jpg" widths={stillWidths} sizes={stillSizes}
+              loading="eager" fetchpriority="high" alt={pg.still.alt} class="still" />
+            <figcaption>{pg.still.caption}</figcaption>
+          </figure>
+        </noscript>
+        <div class="stage" data-pg-needs-js hidden>
+          <figure class="panel panel--raster nf-card">
+            <h2 class="panel-h">{pg.panels.raster.heading}</h2>
+            <canvas class="cv cv--raster" data-pg-canvas="raster" role="img" aria-label={pg.panels.raster.label} width="600" height="300"></canvas>
+            <figcaption>{pg.panels.raster.caption}</figcaption>
+          </figure>
+          <figure class="panel panel--path nf-card">
+            <h2 class="panel-h">{pg.panels.path.heading}</h2>
+            <canvas class="cv cv--path" data-pg-canvas="path" role="img" aria-label={pg.panels.path.label} width="400" height="300"></canvas>
+            <ul class="legend">
+              <li><span class="key key--actual" aria-hidden="true"></span>{pg.panels.path.actual}</li>
+              <li><span class="key key--decoded" aria-hidden="true"></span>{pg.panels.path.decoded}</li>
+              <li><span class="key key--target" aria-hidden="true"></span>{pg.panels.path.target}</li>
+            </ul>
+            <figcaption>{pg.panels.path.caption}</figcaption>
+          </figure>
+          <figure class="panel panel--arm nf-card">
+            <h2 class="panel-h">{pg.panels.arm.heading}</h2>
+            <canvas class="cv cv--arm" data-pg-canvas="arm" role="img" aria-label={pg.panels.arm.label} width="400" height="240"></canvas>
+            <figcaption>{pg.panels.arm.caption}</figcaption>
+          </figure>
+        </div>
+
+        <form class="controls nf-card" data-pg-controls data-pg-needs-js hidden aria-labelledby="h-pg-controls">
+          <h2 id="h-pg-controls" class="nf-visually-hidden">{c.heading}</h2>
+          <div class="row row--play">
+            <button type="button" class="nf-btn nf-btn--primary play" data-pg-play disabled>{c.play}</button>
+            <label class="grow">
+              <span class="lbl">{c.time}</span>
+              <input type="range" data-pg-scrub min="0" max={model.trials[0].durationMs} step="10" value="0" disabled />
+            </label>
+            <output class="mono" data-pg-time aria-live="off">0.00 / {secs(model.trials[0].durationMs)} {c.seconds}</output>
+          </div>
+          <div class="row">
+            <label>
+              <span class="lbl">{c.trial}</span>
+              <select data-pg-trial disabled>
+                {model.trials.map((t, i) => (
+                  <option value={String(i)}>{c.trialOption} {i + 1} · {secs(t.durationMs)} {c.seconds}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              <span class="lbl">{c.speed}</span>
+              <select data-pg-speed disabled>
+                {speeds.map((s) => <option value={String(s)} selected={s === 0.5}>{s}×</option>)}
+              </select>
+            </label>
+            <label class="check">
+              <input type="checkbox" data-pg-advance checked disabled />
+              <span>{c.autoAdvance}</span>
+            </label>
+          </div>
+          <div class="row">
+            <label class="grow">
+              <span class="lbl">{c.neurons}: <output class="mono" data-pg-neurons-out aria-live="off">{model.neuronCounts[lastCount]}</output></span>
+              <input type="range" data-pg-neurons min="0" max={String(lastCount)} step="1" value={String(lastCount)}
+                aria-valuetext={`${model.neuronCounts[lastCount]} ${c.neuronsUnit}`} disabled />
+              <span class="ticks mono" aria-hidden="true">{model.neuronCounts.map((n) => <span>{n}</span>)}</span>
+            </label>
+          </div>
+          <div class="row">
+            <fieldset>
+              <legend class="lbl">{c.noise} <span class="unit">({c.noiseUnit})</span></legend>
+              {model.noiseHz.map((hz, i) => (
+                <label class="radio"><input type="radio" name="pg-noise" value={String(i)} checked={i === 0} disabled /> {noiseLabel(hz)}</label>
+              ))}
+            </fieldset>
+            <fieldset>
+              <legend class="lbl">{c.decoder}</legend>
+              {model.decoders.map((d, i) => (
+                <label class="radio"><input type="radio" name="pg-decoder" value={d} checked={i === 0} disabled /> {decoderName(d)}</label>
+              ))}
+            </fieldset>
+          </div>
+        </form>
+
+        <div class="score nf-card" aria-labelledby="h-pg-score">
+          <h2 id="h-pg-score" class="panel-h">{pg.score.heading}</h2>
+          <dl class="nums">
+            <div><dt>{pg.score.testSet}</dt><dd class="big mono" data-pg-r2="test">{formatR2(start.posR2)}</dd></div>
+            <div><dt>{pg.score.velocity}</dt><dd class="mono" data-pg-r2="vel">{formatR2(start.velR2)}</dd></div>
+            <div data-pg-needs-js hidden><dt>{pg.score.trial}</dt><dd class="mono" data-pg-r2="trial" data-unit={pg.score.trialUnit}>–</dd></div>
+          </dl>
+          <p class="nf-visually-hidden" aria-live="polite" data-pg-live></p>
+          <p class="explain">{pg.score.explain}</p>
+          <figure class="chart" data-pg-needs-js hidden>
+            <h3>{pg.score.chartHeading}</h3>
+            <canvas class="cv cv--chart" data-pg-canvas="chart" role="img" aria-label={pg.score.chartLabel} width="600" height="220"></canvas>
+            <ul class="legend">
+              {model.decoders.map((d) => <li><span class={`key key--${d}`} aria-hidden="true"></span>{decoderName(d)}</li>)}
+            </ul>
+            <figcaption>{pg.score.chartCaption}</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="nf-section band" aria-labelledby="h-pg-how">
+    <div class="nf-wrap">
+      <h2 id="h-pg-how">{pg.how.heading}</h2>
+      <ol class="steps">
+        {pg.how.steps.map((s) => <li class="nf-card"><h3>{s.heading}</h3><p>{s.body}</p></li>)}
+      </ol>
+      <h2 id="h-pg-limits" class="sub">{pg.limits.heading}</h2>
+      <ul class="limits">{pg.limits.items.map((it) => <li>{it}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="nf-section data-sec" aria-labelledby="h-pg-data">
+    <div class="nf-wrap">
+      <h2 id="h-pg-data">{pg.data.heading}</h2>
+      <dl class="facts" data-pg-dataset={ds.dandiset}>
+        <div><dt>{pg.data.dataset}</dt><dd><a href={dandiUrl} rel="noopener noreferrer">{ds.name}</a>, DANDI {ds.dandiset} {w.version} {ds.version}</dd></div>
+        <div><dt>{pg.data.recording}</dt><dd>{ds.units} {w.units}, {ds.area}; {w.meanRate} {ds.meanRateHz} {w.rateUnit}</dd></div>
+        <div><dt>{pg.data.licence}</dt><dd>{licenceUrl ? <a href={licenceUrl} rel="noopener noreferrer license">{ds.licence}</a> : ds.licence}</dd></div>
+        <div><dt>{pg.data.citation}</dt><dd>{ds.citation.replace(` https://doi.org/${ds.doi}`, '')} <a href={doiUrl} rel="noopener noreferrer">doi:{ds.doi}</a></dd></div>
+        <div><dt>{pg.data.hash}</dt><dd><code class="hash">sha256:{ds.sha256}</code></dd></div>
+        <div><dt>{pg.data.split}</dt><dd>{m.split} ({m.reaches.train} {w.training}, {m.reaches.val} {w.validation}, {m.reaches.test} {w.test}; {m.binMs} {w.bins})</dd></div>
+        <div><dt>{pg.data.shown}</dt><dd>{m.shownTrials}</dd></div>
+        <div><dt>{pg.data.noise}</dt><dd>{m.noise}</dd></div>
+        <div><dt>{pg.data.control}</dt><dd>{pg.data.controlText} {formatR2(m.controlShuffledPosR2)}</dd></div>
+      </dl>
+      <p class="repro">{pg.data.reproduce}</p>
+      <details class="tables">
+        <summary>{pg.data.tablesSummary}</summary>
+        {[['posR2', pg.data.tablePosition], ['velR2', pg.data.tableVelocity]].map(([key, caption]) => (
+          <div class="tbl-wrap">
+            <table class="results" data-pg-table={key}>
+              <caption>{caption}</caption>
+              <thead>
+                <tr><th scope="col">{pg.data.rowHeader}</th>{model.noiseHz.map((hz) => <th scope="col">{noiseLabel(hz)}</th>)}</tr>
+              </thead>
+              <tbody>
+                {model.decoders.flatMap((d) => model.neuronCounts.map((n, ci) => (
+                  <tr>
+                    <th scope="row">{decoderName(d)}, {n}</th>
+                    {model.noiseHz.map((_, ni) => <td class="mono">{formatR2(model.results[d][ci][ni][key as 'posR2' | 'velR2'])}</td>)}
+                  </tr>
+                )))}
+              </tbody>
+            </table>
+          </div>
+        ))}
+        <p class="note">{pg.data.noiseHeader}</p>
+      </details>
+      <p class="pg-footer" id="pg-footer">
+        {pg.footer.lead} (<a href={dandiUrl} rel="noopener noreferrer">{ds.shortName}, DANDI {ds.dandiset}</a>, {ds.licence}). {pg.footer.tail}
+      </p>
+    </div>
+  </section>
+</Base>
+<script>
+  import '../scripts/playground.ts';
+</script>
+<style>
+  .head { padding-bottom: 8px; }
+  /* record mode (?record=1): only the demo, for frame capture */
+  :global(html.nf-rec body > header), :global(html.nf-rec body > footer), :global(html.nf-rec .nf-skip) { display: none; }
+  .rec-credit { display: none; }
+  :global(html.nf-rec) .rec-credit { display: block; margin: 0 0 12px; font: 400 12px var(--font-mono); color: var(--color-muted); }
+  :global(html.nf-rec) .head, :global(html.nf-rec) .band, :global(html.nf-rec) .data-sec, :global(html.nf-rec) .controls { display: none; }
+  .to-3d { margin-top: 16px; }
+  .demo { padding-top: 24px; }
+  .pg-status { margin: 0 0 16px; color: var(--color-muted); }
+  :global(.still-fig) { margin: 0; display: grid; gap: 8px; }
+  [data-pg-needs-js][hidden] { display: none; }
+  :global(.still-fig .still) { display: block; width: 100%; height: auto; border: 1px solid var(--color-line); border-radius: var(--radius-card); }
+  :global(.still-fig figcaption) { font-size: 13.5px; color: var(--color-muted); max-width: 80ch; }
+  .stage { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); grid-template-areas: 'raster path' 'raster arm'; gap: 16px; }
+  .panel { margin: 0; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .panel--raster { grid-area: raster; }
+  .panel--path { grid-area: path; }
+  .panel--arm { grid-area: arm; }
+  .panel-h { font-size: 16px; line-height: 1.3; font-weight: 500; }
+  .panel figcaption, .chart figcaption { font-size: 13.5px; color: var(--color-muted); }
+  .cv { display: block; width: 100%; background: var(--color-bg); border: 1px solid var(--color-line); border-radius: calc(var(--radius-card) / 2); }
+  .cv--raster { height: 100%; min-height: 320px; flex: 1; }
+  .cv--path { height: 260px; }
+  .cv--arm { height: 200px; }
+  .cv--chart { height: 200px; }
+  .legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13.5px; }
+  .legend li { display: inline-flex; align-items: center; gap: 8px; }
+  .key { display: inline-block; width: 22px; height: 0; border-top: 2px solid var(--color-ink); }
+  .key--decoded { border-top: 2px dashed var(--color-accent-ink); }
+  .key--target { width: 10px; height: 10px; border: 2px solid var(--color-secondary); }
+  .key--ridge { border-top: 3px solid var(--color-accent-ink); }
+  .key--kalman { border-top: 3px dashed var(--color-secondary); }
+  .controls { margin-top: 16px; padding: 16px 18px; display: grid; gap: 14px; }
+  .row { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: end; }
+  .row label { display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+  .row .grow { flex: 1 1 260px; }
+  .row .check { flex-direction: row; align-items: center; gap: 8px; }
+  .lbl { font: 500 12px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--color-muted); }
+  .lbl output { letter-spacing: 0; color: var(--color-ink); }
+  .unit { text-transform: none; letter-spacing: 0; }
+  .mono { font-family: var(--font-mono); }
+  .play { min-width: 96px; }
+  select, input[type='range'] { font: inherit; color: var(--color-ink); accent-color: var(--color-accent); }
+  select { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 4px; padding: 6px 8px; min-height: 36px; }
+  select option { background: var(--color-bg); color: var(--color-ink); }
+  input[type='range'] { width: 100%; min-height: 28px; }
+  .ticks { display: flex; justify-content: space-between; font-size: 12px; color: var(--color-muted); }
+  fieldset { border: 1px solid var(--color-line); border-radius: 4px; margin: 0; padding: 8px 12px 10px; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  legend { padding: 0 4px; }
+  .radio { flex-direction: row !important; align-items: center; gap: 6px !important; min-height: 28px; }
+  output { font-size: 13.5px; }
+  .score { margin-top: 16px; padding: 18px; display: grid; gap: 14px; }
+  .nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px 24px; margin: 0; }
+  .nums dt { font-size: 13.5px; color: var(--color-muted); }
+  .nums dd { margin: 4px 0 0; font-size: 22px; }
+  .nums .big { font-size: 34px; color: var(--color-accent-ink); }
+  .explain { font-size: 14.5px; color: var(--color-muted); max-width: 80ch; }
+  .chart { margin: 0; display: grid; gap: 8px; }
+  .chart h3 { font-size: 15px; }
+  .band { background: var(--color-surface); border-top: 1px solid var(--color-line); border-bottom: 1px solid var(--color-line); }
+  .steps { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; counter-reset: step; }
+  .steps li { padding: 20px; display: grid; gap: 8px; counter-increment: step; }
+  .steps h3::before { content: counter(step, decimal-leading-zero) ' · '; font: 500 12px var(--font-mono); color: var(--color-accent-ink); }
+  .steps p { color: var(--color-muted); font-size: 15px; }
+  .sub { margin-top: 40px; font-size: clamp(22px, 2.4vw, 28px); }
+  .limits { margin: 14px 0 0; padding-left: 20px; display: grid; gap: 6px; color: var(--color-muted); max-width: 80ch; }
+  .facts { margin: 20px 0 0; display: grid; gap: 10px; max-width: 100ch; }
+  .facts div { display: grid; grid-template-columns: 200px 1fr; gap: 16px; }
+  .facts dt { font: 500 12px/1.9 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--color-muted); }
+  .facts dd { margin: 0; font-size: 15px; overflow-wrap: anywhere; }
+  .hash { font: 400 12.5px var(--font-mono); overflow-wrap: anywhere; }
+  .repro { margin-top: 16px; font-size: 14.5px; color: var(--color-muted); max-width: 80ch; }
+  .tables { margin-top: 20px; }
+  .tables summary { cursor: pointer; font-weight: 500; min-height: 28px; }
+  .tbl-wrap { overflow-x: auto; margin-top: 16px; }
+  .results { border-collapse: collapse; font-size: 14px; min-width: 420px; }
+  .results caption { text-align: left; font-weight: 500; padding-bottom: 6px; }
+  .results th, .results td { text-align: right; padding: 6px 12px; border-top: 1px solid var(--color-line); }
+  .results th[scope='row'], .results thead th:first-child { text-align: left; font-weight: 400; }
+  .results thead th { font: 500 12px var(--font-mono); color: var(--color-muted); }
+  .note { margin-top: 8px; font-size: 13px; color: var(--color-muted); }
+  .pg-footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--color-line); font-size: 14px; color: var(--color-muted); }
+  @media (max-width: 860px) {
+    .stage { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'path' 'raster' 'arm'; }
+    .cv--raster { min-height: 260px; }
+    .facts div { grid-template-columns: 1fr; gap: 2px; }
+  }
+</style>

@@ -1,0 +1,24 @@
+---
+// Figure wrapper: numbered title, the figure body (slot), caption and optional provenance line.
+interface Props { id: string; number?: string; title: string; caption?: string; provenance?: string; status?: string }
+const { id, number, title, caption, provenance, status } = Astro.props;
+---
+<figure class="nf-figure" id={id} aria-labelledby={`${id}-title`}>
+  <p class="nf-label ttl" id={`${id}-title`}>{number && <span>{number} </span>}{title}{status && <span class="st"> · {status}</span>}</p>
+  <div class="body"><slot /></div>
+  {(caption || provenance) && (
+    <figcaption>
+      {caption && <span class="cap">{caption}</span>}
+      {provenance && <span class="prov">{provenance}</span>}
+      <slot name="links" />
+    </figcaption>
+  )}
+</figure>
+<style>
+  .nf-figure { margin: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; break-inside: avoid; }
+  .ttl { color: var(--color-ink); }
+  .st { color: var(--color-muted); }
+  .body { min-width: 0; }
+  figcaption { font: 400 12.5px/1.5 var(--font-mono); color: var(--color-muted); display: flex; flex-direction: column; gap: 6px; }
+  .prov { word-break: break-all; }
+</style>

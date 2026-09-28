@@ -1,0 +1,21 @@
+[package]
+name = "site-rs"
+version = "0.1.0"
+description = "Rust static-site generator that reproduces apps/web's Astro build (ORG-PLAN.md Hive 1, RUST-POLICY.md). See PLAN.md for the parity scorecard and the known main-vs-golden-dist divergence."
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+regex = "=1.13.1"
+
+[lib]
+name = "site_rs"
+path = "src/lib.rs"
+
+[[bin]]
+name = "site-rs"
+path = "src/main.rs"

@@ -1,0 +1,19 @@
+<!-- Row 7 PLANTED FAILURE (paired with row7-script-companion-bad.ts): no <output> and no ARIA link,
+     but the range's own input listener writes "1.5×" into the nearby <span data-speed-val> -- a
+     companion value display found only through the script. The range has no aria-valuetext at
+     render and the listener never sets it. Expected: 1 range with a companion, 2 findings (7a, 7b). -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div class="speed" data-speed-widget>
+      <div class="row">
+        <label for="speed">Playback speed</label>
+        <input type="range" id="speed" data-speed min="0" max="3" step="1" value="1" />
+      </div>
+      <span class="val" data-speed-val>1×</span>
+    </div>
+  </body>
+</html>

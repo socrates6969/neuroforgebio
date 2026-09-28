@@ -1,0 +1,22 @@
+// Regression fixture for U3 (ENGINE-SDKS-REVIEW.md): timestamps.Length * ChannelCount as a plain
+// `int` multiply can silently wrap for huge inputs, so the length check that guards the P/Invoke
+// call can pass when it should throw. This file is text only, read by review-guards.test.mjs to
+// prove hasCheckedLongMultiply() returns false for this pattern (and true for the real fix, which
+// wraps the multiply in `checked((long) ...)`). Note this fixture keeps U2's fix (CheckElementType)
+// so the test isolates the U3 regression specifically.
+namespace NeuroForge
+{
+    public sealed unsafe class StreamWriter
+    {
+        public Dtype Dtype { get; }
+        public int ChannelCount { get; }
+
+        public int Push<T>(ReadOnlySpan<T> samples, ReadOnlySpan<double> timestamps) where T : unmanaged
+        {
+            NeuroForgeCore.CheckElementType<T>(Dtype);
+            if (samples.Length != timestamps.Length * ChannelCount)
+                throw new ArgumentException("length mismatch");
+            return 0;
+        }
+    }
+}

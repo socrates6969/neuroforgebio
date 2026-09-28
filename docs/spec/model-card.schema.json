@@ -1,0 +1,212 @@
+{
+  "$defs": {
+    "Measurement": {
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "description": "how it was measured",
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Method",
+          "type": "string"
+        },
+        "metric": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Metric",
+          "type": "string"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "split": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "evaluation split",
+          "title": "Split"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "method",
+        "metric",
+        "value"
+      ],
+      "title": "Measurement",
+      "type": "object"
+    },
+    "PrivacyRisk": {
+      "additionalProperties": false,
+      "description": "SEC-143: membership inference on a held-out split; required for publication.",
+      "properties": {
+        "held_out_split": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Held Out Split",
+          "type": "string"
+        },
+        "membership_inference": {
+          "$ref": "#/$defs/Measurement"
+        }
+      },
+      "required": [
+        "membership_inference",
+        "held_out_split"
+      ],
+      "title": "PrivacyRisk",
+      "type": "object"
+    },
+    "Robustness": {
+      "additionalProperties": false,
+      "description": "SEC-145: evaluation on perturbed inputs (recorded, not claimed).",
+      "properties": {
+        "adversarial": {
+          "$ref": "#/$defs/Measurement",
+          "description": "a documented adversarial method (``method``)"
+        },
+        "channel_dropout": {
+          "$ref": "#/$defs/Measurement"
+        },
+        "noise": {
+          "$ref": "#/$defs/Measurement"
+        }
+      },
+      "required": [
+        "noise",
+        "channel_dropout",
+        "adversarial"
+      ],
+      "title": "Robustness",
+      "type": "object"
+    }
+  },
+  "$id": "https://neuroforge.invalid/spec/model-card.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "card_schema": {
+      "const": "nf.model-card/v1",
+      "default": "nf.model-card/v1",
+      "title": "Card Schema",
+      "type": "string"
+    },
+    "contact": {
+      "anyOf": [
+        {
+          "maxLength": 200,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Contact"
+    },
+    "evaluation": {
+      "items": {
+        "$ref": "#/$defs/Measurement"
+      },
+      "maxItems": 64,
+      "title": "Evaluation",
+      "type": "array"
+    },
+    "inferences": {
+      "items": {
+        "enum": [
+          "emotion",
+          "cognitive_state",
+          "motor_intent",
+          "sleep_stage",
+          "seizure_risk",
+          "artifact_detection",
+          "sensitive_trait",
+          "other"
+        ],
+        "type": "string"
+      },
+      "maxItems": 16,
+      "minItems": 1,
+      "title": "Inferences",
+      "type": "array"
+    },
+    "limitations": {
+      "maxLength": 4000,
+      "minLength": 1,
+      "title": "Limitations",
+      "type": "string"
+    },
+    "modalities": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 16,
+      "minItems": 1,
+      "title": "Modalities",
+      "type": "array"
+    },
+    "privacy_risk": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PrivacyRisk"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "robustness": {
+      "$ref": "#/$defs/Robustness"
+    },
+    "summary": {
+      "maxLength": 4000,
+      "minLength": 1,
+      "title": "Summary",
+      "type": "string"
+    },
+    "task": {
+      "enum": [
+        "decoding",
+        "classification",
+        "regression",
+        "detection",
+        "representation",
+        "other"
+      ],
+      "title": "Task",
+      "type": "string"
+    }
+  },
+  "required": [
+    "summary",
+    "task",
+    "inferences",
+    "modalities",
+    "limitations",
+    "robustness"
+  ],
+  "title": "ModelCard",
+  "type": "object"
+}

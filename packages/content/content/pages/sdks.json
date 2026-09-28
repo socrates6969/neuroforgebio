@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "title": "SDKs · {brand}",
+    "description": "A Python SDK first, built and tested internally, on one shared core. A C interface for C++ and game engines is planned. Licence pending the owner's decision."
+  },
+  "hero": {
+    "eyebrow": "SDKs",
+    "heading": "Python first. <em>One shared core.</em>",
+    "lede": "Every SDK records provenance the same way because every SDK uses the same core. Signal processing stays in the Python tools your lab already trusts."
+  },
+  "sections": [
+    {
+      "id": "example",
+      "heading": "Every run carries <em>its provenance.</em>",
+      "body": [
+        "Open a recording, run a pinned pipeline version, and get a provenance handle that records every parameter, version and input hash."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "import {pkg} as nf            # Illustrative API, subject to change",
+          "rec = nf.open(\"sub-01_task-motor_eeg.edf\")",
+          "run = nf.pipelines.get(\"eeg-basic@1.0.0\").run(rec)",
+          "print(run.provenance.id)          # every parameter, version and input hash"
+        ],
+        "note": "Illustrative API, subject to change"
+      }
+    },
+    {
+      "id": "languages",
+      "heading": "Languages, <em>in order.</em>",
+      "body": [
+        "We build for the languages our users already work in, in the order they ask for them."
+      ],
+      "items": [
+        {
+          "heading": "Python",
+          "body": "The first SDK, designed to work alongside MNE-Python, BIDS and NWB tooling. Not published yet.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M4-REPORT.md step 4.2–4.3"
+        },
+        {
+          "heading": "C and C++",
+          "body": "A C interface on the shared core, with interoperability through LSL and BrainFlow.",
+          "status": "planned"
+        },
+        {
+          "heading": "Unity and Unreal",
+          "body": "Planned, on the same C interface.",
+          "status": "roadmap"
+        }
+      ],
+      "evidence": [
+        {
+          "text": "MNE-Python had about 308,000 PyPI downloads in the month to 26 September 2026.",
+          "source": "market/landscape.md §2"
+        }
+      ]
+    },
+    {
+      "id": "licence",
+      "heading": "Open where it <em>helps you.</em>",
+      "body": [
+        "The SDKs, the shared core, the format converters and the pipeline step library are planned as open source (Apache-2.0 proposed), pending the owner's decision. The hosted platform, including the consent ledger and model registry, is proprietary.",
+        "No SDK code is published yet."
+      ]
+    }
+  ],
+  "cta": [
+    {
+      "label": "Join early access",
+      "href": "/pricing#early-access",
+      "variant": "primary",
+      "disabled": true,
+      "note": "Early-access list opens soon"
+    },
+    {
+      "label": "See the platform",
+      "href": "/platform",
+      "variant": "ghost"
+    }
+  ]
+}

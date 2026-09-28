@@ -1,0 +1,27 @@
+{
+  "schema": "nf.multiverse-datasets/v1",
+  "note": "Accession IDs and licences are NEVER invented. No EEG decoding dataset accession appears in market/ or research/ docs (the DANDI sets named in research/somatosensory are ICMS/S1 recordings, not EEG decoding). The scientist selects a dataset, copies the accession, version and licence from the repository page, and records who verified them and when. Until then every entry is a TODO placeholder and the runner refuses to download.",
+  "datasets": [
+    {
+      "key": "eeg-decoding-1",
+      "status": "todo",
+      "repository": null,
+      "accession": null,
+      "version": null,
+      "doi": null,
+      "url": null,
+      "licence": {
+        "spdx": null,
+        "url": null,
+        "attribution_required": null,
+        "verified_by": null,
+        "verified_at": null
+      },
+      "citation": null,
+      "modality": "EEG",
+      "task": null,
+      "mains_hz": null,
+      "selection_rationale": "TODO: a public EEG dataset with labelled trials suitable for a two-class decoding task."
+    }
+  ]
+}

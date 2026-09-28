@@ -1,0 +1,23 @@
+<!-- Row 3/4 PASSING fixture: one hidden, purpose-built status line (the /playground and /arena
+     pattern) -- and an aria-live="off" <output>, which must NOT be treated as a live region at all
+     (it's a deliberate opt-out, not an omission). -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <p class="nf-visually-hidden" aria-live="polite" data-run-live></p>
+    <output aria-live="off" data-time>0.00 / 1.20 s</output>
+    <div class="results-card" data-results-card>
+      <table>
+        <thead>
+          <tr><th>Decoder</th><th>R2</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ridge</td><td>0.81</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

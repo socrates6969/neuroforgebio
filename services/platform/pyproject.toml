@@ -1,0 +1,64 @@
+# nf_platform: FastAPI modular monolith (BUILD-GUIDE M2, BLUEPRINT §3.1). uv workspace member of the root
+# project; installed into the root .venv by `uv sync --locked`. Exact pins (M2-CONTRACTS §2).
+# Owners: m2-core (app, db, api, auth, audit), m2-data (storage, signals, ingest/convert) append their deps here.
+[project]
+name = "nf-platform"
+version = "0.0.0"
+description = "Platform service: metadata API, ingest, storage, audit (modular monolith)."
+requires-python = "==3.12.*"
+dependencies = [
+  # m2-core
+  "alembic==1.20.0",
+  "cryptography==50.0.1",
+  "fastapi==0.141.1",
+  "psycopg[binary]==3.3.6",
+  "pydantic==2.13.5",
+  "pyjwt==2.15.0",
+  "sqlalchemy==2.1.1",
+  # m2-data (storage, signals, converters)
+  "boto3==1.43.103",
+  "numpy>=2.1,<3",
+  "pyxdf==1.17.5",
+  "zarr==3.4.0",
+  # m2-stream (uploads 2.6, gRPC stream ingest 2.7)
+  "grpcio==1.84.0",
+  "protobuf==7.36.2",
+  # m5-ledger: jurisdiction RuleSets are YAML (rules/*.yaml, BLUEPRINT §8.2); already in the lock
+  # through zarr -> donfig
+  "pyyaml==6.0.3",
+]
+
+[project.optional-dependencies]
+# Test/dev tools for this package. `pgserver` bundles PostgreSQL 16 binaries (Windows/macOS/Linux) so RLS and
+# migrations are tested against a real Postgres locally; CI uses docker-compose.ci.yml instead.
+test = [
+  "httpx==0.28.1",
+  "import-linter==2.15",
+  "moto[s3]==5.2.3",
+  "pgserver==0.1.4",
+  # m2-data: property tests + an independent EDF/BDF reader used as a test oracle (EDFlib wheel, small)
+  "hypothesis==6.168.1",
+  "pyedflib==0.1.42",
+  # m2-stream: regenerates the committed gRPC stubs in a sync test (proto/ingest/v1); the edge
+  # prototype's LSL inlet (liblsl is bundled in the wheel)
+  "grpcio-tools==1.84.0",
+  "pylsl==1.18.5",
+  # m3-prov: 3.2 pipeline JSON Schema + 3.7 OpenLineage event validation; 3.7 PROV-JSON check with
+  # the W3C PROV reference library (prov, MIT; no runtime dependencies).
+  "jsonschema==4.26.0",
+  "prov==3.2.2",
+]
+# m2-data: CI-only maintained readers for the converter cross-checks (too heavy for the dev PC).
+readers = [
+  "mne==1.13.2",
+  "mne-bids==0.19.0",
+  "pynwb==4.2.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.12,<0.13"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "nf_platform"
+module-root = ""

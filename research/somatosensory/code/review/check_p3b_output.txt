@@ -1,0 +1,18 @@
+cell | arm | reviewer N_req, bias60, rmse60 | coder N_req, bias60, rmse60
+(20.0, 3.0, 0.02) | A | 33.2, -0.006, 0.110 | 33.05962280577215, -0.004, 0.094
+(20.0, 3.0, 0.02) | oracle | 33.2, -0.006, 0.110 | 35.13965071971764, -0.007, 0.115
+(20.0, 1.5, 0.02) | A | inf, +0.196, 0.280 | >150, +0.180, 0.275
+(20.0, 1.5, 0.02) | oracle | 78.6, -0.000, 0.206 | 75.6389735342395, -0.006, 0.215
+(10.0, 1.5, 0.05) | A | inf, +0.246, 0.408 | >150, +0.256, 0.389
+(10.0, 1.5, 0.05) | oracle | inf, +0.071, 0.309 | >150, +0.113, 0.337
+(50.0, 6.0, 0.0) | A | 19.6, -0.124, 0.135 | 38.24427612429105, -0.129, 0.163
+(50.0, 6.0, 0.0) | oracle | 26.7, -0.009, 0.059 | 19.956685516417707, -0.009, 0.049
+(31.5, 3.0, 0.1) | A | inf, +0.238, 0.399 | >150, +0.193, 0.362
+(31.5, 3.0, 0.1) | oracle | inf, +0.238, 0.399 | >150, +0.231, 0.397
+
+--- rule re-check from JSON ---
+main verdict FAIL n_sav 5 bias fails 20
+recount: savings 5 bias fails 20 -> verdict FAIL
+abandonment block {'ctrl_within_10pct_cells': 24, 'ctrl_rule_triggered': False, 'oracle_savings_cells': 9, 'oracle_savings_ci95': [7, 13], 'oracle_rule_triggered_stop_line': True}
+oracle recount 9 -> stop-line rule (< 24): True
+control within 10% recount 24 -> control rule (>= 36 = 75%): False

@@ -1,0 +1,13 @@
+{
+  "name": "@nf/repo-guard",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Zero-dependency repo policy checks: no tracked neural-data files, no secrets, dispatch-only workflows.",
+  "bin": {
+    "repo-guard": "cli.mjs"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\""
+  }
+}

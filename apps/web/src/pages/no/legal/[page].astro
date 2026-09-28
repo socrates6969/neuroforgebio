@@ -1,0 +1,16 @@
+---
+// /no/legal/privacy /no/legal/terms /no/legal/cookies /no/legal/company: Norwegian nfb-legal DRAFTS; noindex while draft.
+import Base from '../../../layouts/Base.astro';
+import LegalPage from '../../../components/LegalPage.astro';
+import { getContent, type LegalKey } from '@nf/content';
+import { LEGAL_KEYS } from '../../../lib/site.ts';
+
+export function getStaticPaths() {
+  return LEGAL_KEYS.map((page) => ({ params: { page } }));
+}
+const key = Astro.params.page as LegalKey;
+const page = getContent('no').legal[key];
+---
+<Base title={page.meta.title} description={page.meta.description} noindex={page.draft} locale="no">
+  <LegalPage locale="no" page={key} />
+</Base>

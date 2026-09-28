@@ -1,0 +1,32 @@
+{
+  "statusLabels": {
+    "designed": "Designed",
+    "planned": "Planned",
+    "roadmap": "Roadmap",
+    "in-preparation": "In preparation"
+  },
+  "buildStateLabels": {
+    "built-internal": "Built, tested internally"
+  },
+  "statusPill": "Status:",
+  "brandHomeLabel": "{brand}, home",
+  "skipLink": "Skip to content",
+  "primaryNav": "Primary",
+  "footerNav": "Footer",
+  "menuOpenLabel": "Open menu",
+  "menuCloseLabel": "Close menu",
+  "securityVisual": "Illustration of layered data protection: encryption, access control and audit logging.",
+  "languageSwitch": {
+    "label": "Language",
+    "names": { "en": "English", "no": "Norsk" }
+  },
+  "legal": {
+    "heading": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "cookies": "Cookies",
+    "company": "Company information"
+  },
+  "draftLabel": "Draft",
+  "citation": "BibTeX citation"
+}

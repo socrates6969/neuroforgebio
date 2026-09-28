@@ -1,0 +1,49 @@
+---
+// /docs/<guide>: SDK guides (Python SDK, C ABI), linked from /docs (not the side nav). Code blocks are
+// quickstart blocks run by tools/doc-snippets/run.py or verbatim excerpts of repository files; the
+// endpoint table maps every v1 operation to the SDK function that calls it (apps/web/test/docs.test.mjs).
+import DocsShell from '../../components/DocsShell.astro';
+import DocSections from '../../components/DocSections.astro';
+import { apiReference, endpointCalls, guides, overview } from '../../lib/docs.ts';
+import DocsJsonLd from '../../components/DocsJsonLd.astro';
+
+export function getStaticPaths() {
+  return guides.map((g) => ({ params: { guide: g.slug }, props: { g } }));
+}
+const { g } = Astro.props;
+const E = g.endpoints;
+const ops = E ? apiReference.groups.flatMap((grp) => grp.operations) : [];
+const calls = E ? endpointCalls(E) : undefined;
+---
+<DocsShell title={g.meta.title} description={g.meta.description} eyebrow={g.eyebrow} heading={g.heading} lede={g.lede} status={g.status}>
+  <DocsJsonLd title={g.meta.title} description={g.meta.description} path={`/docs/${g.slug}/`} />
+  <DocSections sections={g.sections} />
+  {E && calls && (
+    <section id="endpoints" aria-labelledby="h-endpoints">
+      <h2 id="h-endpoints">{E.heading}</h2>
+      {E.body.map((p) => <p class="body">{p}</p>)}
+      <div class="scroll" tabindex="0" role="region" aria-label={E.heading}>
+        <table class="ep">
+          <thead><tr><th scope="col">{E.labels.endpoint}</th><th scope="col">{E.labels.call}</th></tr></thead>
+          <tbody>
+            {ops.map((o) => {
+              const c = calls(o);
+              return (
+                <tr id={`ep-${o.operationId}`}>
+                  <td><a href={`/docs/api/#op-${o.operationId}`}>{o.method} <code>{o.path}</code></a></td>
+                  <td><code>{c.call}</code>{c.note && <> ({c.note})</>}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )}
+  {g.source && <p class="page-src">{overview.nav.pageSource}: {g.source}</p>}
+</DocsShell>
+<!-- Global under .docs, like /docs/api: a scoped style would stamp an attribute on every table cell. -->
+<style is:global>
+  .docs .page-src { margin-top: 28px; font-size: 14px; color: var(--color-muted); overflow-wrap: anywhere; }
+  .docs .ep td a { overflow-wrap: anywhere; }
+</style>

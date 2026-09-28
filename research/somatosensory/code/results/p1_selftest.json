@@ -1,0 +1,12 @@
+{
+ "free_slip_analytic": true,
+ "no_slip_when_held": true,
+ "ou_variance": true,
+ "ou_autocorr_100ms": true,
+ "pulse_area": true,
+ "zero_perturbation_no_slip": true,
+ "crn_p0_equals_nofb": true,
+ "delay_exact_tau": true,
+ "delta_star_interp": true,
+ "poisson_ppf_mean": true
+}

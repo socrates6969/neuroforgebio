@@ -1,0 +1,81 @@
+{
+  "paper": "test-fixtures-unpublished",
+  "note": "Test-only fixtures: not published. P1 (abandoned) and P2 (inconclusive) were removed from the public manifest by the build queen under the whitepaper verification gate; they stay here only to exercise the line and scatter renderers.",
+  "figures": [
+    {
+      "id": "p1-r-curves",
+      "status": "preliminary",
+      "result": {
+        "path": "research/somatosensory/code/results/p1_grip_latency.json",
+        "sha256": "ced364268289d0079bca113c51512c7a559029c01c009c3da94d2c64120ffa5d"
+      },
+      "staticSvg": {
+        "path": "research/somatosensory/code/figures/p1_R_vs_delta.svg",
+        "sha256": "2c3e201d5521e07455d72a1b4ff559b10a7ec0f4c0afbf2e62d1b808ab470223"
+      },
+      "script": {
+        "path": "research/somatosensory/code/p1_grip_latency.py",
+        "sha256": "f9f86cb9a82866e3f036729b13f277afc1878909f4b088f5e7ca92febd9617f1",
+        "commit": "455986f4b73a63d472ef40e5832b30bbb312c8a3"
+      },
+      "plot": {
+        "kind": "line",
+        "x": {
+          "path": ["R_curves", "deltas"],
+          "label": "delta (ms)"
+        },
+        "y": {
+          "label": "R"
+        },
+        "series": [
+          {
+            "label": "R_curves[\"0.5\"]",
+            "path": ["R_curves", "0.5"]
+          },
+          {
+            "label": "R_curves[\"0.75\"]",
+            "path": ["R_curves", "0.75"]
+          },
+          {
+            "label": "R_curves[\"0.95\"]",
+            "path": ["R_curves", "0.95"]
+          }
+        ]
+      }
+    },
+    {
+      "id": "p2-dprime-scatter",
+      "status": "preliminary",
+      "result": {
+        "path": "research/somatosensory/code/results/p2_biomimetic.json",
+        "sha256": "7bf6ffa757bc70d2eef94c3dd08d1704cc4af381bf4fd5ff3538b301f5d6d98a"
+      },
+      "staticSvg": {
+        "path": "research/somatosensory/code/figures/p2_dprime_vs_tau.svg",
+        "sha256": "ad5e988b1b587637cf8697b19e5002d604970906e7a7689c7d692651e7218a9a"
+      },
+      "script": {
+        "path": "research/somatosensory/code/p2_biomimetic_info.py",
+        "sha256": "f43b2ec56a6aae09adf7574d99b070593556cebe2ca2ec1237168cbab2b0621a",
+        "commit": "455986f4b73a63d472ef40e5832b30bbb312c8a3"
+      },
+      "plot": {
+        "kind": "scatter",
+        "base": ["table"],
+        "keys": ["0.1", "0.3", "1.0", "3.0", "10.0", "30.0", "inf"],
+        "pointLabel": "tau_ad = {key}",
+        "groupTitle": "table sub-key",
+        "pointTitle": "table key",
+        "groups": ["charge", "peak"],
+        "x": {
+          "field": "dprime_lin",
+          "label": "dprime_lin"
+        },
+        "y": {
+          "field": "dprime_bio",
+          "label": "dprime_bio"
+        }
+      }
+    }
+  ]
+}

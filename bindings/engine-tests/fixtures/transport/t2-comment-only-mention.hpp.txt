@@ -1,0 +1,20 @@
+// Regression fixture for T2 (nfb-engine literal-reading ruling): a "shipped" header that mentions
+// nf_winhttp_testing only in a comment, never in an #include or any other real code. Under the
+// literal reading, this must still be caught: mentionsTestingHeader() does no stripping of
+// comments, #error text or #pragma message strings, so a plain substring match over the raw file
+// bytes finds this. (An earlier revision of this check stripped comments first and treated a
+// comment-only mention as safe; nfb-engine ruled that too permissive for a security-owned file --
+// see the file's own doc comment in Streaming.cs review-guards for the contrast with R3, which
+// legitimately does strip comments for the C#/C++ review-fix guards.)
+#ifndef NF_WINHTTP_TRANSPORT_HPP
+#define NF_WINHTTP_TRANSPORT_HPP
+
+// The test-only CA hook lives in tests/nf_winhttp_testing.hpp, which is not shipped.
+
+namespace nf {
+namespace transport {
+// ...
+}  // namespace transport
+}  // namespace nf
+
+#endif  // NF_WINHTTP_TRANSPORT_HPP

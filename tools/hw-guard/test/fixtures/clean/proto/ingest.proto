@@ -1,0 +1,17 @@
+syntax = "proto3";
+package nf.ingest.v1;
+
+// Device -> SDK -> platform only.
+service Ingest {
+  rpc PushSamples(stream SampleChunk) returns (IngestAck);
+}
+
+message SampleChunk {
+  string stream_id = 1;
+  repeated float samples = 2;
+  double lsl_timestamp = 3;
+}
+
+message IngestAck {
+  uint64 accepted = 1;
+}

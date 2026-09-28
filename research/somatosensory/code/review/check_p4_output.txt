@@ -1,0 +1,8 @@
+kappa_hat(w) {0.128: np.float64(0.2615), 0.162: np.float64(0.0794), 0.225: np.float64(-0.2443), 0.268: np.float64(-0.4559)}
+N4 kappa0 {0.128: np.float64(22.51), 0.162: np.float64(20.233), 0.225: np.float64(17.831), 0.268: np.float64(16.838)}
+M* kappa0 {0.128: np.float64(81.1), 0.162: np.float64(239.9), 0.225: np.float64(1648.0), 0.268: np.float64(5805.7)}
+model K N4 {20: 52.25, 24: 54.42, 35: 61.77}
+independent BA: C(1) = 1.8082 [upper 1.8082], C(64) = 3.3066 [upper 3.3067], dC = 1.4984
+coder: C(1) = 1.808186589527891  C(64) = 3.306590932999557  dC = 1.498404343471666
+coder verdicts A/B/C: PASS {'kappa0_in_band': True, 'kappa1_outside': True, 'kappa_hat_in_0_0p3': True, 'modelK_all_outside': True} PASS {'Mstar_gt_64_all_w_kappa0': True, 'dC_64_1_lt_2bits': True} PASS
+coder C counts: {'1': (10, 11.0, -0.0909), '4': (20, 20.233, -0.0115), '16': (29, 29.466, -0.0158)}

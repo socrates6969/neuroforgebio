@@ -1,0 +1,111 @@
+// Stream ingest, device -> platform only (BUILD-GUIDE 2.7, BLUEPRINT 3.3, SECURITY-REQUIREMENTS G).
+//
+// Direction. Every message in this file flows from an edge device (lab PC running the SDK) to the
+// platform, and the platform only answers with acknowledgements and stream state. There is no
+// operation, message or field that sends anything to acquisition hardware or to any other device
+// (SEC-090). tools/hw-guard scans this directory in CI.
+//
+// Timing (SEC-093). Cloud streaming is never part of a real-time loop. An acknowledgement only says
+// which chunks are durably stored; it carries NO timing guarantee: it may arrive seconds or hours
+// after the chunk was sent, or never (then the client resends from its write-ahead file). Clients
+// MUST NOT block acquisition on a server round-trip.
+//
+// Timestamps (SEC-094). The platform stores the original per-sample LSL timestamps, the LSL
+// clock-offset series and the local monotonic-clock samples exactly as sent. It never rewrites
+// them; corrections are separate derived artefacts with their own provenance.
+//
+// Integrity (SEC-040, hashing spec v1 section 5.2). `chunk_id` is the content ID of the sample
+// array; `signature` is an Ed25519 signature by the registered device key over the chunk's signing
+// payload (see nf_platform/ingest/stream/protocol.py). A chunk with a valid hash but a bad
+// signature is rejected.
+//
+// Idempotency. The server is idempotent on (stream_id, seq): resending a committed chunk with the
+// same chunk_id is acknowledged as a duplicate and not stored twice; a different chunk under an
+// already committed seq is rejected (ALREADY_EXISTS) and audited.
+//
+// Authentication (SEC-016). Every call carries the metadata entry
+//   authorization: NFDevice <device token>
+// a short-lived token signed by the device's Ed25519 key and bound to one stream. A token signed by
+// any other key is rejected with UNAUTHENTICATED.
+//
+// Versioning: package neuroforge.ingest.v1; breaking changes create v2 next to v1 (BLUEPRINT 4.3).
+syntax = "proto3";
+
+package neuroforge.ingest.v1;
+
+service IngestService {
+  // Client-stream of chunks in seq order starting at the server's next_seq (see GetStreamState).
+  // One acknowledgement when the client half-closes. The client may cut the stream at any time and
+  // resend from its write-ahead file; duplicates are harmless.
+  rpc StreamChunks(stream Chunk) returns (StreamAck);
+
+  // The committed high-water mark of a stream (for resuming after a disconnect or restart).
+  rpc GetStreamState(StreamStateRequest) returns (StreamState);
+
+  // Marks the stream complete: the server builds the multiscale pyramid and stores the timing
+  // series next to the samples. No further chunks are accepted afterwards.
+  rpc FinishStream(FinishStreamRequest) returns (StreamState);
+}
+
+// Clock offset measured by the LSL inlet (time_correction): offset = remote clock - local clock
+// at collection_time (local LSL clock, seconds).
+message ClockOffset {
+  double collection_time = 1;
+  double offset = 2;
+}
+
+// A pair of local clock readings taken on the edge device at the same instant: the LSL local clock
+// and the operating system's monotonic clock (both seconds).
+message LocalClockSample {
+  double lsl_time = 1;
+  double monotonic_time = 2;
+}
+
+message Chunk {
+  string stream_id = 1;
+  // 0, 1, 2, ... without gaps.
+  uint64 seq = 2;
+  uint32 n_samples = 3;
+  uint32 n_channels = 4;
+  // One of int16, int32, float32, float64 (as registered when the stream was opened).
+  string dtype = 5;
+  // n_samples x n_channels values, C order (sample-major), little-endian.
+  bytes samples = 6;
+  // One original LSL timestamp per sample (seconds, sender clock). Never rewritten.
+  repeated double lsl_timestamps = 7;
+  // Clock offsets measured since the previous chunk (may be empty).
+  repeated ClockOffset clock_offsets = 8;
+  // Local clock samples taken while this chunk was assembled (usually one).
+  repeated LocalClockSample local_clock = 9;
+  // chunk:sha256:<hex> of the sample array with shape [n_samples, n_channels] (hashing spec v1).
+  string chunk_id = 10;
+  // Ed25519 signature by the device key over the signing payload of this chunk.
+  bytes signature = 11;
+}
+
+message StreamAck {
+  string stream_id = 1;
+  // Every chunk with seq < next_seq is durably stored. No timing guarantee (see top of file).
+  uint64 next_seq = 2;
+  uint32 accepted = 3;
+  uint32 duplicates = 4;
+  // Accepted chunks that failed a sanity check (SEC-041): stored and marked suspect, not dropped.
+  uint32 suspect = 5;
+}
+
+message StreamStateRequest {
+  string stream_id = 1;
+}
+
+message FinishStreamRequest {
+  string stream_id = 1;
+}
+
+message StreamState {
+  string stream_id = 1;
+  uint64 next_seq = 2;
+  uint64 n_samples = 3;
+  // "open" or "closed".
+  string state = 4;
+  bool suspect = 5;
+}

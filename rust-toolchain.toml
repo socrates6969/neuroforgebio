@@ -1,0 +1,5 @@
+# Pinned toolchain (BUILD-GUIDE 0.1). 1.95.0 is already installed with rustfmt + clippy on the dev PC.
+[toolchain]
+channel = "1.95.0"
+components = ["rustfmt", "clippy"]
+profile = "minimal"

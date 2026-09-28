@@ -1,0 +1,18 @@
+// Regression fixture for R1 (ENGINE-SDKS-REVIEW.md): FNeuroForgeModule::StartupModule resolving
+// neuroforge.dll by bare name uses the default DLL search order (application directory, system
+// directories, the current directory, then PATH), so a planted neuroforge.dll on PATH or in the
+// working directory would be loaded into the editor or game (DLL planting). This file is text
+// only, read by review-guards.test.mjs to prove bareNameGetDllHandle() flags this pattern (and
+// finds no such call in the real fix in NeuroForgeModule.cpp, which loads by absolute path only).
+void FNeuroForgeModule::StartupModule()
+{
+#if PLATFORM_WINDOWS
+	DllHandle = FPlatformProcess::GetDllHandle(TEXT("neuroforge.dll"));
+	if (!DllHandle)
+	{
+		UE_LOG(LogNeuroForge, Error, TEXT("neuroforge.dll not found"));
+		return;
+	}
+#endif
+	const uint32 V = nf_abi_version();
+}

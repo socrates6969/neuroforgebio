@@ -1,0 +1,169 @@
+{
+  "schema": "nf.pipeline-version/v1",
+  "meta": {
+    "name": "multiverse-decoding-base",
+    "version": "0.1.0",
+    "description": "Base pipeline of the planned study 'How preprocessing choices change decoding results' (research/multiverse). Draft: dataset-specific values are TODO (study.json)."
+  },
+  "steps": [
+    {
+      "name": "notch",
+      "step": "nf_steps.notch@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": [
+        "nf-step",
+        "run"
+      ],
+      "params": {
+        "freqs": [
+          50.0
+        ],
+        "notch_widths": 1.0,
+        "trans_bandwidth": 1.0,
+        "method": "fir",
+        "filter_length": "auto",
+        "phase": "zero",
+        "fir_window": "hamming",
+        "fir_design": "firwin",
+        "pad": "reflect_limited",
+        "iir_order": 4,
+        "iir_ftype": "butter"
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-09
+      }
+    },
+    {
+      "name": "filter",
+      "step": "nf_steps.filter@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": [
+        "nf-step",
+        "run"
+      ],
+      "params": {
+        "l_freq": 0.1,
+        "h_freq": 40.0,
+        "method": "fir",
+        "filter_length": "auto",
+        "l_trans_bandwidth": "auto",
+        "h_trans_bandwidth": "auto",
+        "phase": "zero",
+        "fir_window": "hamming",
+        "fir_design": "firwin",
+        "pad": "reflect_limited",
+        "iir_order": 4,
+        "iir_ftype": "butter"
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-09
+      }
+    },
+    {
+      "name": "rereference",
+      "step": "nf_steps.rereference@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": [
+        "nf-step",
+        "run"
+      ],
+      "params": {
+        "ref_channels": "average"
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-09
+      }
+    },
+    {
+      "name": "epochs",
+      "step": "nf_steps.epochs@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": [
+        "nf-step",
+        "run"
+      ],
+      "params": {
+        "event_source": "events",
+        "event_codes": [],
+        "fixed_length_s": 2.0,
+        "tmin": 0.0,
+        "tmax": 1.0,
+        "baseline": null,
+        "detrend": null,
+        "decim": 1
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-09
+      }
+    },
+    {
+      "name": "bandpower",
+      "step": "nf_steps.band_power@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": [
+        "nf-step",
+        "run"
+      ],
+      "params": {
+        "bands": [
+          [
+            "delta",
+            1.0,
+            4.0
+          ],
+          [
+            "theta",
+            4.0,
+            8.0
+          ],
+          [
+            "alpha",
+            8.0,
+            13.0
+          ],
+          [
+            "beta",
+            13.0,
+            30.0
+          ]
+        ],
+        "n_fft": 256,
+        "n_overlap": 128,
+        "n_per_seg": 256,
+        "window": "hamming",
+        "average": "mean",
+        "remove_dc": true,
+        "relative": false
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-09
+      }
+    },
+    {
+      "name": "decode",
+      "step": "nf_steps.decode_lda@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": [
+        "nf-step",
+        "run"
+      ],
+      "params": {
+        "labels": "event_codes",
+        "n_folds": 5,
+        "shrinkage": 0.1,
+        "log": true,
+        "exclude_bads": true
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-09
+      }
+    }
+  ],
+  "seed": 1
+}

@@ -1,0 +1,46 @@
+---
+/**
+ * BuildStatePill: a visual indicator that a feature is built and tested internally.
+ * Used with buildState: "built-internal" on page items. The caller supplies the label (from
+ * ui.buildStateLabels, locale-aware) so this component never hardcodes copy — the same pattern
+ * @nf/ui/components/StatusPill.astro uses. buildSource is internal evidence only, not rendered.
+ */
+
+interface Props {
+  buildState?: 'built-internal';
+  label?: string;
+  buildSource?: string; // internal evidence; not rendered
+}
+
+const { buildState, label } = Astro.props;
+---
+
+{buildState === 'built-internal' && label && (
+  <div class="build-state-pill">
+    <span class="build-state-label">{label}</span>
+  </div>
+)}
+
+<style>
+  /* Reuses the "designed" status tokens (@nf/ui StatusPill's own fallback pattern): already
+     contrast-tested in both themes by packages/themes/test/contrast.test.mjs, unlike the
+     untokened green this replaced (--color-success* isn't defined by either theme, so it always
+     fell back to a hardcoded #4caf50-on-#e8f5e9 that measures ~2.5:1, well under the 4.5:1 AA
+     minimum, in both clinical and cosmos). */
+  .build-state-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: var(--color-status-designed-bg, color-mix(in srgb, var(--color-accent) 14%, transparent));
+    border: 1px solid var(--color-status-designed-ink, var(--color-accent-ink));
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-status-designed-ink, var(--color-accent-ink));
+  }
+
+  .build-state-label {
+    line-height: 1.4;
+  }
+</style>

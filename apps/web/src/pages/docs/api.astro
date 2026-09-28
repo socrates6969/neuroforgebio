@@ -1,0 +1,125 @@
+---
+// /docs/api: API reference generated from openapi/v1.yaml by tools/doc-snippets/gen_api_reference.py
+// (apps/web/test/docs.test.mjs fails when the spec changed without regenerating).
+import DocsShell from '../../components/DocsShell.astro';
+import { apiReference as api, overview } from '../../lib/docs.ts';
+import DocsJsonLd from '../../components/DocsJsonLd.astro';
+const L = (overview as unknown as { apiPage: Record<string, string> }).apiPage;
+const opId = (o: { operationId: string; method: string; path: string }) =>
+  'op-' + (o.operationId || `${o.method}-${o.path}`).replace(/[^A-Za-z0-9_-]+/g, '-');
+const named = new Set(api.schemas.map((s) => s.name));
+// Response descriptions repeated verbatim across (almost) every operation (401/403/404/422/429/500,
+// the default error, "Successful Response") used to be reachable only via a per-response title=
+// attribute - hover-only, so sighted keyboard/touch users never saw them either. Repeating them as
+// hidden text on every one of the ~650 responses on this page would nearly double its HTML
+// (docs/hive/PERF-AUDIT.md budget) for no gain: they're identical on every operation that has them.
+// Fix: list each repeated description once, visibly, in commonResponses (rendered as a <dl> below);
+// per response, only the descriptions unique to that one response (isDistinctive) are worth
+// repeating inline. Net result: everyone gets the same information the old title= gave sighted
+// mouse users, once instead of ~650 times.
+const responseDescCount = new Map<string, number>();
+const responseDescStatuses = new Map<string, Set<string>>();
+for (const g of api.groups)
+  for (const o of g.operations)
+    for (const r of o.responses) {
+      responseDescCount.set(r.description, (responseDescCount.get(r.description) ?? 0) + 1);
+      if (!responseDescStatuses.has(r.description)) responseDescStatuses.set(r.description, new Set());
+      responseDescStatuses.get(r.description)!.add(r.status);
+    }
+const isDistinctive = (d: string) => (responseDescCount.get(d) ?? 0) === 1;
+const commonResponses = [...responseDescStatuses.entries()]
+  .filter(([d]) => !isDistinctive(d))
+  .map(([description, statuses]) => ({ statuses: [...statuses].sort(), description }));
+---
+<DocsShell title={L.title} description={L.description} eyebrow={L.eyebrow} heading={L.heading} lede={L.lede}>
+  <DocsJsonLd title={L.title} description={L.description} path="/docs/api/" />
+  <section id="about" aria-labelledby="h-about">
+    <h2 id="h-about">{api.title} {api.version}</h2>
+    <p class="body">{api.description}</p>
+    <p class="body small">{L.sourceHash}: <code>{api.sha256}</code></p>
+    <nav aria-labelledby="h-about">
+      <ul class="toc">
+        {api.groups.map((g) => <li><a href={`#g-${g.id}`}>{g.heading}</a></li>)}
+        <li><a href="#schemas">{L.schemas}</a></li>
+      </ul>
+    </nav>
+    {commonResponses.length > 0 && (
+      <>
+        <h3 id="h-common-responses">{L.commonResponses}</h3>
+        <dl class="common-responses">
+          {commonResponses.map((c) => <><dt><code>{c.statuses.join(', ')}</code></dt><dd>{c.description}</dd></>)}
+        </dl>
+      </>
+    )}
+  </section>
+  {api.groups.map((g) => (
+    <section id={`g-${g.id}`} aria-labelledby={`h-g-${g.id}`}>
+      <h2 id={`h-g-${g.id}`}>{g.heading}</h2>
+      {g.operations.map((o) => (
+        <article class="op" id={opId(o)} aria-labelledby={`${opId(o)}-h`}>
+          <h3 id={`${opId(o)}-h`}><span class="m">{o.method}</span> <code>{o.path}</code></h3>
+          <p class="body">{o.summary}{o.deprecated && <> ({L.deprecated})</>}</p>
+          {o.description && <p class="body">{o.description}</p>}
+          <p class="meta">
+            {o.public ? L.public : <>{L.action}: <code>{o.action}</code>{o.apiKeyScope && <>; {L.scope}: <code>{o.apiKeyScope}</code></>}</>}
+          </p>
+          {o.parameters.length > 0 && (
+            <div class="scroll" tabindex="0" role="region" aria-label={`${L.parameters}: ${o.method} ${o.path}`}>
+              <table>
+                <thead><tr><th scope="col">{L.name}</th><th scope="col">{L.in}</th><th scope="col">{L.type}</th><th scope="col">{L.required}</th><th scope="col">{L.colDescription}</th></tr></thead>
+                <tbody>
+                  {o.parameters.map((p) => <tr><td><code>{p.name}</code></td><td>{p.in}</td><td>{p.type}</td><td>{p.required ? L.yes : L.no}</td><td>{p.description}</td></tr>)}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {o.requestBody && <p class="meta">{L.requestBody}: {o.requestBody.contentTypes.join(', ')}{o.requestBody.schema && (named.has(o.requestBody.schema) ? <> (<a href={`#schema-${o.requestBody.schema.replace(/[^A-Za-z0-9_-]/g, '')}`}>{o.requestBody.schema}</a>)</> : <> ({o.requestBody.schema})</>)}</p>}
+          <p class="meta">{L.responses}: {o.responses.map((r, i) => <>{i > 0 && ', '}{r.status}{r.description && isDistinctive(r.description) && <span class="nf-visually-hidden"> ({r.description})</span>}</>)}</p>
+        </article>
+      ))}
+    </section>
+  ))}
+  {api.webhooks.length > 0 && (
+    <section id="webhooks" aria-labelledby="h-webhooks">
+      <h2 id="h-webhooks">{L.webhooks}</h2>
+      <ul class="toc">{api.webhooks.map((w) => <li><code>{w}</code></li>)}</ul>
+    </section>
+  )}
+  <section id="schemas" aria-labelledby="h-schemas">
+    <h2 id="h-schemas">{L.schemas}</h2>
+    {api.schemas.map((s) => (
+      <details class="schema" id={`schema-${s.name.replace(/[^A-Za-z0-9_-]/g, '')}`}>
+        <summary><code>{s.name}</code></summary>
+        {s.description && <p class="body">{s.description}</p>}
+        {s.enum.length > 0 && <p class="meta">{s.enum.join(', ')}</p>}
+        {s.properties.length > 0 && (
+          <div class="scroll" tabindex="0" role="region" aria-label={`${L.schemas}: ${s.name}`}>
+            <table>
+              <thead><tr><th scope="col">{L.name}</th><th scope="col">{L.type}</th><th scope="col">{L.required}</th><th scope="col">{L.colDescription}</th></tr></thead>
+              <tbody>
+                {s.properties.map((p) => <tr><td><code>{p.name}</code></td><td>{p.type}</td><td>{p.required ? L.yes : L.no}</td><td>{p.description}</td></tr>)}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </details>
+    ))}
+  </section>
+</DocsShell>
+<style is:global>
+  /* is:global, anchored under DocsShell's .docs/.body: a scoped <style> would stamp a
+     data-astro-cid attribute on each of the ~8,000 elements (48% of this page's HTML,
+     docs/hive/PERF-AUDIT.md). Selectors keep the scoped ones' specificity; ships on /docs/api only. */
+  .docs .small { font-size: 14px; }
+  .docs .toc { margin: 14px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  .docs .common-responses { margin: 14px 0 0; display: grid; gap: 6px 16px; grid-template-columns: max-content 1fr; font-size: 14.5px; }
+  .docs .common-responses dt { font-weight: 500; }
+  .docs .common-responses dd { margin: 0; color: var(--color-muted); }
+  .docs .op { padding: 18px 0; border-top: 1px dashed var(--color-line); }
+  .docs .op:first-of-type { border-top: 0; }
+  .docs .body .op h3 { font-size: 17px; overflow-wrap: anywhere; }
+  .docs .m { display: inline-block; min-width: 4.5em; font-weight: 700; }
+  .docs .meta { margin-top: 8px; font-size: 14.5px; color: var(--color-muted); overflow-wrap: anywhere; }
+  .docs .schema { padding: 8px 0; border-top: 1px dashed var(--color-line); }
+  .docs .body .schema summary { padding: 5px 0; cursor: pointer; }
+</style>

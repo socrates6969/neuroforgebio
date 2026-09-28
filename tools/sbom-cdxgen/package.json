@@ -1,0 +1,13 @@
+{
+  "name": "@nf/sbom-cdxgen",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Isolated, CI-only CycloneDX SBOM scanner (SEC-083, APP-L5). Not part of the pnpm workspace; own lockfile.",
+  "packageManager": "pnpm@9.15.0",
+  "pnpm": {
+    "onlyBuiltDependencies": []
+  },
+  "dependencies": {
+    "@cyclonedx/cdxgen": "12.8.4"
+  }
+}

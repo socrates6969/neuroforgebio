@@ -1,0 +1,77 @@
+---
+// ARIA tabs (automatic activation; keyboard logic in ../lib/tabs.ts).
+// Without JS every panel is shown in sequence and the tablist stays hidden.
+import type { Status, StatusLabels, UiCta } from '../types.ts';
+import Button from './Button.astro';
+import StatusPill from './StatusPill.astro';
+interface Panel { id: string; tabLabel: string; tier: string; heading: string; body: string; bullets: { text: string; status?: Status }[]; cta: UiCta }
+interface Props { label: string; panels: Panel[]; statusLabels: StatusLabels; statusPrefix?: string; idPrefix?: string }
+const { label, panels, statusLabels, statusPrefix, idPrefix = 'aud' } = Astro.props;
+const tid = (id: string) => `${idPrefix}-tab-${id}`;
+const pid = (id: string) => `${idPrefix}-panel-${id}`;
+---
+<div class="tabs-root" data-nf-tabs>
+  <div class="tabs" role="tablist" aria-label={label}>
+    {panels.map((p, i) => (
+      <button type="button" role="tab" id={tid(p.id)} aria-controls={pid(p.id)} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{p.tabLabel}</button>
+    ))}
+  </div>
+  {panels.map((p) => (
+    <div class="panel" id={pid(p.id)} role="tabpanel" aria-labelledby={tid(p.id)} tabindex="0">
+      <div class="nf-card tinted">
+        <p class="nf-label">{p.tier}</p>
+        <h3 set:html={p.heading} />
+        <p>{p.body}</p>
+        <Button cta={p.cta} />
+      </div>
+      <div class="nf-card">
+        <ul class="nf-checks">
+          {p.bullets.map((b) => <li>{b.text}{b.status && <> <StatusPill status={b.status} label={statusLabels[b.status]} prefix={statusPrefix} /></>}</li>)}
+        </ul>
+      </div>
+    </div>
+  ))}
+</div>
+<script>
+  import { nextTabIndex } from '../lib/tabs.ts';
+  for (const root of document.querySelectorAll<HTMLElement>('[data-nf-tabs]')) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = tabs.map((t) => document.getElementById(t.getAttribute('aria-controls') ?? ''));
+    const select = (i: number, focus: boolean) => {
+      tabs.forEach((t, j) => {
+        const on = i === j;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        const p = panels[j];
+        if (p) p.hidden = !on;
+      });
+      if (focus) tabs[i]?.focus();
+    };
+    root.classList.add('enh');
+    select(Math.max(0, tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true')), false);
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i, false));
+      t.addEventListener('keydown', (e) => {
+        const r = nextTabIndex(i, e.key, tabs.length);
+        if (r) { e.preventDefault(); select(r.index, true); }
+      });
+    });
+  }
+</script>
+<style>
+  .tabs { display: none; border: 1px solid var(--color-line); border-radius: var(--radius-card); padding: 3px; background: var(--color-bg); margin-bottom: 28px; max-width: 100%; overflow-x: auto; }
+  .enh .tabs { display: inline-flex; }
+  .tabs button { font: 500 14px var(--font-body); border: 0; background: none; color: var(--color-muted); padding: 10px 18px; border-radius: calc(var(--radius-card) - 2px); cursor: pointer; white-space: nowrap; }
+  .tabs button[aria-selected="true"] { background: var(--color-surface); color: var(--color-ink); box-shadow: 0 0 0 1px var(--color-line); }
+  .panel { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .panel + .panel { margin-top: 24px; }
+  .enh .panel + .panel { margin-top: 0; }
+  .panel[hidden] { display: none; }
+  .nf-card { padding: 28px; }
+  .tinted { background: var(--color-surface-2, color-mix(in srgb, var(--color-accent) 7%, var(--color-surface))); }
+  h3 { margin: 12px 0 10px; }
+  .nf-card p:not(.nf-label) { color: var(--color-muted); font-size: 15px; }
+  .nf-card :global(.nf-btn), .nf-card :global(.nf-btn-wrap) { margin-top: 22px; }
+  .nf-checks { margin-top: 0; }
+  @media (max-width: 800px) { .panel { grid-template-columns: 1fr; } }
+</style>

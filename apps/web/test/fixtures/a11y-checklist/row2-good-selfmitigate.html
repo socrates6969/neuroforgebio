@@ -1,0 +1,23 @@
+<!-- Row 2 PASSING fixture: DocsShell.astro's `.docs` -- `220px minmax(0,1fr)`, copied verbatim from
+     the real build (_guide_.*.css). Every track has a fixed minimum, so per CSS Grid 6.6 no item gets
+     a content-based minimum and the <pre> in `.body` can't widen the grid (DocsShell also gives
+     `.body` min-width:0; it's left out here so the track rule alone is what passes). The test swaps
+     `minmax(0,1fr)` for `1fr` and expects a finding (non-vacuity).
+     Expected: 1 container examined, no findings. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      .docs[data-astro-cid-pvnjvmu4]{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;padding-top:40px;padding-bottom:64px}
+    </style>
+  </head>
+  <body>
+    <div class="nf-wrap docs" data-astro-cid-pvnjvmu4>
+      <nav class="side" data-astro-cid-pvnjvmu4>Guides</nav>
+      <div class="body" data-astro-cid-pvnjvmu4>
+        <pre><code>stream = nf.streaming.open(device_key, dataset="dandi:000128", chunk_seconds=1.0, retry=True)</code></pre>
+      </div>
+    </div>
+  </body>
+</html>

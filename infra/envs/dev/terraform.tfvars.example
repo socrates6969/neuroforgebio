@@ -1,0 +1,5 @@
+# Copy to terraform.tfvars (git-ignored). Never put credentials or secrets here.
+region        = "us-east-1"
+bucket_prefix = "<owner-chosen-unique-prefix>"
+# One KMS KEK per tenant; add a tenant's UUID here and apply before its first upload.
+tenant_ids = []

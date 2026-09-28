@@ -1,0 +1,142 @@
+{
+  "reviewed": false,
+  "meta": {
+    "title": "Plattform · {brand}",
+    "description": "Maskinvareuavhengig innlesing, versjonerte og sammenlignbare forbehandlingsløyper, proveniens for hver kjøring og et styrt modellregister. Bygget og testet internt; ikke tatt i bruk ennå."
+  },
+  "hero": {
+    "eyebrow": "Plattform",
+    "heading": "Reproduserbare, sammenlignbare løyper, <em>fra elektrode til modell.</em>",
+    "lede": "Hver kjøring er låst til en versjon av løypen og registrerer hver parameter, versjon og inndata-hash. Sammenlign løyper side om side i stedet for å stole på én standard for rensing."
+  },
+  "sections": [
+    {
+      "id": "why",
+      "heading": "Valg i forbehandlingen <em>endrer resultatene.</em>",
+      "body": [
+        "Det finnes ingen enkelt riktig måte å rense et nevralt opptak på. Publisert forskning viser at valget av løype flytter svaret, så løypen må registreres, versjoneres og kunne sammenlignes."
+      ],
+      "evidence": [
+        {
+          "text": "I en studie fra 2025 reduserte hvert trinn for artefaktkorreksjon dekodingsytelsen, mens høyere høypass-grenser økte den.",
+          "source": "market/landscape.md §3",
+          "sourceUrl": "https://doi.org/10.1038/s42003-025-08464-3",
+          "grade": "A"
+        },
+        {
+          "text": "En sammenligning av 43 forbehandlingsløyper fra 2025 fant ingen enkelt beste løype.",
+          "source": "market/landscape.md §3",
+          "sourceUrl": "https://doi.org/10.1111/psyp.70197",
+          "grade": "A"
+        },
+        {
+          "text": "En systematisk gjennomgang av 129 EEG-BCI-publikasjoner fant at kode eller løype var tilgjengelig i 20,9 % av dem.",
+          "source": "market/landscape.md §3",
+          "sourceUrl": "https://doi.org/10.3390/s26175562",
+          "grade": "A"
+        }
+      ]
+    },
+    {
+      "id": "ingest",
+      "heading": "Maskinvareuavhengig <em>innlesing.</em>",
+      "body": [
+        "Koblinger for EEG-, ECoG- og mikroelektrodeopptak i åpne formater. Opptakene lagres på standard infrastruktur for tidsserier; vi konkurrerer på proveniens, ikke på lagring."
+      ],
+      "items": [
+        {
+          "heading": "Åpne formater",
+          "body": "Import av EDF/BDF, BrainVision, XDF og BIDS, med typede feilmeldinger for ødelagte filer. NWB-import er skrevet, men ikke testet ennå.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M2-REPORT.md step 2.5"
+        },
+        {
+          "heading": "Strømming",
+          "body": "Inndata fra Lab Streaming Layer (LSL) for sanntidsøkter, testet på én maskin.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M2-REPORT.md step 2.7; docs/hive/M4-REPORT.md step 4.4"
+        },
+        {
+          "heading": "Eksisterende verktøy",
+          "body": "Integrasjoner med MNE-Python, BrainFlow og BIDS- og NWB-verktøyene laboratoriet ditt allerede bruker.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "pipelines",
+      "heading": "Versjonerte løyper <em>med full proveniens.</em>",
+      "body": [
+        "Versjonerte forbehandlingsløyper med full proveniens. Kjør én, eller kjør et rutenett av dem og se hvordan resultatene dine flytter seg."
+      ],
+      "items": [
+        {
+          "heading": "Låste versjoner",
+          "body": "En kjøring navngir en eksakt versjon av løypen, slik at den kan gjentas senere.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M3-REPORT.md step 3.2"
+        },
+        {
+          "heading": "Proveniensgraf",
+          "body": "Inndata, parametere, versjoner og utdata er koblet sammen, fra rått opptak til trent modell.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M3-REPORT.md step 3.1; docs/hive/M6-REPORT.md step 6.1"
+        },
+        {
+          "heading": "Rutenett av løyper",
+          "body": "Kjør et rutenett av løyper på ett datasett og se hvordan dekodingsmålene endrer seg mellom dem.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M3-REPORT.md step 3.6"
+        }
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "import {pkg} as nf            # Illustrative API, subject to change",
+          "rec = nf.open(\"sub-01_task-motor_eeg.edf\")",
+          "run = nf.pipelines.get(\"eeg-basic@1.0.0\").run(rec)",
+          "print(run.provenance.id)          # every parameter, version and input hash"
+        ],
+        "note": "Illustrerende API, kan endres"
+      }
+    },
+    {
+      "id": "models",
+      "heading": "Et styrt <em>modellregister.</em>",
+      "body": [
+        "Styrt modellregister, bygget og testet internt, men ikke tatt i bruk: versjonerte modeller med proveniens, dokumentert tiltenkt bruk og bruksbegrensninger. Referansemålinger publiseres sammen med metodene.",
+        "Modeller der utdataene styrer et klinisk eller assisterende apparat, vil trolig bli regulert som programvare i medisinsk utstyr i kundens produkt. Registeret er laget for å dokumentere den grensen, ikke for å viske den ut."
+      ],
+      "items": [
+        {
+          "heading": "Tiltenkt bruk og begrensninger",
+          "body": "Hver modell registrerer hva den er ment for, og hvor den ikke skal tas i bruk.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M6-REPORT.md step 6.2"
+        },
+        {
+          "heading": "Oversikt over komponenter",
+          "body": "Modellens komponenter listes opp til kundens programvaredokumentasjon.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M6-REPORT.md step 6.5"
+        }
+      ],
+      "evidence": [
+        {
+          "text": "Vår planleggingsantakelse, ikke juridisk rådgivning: utdata som styrer et klinisk eller assisterende BCI, er trolig programvare i medisinsk utstyr i kundens produkt, og da er det kunden som står for den regulatoriske søknaden.",
+          "source": "market/regulation.md §4"
+        }
+      ]
+    }
+  ],
+  "cta": [
+    {
+      "label": "Bli med i tidlig tilgang",
+      "href": "/pricing#early-access",
+      "variant": "primary",
+      "disabled": true,
+      "note": "Listen for tidlig tilgang åpner snart"
+    },
+    { "label": "Styring", "href": "/governance", "variant": "ghost" }
+  ]
+}

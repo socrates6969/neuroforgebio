@@ -1,0 +1,55 @@
+<!-- Row 2 PASSING fixture for the narrowing: grid/flex containers WITHOUT any min-width:0 that are
+     still not findings, because nothing inside them is unbreakable-width. Each is a false positive
+     the old "every container needs min-width:0" rule produced.
+       .cards  -- prose, inline <code> inside a paragraph, a short white-space:nowrap pill (9 chars),
+                  and a long hyphenated phrase (breaks after each hyphen);
+       .row    -- a 64-hex sha256 hash, but under overflow-wrap:anywhere (the /playground .hash fix);
+       .meta   -- a long token that only exists inside .nf-visually-hidden (out of flow);
+       .split  -- PipelineSteps' `.code` shape: the <pre> IS the item and scrolls itself, so its
+                  automatic minimum is 0 (CSS Grid 6.6 / Flexbox 4.5: scroll containers);
+       .stack  -- a flex COLUMN holding a <pre>: min-width:auto acts on the main (vertical) axis, so
+                  this container is skipped, not counted.
+     Expected: 4 containers examined (.cards, .row, .meta, .split), no findings. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      .cards[data-astro-cid-n0r15k01]{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+      .pill[data-astro-cid-n0r15k01]{display:inline-block;white-space:nowrap}
+      .row[data-astro-cid-n0r15k01]{display:flex;flex-wrap:wrap;gap:12px}
+      .hash[data-astro-cid-n0r15k01]{font:400 12.5px var(--font-mono);overflow-wrap:anywhere}
+      .meta[data-astro-cid-n0r15k01]{display:flex;gap:8px}
+      .split[data-astro-cid-n0r15k01]{display:grid;grid-template-columns:1fr 1.3fr}
+      pre[data-astro-cid-n0r15k01]{margin:0;overflow-x:auto;white-space:pre}
+      .stack[data-astro-cid-n0r15k01]{display:flex;flex-direction:column;gap:6px}
+    </style>
+  </head>
+  <body>
+    <div class="cards" data-astro-cid-n0r15k01>
+      <article data-astro-cid-n0r15k01>
+        <h3 data-astro-cid-n0r15k01>Governed model registry</h3>
+        <p data-astro-cid-n0r15k01>Call <code>nf.models.get(name)</code> to fetch a pinned version.</p>
+        <span class="pill" data-astro-cid-n0r15k01>Designed</span>
+      </article>
+      <article data-astro-cid-n0r15k01>
+        <p data-astro-cid-n0r15k01>A state-of-the-art-reproducible-provenance-first-pipeline-runner-for-neural-data.</p>
+      </article>
+    </div>
+    <div class="row" data-astro-cid-n0r15k01>
+      <span data-astro-cid-n0r15k01>Pinned file checksum</span>
+      <code class="hash" data-astro-cid-n0r15k01>sha256:2f78db62bd4d68b9bc737444f72bc2dfe475d7390dd7a54848aaf6a6a6ba8da5</code>
+    </div>
+    <div class="meta" data-astro-cid-n0r15k01>
+      <span data-astro-cid-n0r15k01>Source</span>
+      <span class="nf-visually-hidden">research/somatosensory/code/results/p4_pooling_capacity.json</span>
+    </div>
+    <div class="split" data-astro-cid-n0r15k01>
+      <div data-astro-cid-n0r15k01><p data-astro-cid-n0r15k01>Explanation text.</p></div>
+      <pre data-astro-cid-n0r15k01><code>result = nf.pipelines.get("eeg-basic@1.0.0").run(nf.open("sub-01_task-motor_eeg.edf"))</code></pre>
+    </div>
+    <div class="stack" data-astro-cid-n0r15k01>
+      <pre data-astro-cid-n0r15k01><code>result = nf.pipelines.get("eeg-basic@1.0.0").run(nf.open("sub-01_task-motor_eeg.edf"))</code></pre>
+    </div>
+  </body>
+</html>

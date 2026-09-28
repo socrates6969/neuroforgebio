@@ -1,0 +1,33 @@
+---
+// Clinical BrandMark: monochrome 10-20 style mark (design/option-1.html nav logo, single ink colour)
+// followed by the brand name from packages/content. The enclosing link carries the aria-label.
+import type { SlotContract } from '../../contract.ts';
+type Props = SlotContract['BrandMark'];
+const { name } = Astro.props;
+---
+
+<span class="nf-bm">
+  <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true" focusable="false">
+    <circle cx="13" cy="13" r="11.5" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
+    <circle cx="13" cy="13" r="3" fill="currentColor"></circle>
+    <circle cx="13" cy="5.5" r="1.6" fill="currentColor"></circle>
+    <circle cx="20.5" cy="13" r="1.6" fill="currentColor"></circle>
+    <circle cx="5.5" cy="13" r="1.6" fill="currentColor"></circle>
+    <circle cx="13" cy="20.5" r="1.6" fill="none" stroke="currentColor" stroke-width="1"></circle>
+  </svg>
+  <span class="nf-bm-name">{name}</span>
+</span>
+
+<style>
+  .nf-bm {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+  }
+  .nf-bm svg {
+    flex: none;
+    display: block;
+  }
+</style>

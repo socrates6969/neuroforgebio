@@ -1,0 +1,11 @@
+syntax = "proto3";
+package nf.stream.v1;
+
+service Device {
+  rpc SetStimulation(StimParams) returns (Ack);
+}
+
+message StimParams {
+  repeated PulseTrain trains = 1;
+  bool trigger_out = 2;
+}

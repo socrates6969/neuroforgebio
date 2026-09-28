@@ -1,0 +1,11 @@
+{
+  "dependencies": [
+    { "name": "numpy", "version": "2.0.0", "vulns": [] },
+    {
+      "name": "Fixture_Py",
+      "version": "1.0",
+      "vulns": [{ "id": "PYSEC-2099-1", "fix_versions": ["1.1"], "aliases": ["CVE-2099-0005"] }]
+    }
+  ],
+  "fixes": []
+}

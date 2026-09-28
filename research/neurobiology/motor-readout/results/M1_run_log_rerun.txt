@@ -1,0 +1,29 @@
+2026-09-27T00:15:18 +    5.0s M1 start tag=rerun dry=False python=3.12.10 torch=2.14.0+cpu
+2026-09-27T00:15:18 +    5.5s input hashes verified against DANDI/PhysioNet digests: 10 files
+2026-09-27T00:15:33 +   20.1s pytest: ........................................                                 [100%]
+
+2026-09-27T00:15:33 +   20.2s split lock written: M1_split_lock_rerun.json (sha e3e2097c69a7)
+2026-09-27T00:15:33 +   20.2s FIRST DATA READ (D1 behaviour + spikes)
+2026-09-27T00:15:34 +   21.2s FIRST MODEL FIT (D1 honest)
+2026-09-27T00:15:48 +   34.6s D1 honest fitted: val R2 ridge 0.685 kf 0.277 gru 0.809
+2026-09-27T00:15:52 +   38.8s D1 NC1 fitted
+2026-09-27T00:16:54 +  101.4s D1 condition-held-out fitted
+2026-09-27T00:17:08 +  114.9s D1 bin 10 ms fitted
+2026-09-27T00:17:08 +  115.0s D1 bin 50 ms fitted
+2026-09-27T00:17:08 +  115.1s D1 bin 100 ms fitted
+2026-09-27T00:18:12 +  178.8s D1 NC2b lag sweep fitted
+2026-09-27T00:18:12 +  179.3s D2 sessions loaded (re-binned 20 -> 32 ms)
+2026-09-27T00:18:21 +  188.4s D2 20200127 (lag 0) fitted
+2026-09-27T00:18:29 +  196.6s D2 20200130 (lag 3) fitted
+2026-09-27T00:18:40 +  206.7s D2 20200204 (lag 8) fitted
+2026-09-27T00:18:52 +  219.2s D2 20200211 (lag 15) fitted
+2026-09-27T00:19:00 +  227.4s D2 20200228 (lag 32) fitted
+2026-09-27T00:19:07 +  233.6s D2 20200626 (lag 151) fitted
+2026-09-27T00:19:16 +  242.8s D2 20200924 (lag 241) fitted
+2026-09-27T00:19:26 +  252.9s D2 20210223 (lag 393) fitted
+2026-09-27T00:19:39 +  265.7s D2 20220126 (lag 730) fitted
+2026-09-27T00:19:42 +  269.4s D2 NC1 fitted
+2026-09-27T00:19:42 +  269.4s models frozen: 80 hashes -> M1_frozen_models_rerun.json (sha cf37eba306c8)
+2026-09-27T00:20:50 +  337.3s planted-leak fits done
+2026-09-27T00:20:50 +  337.3s VAULT OPEN (final scores)
+2026-09-27T00:20:52 +  338.8s card written M1_card_rerun.json sha c7bd7ac526cb1b5f858c84be383061d80e83a7eb6ab63b01fa1a7581e1b75af0 wall 339s peak RSS 1267 MB

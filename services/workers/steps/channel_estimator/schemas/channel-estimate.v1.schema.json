@@ -1,0 +1,1082 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.invalid/nf/channel-estimate/v1",
+  "title": "Channel estimate (nf.channel-estimate/v1)",
+  "description": "Distinct-channel counts, clustering statistics and attrition probabilities for one projected-field map. Channel counts and statistics only; no stimulation parameters. Research use only.",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "nf.channel-estimate/v1"
+    },
+    "notice": {
+      "type": "string"
+    },
+    "map_id": {
+      "type": ["string", "null"]
+    },
+    "input_summary": {
+      "type": "object",
+      "properties": {
+        "electrodes_listed": {
+          "type": "integer"
+        },
+        "pf_electrodes": {
+          "type": "integer"
+        },
+        "arrays": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "array_id": {
+                "type": "string"
+              },
+              "electrodes_listed": {
+                "type": "integer"
+              },
+              "pf_electrodes": {
+                "type": "integer"
+              }
+            },
+            "required": ["array_id", "electrodes_listed", "pf_electrodes"],
+            "additionalProperties": false
+          }
+        },
+        "positions_present": {
+          "type": "boolean"
+        },
+        "dominant_segments_outside_reference": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "electrodes_listed",
+        "pf_electrodes",
+        "arrays",
+        "positions_present",
+        "dominant_segments_outside_reference"
+      ],
+      "additionalProperties": false
+    },
+    "channel_counts": {
+      "type": "object",
+      "properties": {
+        "m": {
+          "type": "integer"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "by_rule": {
+          "type": "object",
+          "properties": {
+            "R1": {
+              "type": "object",
+              "properties": {
+                "territory_counts": {
+                  "type": "object",
+                  "properties": {
+                    "D1": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D2": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D3": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D4": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D5": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "PALM": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "DORSUM_HAND": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "WRIST": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": ["D1", "D2", "D3", "D4", "D5", "PALM", "DORSUM_HAND", "WRIST"],
+                  "additionalProperties": false
+                },
+                "k_digit": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 5
+                },
+                "k_territory": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 6
+                }
+              },
+              "required": ["territory_counts", "k_digit", "k_territory"],
+              "additionalProperties": false
+            },
+            "R2": {
+              "type": "object",
+              "properties": {
+                "territory_counts": {
+                  "type": "object",
+                  "properties": {
+                    "D1": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D2": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D3": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D4": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D5": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "PALM": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "DORSUM_HAND": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "WRIST": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": ["D1", "D2", "D3", "D4", "D5", "PALM", "DORSUM_HAND", "WRIST"],
+                  "additionalProperties": false
+                },
+                "k_digit": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 5
+                },
+                "k_territory": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 6
+                }
+              },
+              "required": ["territory_counts", "k_digit", "k_territory"],
+              "additionalProperties": false
+            },
+            "R3": {
+              "type": "object",
+              "properties": {
+                "territory_counts": {
+                  "type": "object",
+                  "properties": {
+                    "D1": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D2": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D3": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D4": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D5": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "HAND": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "MIXED": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": ["D1", "D2", "D3", "D4", "D5", "HAND", "MIXED"],
+                  "additionalProperties": false
+                },
+                "k_digit": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 5
+                },
+                "k_territory": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 6
+                }
+              },
+              "required": ["territory_counts", "k_digit", "k_territory"],
+              "additionalProperties": false
+            },
+            "ray": {
+              "type": "object",
+              "properties": {
+                "territory_counts": {
+                  "type": "object",
+                  "properties": {
+                    "D1": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D2": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D3": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D4": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "D5": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "PALM": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "DORSUM_HAND": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "WRIST": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": ["D1", "D2", "D3", "D4", "D5", "PALM", "DORSUM_HAND", "WRIST"],
+                  "additionalProperties": false
+                },
+                "k_digit": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 5
+                },
+                "k_territory": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 6
+                }
+              },
+              "required": ["territory_counts", "k_digit", "k_territory"],
+              "additionalProperties": false
+            }
+          },
+          "required": ["R1", "R2", "R3", "ray"],
+          "additionalProperties": false
+        },
+        "per_array_R1": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "array_id": {
+                "type": "string"
+              },
+              "k_digit": {
+                "type": "integer"
+              },
+              "k_territory": {
+                "type": "integer"
+              }
+            },
+            "required": ["array_id", "k_digit", "k_territory"],
+            "additionalProperties": false
+          }
+        },
+        "second_array_gain_R1": {
+          "type": ["integer", "null"]
+        }
+      },
+      "required": ["m", "definition", "by_rule", "per_array_R1", "second_array_gain_R1"],
+      "additionalProperties": false
+    },
+    "diversity": {
+      "type": "object",
+      "properties": {
+        "rule": {
+          "const": "R1"
+        },
+        "n_eff_digit": {
+          "type": ["number", "null"]
+        },
+        "n_eff_digit_bias_corrected": {
+          "type": ["number", "null"]
+        },
+        "n_eff_segment": {
+          "type": ["number", "null"]
+        },
+        "n_eff_segment_bias_corrected": {
+          "type": ["number", "null"]
+        },
+        "n_segment_classes": {
+          "type": "integer"
+        },
+        "n_eff_soft": {
+          "type": ["number", "null"]
+        }
+      },
+      "required": [
+        "rule",
+        "n_eff_digit",
+        "n_eff_digit_bias_corrected",
+        "n_eff_segment",
+        "n_eff_segment_bias_corrected",
+        "n_segment_classes",
+        "n_eff_soft"
+      ],
+      "additionalProperties": false
+    },
+    "clustering": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "skipped"
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": ["status", "reason"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "computed"
+            },
+            "statistic": {
+              "type": "string"
+            },
+            "seed": {
+              "type": "integer"
+            },
+            "draws": {
+              "type": "integer"
+            },
+            "rng": {
+              "type": "object",
+              "properties": {
+                "construction": {
+                  "type": "string"
+                },
+                "streams_used": {
+                  "type": "object",
+                  "properties": {
+                    "null_a": {
+                      "type": "string"
+                    },
+                    "null_b": {
+                      "type": "string"
+                    },
+                    "relabelling": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["null_a", "null_b", "relabelling"],
+                  "additionalProperties": false
+                }
+              },
+              "required": ["construction", "streams_used"],
+              "additionalProperties": false
+            },
+            "null_a_area": {
+              "type": "object",
+              "properties": {
+                "segment_level": {
+                  "type": "object",
+                  "properties": {
+                    "observed": {
+                      "type": "number"
+                    },
+                    "null_median": {
+                      "type": "number"
+                    },
+                    "ratio": {
+                      "type": ["number", "null"]
+                    },
+                    "p_value": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "required": ["observed", "null_median", "ratio", "p_value"],
+                  "additionalProperties": false
+                },
+                "digit_level": {
+                  "type": "object",
+                  "properties": {
+                    "observed": {
+                      "type": "number"
+                    },
+                    "null_median": {
+                      "type": "number"
+                    },
+                    "ratio": {
+                      "type": ["number", "null"]
+                    },
+                    "p_value": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "required": ["observed", "null_median", "ratio", "p_value"],
+                  "additionalProperties": false
+                },
+                "k_digit": {
+                  "type": "object",
+                  "properties": {
+                    "observed": {
+                      "type": "integer"
+                    },
+                    "null_median": {
+                      "type": "number"
+                    },
+                    "p_value": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "required": ["observed", "null_median", "p_value"],
+                  "additionalProperties": false
+                }
+              },
+              "required": ["segment_level", "digit_level", "k_digit"],
+              "additionalProperties": false
+            },
+            "null_b_pooled": {
+              "type": "object",
+              "properties": {
+                "segment_level": {
+                  "type": "object",
+                  "properties": {
+                    "observed": {
+                      "type": "number"
+                    },
+                    "null_median": {
+                      "type": "number"
+                    },
+                    "ratio": {
+                      "type": ["number", "null"]
+                    },
+                    "p_value": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "required": ["observed", "null_median", "ratio", "p_value"],
+                  "additionalProperties": false
+                },
+                "digit_level": {
+                  "type": "object",
+                  "properties": {
+                    "observed": {
+                      "type": "number"
+                    },
+                    "null_median": {
+                      "type": "number"
+                    },
+                    "ratio": {
+                      "type": ["number", "null"]
+                    },
+                    "p_value": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "required": ["observed", "null_median", "ratio", "p_value"],
+                  "additionalProperties": false
+                },
+                "k_digit": {
+                  "type": "object",
+                  "properties": {
+                    "observed": {
+                      "type": "integer"
+                    },
+                    "null_median": {
+                      "type": "number"
+                    },
+                    "p_value": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "required": ["observed", "null_median", "p_value"],
+                  "additionalProperties": false
+                }
+              },
+              "required": ["segment_level", "digit_level", "k_digit"],
+              "additionalProperties": false
+            },
+            "null_a_area_no_wrist": {
+              "type": "object",
+              "properties": {
+                "null_median": {
+                  "type": "number"
+                },
+                "p_value": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": ["null_median", "p_value"],
+              "additionalProperties": false
+            },
+            "reference": {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "string"
+                },
+                "segments_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "pooled_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "pooled_electrodes": {
+                  "type": "integer"
+                }
+              },
+              "required": ["source", "segments_sha256", "pooled_sha256", "pooled_electrodes"],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "status",
+            "statistic",
+            "seed",
+            "draws",
+            "rng",
+            "null_a_area",
+            "null_b_pooled",
+            "null_a_area_no_wrist",
+            "reference"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "attrition": {
+      "type": "object",
+      "properties": {
+        "rule": {
+          "enum": ["R1", "R2", "R3", "ray"]
+        },
+        "m": {
+          "type": "integer"
+        },
+        "survival": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "model": {
+          "type": "string"
+        },
+        "digit_level": {
+          "type": "object",
+          "properties": {
+            "class_sizes": {
+              "type": "object",
+              "properties": {
+                "D1": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "D2": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "D3": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "D4": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "D5": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": ["D1", "D2", "D3", "D4", "D5"],
+              "additionalProperties": false
+            },
+            "p_k_at_least": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "k": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "probability": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": ["k", "probability"],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": ["class_sizes", "p_k_at_least"],
+          "additionalProperties": false
+        },
+        "territory_level": {
+          "type": "object",
+          "properties": {
+            "class_sizes": {
+              "type": "object",
+              "properties": {
+                "D1": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "D2": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "D3": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "D4": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "D5": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "HAND_POOLED": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": ["D1", "D2", "D3", "D4", "D5", "HAND_POOLED"],
+              "additionalProperties": false
+            },
+            "p_k_at_least": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "k": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "probability": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": ["k", "probability"],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": ["class_sizes", "p_k_at_least"],
+          "additionalProperties": false
+        },
+        "sensitivity": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "survival": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "digit_level": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "k": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "probability": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "required": ["k", "probability"],
+                  "additionalProperties": false
+                }
+              },
+              "territory_level": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "k": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "probability": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "required": ["k", "probability"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["survival", "digit_level", "territory_level"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "rule",
+        "m",
+        "survival",
+        "model",
+        "digit_level",
+        "territory_level",
+        "sensitivity"
+      ],
+      "additionalProperties": false
+    },
+    "relabelling": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "not_requested"
+            }
+          },
+          "required": ["status"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "skipped"
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": ["status", "reason"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "computed"
+            },
+            "rule": {
+              "const": "R1"
+            },
+            "method": {
+              "type": "string"
+            },
+            "seed": {
+              "type": "integer"
+            },
+            "rng": {
+              "type": "object",
+              "properties": {
+                "construction": {
+                  "type": "string"
+                },
+                "streams_used": {
+                  "type": "object",
+                  "properties": {
+                    "null_a": {
+                      "type": "string"
+                    },
+                    "null_b": {
+                      "type": "string"
+                    },
+                    "relabelling": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["null_a", "null_b", "relabelling"],
+                  "additionalProperties": false
+                }
+              },
+              "required": ["construction", "streams_used"],
+              "additionalProperties": false
+            },
+            "levels": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "fraction": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "electrodes_relabelled": {
+                    "type": "integer"
+                  },
+                  "draws": {
+                    "type": "integer"
+                  },
+                  "p_k_digit_at_least": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "p_k_territory_at_least": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "p_k_digit_within_1_of_observed": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "k_digit_distribution": {
+                    "type": "object",
+                    "propertyNames": {
+                      "pattern": "^[0-5]$"
+                    },
+                    "additionalProperties": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "required": [
+                  "fraction",
+                  "electrodes_relabelled",
+                  "draws",
+                  "p_k_digit_at_least",
+                  "p_k_territory_at_least",
+                  "p_k_digit_within_1_of_observed",
+                  "k_digit_distribution"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": ["status", "rule", "method", "seed", "rng", "levels"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "package": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "code_commit": {
+          "type": ["string", "null"]
+        },
+        "input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "input_hash_scheme": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "m": {
+              "type": "integer"
+            },
+            "survival": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "rule": {
+              "enum": ["R1", "R2", "R3", "ray"]
+            },
+            "seed": {
+              "type": "integer"
+            },
+            "null_draws": {
+              "type": "integer"
+            },
+            "sensitivity": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "relabel": {
+              "type": "boolean"
+            },
+            "relabel_fractions": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "relabel_draws": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "m",
+            "survival",
+            "rule",
+            "seed",
+            "null_draws",
+            "sensitivity",
+            "relabel",
+            "relabel_fractions",
+            "relabel_draws"
+          ],
+          "additionalProperties": false
+        },
+        "reference_data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "segments_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "pooled_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": ["segments_sha256", "pooled_sha256"],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "const": "not_installed"
+                }
+              },
+              "required": ["status"],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "method": {
+          "type": "string"
+        },
+        "runtime": {
+          "type": "object",
+          "properties": {
+            "python": {
+              "type": "string"
+            },
+            "numpy": {
+              "type": "string"
+            }
+          },
+          "required": ["python", "numpy"],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "package",
+        "version",
+        "code_commit",
+        "input_sha256",
+        "input_hash_scheme",
+        "parameters",
+        "reference_data",
+        "method",
+        "runtime"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema",
+    "notice",
+    "map_id",
+    "input_summary",
+    "channel_counts",
+    "diversity",
+    "clustering",
+    "attrition",
+    "relabelling",
+    "limitations",
+    "provenance"
+  ],
+  "additionalProperties": false
+}

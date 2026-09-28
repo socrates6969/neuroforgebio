@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NeuroForge — Neural Data Terminal</title>
+<meta name="description" content="Design option 2 (dark developer-infra / terminal) for NeuroForge (working name): the data layer for brain-computer interfaces.">
+<meta name="theme-color" content="#0A0E14">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0E14; --surface:#11161F; --surface-2:#0D121A; --border:#1F2733; --border-2:#2A3442;
+  --fg:#C9D1D9; --fg-strong:#E6EDF3; --muted:#8B949E;
+  --accent:#39FF88; --accent-dim:rgba(57,255,136,.12); --secondary:#7AA2F7; --warn:#F7B955;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --radius:10px; --max:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--secondary);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--accent);color:#04120A;padding:8px 14px;font:600 14px var(--mono);z-index:100;border-radius:6px}
+.skip:focus{left:12px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+.mono{font-family:var(--mono)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* grid backdrop */
+.backdrop{position:absolute;inset:0 0 auto 0;height:900px;pointer-events:none;
+  background-image:linear-gradient(rgba(201,209,217,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(201,209,217,.035) 1px,transparent 1px);
+  background-size:40px 40px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%)}
+
+/* header */
+header.site{position:sticky;top:0;z-index:50;background:rgba(10,14,20,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.nav{display:flex;align-items:center;gap:24px;height:60px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--fg-strong);font:700 16px var(--mono);letter-spacing:-.02em}
+.logo:hover{text-decoration:none}
+.logo svg{flex:none}
+.tag{font:500 11px var(--mono);color:var(--muted);border:1px solid var(--border-2);padding:1px 6px;border-radius:4px;white-space:nowrap}
+.nav ul{display:flex;gap:4px;list-style:none;margin:0 0 0 8px;padding:0}
+.nav ul a{display:block;padding:6px 10px;color:var(--muted);font:500 14px var(--sans);border-radius:6px}
+.nav ul a:hover{color:var(--fg-strong);background:var(--surface);text-decoration:none}
+.nav .right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 14px var(--mono);padding:9px 16px;border-radius:8px;border:1px solid var(--border-2);color:var(--fg-strong);background:var(--surface);cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--muted);text-decoration:none}
+.btn.primary{background:var(--accent);color:#04120A;border-color:var(--accent)}
+.btn.primary:hover{background:#6BFFA8;border-color:#6BFFA8}
+.btn.ghost{background:transparent}
+.menu-btn{display:none;background:none;border:1px solid var(--border-2);color:var(--fg);border-radius:6px;padding:6px 10px;font:500 13px var(--mono);cursor:pointer}
+@media (max-width:920px){
+  .nav ul{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:var(--bg);border-bottom:1px solid var(--border);padding:10px 20px 16px;margin:0}
+  .nav ul.open{display:flex}
+  .menu-btn{display:block}
+  .nav .right .signin{display:none}
+}
+@media (max-width:480px){.nav .tag{display:none}.nav .right .btn.primary{padding:8px 12px;font-size:13px}}
+
+/* hero */
+.hero{position:relative;padding:72px 0 40px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:500 13px var(--mono);color:var(--accent);background:var(--accent-dim);border:1px solid rgba(57,255,136,.25);padding:4px 10px;border-radius:999px}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+h1{font:700 clamp(34px,5.6vw,64px)/1.05 var(--mono);letter-spacing:-.04em;color:var(--fg-strong);margin:22px 0 18px;max-width:17ch}
+h1 .hl{color:var(--accent)}
+.lede{font-size:clamp(17px,1.6vw,19px);color:var(--fg);max-width:60ch;margin:0 0 30px}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:28px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px}
+.palette{max-width:560px;background:var(--surface);border:1px solid var(--border-2);border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.45),0 0 0 1px rgba(57,255,136,.04)}
+.palette .bar{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--border)}
+.palette .bar .prompt{color:var(--accent);font:600 15px var(--mono)}
+.palette .bar code{font:500 15px var(--mono);color:var(--fg-strong);flex:1;overflow:auto;white-space:nowrap}
+.copy{font:500 12px var(--mono);color:var(--muted);background:var(--surface-2);border:1px solid var(--border-2);padding:5px 10px;border-radius:6px;cursor:pointer}
+.copy:hover{color:var(--fg-strong)}
+.copy.ok{color:var(--accent);border-color:rgba(57,255,136,.4)}
+.palette ul{list-style:none;margin:0;padding:6px}
+.palette li a{display:flex;justify-content:space-between;gap:12px;padding:8px 10px;border-radius:6px;color:var(--fg);font:14px var(--sans)}
+.palette li a:hover,.palette li a:focus-visible{background:var(--surface-2);text-decoration:none;color:var(--fg-strong)}
+.palette li kbd{font:500 12px var(--mono);color:var(--muted);border:1px solid var(--border-2);border-radius:4px;padding:0 6px}
+.formats{margin-top:18px;font:500 13px var(--mono);color:var(--muted)}
+.formats span{color:var(--fg)}
+
+.scope{position:relative;margin-top:48px;border:1px solid var(--border-2);border-radius:12px;overflow:hidden;background:var(--bg);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.scope .chrome{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);font:500 12px var(--mono);color:var(--muted)}
+.scope .chrome i{width:10px;height:10px;border-radius:50%;background:#2A3442;display:inline-block}
+.scope .chrome .t{margin-left:8px}
+#scope-stage{position:relative;height:clamp(320px,42vw,460px)}
+#scope-c{display:block;width:100%;height:100%}
+
+/* sections */
+section{padding:88px 0;border-top:1px solid var(--border)}
+.sec-head{margin-bottom:40px;max-width:760px}
+.sec-kicker{font:500 13px var(--mono);color:var(--accent);margin:0 0 10px}
+.sec-kicker::before{content:"// ";color:var(--muted)}
+h2{font:700 clamp(26px,3.4vw,40px)/1.15 var(--mono);letter-spacing:-.03em;color:var(--fg-strong);margin:0 0 14px}
+h3{font:600 18px/1.3 var(--mono);color:var(--fg-strong);margin:0 0 8px;letter-spacing:-.01em}
+.sec-head p{color:var(--fg);margin:0;font-size:17px}
+.muted{color:var(--muted)}
+
+/* pipeline timeline */
+.pipe-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:start}
+@media (max-width:920px){.pipe-grid{grid-template-columns:1fr}}
+.timeline{list-style:none;margin:0;padding:0;position:relative}
+.timeline::before{content:"";position:absolute;left:15px;top:10px;bottom:10px;width:1px;background:linear-gradient(var(--accent),var(--secondary) 70%,transparent)}
+.step{position:relative;padding:0 0 30px 52px}
+.step:last-child{padding-bottom:0}
+.step .tick{position:absolute;left:0;top:0;width:31px;height:31px;border-radius:50%;background:var(--bg);border:1px solid var(--accent);display:grid;place-items:center;color:var(--accent);font:700 14px var(--mono)}
+.step .cmd{font:500 14px var(--mono);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin:0 0 10px;overflow:auto;white-space:nowrap}
+.step .cmd .p{color:var(--accent)} .step .cmd .ok{color:var(--accent);float:right;margin-left:16px}
+.step p{margin:0;color:var(--fg);font-size:15.5px}
+.step .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{font:500 12px var(--mono);color:var(--fg);background:var(--surface-2);border:1px solid var(--border-2);padding:2px 8px;border-radius:5px}
+
+/* code tabs */
+.codebox{background:var(--surface);border:1px solid var(--border-2);border-radius:12px;overflow:hidden;position:sticky;top:84px}
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface-2);overflow-x:auto}
+.tabs button{font:500 13px var(--mono);color:var(--muted);background:none;border:0;border-bottom:2px solid transparent;padding:12px 16px;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--fg-strong);border-bottom-color:var(--accent)}
+.tabs button:hover{color:var(--fg-strong)}
+.tabs .copy{margin:8px 10px 8px auto}
+pre{margin:0;padding:20px;overflow:auto;font:14px/1.7 var(--mono);color:var(--fg);tab-size:4}
+.kw{color:#C792EA}.fn{color:var(--secondary)}.st{color:#A5E075}.cm{color:#7D8590;font-style:italic}.nu{color:var(--warn)}.ty{color:#5EDAD1}
+.codebox .note{font:500 12px var(--mono);color:var(--muted);padding:10px 20px;border-top:1px solid var(--border)}
+
+/* panes */
+.panes{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:820px){.panes{grid-template-columns:1fr}}
+.pane{background:var(--surface);border:1px solid var(--border-2);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.pane .chrome{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);font:500 12px var(--mono);color:var(--muted);background:var(--surface-2)}
+.pane .chrome i{width:10px;height:10px;border-radius:50%;background:#2A3442;display:inline-block}
+.pane .body{padding:22px 22px 24px;font:14.5px/1.75 var(--mono);flex:1}
+.pane .body .p{color:var(--accent)}
+.pane .body h3{margin:4px 0 14px;font-size:20px}
+.pane ul{list-style:none;margin:0 0 20px;padding:0}
+.pane li{padding-left:22px;position:relative;font-family:var(--sans);font-size:15.5px;line-height:1.6;margin-bottom:8px}
+.pane li::before{content:"+";position:absolute;left:4px;color:var(--accent);font-family:var(--mono);font-weight:700}
+.pane.hw li::before{color:var(--secondary)}
+.pane.hw .p{color:var(--secondary)}
+
+/* compliance */
+.comp-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:880px){.comp-grid{grid-template-columns:1fr}}
+.yaml{background:var(--surface);border:1px solid var(--border-2);border-radius:12px;overflow:hidden}
+.yaml .chrome{padding:10px 16px;border-bottom:1px solid var(--border);font:500 12px var(--mono);color:var(--muted);background:var(--surface-2);display:flex;justify-content:space-between}
+.yk{color:var(--secondary)}.yv{color:var(--fg-strong)}.yp{color:var(--warn)}.yr{color:#C792EA}
+.clist{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.clist li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.status{font:600 11px var(--mono);padding:2px 8px;border-radius:4px;letter-spacing:.02em;white-space:nowrap;margin-top:2px}
+.s-live{color:var(--accent);background:var(--accent-dim);border:1px solid rgba(57,255,136,.3)}
+.s-plan{color:var(--warn);background:rgba(247,185,85,.1);border:1px solid rgba(247,185,85,.3)}
+.s-road{color:var(--secondary);background:rgba(122,162,247,.1);border:1px solid rgba(122,162,247,.3)}
+.clist strong{color:var(--fg-strong);font-weight:600;display:block}
+.clist span.d{color:var(--muted);font-size:14.5px}
+.legal{font-size:13.5px;color:var(--muted);margin-top:16px}
+
+/* pricing */
+.cli{background:var(--surface);border:1px solid var(--border-2);border-radius:12px;overflow:hidden}
+.cli .cmdline{padding:14px 20px;border-bottom:1px solid var(--border);font:500 14px var(--mono);background:var(--surface-2)}
+.cli .cmdline .p{color:var(--accent)}
+.table-scroll{overflow-x:auto}
+table.plans{width:100%;border-collapse:collapse;font:14px/1.5 var(--mono);min-width:640px}
+.plans caption{text-align:left;padding:14px 20px 0;color:var(--muted);font-size:13px}
+.plans th,.plans td{padding:13px 20px;text-align:left;border-bottom:1px dashed var(--border-2);vertical-align:top}
+.plans thead th{color:var(--muted);font-weight:500;text-transform:uppercase;font-size:12px;letter-spacing:.06em}
+.plans tbody th{color:var(--fg);font-weight:500}
+.plans td{color:var(--fg-strong)}
+.plans .y{color:var(--accent)} .plans .n{color:var(--muted)}
+.plans tr.price td{font-weight:700;font-size:15px}
+.plans tr.price td:nth-child(2){color:var(--accent)}
+.plans tfoot td{border-bottom:0;padding-top:18px;padding-bottom:20px}
+.cli .foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:16px 20px;border-top:1px solid var(--border)}
+.cli .foot p{margin:0;font:13px var(--mono);color:var(--muted)}
+
+/* research */
+.readme{background:var(--surface);border:1px solid var(--border-2);border-radius:12px;overflow:hidden}
+.readme .chrome{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--border);font:500 13px var(--mono);color:var(--muted);background:var(--surface-2)}
+.readme .chrome svg{flex:none}
+.readme .md{padding:28px 28px 32px}
+.readme .md h3{font-size:24px;padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:14px;line-height:1.3}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.badge{display:inline-flex;font:600 11.5px var(--mono);border-radius:4px;overflow:hidden;border:1px solid var(--border-2)}
+.badge b{background:#1F2733;color:var(--fg);padding:2px 7px;font-weight:500}
+.badge em{font-style:normal;padding:2px 7px}
+.badge.warn em{background:rgba(247,185,85,.14);color:var(--warn)}
+.badge.acc em{background:var(--accent-dim);color:var(--accent)}
+.badge.sec em{background:rgba(122,162,247,.14);color:var(--secondary)}
+.md p{margin:0 0 14px;max-width:72ch}
+.md blockquote{margin:0 0 18px;padding:10px 16px;border-left:3px solid var(--warn);background:rgba(247,185,85,.06);color:var(--fg);font-size:15px}
+.research-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start;margin-top:10px}
+@media (max-width:900px){.research-grid{grid-template-columns:1fr}}
+.loop{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:14px}
+.loop-fig{font:13px/1.55 var(--mono);color:var(--muted);white-space:pre;overflow-x:auto;margin:0;padding:6px 2px}
+.loop-fig button{font:inherit;color:var(--fg-strong);background:var(--surface);border:0;box-shadow:0 0 0 1px var(--border-2);border-radius:3px;padding:0;margin:0;cursor:pointer;line-height:inherit}
+.loop-fig button:hover,.loop-fig button[aria-pressed="true"]{color:#04120A;background:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.loop-fig button.enc[aria-pressed="true"],.loop-fig button.enc:hover{background:var(--secondary);box-shadow:0 0 0 1px var(--secondary)}
+.loop-fig .arr{color:var(--accent)}
+.loop-desc{font:14px/1.6 var(--sans);color:var(--fg);min-height:4.8em;margin:10px 2px 0;padding-top:10px;border-top:1px dashed var(--border-2)}
+.loop-desc b{font-family:var(--mono);color:var(--fg-strong);font-weight:600}
+.cap{font:12px var(--mono);color:var(--muted);margin:8px 2px 0}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
+@media (max-width:720px){.cards{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--border-2);border-radius:12px;padding:20px 22px}
+.card .path{font:500 12.5px var(--mono);color:var(--muted);margin-bottom:8px}
+.card h3{font-size:16px;line-height:1.4}
+.card p{margin:8px 0 0;font-size:14.5px;color:var(--muted)}
+
+/* closing cta */
+.closing{text-align:left}
+.closing .box{background:linear-gradient(135deg,rgba(57,255,136,.08),rgba(122,162,247,.06));border:1px solid var(--border-2);border-radius:14px;padding:40px 32px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
+.closing h2{margin:0 0 6px}
+.closing p{margin:0;color:var(--fg)}
+
+/* footer */
+footer{border-top:1px solid var(--border);padding:44px 0 56px;font-size:14px}
+.foot-grid{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:flex-start;justify-content:space-between}
+footer nav ul{display:flex;flex-wrap:wrap;gap:6px 22px;list-style:none;margin:0;padding:0}
+footer nav a{color:var(--muted);font:500 14px var(--mono)}
+footer nav a:hover{color:var(--fg-strong)}
+footer .disclaimer{color:var(--muted);margin:10px 0 0;font-size:13.5px;max-width:52ch}
+footer .copy-r{color:var(--muted);font:13px var(--mono);margin-top:14px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="NeuroForge (working name) home">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#11161F" stroke="#39FF88"/><path d="M5 14h3l2-5 3 9 2-6 1.5 2H21" fill="none" stroke="#39FF88" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      neuroforge
+    </a>
+    <span class="tag">working name</span>
+    <button class="menu-btn" aria-expanded="false" aria-controls="primary-nav">menu</button>
+    <ul id="primary-nav">
+      <li><a href="#platform">Platform</a></li>
+      <li><a href="#neuro-ai">Neuro-AI</a></li>
+      <li><a href="#sdks">SDKs</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#docs">Docs</a></li>
+    </ul>
+    <div class="right">
+      <a class="btn ghost signin" href="#signin">Sign in</a>
+      <a class="btn primary" href="#pricing">Start free</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="hero" id="top">
+    <div class="backdrop" aria-hidden="true"></div>
+    <div class="wrap" style="position:relative">
+      <span class="eyebrow"><span class="dot" aria-hidden="true"></span>early access · academic tier free</span>
+      <h1>The data layer for <span class="hl">brain-computer interfaces.</span></h1>
+      <p class="lede">Hardware-agnostic ingest, automated neuro-cleaning, and Neuro-AI models — so your team ships decoders, not data pipelines.</p>
+
+      <div class="cta-row">
+        <a class="btn primary" href="#pricing">Start free (academic) →</a>
+        <a class="btn" href="#contact">Book a demo</a>
+      </div>
+
+      <div class="palette" role="group" aria-label="Quick start">
+        <div class="bar">
+          <span class="prompt" aria-hidden="true">$</span>
+          <code id="install-cmd">pip install neuroforge</code>
+          <button class="copy" type="button" data-copy="pip install neuroforge" aria-label="Copy install command">copy</button>
+        </div>
+        <ul>
+          <li><a href="#platform"><span>Connect a stream — LSL, BIDS, EDF/BDF, NWB, XDF</span><kbd>ingest</kbd></a></li>
+          <li><a href="#platform"><span>Run the default cleaning pipeline</span><kbd>clean</kbd></a></li>
+          <li><a href="#neuro-ai"><span>Browse Neuro-AI models</span><kbd>models</kbd></a></li>
+          <li><a href="#sdks"><span>Python · C++ · Unity / Unreal SDKs</span><kbd>sdk</kbd></a></li>
+        </ul>
+      </div>
+      <p class="formats">works with <span>BIDS · LSL · EDF/BDF · NWB · XDF</span> <span class="muted">— file &amp; stream formats, not partners</span></p>
+
+      <div class="scope">
+        <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span class="t">neuroforge stream --watch lsl://headset-01</span></div>
+        <div id="scope-stage" role="img" aria-label="Terminal-style oscilloscope: multi-channel EEG waveforms stream from left to right; noisy raw traces pass a vertical clean() divider and continue as clean traces. Status line reads: stream lsl://headset-01, 256 Hz, 32 channels, artifacts ICA-removed. Synthetic demo signal.">
+          <canvas id="scope-c" aria-hidden="true"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIPELINE -->
+  <section id="platform" aria-labelledby="platform-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="sec-kicker">platform</p>
+        <h2 id="platform-h">One pipeline. Electrode to model.</h2>
+        <p>Four composable stages you can run in the cloud, at the edge, or from a notebook. Every run is versioned, so results stay reproducible.</p>
+      </div>
+      <div class="pipe-grid">
+        <ol class="timeline">
+          <li class="step">
+            <span class="tick" aria-hidden="true">1</span>
+            <div class="cmd"><span class="p">$</span> nf ingest lsl://headset-01 <span class="ok" aria-hidden="true">✓</span></div>
+            <h3>Ingest</h3>
+            <p>Hardware-agnostic connectors for EEG, ECoG, and microelectrode arrays. BIDS, Lab Streaming Layer (LSL), EDF/BDF, NWB, XDF — into low-latency time-series storage.</p>
+            <div class="chips"><span class="chip">EEG</span><span class="chip">ECoG</span><span class="chip">microelectrode</span><span class="chip">BIDS</span><span class="chip">LSL</span></div>
+          </li>
+          <li class="step">
+            <span class="tick" aria-hidden="true">2</span>
+            <div class="cmd"><span class="p">$</span> nf clean --pipeline ica-default <span class="ok" aria-hidden="true">✓</span></div>
+            <h3>Clean</h3>
+            <p>Automated neuro-cleaning: filtering, ICA, artifact rejection, re-referencing, normalization. Versioned, reproducible pipelines with provenance attached to every output.</p>
+            <div class="chips"><span class="chip">filter</span><span class="chip">ICA</span><span class="chip">artifact rejection</span><span class="chip">re-ref</span><span class="chip">provenance</span></div>
+          </li>
+          <li class="step" id="neuro-ai">
+            <span class="tick" aria-hidden="true">3</span>
+            <div class="cmd"><span class="p">$</span> nf models get motor-intent/v1 <span class="ok" aria-hidden="true">✓</span></div>
+            <h3>Neuro-AI</h3>
+            <p>Model marketplace: motor-intent decoding, cognitive-state estimation, plus bring-your-own-model. Benchmarks published with methods, on public datasets.</p>
+            <div class="chips"><span class="chip">motor intent</span><span class="chip">cognitive state</span><span class="chip">BYO model</span></div>
+          </li>
+          <li class="step">
+            <span class="tick" aria-hidden="true">4</span>
+            <div class="cmd"><span class="p">$</span> nf sdk add python cpp unity <span class="ok" aria-hidden="true">✓</span></div>
+            <h3>SDKs</h3>
+            <p>Python, C++, Unity / Unreal. Stream in, get predictions out — with the same pipeline definition everywhere.</p>
+            <div class="chips"><span class="chip">Python</span><span class="chip">C++</span><span class="chip">Unity</span><span class="chip">Unreal</span></div>
+          </li>
+        </ol>
+
+        <div class="codebox" id="sdks">
+          <div class="tabs" role="tablist" aria-label="SDK examples">
+            <button role="tab" id="tab-py" aria-selected="true" aria-controls="panel-py" tabindex="0">python</button>
+            <button role="tab" id="tab-cpp" aria-selected="false" aria-controls="panel-cpp" tabindex="-1">c++</button>
+            <button role="tab" id="tab-cs" aria-selected="false" aria-controls="panel-cs" tabindex="-1">unity c#</button>
+            <button class="copy" type="button" id="copy-code" aria-label="Copy the visible code sample">copy</button>
+          </div>
+<div role="tabpanel" id="panel-py" aria-labelledby="tab-py" tabindex="0"><pre><code><span class="kw">import</span> neuroforge <span class="kw">as</span> nf
+
+stream = nf.<span class="fn">connect</span>(<span class="st">"lsl://headset-01"</span>)
+clean  = stream.<span class="fn">pipeline</span>(<span class="st">"ica-default"</span>).<span class="fn">run</span>()
+intent = nf.models.<span class="fn">get</span>(<span class="st">"motor-intent/v1"</span>).<span class="fn">predict</span>(clean)
+
+<span class="kw">for</span> window <span class="kw">in</span> intent:
+    <span class="fn">print</span>(window.label, window.confidence)</code></pre></div>
+<div role="tabpanel" id="panel-cpp" aria-labelledby="tab-cpp" tabindex="0" hidden><pre><code><span class="kw">#include</span> <span class="st">&lt;neuroforge/neuroforge.hpp&gt;</span>
+
+<span class="ty">int</span> <span class="fn">main</span>() {
+    <span class="kw">auto</span> stream = nf::<span class="fn">connect</span>(<span class="st">"lsl://headset-01"</span>);
+    <span class="kw">auto</span> clean  = stream.<span class="fn">pipeline</span>(<span class="st">"ica-default"</span>).<span class="fn">run</span>();
+    <span class="kw">auto</span> model  = nf::models::<span class="fn">get</span>(<span class="st">"motor-intent/v1"</span>);
+
+    <span class="kw">for</span> (<span class="kw">const auto</span>&amp; w : model.<span class="fn">predict</span>(clean)) {
+        std::cout &lt;&lt; w.label &lt;&lt; <span class="st">" "</span> &lt;&lt; w.confidence &lt;&lt; <span class="st">"\n"</span>;
+    }
+}</code></pre></div>
+<div role="tabpanel" id="panel-cs" aria-labelledby="tab-cs" tabindex="0" hidden><pre><code><span class="kw">using</span> NeuroForge;
+<span class="kw">using</span> UnityEngine;
+
+<span class="kw">public class</span> <span class="ty">IntentDriver</span> : <span class="ty">MonoBehaviour</span> {
+    <span class="ty">NfStream</span> stream; <span class="ty">NfModel</span> model;
+
+    <span class="kw">void</span> <span class="fn">Start</span>() {
+        stream = <span class="ty">Nf</span>.<span class="fn">Connect</span>(<span class="st">"lsl://headset-01"</span>).<span class="fn">Pipeline</span>(<span class="st">"ica-default"</span>);
+        model  = <span class="ty">Nf</span>.Models.<span class="fn">Get</span>(<span class="st">"motor-intent/v1"</span>);
+    }
+    <span class="kw">void</span> <span class="fn">Update</span>() {
+        <span class="kw">var</span> w = model.<span class="fn">Predict</span>(stream.<span class="fn">Latest</span>());
+        <span class="kw">if</span> (w.Label == <span class="st">"left"</span>) transform.<span class="fn">Rotate</span>(<span class="nu">0</span>, -<span class="nu">1</span>, <span class="nu">0</span>);
+    }
+}</code></pre></div>
+          <p class="note">// Illustrative API — subject to change</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIENCES -->
+  <section id="audiences" aria-labelledby="aud-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="sec-kicker">who it's for</p>
+        <h2 id="aud-h">Two terminals, one platform.</h2>
+        <p>Labs get reproducibility for free. Hardware teams get a data stack they don't have to build.</p>
+      </div>
+      <div class="panes">
+        <article class="pane" aria-labelledby="res-h">
+          <div class="chrome" aria-hidden="true"><i></i><i></i><i></i>&nbsp; ~/lab — researcher</div>
+          <div class="body">
+            <div aria-hidden="true"><span class="p">researcher@lab</span>:~$ nf init --tier academic</div>
+            <h3 id="res-h">For researchers</h3>
+            <ul>
+              <li>Free academic tier for labs and students</li>
+              <li>BIDS-native import and export</li>
+              <li>Reproducible, versioned pipelines</li>
+              <li>Export to MNE / EEGLAB-compatible formats</li>
+              <li>Citation-ready provenance for every result</li>
+            </ul>
+            <a class="btn primary" href="#pricing">Start free (academic)</a>
+          </div>
+        </article>
+        <article class="pane hw" aria-labelledby="hw-h">
+          <div class="chrome" aria-hidden="true"><i></i><i></i><i></i>&nbsp; ~/device — hardware team</div>
+          <div class="body">
+            <div aria-hidden="true"><span class="p">eng@device</span>:~$ nf connector new --device my-headset</div>
+            <h3 id="hw-h">For hardware companies</h3>
+            <ul>
+              <li>White-label SDK for your customers</li>
+              <li>Device connector program</li>
+              <li>Cloud + edge deployment</li>
+              <li>Compliance handled, so you can focus on the device</li>
+              <li>Usage-based pricing that scales with you</li>
+            </ul>
+            <a class="btn" href="#contact">Talk to us</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPLIANCE -->
+  <section id="security" aria-labelledby="sec-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="sec-kicker">security &amp; compliance</p>
+        <h2 id="sec-h">Neural data is sensitive. We treat it that way.</h2>
+        <p>Security is part of the platform config, not an add-on. Status labels below are honest: some controls are planned or on the roadmap.</p>
+      </div>
+      <div class="comp-grid">
+        <div class="yaml">
+          <div class="chrome"><span>security.yaml</span><span>read-only</span></div>
+<pre aria-label="Security configuration example"><code><span class="yk">encryption</span>:
+  <span class="yk">at_rest</span>: <span class="yv">AES-256</span>
+  <span class="yk">in_transit</span>: <span class="yv">TLS 1.3</span>
+<span class="yk">access</span>:
+  <span class="yk">rbac</span>: <span class="yv">true</span>
+  <span class="yk">audit_log</span>: <span class="yv">true</span>
+<span class="yk">hipaa</span>:
+  <span class="yk">workflows</span>: <span class="yv">aligned</span>
+  <span class="yk">baa</span>: <span class="yp">planned</span>        <span class="cm"># enterprise</span>
+<span class="yk">soc2_type_ii</span>: <span class="yr">roadmap</span>
+<span class="yk">neural_data_privacy</span>:
+  <span class="yk">us_state_laws</span>: [<span class="yv">CO</span>, <span class="yv">CA</span>, <span class="yv">CT</span>, <span class="yv">MT</span>]
+<span class="yk">data_residency</span>: <span class="yp">planned</span>
+<span class="yk">deidentification</span>: <span class="yv">tooling</span></code></pre>
+        </div>
+        <div>
+          <ul class="clist">
+            <li><span class="status s-live">BUILT-IN</span><div><strong>AES-256 at rest, TLS 1.3 in transit</strong><span class="d">Encryption on by default for every stream and file.</span></div></li>
+            <li><span class="status s-live">BUILT-IN</span><div><strong>RBAC &amp; audit logs</strong><span class="d">Role-based access down to the dataset, with a full access trail.</span></div></li>
+            <li><span class="status s-live">DESIGN</span><div><strong>HIPAA-aligned workflows</strong><span class="d">Designed for HIPAA-aligned workflows; BAA available for enterprise (planned).</span></div></li>
+            <li><span class="status s-road">ROADMAP</span><div><strong>SOC 2 Type II</strong><span class="d">On the roadmap. Not certified today.</span></div></li>
+            <li><span class="status s-live">DESIGN</span><div><strong>Neural-data privacy laws</strong><span class="d">Built to support emerging US state neural-data privacy laws (e.g. Colorado, California, Connecticut, Montana).</span></div></li>
+            <li><span class="status s-plan">PLANNED</span><div><strong>Data residency &amp; de-identification</strong><span class="d">Regional storage options (planned) and de-identification tooling.</span></div></li>
+          </ul>
+          <p class="legal">Nothing on this page is legal advice. Research and development use only.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" aria-labelledby="price-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="sec-kicker">pricing</p>
+        <h2 id="price-h">Free for science. Fair for startups.</h2>
+        <p>Final prices are set at launch. Join early access to help shape them.</p>
+      </div>
+      <div class="cli">
+        <div class="cmdline" aria-hidden="true"><span class="p">$</span> nf plans --compare</div>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Plan comparison, scrollable">
+          <table class="plans">
+            <caption>Plan comparison (preview — subject to change)</caption>
+            <thead>
+              <tr><th scope="col">feature</th><th scope="col">academic</th><th scope="col">startup</th><th scope="col">enterprise</th></tr>
+            </thead>
+            <tbody>
+              <tr class="price"><th scope="row">price</th><td>Free</td><td>Usage-based</td><td>Custom</td></tr>
+              <tr><th scope="row">for</th><td>labs &amp; students</td><td>seed-stage BCI hardware teams</td><td>scale-ups &amp; clinical-research orgs</td></tr>
+              <tr><th scope="row">ingest + cleaning</th><td class="y">✓ <span class="sr-only">included</span>fair-use limits</td><td class="y">✓ <span class="sr-only">included</span></td><td class="y">✓ <span class="sr-only">included</span></td></tr>
+              <tr><th scope="row">Neuro-AI models</th><td class="y">✓ <span class="sr-only">included</span></td><td class="y">✓ <span class="sr-only">included</span></td><td class="y">✓ <span class="sr-only">included</span>+ private models</td></tr>
+              <tr><th scope="row">SDKs</th><td class="y">✓ <span class="sr-only">included</span></td><td class="y">✓ <span class="sr-only">included</span>white-label</td><td class="y">✓ <span class="sr-only">included</span>white-label</td></tr>
+              <tr><th scope="row">BAA / SSO</th><td class="n">— <span class="sr-only">not included</span></td><td class="n">— <span class="sr-only">not included</span></td><td class="y">✓ <span class="sr-only">included</span>(BAA planned)</td></tr>
+              <tr><th scope="row">on-prem / edge</th><td class="n">— <span class="sr-only">not included</span></td><td class="n">edge <span class="sr-only">only</span></td><td class="y">✓ <span class="sr-only">included</span></td></tr>
+              <tr><th scope="row">support</th><td>community</td><td>email</td><td>dedicated</td></tr>
+            </tbody>
+            <tfoot>
+              <tr><th scope="row" class="n">pricing</th><td class="n">—</td><td>at launch</td><td>talk to us</td></tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="foot">
+          <p>// exit 0 — no card required for academic</p>
+          <a class="btn primary" href="#contact">Join the early-access list</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research" aria-labelledby="research-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="sec-kicker">research</p>
+        <h2 id="research-h">Whitepapers, in the open.</h2>
+        <p>Our research is computational and theoretical, published with methods. Status tags tell you exactly how far along each piece is.</p>
+      </div>
+
+      <article class="readme" aria-labelledby="wp-h">
+        <div class="chrome">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2h8l4 4v8H2z" fill="none" stroke="#8B949E"/><path d="M10 2v4h4" fill="none" stroke="#8B949E"/></svg>
+          research / somatosensory-feedback / README.md
+        </div>
+        <div class="md">
+          <h3 id="wp-h">Bidirectional closed-loop somatosensory feedback: a computational study</h3>
+          <div class="badges">
+            <span class="badge warn"><b>status</b><em>in preparation</em></span>
+            <span class="badge sec"><b>type</b><em>computational / theoretical</em></span>
+            <span class="badge acc"><b>methods</b><em>published with paper</em></span>
+          </div>
+          <div class="research-grid">
+            <div>
+              <p>Modelling how patterned stimulation of somatosensory cortex could encode touch, pressure and proprioception.</p>
+              <blockquote>Computational/theoretical work; any clinical application requires IRB/FDA oversight.</blockquote>
+              <p class="muted">The figure shows the loop we model. Select a stage to read what it does in the study.</p>
+              <a class="btn" href="#research">Read preview →</a>
+            </div>
+            <figure class="loop" style="margin:0">
+              <div class="loop-fig" id="loop-fig" role="group" aria-label="Interactive schematic of the closed loop. Select a stage for a description.">
+<span class="arr">┌──▶</span> <button type="button" data-k="record" aria-pressed="false">record</button> <span class="arr">──▶</span> <button type="button" data-k="decode" aria-pressed="false">decode</button> <span class="arr">──▶</span> <button type="button" data-k="act" aria-pressed="false">act</button> <span class="arr">──┐</span>
+<span class="arr">│</span>                                <span class="arr">│</span>
+<span class="arr">│</span>              motor loop        <span class="arr">▼</span>
+<span class="arr">│</span>                              <button type="button" data-k="sense" aria-pressed="false">sense</button>
+<span class="arr">│</span>           sensory loop         <span class="arr">│</span>
+<span class="arr">│</span>                                <span class="arr">▼</span>
+<span class="arr">└───</span> <button type="button" class="enc" data-k="s1" aria-pressed="false">S1 model</button> <span class="arr">◀──</span> <button type="button" class="enc" data-k="encode" aria-pressed="false">encode</button> <span class="arr">◀───────┘</span></div>
+              <p class="loop-desc" id="loop-desc" aria-live="polite"><b>select a stage</b> — each box is a stage of the simulated bidirectional loop.</p>
+              <figcaption class="cap">Fig. schematic only — no results shown.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <div class="cards">
+        <article class="card">
+          <div class="path">research / artifact-benchmarks</div>
+          <h3>Benchmarking automated artifact rejection on public EEG datasets</h3>
+          <div class="badges" style="margin:12px 0 0"><span class="badge sec"><b>status</b><em>planned</em></span></div>
+          <p>How much signal survives automated cleaning, measured openly.</p>
+        </article>
+        <article class="card">
+          <div class="path">research / reference-architecture</div>
+          <h3>A reference architecture for HIPAA-aligned neural data pipelines</h3>
+          <div class="badges" style="margin:12px 0 0"><span class="badge sec"><b>status</b><em>planned</em></span></div>
+          <p>The storage, access and audit design behind the platform.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" aria-labelledby="cta-h" class="closing">
+    <div class="wrap">
+      <div class="box">
+        <div>
+          <h2 id="cta-h">Ship decoders, not data pipelines.</h2>
+          <p>Free for academic labs. Early access for hardware teams.</p>
+        </div>
+        <div class="cta-row" style="margin:0">
+          <a class="btn primary" href="#pricing">Start free (academic)</a>
+          <a class="btn" href="#contact">Book a demo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="#top" aria-label="NeuroForge (working name) home">
+        <svg width="22" height="22" viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="#11161F" stroke="#39FF88"/><path d="M5 14h3l2-5 3 9 2-6 1.5 2H21" fill="none" stroke="#39FF88" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        neuroforge
+      </a>
+      <p class="disclaimer">NeuroForge (working name) — design concept, not a live product. Research and development use only; no medical claims.</p>
+      <p class="copy-r">© 2026</p>
+    </div>
+    <nav aria-label="Footer" id="docs">
+      <ul>
+        <li><a href="#docs">Docs</a></li>
+        <li><a href="#status">Status</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="#careers">Careers</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  // mobile nav
+  var mb = document.querySelector('.menu-btn'), nl = document.getElementById('primary-nav');
+  mb.addEventListener('click', function(){ var o = nl.classList.toggle('open'); mb.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+  nl.addEventListener('click', function(e){ if(e.target.tagName === 'A'){ nl.classList.remove('open'); mb.setAttribute('aria-expanded','false'); } });
+
+  // copy buttons
+  function copyText(txt, btn){
+    function done(){ var o = btn.textContent; btn.textContent = 'copied'; btn.classList.add('ok'); setTimeout(function(){ btn.textContent = o; btn.classList.remove('ok'); }, 1400); }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done, done); }
+    else { var ta = document.createElement('textarea'); ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(e){} document.body.removeChild(ta); done(); }
+  }
+  document.querySelectorAll('[data-copy]').forEach(function(b){ b.addEventListener('click', function(){ copyText(b.getAttribute('data-copy'), b); }); });
+
+  // tabs (ARIA pattern with arrow keys)
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  function select(tab){
+    tabs.forEach(function(t){ var on = t === tab; t.setAttribute('aria-selected', on ? 'true':'false'); t.tabIndex = on ? 0 : -1; document.getElementById(t.getAttribute('aria-controls')).hidden = !on; });
+  }
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){ select(t); });
+    t.addEventListener('keydown', function(e){
+      var j = null;
+      if(e.key === 'ArrowRight') j = (i+1) % tabs.length; else if(e.key === 'ArrowLeft') j = (i-1+tabs.length) % tabs.length;
+      else if(e.key === 'Home') j = 0; else if(e.key === 'End') j = tabs.length-1;
+      if(j !== null){ e.preventDefault(); select(tabs[j]); tabs[j].focus(); }
+    });
+  });
+  document.getElementById('copy-code').addEventListener('click', function(){
+    var sel = tabs.filter(function(t){ return t.getAttribute('aria-selected') === 'true'; })[0];
+    copyText(document.getElementById(sel.getAttribute('aria-controls')).textContent, this);
+  });
+
+  // interactive loop figure
+  var D = {
+    record: 'records neural activity from a (simulated) motor-cortex array, as the platform would ingest it.',
+    decode: 'estimates movement intent from the cleaned signal with a Neuro-AI model.',
+    act:    'drives a simulated effector — e.g. a virtual hand — from the decoded intent.',
+    sense:  'models contact on the virtual hand: touch, pressure and joint position (proprioception).',
+    encode: 'maps those sensations to candidate stimulation patterns. This is the open research question.',
+    s1:     'a computational model of somatosensory cortex (S1) predicts the evoked response, closing the loop in simulation only.'
+  };
+  var fig = document.getElementById('loop-fig'), desc = document.getElementById('loop-desc');
+  fig.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    fig.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true':'false'); });
+    desc.innerHTML = '';
+    var s = document.createElement('b'); s.textContent = b.textContent; desc.appendChild(s);
+    desc.appendChild(document.createTextNode(' — ' + D[b.getAttribute('data-k')]));
+  });
+})();
+
+/* Hero oscilloscope — adapted from design/assets/asset-2-terminal.html (synthetic demo signal) */
+(function(){
+  'use strict';
+  var stage = document.getElementById('scope-stage');
+  var cv = document.getElementById('scope-c');
+  if(!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var RM = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : {matches:false};
+  var C = {bg:'#0A0E14', fg:'#C9D1D9', acc:'#39FF88', sec:'#7AA2F7', warn:'#F7B955'};
+  var MONO = '"JetBrains Mono", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace';
+  var NAMES = ['Fp1','Fp2','F3','F4','F7','F8','C3','C4','T7','T8','P3','P4','P7','P8','O1','O2'];
+  var FRONTAL = {0:1,1:1,4:0.6,5:0.6,2:0.45,3:0.45};
+  var TEMPORAL = {8:1,9:1,4:0.5,5:0.5,12:0.5,13:0.5};
+  var W=1,H=1,DPR=1,L={};
+
+  function rgba(hex,a){ var n=parseInt(hex.slice(1),16); return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'; }
+  function hash(n){ n = (n|0) ^ 0x9e3779b9; n = Math.imul(n ^ (n>>>16), 0x85ebca6b); n = Math.imul(n ^ (n>>>13), 0xc2b2ae35); n ^= n>>>16; return (n>>>0)/4294967295; }
+  function vnoise(x, salt){ var i=Math.floor(x), f=x-i; f=f*f*(3-2*f); var a=hash(i*131+salt), b=hash((i+1)*131+salt); return (a + (b-a)*f)*2-1; }
+  function sstep(a,b,x){ var t=Math.max(0,Math.min(1,(x-a)/(b-a))); return t*t*(3-2*t); }
+
+  function clean(c,s){
+    var a = s*0.018;
+    return 0.46*Math.sin(a*1.3 + c*1.1)*(0.6 + 0.4*Math.sin(s*0.0021 + c))
+         + 0.28*Math.sin(a*2.9 + c*2.3) + 0.16*Math.sin(a*6.1 + c*0.7) + 0.10*Math.sin(a*0.37 + c*3.1);
+  }
+  function artifact(c,s){
+    var n = 0.30*vnoise(s*0.45, c*977) + 0.14*vnoise(s*1.3, c*331+7);
+    n += 0.20*Math.sin(s*1.9 + c*0.3);
+    n += 0.45*Math.sin(s*0.0037 + c*1.7);
+    var fw = FRONTAL[c] || 0;
+    if(fw){ var blk = Math.floor(s/430), m = s - blk*430 - 215; if(hash(blk*17+3) > 0.35) n += 1.9*fw*Math.exp(-(m*m)/(2*26*26)); }
+    var tw = TEMPORAL[c] || 0;
+    if(tw){ var seg = Math.floor(s/300), env = hash(seg*29+11) > 0.55 ? Math.sin(Math.PI*((s/300)%1)) : 0; n += 0.7*tw*env*vnoise(s*2.2, c*53+1); }
+    var pk = Math.floor(s/900);
+    if(Math.floor(hash(pk*7+1)*16) === c){ var d = s - pk*900 - 450; if(d>0 && d<60) n += 1.6*Math.exp(-d/12); }
+    return n;
+  }
+
+  function layout(){
+    var r = stage.getBoundingClientRect();
+    W = Math.max(1,r.width); H = Math.max(1,r.height);
+    DPR = Math.min(2, window.devicePixelRatio||1);
+    cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    var fs = Math.max(10, Math.min(13, W/85));
+    var topBar = fs*3.0, botBar = fs*2.6, lblW = fs*3.6;
+    var y0 = topBar + fs*3.6, y1 = H - botBar - fs*0.8;
+    var n = Math.max(6, Math.min(14, Math.floor((y1-y0)/28)));
+    L = {fs:fs, topBar:topBar, botBar:botBar, x0:lblW + 10, x1:W - 12, y0:y0, y1:y1, n:n, gap:(y1-y0)/n, div: Math.round(W*0.52)};
+    var a = L.div - 36, b = L.div + 36;
+    L.gA = ctx.createLinearGradient(a,0,b,0); L.gA.addColorStop(0, rgba(C.fg,0.55)); L.gA.addColorStop(1, rgba(C.acc,0.95));
+    L.gB = ctx.createLinearGradient(a,0,b,0); L.gB.addColorStop(0, rgba(C.fg,0.55)); L.gB.addColorStop(1, rgba(C.sec,0.95));
+  }
+
+  function drawGrid(){
+    ctx.lineWidth = 1;
+    for(var x = L.x0; x <= L.x1; x += 32){
+      ctx.strokeStyle = ((x-L.x0)/32)%5===0 ? 'rgba(201,209,217,0.07)' : 'rgba(201,209,217,0.03)';
+      ctx.beginPath(); ctx.moveTo(x+0.5, L.y0 - L.gap*0.5); ctx.lineTo(x+0.5, L.y1); ctx.stroke();
+    }
+    for(var i=0;i<=L.n;i++){
+      var y = Math.round(L.y0 + (i-0.5)*L.gap)+0.5;
+      ctx.strokeStyle = 'rgba(201,209,217,0.035)';
+      ctx.beginPath(); ctx.moveTo(L.x0,y); ctx.lineTo(L.x1,y); ctx.stroke();
+    }
+  }
+
+  function fmtTime(t){ var m=Math.floor(t/60), s=t-m*60; return (m<10?'0':'')+m+':'+(s<10?'0':'')+s.toFixed(2); }
+
+  function draw(t){
+    ctx.fillStyle = C.bg; ctx.fillRect(0,0,W,H);
+    var fs = L.fs;
+    var vg = ctx.createRadialGradient(W*0.5,H*0.5,Math.min(W,H)*0.2,W*0.5,H*0.5,Math.max(W,H)*0.75);
+    vg.addColorStop(0,'rgba(20,28,40,0.35)'); vg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = vg; ctx.fillRect(0,0,W,H);
+    drawGrid();
+    ctx.fillStyle = 'rgba(57,255,136,0.018)'; ctx.fillRect(L.div, L.y0 - L.gap*0.5, L.x1-L.div, L.y1 - L.y0 + L.gap*0.5);
+
+    var speed = 70, sNow = t*speed, amp = L.gap*0.36, step = 2;
+    ctx.lineJoin = 'round';
+    ctx.font = '500 '+(fs*0.85)+'px '+MONO; ctx.textBaseline='middle'; ctx.textAlign='left';
+    for(var c=0;c<L.n;c++){
+      var yc = L.y0 + c*L.gap, ch = c % NAMES.length;
+      ctx.fillStyle = rgba(C.fg,0.5); ctx.fillText(NAMES[ch], 8, yc);
+      var grad = c%2 ? L.gB : L.gA;
+      for(var pass=0; pass<2; pass++){
+        var xs = pass===0 ? L.div - 36 : L.x0;
+        ctx.beginPath();
+        for(var x = xs; x <= L.x1; x += step){
+          var s = sNow - x, w = sstep(L.div-36, L.div+36, x);
+          var v = clean(ch,s) + (1-w)*artifact(ch,s);
+          var y = yc - v*amp;
+          if(x===xs) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        }
+        if(pass===0){ ctx.strokeStyle = rgba(c%2?C.sec:C.acc, 0.10); ctx.lineWidth = 4; }
+        else { ctx.strokeStyle = grad; ctx.lineWidth = 1.15; }
+        ctx.stroke();
+      }
+    }
+
+    ctx.save();
+    ctx.setLineDash([4,5]); ctx.strokeStyle = rgba(C.acc,0.55); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(L.div+0.5, L.y0 - L.gap*0.2 - fs*1.6); ctx.lineTo(L.div+0.5, L.y1); ctx.stroke();
+    ctx.restore();
+    var bandG = ctx.createLinearGradient(L.div-26,0,L.div+26,0);
+    bandG.addColorStop(0,'rgba(57,255,136,0)'); bandG.addColorStop(0.5,'rgba(57,255,136,0.07)'); bandG.addColorStop(1,'rgba(57,255,136,0)');
+    ctx.fillStyle = bandG; ctx.fillRect(L.div-26, L.y0 - L.gap*0.5, 52, L.y1 - L.y0 + L.gap*0.5);
+    var lbl = 'clean()';
+    ctx.font = '600 '+fs+'px '+MONO; var lw = ctx.measureText(lbl).width;
+    var ly = L.y0 - L.gap*0.5 - fs*1.3;
+    ctx.fillStyle = C.bg; ctx.fillRect(L.div - lw/2 - 10, ly - fs*0.85, lw+20, fs*1.7);
+    ctx.strokeStyle = rgba(C.acc,0.7); ctx.lineWidth=1; ctx.strokeRect(L.div - lw/2 - 10 + 0.5, ly - fs*0.85 + 0.5, lw+20, fs*1.7);
+    ctx.fillStyle = C.acc; ctx.textAlign='center'; ctx.fillText(lbl, L.div, ly);
+    ctx.font = '500 '+(fs*0.82)+'px '+MONO;
+    ctx.textAlign='left'; ctx.fillStyle = rgba(C.fg,0.45);
+    if(L.div - L.x0 > fs*22) ctx.fillText('raw  ~ line noise · EOG · EMG · drift', L.x0, ly);
+    ctx.textAlign='right'; ctx.fillStyle = rgba(C.acc,0.7);
+    if(L.x1 - L.div > fs*16) ctx.fillText('clean  ✓ ICA · notch · re-ref', L.x1, ly);
+
+    ctx.fillStyle = 'rgba(201,209,217,0.035)'; ctx.fillRect(0,0,W,L.topBar);
+    ctx.fillStyle = 'rgba(201,209,217,0.10)'; ctx.fillRect(0,L.topBar,W,1);
+    ctx.font = '500 '+fs+'px '+MONO; ctx.textAlign='left'; ctx.textBaseline='middle';
+    var ty = L.topBar/2, x = 14;
+    ctx.fillStyle = C.acc; ctx.beginPath(); ctx.arc(x+4, ty, 3.5, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = rgba(C.acc, 0.25*(0.5+0.5*Math.sin(t*3))); ctx.beginPath(); ctx.arc(x+4, ty, 7, 0, Math.PI*2); ctx.fill();
+    x += 18;
+    var parts = [['$ ',C.sec],['stream: ',rgba(C.fg,0.6)],['lsl://headset-01',C.fg],[' | ',rgba(C.fg,0.3)],['256 Hz',C.fg],[' | ',rgba(C.fg,0.3)],['32 ch',C.fg],[' | ',rgba(C.fg,0.3)],['artifacts: ',rgba(C.fg,0.6)],['ICA-removed',C.acc]];
+    for(var i=0;i<parts.length;i++){
+      if(x > W - 20) break;
+      ctx.fillStyle = parts[i][1]; ctx.fillText(parts[i][0], x, ty); x += ctx.measureText(parts[i][0]).width;
+    }
+    if(Math.floor(t*1.6)%2===0 && x < W-16){ ctx.fillStyle = rgba(C.acc,0.85); ctx.fillRect(x+4, ty - fs*0.55, fs*0.55, fs*1.1); }
+
+    var by = H - L.botBar/2;
+    ctx.fillStyle = 'rgba(201,209,217,0.10)'; ctx.fillRect(0,H-L.botBar,W,1);
+    ctx.font = '500 '+(fs*0.85)+'px '+MONO; ctx.textAlign='left'; ctx.fillStyle = rgba(C.fg,0.45);
+    var bl = 't+'+fmtTime(t)+'   buf 2.0 s   view '+L.n+'/32 ch   scale 50 µV/div';
+    if(W < 460) bl = 't+'+fmtTime(t)+'   '+L.n+'/32 ch';
+    ctx.fillText(bl, 14, by);
+    ctx.textAlign='right'; ctx.fillStyle = rgba(C.sec,0.8);
+    if(W > ctx.measureText(bl).width + 200) ctx.fillText('[synthetic demo signal]', W-14, by);
+  }
+
+  var t = 12.48, raf=0, running=false, last=0, inView=true;
+  function frame(now){ var dt=Math.min(0.05,(now-last)/1000)||0; last=now; t+=dt; draw(t); raf=requestAnimationFrame(frame); }
+  function start(){ if(running||RM.matches||document.hidden||!inView) return; running=true; last=performance.now(); raf=requestAnimationFrame(frame); }
+  function stop(){ running=false; cancelAnimationFrame(raf); }
+  document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+  var onRM = function(){ if(RM.matches){ stop(); draw(t); } else start(); };
+  if(RM.addEventListener) RM.addEventListener('change', onRM); else if(RM.addListener) RM.addListener(onRM);
+  if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ inView=es[0].isIntersecting; inView?start():stop(); }).observe(stage); }
+  if('ResizeObserver' in window){ new ResizeObserver(function(){ layout(); draw(t); }).observe(stage); }
+  else window.addEventListener('resize', function(){ layout(); draw(t); });
+  layout(); draw(t); start();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ draw(t); });
+})();
+</script>
+</body>
+</html>

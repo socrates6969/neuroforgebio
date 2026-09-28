@@ -1,0 +1,18 @@
+[package]
+name = "neuroforge-c"
+version = "0.1.0"
+description = "Stable C ABI over nf-core (ADR 0013): generated header include/neuroforge.h."
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lib]
+# neuroforge.dll + neuroforge.dll.lib (import library) and neuroforge.lib (static) on MSVC;
+# libneuroforge.so / .a elsewhere. `lib` keeps the crate usable from its own Rust tests.
+name = "neuroforge"
+crate-type = ["cdylib", "staticlib", "lib"]
+
+[dependencies]
+nf-core = { path = "../../core/nf-core", features = ["stream"] }
+serde_json = "1"

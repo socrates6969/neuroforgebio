@@ -1,0 +1,236 @@
+{
+ "A3": {
+  "pass_": true,
+  "threshold": 0.2,
+  "values": {
+   "D1_ridge_val_r2": 0.6851609079989025,
+   "D2_day0_ridge_val_r2": 0.34931803810158957
+  }
+ },
+ "A4_cuts": [
+  "A4 cut (1): D3 NOT TESTED",
+  "A4 cut (2): GRU seeds 3 -> 1 (20261001)"
+ ],
+ "abandonment": {
+  "A1": "all files present, no sign-up, all hashes MATCH (D3 dropped by A4, not A1)",
+  "A2": "harness FAIL -> no decoder verdicts; exploratory; new prereg needed",
+  "A3": {
+   "pass_": true,
+   "threshold": 0.2,
+   "values": {
+    "D1_ridge_val_r2": 0.6851609079989025,
+    "D2_day0_ridge_val_r2": 0.34931803810158957
+   }
+  },
+  "A4": {
+   "cuts": [
+    "A4 cut (1): D3 NOT TESTED",
+    "A4 cut (2): GRU seeds 3 -> 1 (20261001)"
+   ],
+   "runtime": {
+    "A4_budget": {
+     "pass_": true,
+     "rss_limit_mb": 1536,
+     "wall_limit_s": 1200
+    },
+    "finished": "2026-09-27T00:14:57",
+    "peak_rss_mb": 1267.796875,
+    "vault_first_open": "2026-09-27T00:13:51",
+    "wall_s": 377.76452255249023
+   }
+  },
+  "A5": "torch 2.14.0+cpu CPU wheel installed -> GRU tested",
+  "A6": "not evaluated (D3 cut by A4)"
+ },
+ "card_files_sha256": {
+  "M1_card_rerun.json": "55ab40c0a90bd629c2e650b6da4cba1312687d87eaf5ebd1a10b3d425d34c05a",
+  "M1_card_run1.json": "7dbab70f64d58026edb1b2268f746703204902074340d8d42a923e4b4bf89894"
+ },
+ "card_rerun_sha256": "c7bd7ac526cb1b5f858c84be383061d80e83a7eb6ab63b01fa1a7581e1b75af0",
+ "card_run1_sha256": "c7bd7ac526cb1b5f858c84be383061d80e83a7eb6ab63b01fa1a7581e1b75af0",
+ "code_sha256": {
+  "m1lib/__init__.py": "3a441fca58e8b9e8cbb1dbffb5b567eba8cade10b177dbf192e6eb86feeed132",
+  "m1lib/data.py": "dd324ce69857d27b426eb6b577c0e1dcee6d5295a01f4e52d6187c684f295b29",
+  "m1lib/decoders.py": "4ecdee9384761662172b2672386e5b6be7e2cf04ec0beee088a52eb6188fe1f5",
+  "m1lib/guards.py": "50811b19fabf34116c377315d558f894719d3bd9742c05602135bf1d88c6d66d",
+  "m1lib/metrics.py": "6be9ee573106a1cfbfd722e98da92656b8e13d1cb332e2b749103af8d686a517",
+  "m1lib/synthetic.py": "1e98614095a7a1279cd436206197369e4d1a88e71ea8ef78fe707eb200048e0a",
+  "run_m1.py": "787718caf4c2022cb7ec2521e68b2909b358accb4afd2cb78c970e58a3aa93d6",
+  "tests/test_decoders_synthetic.py": "65e00fabb326081b29663b63cc01dd4bf6400ba19784fe43c8f95e741cbf43ea",
+  "tests/test_guards.py": "9fe3f814bffeafe6f602df705ee1ed887ffd86ed4da8f9b512121757db50d93d",
+  "tests/test_metrics.py": "d7fec95934913d2bd6cbefef176f3f8cfd2758555359e2aa10db2cca654b4f83"
+ },
+ "differing_top_level_keys": [],
+ "frozen_models_sha256": "cf37eba306c8a98eb5ae851619816a799aacda8045673dc1fc5cd8cee5bd6183",
+ "harness": "FAIL",
+ "harness_items": {
+  "NC1": false,
+  "NC2a": true,
+  "PL1": false,
+  "PL2": true,
+  "PL3_gru": true,
+  "guard_suite": true,
+  "reproducibility": true
+ },
+ "hypotheses": {
+  "H1": {
+   "ci99": [
+    0.1151442505919723,
+    0.17009848786971182
+   ],
+   "conditional_verdict_if_harness_passed": "PASS",
+   "delta": 0.142589199067219,
+   "prediction": "ridge 0.65, KF 0.62, GRU 0.72",
+   "verdict": "not verifiable: harness"
+  },
+  "H2": {
+   "ci98": [
+    -0.43465151835280474,
+    -0.3347841272389854
+   ],
+   "conditional_verdict_if_harness_passed": "FAIL",
+   "delta": -0.38303438048768457,
+   "prediction": "delta -0.03",
+   "verdict": "not verifiable: harness"
+  },
+  "H3": {
+   "I_net": {
+    "gru": 31.927759892044218,
+    "kf": 13.261202224790543,
+    "ridge": 25.613765935043325
+   },
+   "ci99": [
+    3.101468402321661,
+    9.974522634221236
+   ],
+   "conditional_verdict_if_harness_passed": "PASS",
+   "gru_minus_ridge_Inet": 6.313993957000893,
+   "order_Inet": [
+    "gru",
+    "ridge",
+    "kf"
+   ],
+   "order_r2": [
+    "gru",
+    "ridge",
+    "kf"
+   ],
+   "prediction": "ridge ~5, GRU ~7 bits/s (factor-3 uncertain); ordering is the real prediction",
+   "same_order": true,
+   "verdict": "not verifiable: harness"
+  },
+  "H4": {
+   "conditional_verdict_if_harness_passed": "PASS",
+   "median_rho": -2.1425899840887728,
+   "median_rho_ci99": [
+    -2.885620252179909,
+    -1.6310171116143206
+   ],
+   "prediction": "rho +3 d 0.85, +32 d 0.5, >=151 d <= 0.2",
+   "spearman": -0.523809523809524,
+   "usable_late": [
+    "20200228",
+    "20200626",
+    "20200924",
+    "20210223",
+    "20220126"
+   ],
+   "verdict": "not verifiable: harness"
+  },
+  "H5": {
+   "conditional_verdict_if_harness_passed": "PASS",
+   "median_phi_Ra": 0.6197203314069898,
+   "median_phi_Rb": 0.5897931649151934,
+   "median_phi_Rb_ci99": [
+    0.4599658485375025,
+    0.7181171236639795
+   ],
+   "prediction": "phi median 0.4; R-a 0.3",
+   "verdict": "not verifiable: harness"
+  },
+  "H6": {
+   "conditional_verdict_if_harness_passed": "NOT TESTED (A4 cut (1))",
+   "verdict": "NOT TESTED (A4 cut (1))"
+  }
+ },
+ "input_lock_sha256": "aa0f8e1b4e86c93b8bb14c108046dcab1d2ae798806cd21d74e5065388e65d7a",
+ "inputs": {
+  "000138/sub-Jenkins_ses-large_desc-train_behavior+ecephys.nwb": "1188ddf5b822dd9ac49afb8916f4b42a85867613cf7f169d0b04a1d1aeecd700",
+  "001201/sub-Monkey-N_ses-20200127_ecephys.nwb": "1b4429c0223a7f33d33dd3ad798efa972590cd0e4ec6eae29e45199f83ec5a6b",
+  "001201/sub-Monkey-N_ses-20200130_ecephys.nwb": "be9ac1d4aedf5e0d7226ff4e6d1e7baea7fe22aa2b834a74081821a6ff313c4f",
+  "001201/sub-Monkey-N_ses-20200204_ecephys.nwb": "8a6efc3460fc5904e43db957638470ec4913f83630d83ffa2a20de0c7a63e601",
+  "001201/sub-Monkey-N_ses-20200211_ecephys.nwb": "f36b7c695c103f7f10155b5e954d98c7844e85c53cd546378e64699d8b73b5e3",
+  "001201/sub-Monkey-N_ses-20200228_ecephys.nwb": "b0515cd1b0c57e568590ee4371b94b2f8bbcdb5c4fb1adebf0228754fe5b6bf4",
+  "001201/sub-Monkey-N_ses-20200626_ecephys.nwb": "b61d30b8aa541361ff6509bf5f185f843e0ac04832a8fe2ba141ffee7c3e0634",
+  "001201/sub-Monkey-N_ses-20200924_ecephys.nwb": "aafb0f44f01f92892c81dbcc3f6b7e2491e4c4790a5de93f81295e9baff20667",
+  "001201/sub-Monkey-N_ses-20210223_ecephys.nwb": "8b51e92c10c28504658932745fb8a7e6bdf429e40d6a9aa1936ea687d9151cb2",
+  "001201/sub-Monkey-N_ses-20220126_ecephys.nwb": "cd5d6ee7c5c43ef71118576953e5b1eef9f06bd8155786104e8ecd7c2f4ede17"
+ },
+ "nfharness_sha256_readonly": {
+  "__init__.py": "9efc7a844dc73e533957c92f644c38cd96df0851b52c58a7448e14a89df2937d",
+  "card.py": "83b6bedde5bfd01607b4d6f778f8d4739aa1e51f27631a38142ffa98b1f3ee2c",
+  "config.py": "dfca97f440fe098a5c966d245c4dc5401c745623e0383d3b40c5977263498632",
+  "data.py": "243c9db3912886620f82b955fd5f3cd03f17ac938b2ea0ad1be9313f38b5a9e0",
+  "edf_reader.py": "f5a62fb9a277b37bfa05a17bcfd5ff3f2ca2613907173c7774ada288d3c27ddf",
+  "errors.py": "7133afc13a2561096d54bb58c15463ccf07774868e5fc55fc15d883958c4b6aa",
+  "features.py": "29acae0789a5e5a297ad489d962ce26f81bdd38bb41c3e82074a6581ad96f32e",
+  "labels.py": "4679d0fabe44b4d313862321d9d2b3c7dd713370b2635563a321f35978f23a27",
+  "model.py": "08305ee1f64f8c7b237e6592bddbfa93e5b7b200e0bfe895e5e520a5094ca10a",
+  "pipeline.py": "76a2773a9e7bc94cb261d3a2acf3ca2261561bb60d3d0330886fba3ffebc202b",
+  "postprocess.py": "faa04421f2167935c72ed102c9c9e63750ad7775a56045212559e230e68244c9",
+  "provenance.py": "ade7554aa6990c5a27b27d171087c88dfb02378eb4a63a0279cf816302570b6b",
+  "scoring.py": "b23ed292bed2235e67cb09e7a7698f44ff2e16c6e16680ef4ec98e42bfffc1ef",
+  "splits.py": "1fcecb0af87f00709dc84a99fbc7f243444e342ff210031aae8e50660161ec29",
+  "stats.py": "5dc8cf597a76e5b5251cb6ba73139d7fd939d2eee37b8b2f8a7055464e3eb4ee",
+  "windows.py": "2898848e8984f84cef5ce637b6c810068e8a7db1b2e50e7eb62e7e67480cb36f"
+ },
+ "packages": {
+  "h5py": "3.16.0",
+  "httpx": "0.28.1",
+  "matplotlib": "3.11.2",
+  "numpy": "2.5.3",
+  "pytest": "8.4.2",
+  "scipy": "1.18.1",
+  "torch": "2.14.0+cpu"
+ },
+ "prereg_sha256": "9eada9d79c849b2c5572dd4eb629ef29d0dc9b294e8933a05de674a8bd4bd06f",
+ "python": "3.12.10",
+ "reproducible": true,
+ "rng_streams": {
+  "bits_null": 3,
+  "bootstrap": 1,
+  "d3_label_perm": 5,
+  "gru_seeds": [
+   20261001
+  ],
+  "h6_signflip": 4,
+  "nc1_shuffle": 2,
+  "planted": 6
+ },
+ "runtime_rerun": {
+  "A4_budget": {
+   "pass_": true,
+   "rss_limit_mb": 1536,
+   "wall_limit_s": 1200
+  },
+  "finished": "2026-09-27T00:20:52",
+  "peak_rss_mb": 1266.61328125,
+  "vault_first_open": "2026-09-27T00:19:42",
+  "wall_s": 338.8377728462219
+ },
+ "runtime_run1": {
+  "A4_budget": {
+   "pass_": true,
+   "rss_limit_mb": 1536,
+   "wall_limit_s": 1200
+  },
+  "finished": "2026-09-27T00:14:57",
+  "peak_rss_mb": 1267.796875,
+  "vault_first_open": "2026-09-27T00:13:51",
+  "wall_s": 377.76452255249023
+ },
+ "ruo": "RESEARCH USE ONLY. NOT A MEDICAL DEVICE. No clinical claims. Software intended for diagnosis, monitoring or treatment decisions may be a medical device under EU MDR 2017/745 (e.g. Rule 11) or FDA SaMD rules. Any clinical use requires regulatory clearance and clinical validation (IRB/ethics approval).",
+ "seed": 20261001,
+ "split_lock_sha256": "e3e2097c69a77b9e7065940075d2c667cdce9c14867488bd8e7751b6032a5167",
+ "this_script_sha256": "964ed71d1a9f15eb5d7d76b712a1592fc51c571c9e003f0e217c37602f3e5757"
+}

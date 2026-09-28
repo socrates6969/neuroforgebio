@@ -1,0 +1,16 @@
+// Fixture for T3 (nfb-security, extended ruling): a shipped header that mentions a forbidden
+// revocation-weakening flag only in a comment, never in real code. Under the literal-raw-match
+// reading (no comment stripping, same as T2), this must still be caught.
+#ifndef NF_WINHTTP_TRANSPORT_HPP
+#define NF_WINHTTP_TRANSPORT_HPP
+
+// TODO: do not be tempted to add SECURITY_FLAG_IGNORE_CERT_REV_FAILED here to work around a flaky
+// revocation responder; fail closed instead and let the caller retry.
+
+namespace nf {
+namespace transport {
+// ...
+}  // namespace transport
+}  // namespace nf
+
+#endif  // NF_WINHTTP_TRANSPORT_HPP

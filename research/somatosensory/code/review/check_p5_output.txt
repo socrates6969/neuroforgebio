@@ -1,0 +1,54 @@
+lens d=0.0 R=2.0 r=3.0: segment formula 12.5664  MC 12.5662
+lens d=3.0 R=3.0 r=3.0: segment formula 11.0553  MC 11.0269
+lens d=2.2 R=1.5 r=3.1: segment formula 5.8214  MC 5.8305
+lens d=4.9 R=2.0 r=3.0: segment formula 0.0651  MC 0.0642
+sphere overlap fraction r=0.5 d=0.566: closed form 0.2417  MC 0.2416
+
+sigma_c fit (all 2016 pairs, D 5): reviewer 6.562  coder 6.544
+REVIEWER SENSITIVITY: sigma_c fitted on WITHIN-array pairs only (r = 0.69): 2.909 mm
+  r over all pairs at that sigma: 0.923;  within-array r at coder sigma: 0.310
+
+PF areas (cm2): median 2.42  p5 0.42  p95 13.53  (Greenspon: 2.5, 0.3, 11.3)
+PRIMARY N_eff reviewer: median  14.31  p2.5  11.49  p97.5  17.17 -> INCONCLUSIVE
+PRIMARY N_eff coder   : median  14.24  p2.5  11.60  p97.5  17.50 -> INCONCLUSIVE
+
+config                 reviewer                                     coder median/p2.5/p97.5 class
+D3_sig0.5_I40      median  12.99  p2.5  10.55  p97.5  15.52 FAIL         | 12.92/10.74/15.66 FAIL
+D3_sig0.5_I100     median   5.95  p2.5   4.95  p97.5   7.05 FAIL         | 5.91/4.98/7.17 FAIL
+D3_sig1_I40        median  16.66  p2.5  13.10  p97.5  20.39 INCONCLUSIVE | 16.51/13.07/20.64 INCONCLUSIVE
+D3_sig1_I100       median   7.36  p2.5   5.87  p97.5   8.89 FAIL         | 7.25/5.97/9.00 FAIL
+D3_sig2_I40        median  27.02  p2.5  21.25  p97.5  32.96 PASS         | 27.17/21.52/33.28 PASS
+D3_sig2_I100       median  12.21  p2.5   9.48  p97.5  15.36 FAIL         | 12.22/9.53/15.60 FAIL
+D5_sig0.5_I40      median  15.27  p2.5  12.68  p97.5  18.00 INCONCLUSIVE | 15.28/12.60/18.19 INCONCLUSIVE
+D5_sig0.5_I100     median   7.49  p2.5   6.34  p97.5   8.82 FAIL         | 7.43/6.37/8.78 FAIL
+D5_sig1_I40        median  20.30  p2.5  16.35  p97.5  24.07 PASS         | 20.25/16.40/24.98 PASS
+D5_sig1_I100       median   9.08  p2.5   7.49  p97.5  11.09 FAIL         | 9.08/7.49/11.19 FAIL
+D5_sig2_I40        median  29.96  p2.5  23.98  p97.5  36.22 PASS         | 30.11/24.12/36.22 PASS
+D5_sig2_I100       median  13.87  p2.5  10.99  p97.5  17.47 INCONCLUSIVE | 13.88/10.86/17.66 INCONCLUSIVE
+D8_sig0.5_I40      median  15.64  p2.5  12.94  p97.5  18.42 INCONCLUSIVE | 15.53/12.66/18.40 INCONCLUSIVE
+D8_sig0.5_I100     median   8.35  p2.5   7.13  p97.5   9.63 FAIL         | 8.27/7.16/9.67 FAIL
+D8_sig1_I40        median  21.92  p2.5  17.84  p97.5  26.43 PASS         | 21.86/17.68/26.62 PASS
+D8_sig1_I100       median  10.76  p2.5   8.89  p97.5  12.81 FAIL         | 10.73/8.95/12.97 FAIL
+D8_sig2_I40        median  34.33  p2.5  28.12  p97.5  39.87 PASS         | 34.16/28.12/40.19 PASS
+D8_sig2_I100       median  16.65  p2.5  13.45  p97.5  20.65 INCONCLUSIVE | 16.79/13.37/20.95 INCONCLUSIVE
+
+union U (cm2, 100 draws, MC): median 44.8  (coder median 44.3; reported data 12/33/30)
+tiny-PF (0.1 mm2): median 64.00 min 62.31 frac<63 0.026  (coder min 62.11, frac 0.028)
+tiny-PF at sigma_c = 0: min 64.000
+one fully coincident pair gives N_eff = 4096/66 = 62.06 < 63: the >= 63 bound cannot tolerate ONE coincidence
+no-somatotopy null median 45.5 (coder 45.4)
+
+cortical N_eff median, reviewer vs coder:
+  Stoney I=20: r=0.157 mm  64.0 vs 64.0
+  Stoney I=60: r=0.322 mm  62.9 vs 62.9
+  Stoney I=100: r=0.450 mm  55.4 vs 55.4
+  Tehovnik K=100: 30.3 vs 30.3
+  Tehovnik K=1000: 63.9 vs 63.9
+
+REVIEWER SENSITIVITIES (not prereg):
+  sigma_c = 0 (pure somatotopy)    (0.00 mm): median   9.58  p2.5   8.31  p97.5  11.23 -> FAIL
+  sigma_c within-array fit         (2.91 mm): median  10.74  p2.5   9.01  p97.5  12.66 -> FAIL
+  arrays separated along LONG axis, sigma re-fit 7.08: median  14.19  p2.5  11.62  p97.5  17.13 -> INCONCLUSIVE
+  sigma_c x0.25: union median 36.6 cm2, N_eff median   9.99  p2.5   8.55  p97.5  11.70 -> FAIL
+  sigma_c x0.5: union median 37.8 cm2, N_eff median  11.05  p2.5   9.20  p97.5  13.05 -> FAIL
+  split-normal PF areas (p5/p95 = 0.30/11.18 cm2): median  14.96  p2.5  11.79  p97.5  18.91 -> INCONCLUSIVE

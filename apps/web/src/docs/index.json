@@ -1,0 +1,90 @@
+{
+  "meta": {
+    "title": "Docs · {brand}",
+    "description": "Python SDK guide, quickstarts, API reference and changelog for the v1 API, and a preview of the C ABI. In development; the SDK is not published yet."
+  },
+  "nav": {
+    "label": "Documentation",
+    "overview": "Overview",
+    "api": "API reference",
+    "changelog": "Changelog",
+    "source": "Copied verbatim from",
+    "doctest": "Runs in CI as part of the quickstart",
+    "pageSource": "Source"
+  },
+  "apiPage": {
+    "title": "API reference · {brand}",
+    "description": "Every v1 operation, generated from the committed OpenAPI document.",
+    "eyebrow": "Docs · Reference",
+    "heading": "API <em>reference.</em>",
+    "lede": "Generated from openapi/v1.yaml. Base path /v1; authenticate with an API key or an access token as a bearer credential.",
+    "operations": "Operations",
+    "parameters": "Parameters",
+    "requestBody": "Request body",
+    "responses": "Responses",
+    "commonResponses": "Common response codes",
+    "schemas": "Schemas",
+    "webhooks": "Webhook events",
+    "name": "Name",
+    "in": "In",
+    "type": "Type",
+    "required": "Required",
+    "colDescription": "Description",
+    "yes": "yes",
+    "no": "no",
+    "status": "Status",
+    "public": "No authentication",
+    "deprecated": "Deprecated",
+    "action": "Permission",
+    "scope": "API key scope",
+    "sourceHash": "Source SHA-256"
+  },
+  "eyebrow": "Docs",
+  "heading": "Python SDK and API <em>documentation.</em>",
+  "lede": "The Python SDK runs on one shared Rust core that hashes, buffers and records provenance. Every Python code block on these pages runs in our CI; the other blocks are copied verbatim from the repository, and a test checks both.",
+  "status": "in-preparation",
+  "sections": [
+    {
+      "id": "state",
+      "heading": "What exists today",
+      "body": [
+        "The SDK and the v1 API are in development. The package is not published to a package index yet, and there is no hosted service. The quickstarts run against a local test instance of the platform with demo data.",
+        "Configure the SDK with the environment variables NF_API_URL, NF_API_TOKEN (an API key) and NF_SESSION (the session that receives uploads), or call nf.configure with the same values. Streaming also needs NF_INGEST_TARGET, the host and port of the ingest service."
+      ],
+      "items": [
+        {
+          "heading": "Python SDK on the shared core",
+          "body": "Canonical hashing, retries, the encrypted stream buffer and the offline provenance recorder run in the Rust core. Built, tested internally (SDK tests: 25 passed, 2 skipped; M4 report, 2026-09-26); not published.",
+          "status": "in-preparation"
+        },
+        {
+          "heading": "Published package and wheels",
+          "body": "Wheels for Windows, macOS and Linux are built and signed in CI; publishing needs the owner's approval.",
+          "status": "planned"
+        },
+        {
+          "heading": "C ABI, Unity and Unreal",
+          "body": "A stable C interface with a C++17 wrapper and Unity and Unreal SDKs on it: in development, not released.",
+          "status": "in-preparation"
+        },
+        {
+          "heading": "Syncing the offline provenance chain",
+          "body": "The local chain is recorded and verified today; the upload endpoint is designed.",
+          "status": "designed"
+        }
+      ]
+    },
+    {
+      "id": "quickstarts",
+      "heading": "Quickstarts",
+      "body": ["Each quickstart is a short script. Run the blocks in order in one Python session."]
+    },
+    {
+      "id": "reference",
+      "heading": "Reference",
+      "body": [
+        "The API reference is generated from the OpenAPI document of the v1 API. Errors use RFC 9457 problem documents; the SDK raises them as NfApiError with the status and the problem fields."
+      ]
+    }
+  ]
+}

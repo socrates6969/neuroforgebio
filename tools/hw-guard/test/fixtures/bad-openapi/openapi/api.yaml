@@ -1,0 +1,19 @@
+openapi: 3.1.0
+info:
+  title: fixture
+  version: 0.0.0
+paths:
+  /devices/{id}/command:
+    post:
+      operationId: sendDeviceCommand
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                amplitude_set:
+                  type: number
+                write_register:
+                  type: integer
+                actuatorState:
+                  type: string

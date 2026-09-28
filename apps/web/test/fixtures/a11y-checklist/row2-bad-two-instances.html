@@ -1,0 +1,29 @@
+<!-- Row 2 PLANTED FAILURE for per-instance evaluation (web-a11y review of v1, item 1): two grids
+     with the same class on one page. The first is fixed (its item .main has min-width:0); the
+     second holds its <pre> in an item (.risky) with no min-width:0. v1 pooled the children of every
+     `.grid` into one set, so the fixed instance masked the broken one. Each container instance is
+     now checked on its own. Expected: 2 containers examined, exactly 1 finding, naming div.risky. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      .grid[data-astro-cid-tw01nst5]{display:grid;grid-template-columns:220px 1fr;gap:32px}
+      .main[data-astro-cid-tw01nst5]{min-width:0}
+    </style>
+  </head>
+  <body>
+    <div class="grid" data-astro-cid-tw01nst5>
+      <div class="side" data-astro-cid-tw01nst5>On this page</div>
+      <div class="main" data-astro-cid-tw01nst5>
+        <pre><code>nf verify --manifest dist/manifest.json --key keys/release-2026.pub --strict</code></pre>
+      </div>
+    </div>
+    <div class="grid" data-astro-cid-tw01nst5>
+      <div class="side" data-astro-cid-tw01nst5>Examples</div>
+      <div class="risky" data-astro-cid-tw01nst5>
+        <pre><code>nf verify --manifest dist/manifest.json --key keys/release-2026.pub --strict</code></pre>
+      </div>
+    </div>
+  </body>
+</html>

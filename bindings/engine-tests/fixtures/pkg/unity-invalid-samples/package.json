@@ -1,0 +1,14 @@
+{
+  "name": "com.example.badsamples",
+  "version": "0.1.0",
+  "displayName": "Bad Samples Fixture",
+  "unity": "2021.3",
+  "description": "unverified: fixture only, proves package-integrity.test.mjs catches a samples[].path that does not exist on disk.",
+  "samples": [
+    {
+      "displayName": "Missing sample",
+      "description": "This path is never created on purpose.",
+      "path": "Samples~/DoesNotExist"
+    }
+  ]
+}

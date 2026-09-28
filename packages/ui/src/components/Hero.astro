@@ -1,0 +1,45 @@
+---
+// Hero shell: text column + the theme's HeroVisual passed in the "visual" slot.
+import type { UiCta } from '../types.ts';
+import Button from './Button.astro';
+interface Props {
+  eyebrow: string; heading: string; sub: string; ctas: UiCta[];
+  formats?: { lead: string; items: string[]; note?: string; label?: string };
+}
+const { eyebrow, heading, sub, ctas, formats } = Astro.props;
+---
+<section class="hero" aria-labelledby="h-hero">
+  <div class="nf-wrap">
+    <div class="hero-top">
+      <div>
+        <p class="nf-label eyebrow"><span class="dot" aria-hidden="true"></span>{eyebrow}</p>
+        <h1 id="h-hero" set:html={heading} />
+        <p class="nf-lede">{sub}</p>
+        <div class="ctas">{ctas.map((c) => <Button cta={c} />)}</div>
+        {formats && (
+          <p class="formats">
+            {formats.label && <span class="nf-visually-hidden">{formats.label}: </span>}
+            {formats.lead}{" "}{formats.items.map((f, i) => <>{i > 0 && <span aria-hidden="true"> · </span>}<b>{f}</b></>)}
+            {formats.note && <span class="fnote"> {formats.note}</span>}
+          </p>
+        )}
+      </div>
+      <slot name="aside" />
+    </div>
+    <div class="stage"><slot name="visual" /></div>
+  </div>
+</section>
+<style>
+  .hero { padding: 64px 0 28px; border-bottom: 1px solid var(--color-line); position: relative; }
+  .hero-top { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: end; }
+  .hero-top:not(:has(> :nth-child(2))) { grid-template-columns: 1fr; }
+  .eyebrow .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); margin-right: 8px; vertical-align: 1px; }
+  h1 { margin-top: 18px; max-width: 20ch; }
+  .nf-lede { margin-top: 20px; }
+  .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+  .formats { margin-top: 22px; font: 400 13px/1.6 var(--font-mono); color: var(--color-muted); }
+  .formats b { font-weight: 500; color: var(--color-ink); }
+  .fnote { display: block; }
+  .stage { margin-top: 44px; }
+  @media (max-width: 900px) { .hero-top { grid-template-columns: 1fr; gap: 32px; } }
+</style>

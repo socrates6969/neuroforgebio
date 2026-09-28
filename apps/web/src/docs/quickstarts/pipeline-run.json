@@ -1,0 +1,62 @@
+{
+  "order": 2,
+  "meta": {
+    "title": "Quickstart: pipeline run · {brand}",
+    "description": "Run a pinned pipeline version on a recording and read its run record and provenance."
+  },
+  "navLabel": "Pipeline run",
+  "eyebrow": "Quickstart 2",
+  "heading": "Run a <em>pinned pipeline.</em>",
+  "lede": "A pipeline version is identified by the hash of its steps, images, parameters and seed. The SDK recomputes that hash locally, so a pipeline cannot change under a name.",
+  "sections": [
+    {
+      "id": "get",
+      "heading": "Resolve a version",
+      "body": [
+        "A reference is name@version or a content ID (pv:sha256:...). Every parameter is explicit, defaults included."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "import {pkg} as nf",
+          "",
+          "pipe = nf.pipelines.get(\"eeg-basic@1.0.0\")",
+          "print(pipe.id)                                   # recomputed by the SDK core",
+          "for step in pipe.steps:",
+          "    print(step[\"name\"], step[\"params\"])"
+        ]
+      }
+    },
+    {
+      "id": "run",
+      "heading": "Run it",
+      "body": [
+        "run queues the pipeline on a recording and returns at once. A local file is uploaded first. wait polls until the run ends and raises if it failed."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "rec = nf.open(\"sub-01_task-motor_eeg.edf\")      # demo data",
+          "run = pipe.run(rec, synthetic=True)",
+          "run.wait()",
+          "print(run.state, run.provenance.id)"
+        ]
+      }
+    },
+    {
+      "id": "record",
+      "heading": "Read the run record",
+      "body": [
+        "The run record holds every resolved parameter, the seed, thread pins and library versions. Outputs are listed only after their provenance is committed."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "print(run.record[\"seed\"])",
+          "print([s[\"params\"] for s in run.record[\"steps\"]][0])",
+          "print([(a[\"step\"], a[\"name\"]) for a in run.artifacts][:3])"
+        ]
+      }
+    }
+  ]
+}

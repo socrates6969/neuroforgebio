@@ -1,0 +1,75 @@
+{
+  "order": 1,
+  "meta": {
+    "title": "Quickstart: file ingest · {brand}",
+    "description": "Open a local recording, hash it on your machine, upload it and read a window back."
+  },
+  "navLabel": "File ingest",
+  "eyebrow": "Quickstart 1",
+  "heading": "Ingest a <em>recording file.</em>",
+  "lede": "The SDK hashes the file on your machine before it leaves it. The platform hashes it again and rejects the upload if the two hashes differ.",
+  "sections": [
+    {
+      "id": "open",
+      "heading": "Open and hash",
+      "body": [
+        "nf.open accepts a path to a local file (EDF, BDF, XDF, NWB and the other formats the platform converts) or the ID of a recording on the platform. The content ID is the SHA-256 of the file bytes, computed by the Rust core in one streaming pass."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "import {pkg} as nf",
+          "",
+          "rec = nf.open(\"sub-01_task-motor_eeg.edf\")      # demo data",
+          "print(rec.blob_id)                               # blob:sha256:..., computed locally",
+          "print(rec.size, \"bytes\")"
+        ]
+      }
+    },
+    {
+      "id": "upload",
+      "heading": "Upload into a session",
+      "body": [
+        "upload sends the file in parts, asks the platform to check the hash, and waits until the file has been converted into the canonical signal store. Outside production, only synthetic or licence-checked public data is accepted; set synthetic=True for such files."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "remote = rec.upload(synthetic=True)",
+          "info = remote.info()",
+          "print(info[\"source_format\"], [c[\"name\"] for c in info[\"channels\"]])"
+        ]
+      }
+    },
+    {
+      "id": "read",
+      "heading": "Read a window",
+      "body": [
+        "read returns the samples of a time window as channels x samples, in the stored type. physical=True applies each channel's scale and offset. For long windows, pass a pyramid level to read a decimated overview."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "header, data = remote.read(0.0, 2.0)",
+          "print(header[\"channels\"], data.shape, header[\"sfreq\"])",
+          "header, overview = remote.read(0.0, 20.0, level=1, kind=\"max\")",
+          "print(overview.shape)"
+        ]
+      }
+    },
+    {
+      "id": "mne",
+      "heading": "Continue in MNE-Python",
+      "body": [
+        "Signal processing stays in the tools your lab already uses. to_mne returns an mne.io.RawArray in volts (install the mne extra)."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "raw = remote.to_mne(0.0, 2.0)",
+          "print(raw)"
+        ]
+      }
+    }
+  ]
+}

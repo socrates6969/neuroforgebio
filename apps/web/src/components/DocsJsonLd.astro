@@ -1,0 +1,15 @@
+---
+// JSON-LD for a docs page (web-seo pattern): the site Organization plus a TechArticle built only from
+// the page's own title, description and canonical URL. Rendered in the page body, not in DocsShell.
+import JsonLd from './JsonLd.astro';
+import { canonicalUrl, content, organizationJsonLd } from '../lib/site.ts';
+import { techArticleSchema } from '../lib/jsonld.ts';
+
+interface Props { title: string; description: string; path: string }
+const { title, description, path } = Astro.props;
+const schema = [
+  organizationJsonLd,
+  techArticleSchema({ title, description, url: canonicalUrl(path), brand: content.brand.name }),
+];
+---
+<JsonLd schema={schema} />

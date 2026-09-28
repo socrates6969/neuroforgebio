@@ -1,0 +1,435 @@
+{
+ "N1c_synthetic": {
+  "card_hashes_run1": {
+   "N2_run_card.json": "fe3cb960d69b30f5729b2ea9e79a81cbfc152c14134517117707435ef35d7176",
+   "syn01_card.json": "83f4b761a371a528035951134e08ccf86283e161fbf12ad1338302964f4b7403",
+   "syn02_card.json": "dd6a6a68ba36a0467908ad8530d86af17ae953e28d332486c0aa1d7021cfe8e7",
+   "syn03_card.json": "9b96d7ae8bf64a96bc4ecce0d337570c0efabaf771fb69a118b19d351a57c678"
+  },
+  "card_hashes_run2": {
+   "N2_run_card.json": "fe3cb960d69b30f5729b2ea9e79a81cbfc152c14134517117707435ef35d7176",
+   "syn01_card.json": "83f4b761a371a528035951134e08ccf86283e161fbf12ad1338302964f4b7403",
+   "syn02_card.json": "dd6a6a68ba36a0467908ad8530d86af17ae953e28d332486c0aa1d7021cfe8e7",
+   "syn03_card.json": "9b96d7ae8bf64a96bc4ecce0d337570c0efabaf771fb69a118b19d351a57c678"
+  },
+  "identical": true,
+  "note": "synthetic EDFs (stream (5,1)), 3 subjects x 8 files x 1200 s, R = 2 shuffle replicates",
+  "runs": [
+   {
+    "stdout": "{\"n2\": \"not verifiable: code (harness not validated: N1 a,b,S-b leak demonstration failed)\", \"subjects\": {\"syn01\": [\"PASS\", 4, 0, 1.0], \"syn02\": [\"PASS\", 3, 0, 0.9995], \"syn03\": [\"PASS\", 4, 0, 1.0]}, \"N1a\": \"FAIL\", \"N1b\": \"FAIL\", \"card_hash\": \"fe3cb960d69b30f5729b2ea9e79a81cbfc152c14134517117707435ef35d7176\", \"wall_s\": 22.1, \"peak_mb\": 194.05078125}",
+    "wall_s": 24.759003400802612
+   },
+   {
+    "stdout": "{\"n2\": \"not verifiable: code (harness not validated: N1 a,b,S-b leak demonstration failed)\", \"subjects\": {\"syn01\": [\"PASS\", 4, 0, 1.0], \"syn02\": [\"PASS\", 3, 0, 0.9995], \"syn03\": [\"PASS\", 4, 0, 1.0]}, \"N1a\": \"FAIL\", \"N1b\": \"FAIL\", \"card_hash\": \"fe3cb960d69b30f5729b2ea9e79a81cbfc152c14134517117707435ef35d7176\", \"wall_s\": 23.6, \"peak_mb\": 193.6796875}",
+    "wall_s": 26.595421075820923
+   }
+  ],
+  "verdict_synthetic": "PASS"
+ },
+ "N1d": {
+  "caught": {
+   "F1": true,
+   "F2": true,
+   "F3": true,
+   "F4": true,
+   "F5": true,
+   "F6": true,
+   "F7": true,
+   "F8": true,
+   "F9": true,
+   "S1": true,
+   "S5": true,
+   "S7": true
+  },
+  "n_caught": 12,
+  "n_required": 12,
+  "pytest_returncode": 0,
+  "pytest_tail": [
+   "- generated xml file: C:\\Users\\mariu\\AppData\\Local\\Temp\\nfh_n1_vh1toqxr\\junit.xml -"
+  ],
+  "tests_failed": 0,
+  "tests_passed": 54,
+  "tests_total": 54,
+  "verdict_synthetic": "PASS",
+  "violation_tests_by_id": {
+   "F1": [
+    "pass"
+   ],
+   "F2": [
+    "pass",
+    "pass"
+   ],
+   "F3": [
+    "pass",
+    "pass"
+   ],
+   "F4": [
+    "pass",
+    "pass"
+   ],
+   "F5": [
+    "pass"
+   ],
+   "F6": [
+    "pass"
+   ],
+   "F7": [
+    "pass",
+    "pass"
+   ],
+   "F8": [
+    "pass"
+   ],
+   "F9": [
+    "pass"
+   ],
+   "S1": [
+    "pass"
+   ],
+   "S5": [
+    "pass"
+   ],
+   "S7": [
+    "pass"
+   ]
+  },
+  "wall_s": 2.206139087677002
+ },
+ "N1e": {
+  "disagreements": [],
+  "fixture": {
+   "X1": {
+    "expected": [
+     1,
+     0,
+     1,
+     0
+    ],
+    "match": true,
+    "reimpl": [
+     1,
+     0,
+     1,
+     0.0
+    ],
+    "timescoring": [
+     1,
+     0,
+     1,
+     0.0
+    ]
+   },
+   "X10": {
+    "expected": [
+     1,
+     0,
+     1,
+     0
+    ],
+    "match": true,
+    "reimpl": [
+     1,
+     0,
+     1,
+     0.0
+    ],
+    "timescoring": [
+     1,
+     0,
+     1,
+     0.0
+    ]
+   },
+   "X11": {
+    "expected": [
+     0,
+     3,
+     0,
+     36
+    ],
+    "match": true,
+    "reimpl": [
+     0,
+     3,
+     0,
+     36.0
+    ],
+    "timescoring": [
+     0,
+     3,
+     0,
+     36.0
+    ]
+   },
+   "X12a": {
+    "expected": [
+     1,
+     0,
+     1,
+     0
+    ],
+    "match": true,
+    "reimpl": [
+     1,
+     0,
+     1,
+     0.0
+    ],
+    "timescoring": [
+     1,
+     0,
+     1,
+     0.0
+    ]
+   },
+   "X12b": {
+    "expected": [
+     1,
+     0,
+     1,
+     0
+    ],
+    "match": true,
+    "reimpl": [
+     1,
+     0,
+     1,
+     0.0
+    ],
+    "timescoring": [
+     1,
+     0,
+     1,
+     0.0
+    ]
+   },
+   "X2": {
+    "expected": [
+     0,
+     0,
+     1,
+     0
+    ],
+    "match": true,
+    "reimpl": [
+     0,
+     0,
+     1,
+     0.0
+    ],
+    "timescoring": [
+     0,
+     0,
+     1,
+     0.0
+    ]
+   },
+   "X3": {
+    "expected": [
+     1,
+     0,
+     1,
+     0
+    ],
+    "match": true,
+    "reimpl": [
+     1,
+     0,
+     1,
+     0.0
+    ],
+    "timescoring": [
+     1,
+     0,
+     1,
+     0.0
+    ]
+   },
+   "X4": {
+    "expected": [
+     0,
+     1,
+     1,
+     24
+    ],
+    "match": true,
+    "reimpl": [
+     0,
+     1,
+     1,
+     24.0
+    ],
+    "timescoring": [
+     0,
+     1,
+     1,
+     24.0
+    ]
+   },
+   "X5": {
+    "expected": [
+     1,
+     0,
+     1,
+     0
+    ],
+    "match": true,
+    "reimpl": [
+     1,
+     0,
+     1,
+     0.0
+    ],
+    "timescoring": [
+     1,
+     0,
+     1,
+     0.0
+    ]
+   },
+   "X6": {
+    "expected": [
+     0,
+     1,
+     1,
+     24
+    ],
+    "match": true,
+    "reimpl": [
+     0,
+     1,
+     1,
+     24.0
+    ],
+    "timescoring": [
+     0,
+     1,
+     1,
+     24.0
+    ]
+   },
+   "X7": {
+    "expected": [
+     1,
+     1,
+     1,
+     24
+    ],
+    "match": true,
+    "reimpl": [
+     1,
+     1,
+     1,
+     24.0
+    ],
+    "timescoring": [
+     1,
+     1,
+     1,
+     24.0
+    ]
+   },
+   "X8": {
+    "expected": [
+     1,
+     2,
+     1,
+     48
+    ],
+    "match": true,
+    "reimpl": [
+     1,
+     2,
+     1,
+     48.0
+    ],
+    "timescoring": [
+     1,
+     2,
+     1,
+     48.0
+    ]
+   },
+   "X9": {
+    "expected": [
+     1,
+     2,
+     1,
+     48
+    ],
+    "match": true,
+    "reimpl": [
+     1,
+     2,
+     1,
+     48.0
+    ],
+    "timescoring": [
+     1,
+     2,
+     1,
+     48.0
+    ]
+   }
+  },
+  "fixture_all_match": true,
+  "latency_X12_ok": true,
+  "prediction": "fixture exact; 1000/1000 identical; P(PASS)=0.85",
+  "random_identical": 1000,
+  "random_pairs": 1000,
+  "verdict": "PASS"
+ },
+ "provenance": {
+  "code_sha256": {
+   "edf_reader.py": "f5a62fb9a277b37bfa05a17bcfd5ff3f2ca2613907173c7774ada288d3c27ddf",
+   "nfharness/__init__.py": "9efc7a844dc73e533957c92f644c38cd96df0851b52c58a7448e14a89df2937d",
+   "nfharness/card.py": "83b6bedde5bfd01607b4d6f778f8d4739aa1e51f27631a38142ffa98b1f3ee2c",
+   "nfharness/config.py": "dfca97f440fe098a5c966d245c4dc5401c745623e0383d3b40c5977263498632",
+   "nfharness/data.py": "243c9db3912886620f82b955fd5f3cd03f17ac938b2ea0ad1be9313f38b5a9e0",
+   "nfharness/errors.py": "7133afc13a2561096d54bb58c15463ccf07774868e5fc55fc15d883958c4b6aa",
+   "nfharness/features.py": "29acae0789a5e5a297ad489d962ce26f81bdd38bb41c3e82074a6581ad96f32e",
+   "nfharness/labels.py": "4679d0fabe44b4d313862321d9d2b3c7dd713370b2635563a321f35978f23a27",
+   "nfharness/model.py": "08305ee1f64f8c7b237e6592bddbfa93e5b7b200e0bfe895e5e520a5094ca10a",
+   "nfharness/pipeline.py": "76a2773a9e7bc94cb261d3a2acf3ca2261561bb60d3d0330886fba3ffebc202b",
+   "nfharness/postprocess.py": "faa04421f2167935c72ed102c9c9e63750ad7775a56045212559e230e68244c9",
+   "nfharness/provenance.py": "ade7554aa6990c5a27b27d171087c88dfb02378eb4a63a0279cf816302570b6b",
+   "nfharness/scoring.py": "b23ed292bed2235e67cb09e7a7698f44ff2e16c6e16680ef4ec98e42bfffc1ef",
+   "nfharness/splits.py": "1fcecb0af87f00709dc84a99fbc7f243444e342ff210031aae8e50660161ec29",
+   "nfharness/stats.py": "5dc8cf597a76e5b5251cb6ba73139d7fd939d2eee37b8b2f8a7055464e3eb4ee",
+   "nfharness/windows.py": "2898848e8984f84cef5ce637b6c810068e8a7db1b2e50e7eb62e7e67480cb36f",
+   "run_n1.py": "9aa51100016d8325ade3e736a12b7e535c4b3e157b3d813afa515a4cf1360aba",
+   "tests/conftest.py": "118c154f3590c36ff4e3cfc625eea7644e596e20eace51bac79eba3ef79ded6a",
+   "tests/test_units.py": "1aaf420595b78372d95110a07aa311657cc06839d8f463c849ef3a179a5ad1df",
+   "tests/test_violations.py": "8853bcfe40488de1549e072ee7ba467b2591b12f13216bfbabbda28068d87cca"
+  },
+  "environment": {
+   "blas_threads": {
+    "MKL_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+   },
+   "machine": "AMD64",
+   "packages": {
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.3",
+    "pytest": "8.4.2",
+    "scipy": "1.18.1",
+    "timescoring": "0.0.7"
+   },
+   "platform": "Windows-11-10.0.26200-SP0",
+   "processor": "AMD64 Family 25 Model 117 Stepping 2, AuthenticAMD",
+   "python": "3.12.10"
+  },
+  "prereg_sha256": {
+   "N1_harness_controls.md": "27db9d27f5b6ac2e0f49826c6b3eb9625b8e1633434ae70cf62a7e10f09fc93b",
+   "N2_baseline_detection.md": "ed929ae0e5182827352928225cf40865a8bee5f6b5da089be5a6600e6678e21c"
+  },
+  "seed": 20261001
+ },
+ "runtime": {
+  "finished_utc": "2026-09-26T16:46:27.811066+00:00",
+  "peak_ram_mb": 259.703125,
+  "wall_s": 64.14468359947205
+ },
+ "status_label": "RESEARCH USE ONLY. NOT A MEDICAL DEVICE."
+}

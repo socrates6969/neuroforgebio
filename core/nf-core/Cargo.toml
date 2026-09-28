@@ -1,0 +1,32 @@
+[package]
+name = "nf-core"
+version = "0.1.0"
+description = "Shared SDK core (BLUEPRINT §5): model types, canonical JSON + content IDs, Zarr v3 chunk IO + cache, API client core, stream write-ahead buffer, offline provenance recorder."
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+# Default build stays light (hashing, canonical JSON, model, Zarr, provenance, client policy).
+# `stream` adds the encrypted write-ahead buffer, chunk signing and device tokens.
+# A Rust-owned HTTPS/gRPC transport is planned; today the Python binding injects its transport.
+[features]
+default = []
+stream = ["dep:aes-gcm", "dep:ed25519-dalek", "dep:zeroize"]
+
+[dependencies]
+sha2 = { version = "0.10", default-features = false, features = ["std"] }
+unicode-normalization = { version = "0.1", default-features = false, features = ["std"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+getrandom = "0.2"
+aes-gcm = { version = "0.10", optional = true, default-features = false, features = ["aes", "alloc", "getrandom"] }
+ed25519-dalek = { version = "2.2", optional = true, default-features = false, features = ["std", "zeroize", "rand_core"] }
+zeroize = { version = "1", optional = true }
+
+[dev-dependencies]
+proptest = { version = "1", default-features = false, features = ["std"] }
+
+[[test]]
+name = "stream"
+required-features = ["stream"]

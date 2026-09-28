@@ -1,0 +1,19 @@
+---
+import type { UiCta } from '../types.ts';
+import Button from './Button.astro';
+interface Props { heading: string; body: string; ctas: UiCta[]; id?: string }
+const { heading, body, ctas, id = 'h-cta' } = Astro.props;
+---
+<div class="cta">
+  <div>
+    <h2 id={id} set:html={heading} />
+    <p>{body}</p>
+  </div>
+  <div class="actions">{ctas.map((c) => <Button cta={c} />)}<slot /></div>
+</div>
+<style>
+  .cta { background: var(--color-surface); border: 1px solid var(--color-line); box-shadow: var(--elevation-card); border-radius: var(--radius-card); padding: 48px; display: flex; justify-content: space-between; align-items: center; gap: 28px; flex-wrap: wrap; }
+  .cta p { color: var(--color-muted); margin-top: 10px; max-width: 56ch; }
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
+  @media (max-width: 700px) { .cta { padding: 32px 24px; } }
+</style>

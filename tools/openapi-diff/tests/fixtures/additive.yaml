@@ -1,0 +1,100 @@
+# base.yaml plus only additive changes: a new operation, an optional parameter, an optional request
+# property, a new response property, a widened request bound and a new webhook.
+openapi: 3.1.0
+info: {title: Fixture API, version: 1.3.0}
+paths:
+  /v1/items:
+    get:
+      operationId: listItems
+      security: [{oidc: []}, {apiKey: []}]
+      x-nf-api-key-scope: metadata:read
+      parameters:
+        - {name: limit, in: query, required: false, schema: {type: integer, minimum: 1, maximum: 500}}
+        - {name: state, in: query, required: false, schema: {type: string, enum: [open, closed, archived]}}
+        - {name: q, in: query, required: false, schema: {type: string}}
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema: {type: array, items: {$ref: '#/components/schemas/Item'}}
+    post:
+      operationId: createItem
+      security: [{oidc: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ItemIn'}
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Item'}
+  /v1/items/{item_id}:
+    get:
+      operationId: getItem
+      security: [{oidc: []}]
+      parameters:
+        - {name: item_id, in: path, required: true, schema: {type: string, format: uuid}}
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Item'}
+    delete:
+      operationId: deleteItem
+      security: [{oidc: []}]
+      parameters:
+        - {name: item_id, in: path, required: true, schema: {type: string, format: uuid}}
+      responses:
+        '204': {description: deleted}
+  /v1/health:
+    get:
+      operationId: health
+      security: []
+      responses:
+        '200': {description: ok}
+webhooks:
+  itemChanged:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ItemEvent'}
+      responses:
+        2XX: {description: ok}
+  itemDeleted:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ItemEvent'}
+      responses:
+        2XX: {description: ok}
+components:
+  schemas:
+    ItemIn:
+      type: object
+      required: [name]
+      properties:
+        name: {type: string, maxLength: 200}
+        note: {anyOf: [{type: string}, {type: 'null'}]}
+        tags: {type: array, items: {type: string}}
+    Item:
+      type: object
+      required: [id, name, state]
+      properties:
+        id: {type: string, format: uuid}
+        name: {type: string}
+        state: {type: string, enum: [open, closed]}
+        size: {type: integer}
+        created_at: {type: string, format: date-time}
+    ItemEvent:
+      type: object
+      required: [id, item]
+      properties:
+        id: {type: string}
+        item: {$ref: '#/components/schemas/Item'}

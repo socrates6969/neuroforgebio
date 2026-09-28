@@ -1,0 +1,577 @@
+{
+ "N": 1000,
+ "rows": [
+  {
+   "config": "baseline (N=1000)",
+   "F_NOFB": 0.401,
+   "F_NAT": 0.581,
+   "G0": false,
+   "G0_ratio": 1.448877805486284,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.6,
+   "SM_opt_NAT": 0.7
+  },
+  {
+   "config": "tau_m=20ms",
+   "F_NOFB": 0.401,
+   "F_NAT": 0.569,
+   "G0": false,
+   "G0_ratio": 1.4189526184538652,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.6,
+   "SM_opt_NAT": 0.3
+  },
+  {
+   "config": "tau_m=80ms",
+   "F_NOFB": 0.399,
+   "F_NAT": 0.581,
+   "G0": false,
+   "G0_ratio": 1.4561403508771928,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.6,
+   "SM_opt_NAT": 0.7
+  },
+  {
+   "config": "drop=5mm",
+   "F_NOFB": 0.428,
+   "F_NAT": 0.582,
+   "G0": false,
+   "G0_ratio": 1.3598130841121494,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.6,
+   "SM_opt_NAT": 0.7
+  },
+  {
+   "config": "drop=20mm",
+   "F_NOFB": 0.36,
+   "F_NAT": 0.539,
+   "G0": false,
+   "G0_ratio": 1.4972222222222225,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.6,
+   "SM_opt_NAT": 0.2
+  },
+  {
+   "config": "amp U(0.1,0.4)",
+   "F_NOFB": 0.174,
+   "F_NAT": 0.306,
+   "G0": false,
+   "G0_ratio": 1.7586206896551726,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.5,
+   "SM_opt_NAT": 0.2
+  },
+  {
+   "config": "amp U(0.4,1.0)",
+   "F_NOFB": 0.718,
+   "F_NAT": 0.823,
+   "G0": false,
+   "G0_ratio": 1.1462395543175488,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.8,
+   "SM_opt_NAT": 0.8
+  },
+  {
+   "config": "Poisson 1",
+   "F_NOFB": 0.265,
+   "F_NAT": 0.375,
+   "G0": false,
+   "G0_ratio": 1.4150943396226414,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.5,
+   "SM_opt_NAT": 0.3
+  },
+  {
+   "config": "Poisson 4",
+   "F_NOFB": 0.587,
+   "F_NAT": 0.755,
+   "G0": false,
+   "G0_ratio": 1.2862010221465077,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.7,
+   "SM_opt_NAT": 0.8
+  },
+  {
+   "config": "c U(1.3,2.0)",
+   "F_NOFB": 0.731,
+   "F_NAT": 0.796,
+   "G0": false,
+   "G0_ratio": 1.0889192886456909,
+   "G_Z": {
+    "F_NOFB": 0.096,
+    "F_NAT": 0.031,
+    "passed": false
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.4,
+   "SM_opt_NAT": 0.1
+  },
+  {
+   "config": "c U(2.0,4.0)",
+   "F_NOFB": 0.107,
+   "F_NAT": 0.206,
+   "G0": false,
+   "G0_ratio": 1.925233644859813,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.8,
+   "SM_opt_NAT": 1.0
+  },
+  {
+   "config": "noise 0",
+   "F_NOFB": 0.211,
+   "F_NAT": 0.284,
+   "G0": false,
+   "G0_ratio": 1.3459715639810426,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.7,
+   "SM_opt_NAT": 0.7
+  },
+  {
+   "config": "noise 0.1",
+   "F_NOFB": 0.569,
+   "F_NAT": 0.695,
+   "G0": false,
+   "G0_ratio": 1.2214411247803163,
+   "G_Z": {
+    "F_NOFB": 0.098,
+    "F_NAT": 0.08,
+    "passed": false
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.5,
+   "SM_opt_NAT": 0.2
+  },
+  {
+   "config": "NAT tau 50ms",
+   "F_NOFB": 0.401,
+   "F_NAT": 0.55,
+   "G0": false,
+   "G0_ratio": 1.371571072319202,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.6,
+   "SM_opt_NAT": 0.3
+  },
+  {
+   "config": "NAT tau 100ms",
+   "F_NOFB": 0.401,
+   "F_NAT": 0.581,
+   "G0": false,
+   "G0_ratio": 1.448877805486284,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.6,
+   "SM_opt_NAT": 0.7
+  },
+  {
+   "config": "memory +/-5%",
+   "F_NOFB": 0.364,
+   "F_NAT": 0.539,
+   "G0": false,
+   "G0_ratio": 1.4807692307692308,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.6,
+   "SM_opt_NAT": 0.7
+  },
+  {
+   "config": "memory +/-15%",
+   "F_NOFB": 0.447,
+   "F_NAT": 0.597,
+   "G0": false,
+   "G0_ratio": 1.3355704697986577,
+   "G_Z": {
+    "F_NOFB": 0.007,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.6,
+   "SM_opt_NAT": 0.2
+  },
+  {
+   "config": "p_det_NAT 0.8",
+   "F_NOFB": 0.401,
+   "F_NAT": 0.571,
+   "G0": false,
+   "G0_ratio": 1.423940149625935,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.6,
+   "SM_opt_NAT": 0.7
+  },
+  {
+   "config": "p_det_NAT 1.0",
+   "F_NOFB": 0.401,
+   "F_NAT": 0.586,
+   "G0": false,
+   "G0_ratio": 1.4613466334164587,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.6,
+   "SM_opt_NAT": 0.7
+  },
+  {
+   "config": "predictive (Smith)",
+   "F_NOFB": 0.401,
+   "F_NAT": 0.572,
+   "G0": false,
+   "G0_ratio": 1.4264339152119698,
+   "G_Z": {
+    "F_NOFB": 0.0,
+    "F_NAT": 0.0,
+    "passed": true
+   },
+   "R": [
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan",
+    "nan"
+   ],
+   "delta_star": "undefined",
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.6,
+   "SM_opt_NAT": 0.7
+  },
+  {
+   "config": "REFERENCE cycle-1 friction model (not counted)",
+   "F_NOFB": 0.752,
+   "F_NAT": 0.607,
+   "G0": false,
+   "G0_ratio": 0.8071808510638298,
+   "G_Z": {
+    "F_NOFB": 0.51,
+    "F_NAT": 0.071,
+    "passed": false
+   },
+   "R": [
+    1.358620689655172,
+    1.0,
+    0.49655172413793064,
+    0.08965517241379317,
+    -0.0965517241379311,
+    -0.1724137931034484,
+    -0.1862068965517243,
+    -0.17931034482758634,
+    -0.2275862068965519
+   ],
+   "delta_star": 24.8,
+   "in_50_150": false,
+   "SM_opt_NOFB": 0.3,
+   "SM_opt_NAT": 0.2
+  }
+ ],
+ "frac_in_50_150": 0.0,
+ "n_in": 0,
+ "n_configs": 19,
+ "robust": false,
+ "runtime_s": 220.7
+}

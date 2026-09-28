@@ -1,0 +1,161 @@
+{
+ "card_sha256_excl_runtime": "faed1edaaa850a8c282d6791fd7fb7dd38e6262fb8b0ce3de6f0138cfd190ce5",
+ "controls": {
+  "N3 harness gate": "see results\\N3_card.json / N3_verdict.json"
+ },
+ "data": {
+  "dataset": "CHB-MIT Scalp EEG Database v1.0.0, DOI 10.13026/C2K01R, ODC-By 1.0",
+  "files": "R2 subset: seizure-containing files only (prereg N3 \u00a72.1); chb23/chb24 test files now BURNED",
+  "hours_scored_test": 2.0,
+  "subject": "chb24 (no SUBJECT-INFO row; age/sex unknown; repeat-patient status UNVERIFIED)",
+  "test_seizures_N_ref": 4
+ },
+ "leakage_checklist": {
+  "guards": "nfharness F1-F9/S7 unchanged; N3 gate = NC-P window arm + pooled event arm + C3' + planted leaks"
+ },
+ "metrics": {
+  "chb24": {
+   "N_ref_is_4": true,
+   "auroc_bootstrap_nan_draws": 0,
+   "auroc_ci_block_bootstrap_files": [
+    0.8626863412788498,
+    0.919900787861103
+   ],
+   "f1": 0.5,
+   "fa_ci_garwood_per_24h": [
+    41.44598612098201,
+    189.15827064231976
+   ],
+   "fa_per_24h": 96.0,
+   "flags": [
+    "CI uninformative (N_ref = 4)",
+    "FA on peri-ictal data only"
+   ],
+   "fp": 8,
+   "fp_grid_meet_max_inconclusive_max": [
+    2,
+    5
+   ],
+   "hours": 2.0,
+   "latency_frac_le_10s": 0.75,
+   "latency_iqr": [
+    7.0,
+    9.0
+   ],
+   "latency_median": 7.5,
+   "latency_s": [
+    8,
+    12,
+    7,
+    7
+   ],
+   "lr_converged_all_fits": true,
+   "n_fits": 3,
+   "n_pos_windows": 98,
+   "n_ref": 4,
+   "n_test_windows": 7198,
+   "n_train_pos_windows": 100,
+   "n_train_windows": 7195,
+   "per_file": {
+    "chb24_04.edf": {
+     "dur_s": 3600.0,
+     "fp": 8,
+     "latencies": [
+      8,
+      12,
+      7
+     ],
+     "n_ref": 3,
+     "s_fp": 71,
+     "s_nref": 78,
+     "s_tp": 37,
+     "tp": 3,
+     "tp_indicators": [
+      1,
+      1,
+      1
+     ]
+    },
+    "chb24_06.edf": {
+     "dur_s": 3600.0,
+     "fp": 0,
+     "latencies": [
+      7
+     ],
+     "n_ref": 1,
+     "s_fp": 0,
+     "s_nref": 24,
+     "s_tp": 10,
+     "tp": 1,
+     "tp_indicators": [
+      1
+     ]
+    }
+   },
+   "precision": 0.3333333333333333,
+   "prevalence": 0.013614893025840511,
+   "sample_f1": 0.42727272727272725,
+   "sample_precision": 0.3983050847457627,
+   "sample_sensitivity": 0.46078431372549017,
+   "scores_complete": true,
+   "sens_ci_bootstrap_by_event": [
+    1.0,
+    1.0
+   ],
+   "sens_ci_clopper_pearson": [
+    0.3976353643835253,
+    1.0
+   ],
+   "sensitivity": 1.0,
+   "tau": 0.99,
+   "tp": 4,
+   "verdict": "FAIL",
+   "window_auprc": 0.2772259923773552,
+   "window_auroc": 0.8911943087093993
+  }
+ },
+ "model": {
+  "config_sha256": "b6775e9aad8958cfce6cbfe805674c55fd13b1c8969a8320b681edb451bd1e4f",
+  "tau_rule": "smallest grid tau with inner-LOFO train FA <= 12/24h",
+  "tau_star": 0.99
+ },
+ "provenance": {
+  "label_vault": {
+   "chain_sha256": "2dd1a74000c25ede8881f632cd8cdb557b9e25d45a4e15025b046fbae67d1375",
+   "scorer_reads": 4,
+   "vault": "N3-N2-chb24"
+  },
+  "prereg_sha256": {
+   "N1_harness_controls.md": "27db9d27f5b6ac2e0f49826c6b3eb9625b8e1633434ae70cf62a7e10f09fc93b",
+   "N1b_negative_controls_v2.md": "a67b251734d59097b0cd516162e054ecb72737f27344868a45b3c40f1d7fc4a6",
+   "N2_baseline_detection.md": "ed929ae0e5182827352928225cf40865a8bee5f6b5da089be5a6600e6678e21c",
+   "N3_harness_validation_fresh.md": "954e4abba139cde8d9a37e0ae43190416389315719d7d7451d26b394e87fc32b"
+  },
+  "sha256_scores_hyps_step_i": "3ff1b5ac718ae929291cedfabfb72a2cad41b17578b3485dcc488281bdbb13f9",
+  "split_hash": "9320fa73c5e52ce449f7257f47dda5fce87a25b53d812f51dbf6b21bc0397a19"
+ },
+ "run_id": "N3-N2model-chb24-9320fa73c5e5",
+ "runtime": {},
+ "split": {
+  "buffer_s": 10,
+  "folds": {
+   "chb24": {
+    "test": [
+     "chb24_04.edf",
+     "chb24_06.edf"
+    ],
+    "train": [
+     "chb24_01.edf",
+     "chb24_03.edf"
+    ]
+   }
+  },
+  "hash": "9320fa73c5e52ce449f7257f47dda5fce87a25b53d812f51dbf6b21bc0397a19",
+  "hash_matches_prereg": true,
+  "note": "split string of both subjects hashed (S7) before feature extraction",
+  "scheme": "causal: train through the file with the 3rd seizure; test = the next seizure files"
+ },
+ "task": "seizure DETECTION, patient-specific causal split (N2 \u00a71); CHB-MIT bipolar, 22 unique channels",
+ "verdict": "N2 decision rule, subject chb24: FAIL (counts only if the N3 harness = PASS; see results\\N3_verdict.json)",
+ "verdict_note": "Locked N2 model and rule re-run unchanged on a fresh subject (prereg N3 \u00a75). FP grid [2, 5]."
+}

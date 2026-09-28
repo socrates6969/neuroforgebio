@@ -1,0 +1,16 @@
+{
+  "name": "NeuroForge Bio",
+  "legalName": "NeuroForge Bio",
+  "legalNameIsPlaceholder": true,
+  "domain": "neuroforge-bio.invalid",
+  "domainIsPlaceholder": true,
+  "secondaryHost": "cosmos.neuroforge-bio.invalid",
+  "codeIdentifiers": {
+    "pythonImport": "neuroforge",
+    "pypiPackage": "neuroforge",
+    "grpcPackage": "neuroforge",
+    "repoName": "neuroforge",
+    "fixed": false,
+    "note": "Not fixed: these identifiers are settled only after the clash check is clean. The PyPI name is already taken by an unrelated project (market/names.md §1). No legal entity is formed and no domain is registered; the .invalid host is a deliberate placeholder (owner-gated, DECISIONS.md GATE B)."
+  }
+}

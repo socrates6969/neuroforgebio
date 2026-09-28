@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stream Terminal Hero</title>
+<style>
+  html,body{margin:0;height:100%;background:#0A0E14;overflow:hidden}
+  #stage{position:absolute;inset:0}
+  canvas{display:block;width:100%;height:100%}
+</style>
+</head>
+<body>
+<div id="stage" role="img" aria-label="Terminal-style oscilloscope: multi-channel EEG waveforms stream from left to right; noisy raw traces pass a vertical clean() divider and continue as clean traces. Status line reads: stream lsl://headset-01, 256 Hz, 32 channels, artifacts ICA-removed. Synthetic demo signal.">
+  <canvas id="c" aria-hidden="true"></canvas>
+</div>
+<script>
+(function(){
+  'use strict';
+  var stage = document.getElementById('stage');
+  var cv = document.getElementById('c');
+  var ctx = cv.getContext('2d');
+  var RM = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : {matches:false};
+  var C = {bg:'#0A0E14', fg:'#C9D1D9', acc:'#39FF88', sec:'#7AA2F7', warn:'#E3B341'};
+  var MONO = '"JetBrains Mono", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace';
+  var NAMES = ['Fp1','Fp2','F3','F4','F7','F8','C3','C4','T7','T8','P3','P4','P7','P8','O1','O2'];
+  var FRONTAL = {0:1,1:1,4:0.6,5:0.6,2:0.45,3:0.45};
+  var TEMPORAL = {8:1,9:1,4:0.5,5:0.5,12:0.5,13:0.5};
+  var W=1,H=1,DPR=1,L={};
+
+  function rgba(hex,a){ var n=parseInt(hex.slice(1),16); return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'; }
+  function hash(n){ n = (n|0) ^ 0x9e3779b9; n = Math.imul(n ^ (n>>>16), 0x85ebca6b); n = Math.imul(n ^ (n>>>13), 0xc2b2ae35); n ^= n>>>16; return (n>>>0)/4294967295; }
+  function vnoise(x, salt){ var i=Math.floor(x), f=x-i; f=f*f*(3-2*f); var a=hash(i*131+salt), b=hash((i+1)*131+salt); return (a + (b-a)*f)*2-1; }
+  function sstep(a,b,x){ var t=Math.max(0,Math.min(1,(x-a)/(b-a))); return t*t*(3-2*t); }
+
+  function clean(c,s){
+    var a = s*0.018;
+    return 0.46*Math.sin(a*1.3 + c*1.1)*(0.6 + 0.4*Math.sin(s*0.0021 + c))
+         + 0.28*Math.sin(a*2.9 + c*2.3)
+         + 0.16*Math.sin(a*6.1 + c*0.7)
+         + 0.10*Math.sin(a*0.37 + c*3.1);
+  }
+  function artifact(c,s){
+    var n = 0.30*vnoise(s*0.45, c*977) + 0.14*vnoise(s*1.3, c*331+7);   // broadband noise
+    n += 0.20*Math.sin(s*1.9 + c*0.3);                                 // line noise
+    n += 0.45*Math.sin(s*0.0037 + c*1.7);                              // slow drift
+    var fw = FRONTAL[c] || 0;
+    if(fw){                                                            // eye blinks (shared across frontal ch)
+      var blk = Math.floor(s/430), m = s - blk*430 - 215;
+      if(hash(blk*17+3) > 0.35) n += 1.9*fw*Math.exp(-(m*m)/(2*26*26));
+    }
+    var tw = TEMPORAL[c] || 0;
+    if(tw){                                                            // muscle bursts
+      var seg = Math.floor(s/300), env = hash(seg*29+11) > 0.55 ? Math.sin(Math.PI*((s/300)%1)) : 0;
+      n += 0.7*tw*env*vnoise(s*2.2, c*53+1);
+    }
+    var pk = Math.floor(s/900);                                        // occasional electrode pop
+    if(Math.floor(hash(pk*7+1)*16) === c){ var d = s - pk*900 - 450; if(d>0 && d<60) n += 1.6*Math.exp(-d/12); }
+    return n;
+  }
+
+  function layout(){
+    var r = stage.getBoundingClientRect();
+    W = Math.max(1,r.width); H = Math.max(1,r.height);
+    DPR = Math.min(2, window.devicePixelRatio||1);
+    cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    var fs = Math.max(10, Math.min(13, W/85));
+    var topBar = fs*3.0, botBar = fs*2.6, lblW = fs*3.6;
+    var y0 = topBar + fs*3.6, y1 = H - botBar - fs*0.8;
+    var n = Math.max(6, Math.min(16, Math.floor((y1-y0)/30)));
+    L = {fs:fs, topBar:topBar, botBar:botBar, x0:lblW + 10, x1:W - 12, y0:y0, y1:y1, n:n,
+         gap:(y1-y0)/n, div: Math.round(W*0.52)};
+    // gradients: gray -> accent / secondary across divider
+    var a = L.div - 36, b = L.div + 36;
+    L.gA = ctx.createLinearGradient(a,0,b,0); L.gA.addColorStop(0, rgba(C.fg,0.55)); L.gA.addColorStop(1, rgba(C.acc,0.95));
+    L.gB = ctx.createLinearGradient(a,0,b,0); L.gB.addColorStop(0, rgba(C.fg,0.55)); L.gB.addColorStop(1, rgba(C.sec,0.95));
+  }
+
+  function drawGrid(){
+    ctx.lineWidth = 1;
+    for(var x = L.x0; x <= L.x1; x += 32){
+      ctx.strokeStyle = ((x-L.x0)/32)%5===0 ? 'rgba(201,209,217,0.07)' : 'rgba(201,209,217,0.03)';
+      ctx.beginPath(); ctx.moveTo(x+0.5, L.y0 - L.gap*0.5); ctx.lineTo(x+0.5, L.y1); ctx.stroke();
+    }
+    for(var i=0;i<=L.n;i++){
+      var y = Math.round(L.y0 + (i-0.5)*L.gap)+0.5;
+      ctx.strokeStyle = 'rgba(201,209,217,0.035)';
+      ctx.beginPath(); ctx.moveTo(L.x0,y); ctx.lineTo(L.x1,y); ctx.stroke();
+    }
+  }
+
+  function fmtTime(t){ var m=Math.floor(t/60), s=t-m*60; return (m<10?'0':'')+m+':'+(s<10?'0':'')+s.toFixed(2); }
+
+  function draw(t){
+    ctx.fillStyle = C.bg; ctx.fillRect(0,0,W,H);
+    var fs = L.fs;
+    // vignette
+    var vg = ctx.createRadialGradient(W*0.5,H*0.5,Math.min(W,H)*0.2,W*0.5,H*0.5,Math.max(W,H)*0.75);
+    vg.addColorStop(0,'rgba(20,28,40,0.35)'); vg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = vg; ctx.fillRect(0,0,W,H);
+
+    drawGrid();
+
+    // clean zone tint
+    ctx.fillStyle = 'rgba(57,255,136,0.018)'; ctx.fillRect(L.div, L.y0 - L.gap*0.5, L.x1-L.div, L.y1 - L.y0 + L.gap*0.5);
+
+    var speed = 70, sNow = t*speed, amp = L.gap*0.36, step = 2;
+    ctx.lineJoin = 'round';
+    ctx.font = '500 '+(fs*0.85)+'px '+MONO; ctx.textBaseline='middle'; ctx.textAlign='left';
+    for(var c=0;c<L.n;c++){
+      var yc = L.y0 + c*L.gap + L.gap*0.5 - L.gap*0.5, ch = c % NAMES.length;
+      ctx.fillStyle = rgba(C.fg,0.5); ctx.fillText(NAMES[ch], 8, yc);
+      var grad = c%2 ? L.gB : L.gA;
+      // glow pass (right side only) then crisp pass
+      for(var pass=0; pass<2; pass++){
+        var xs = pass===0 ? L.div - 36 : L.x0;
+        ctx.beginPath();
+        for(var x = xs; x <= L.x1; x += step){
+          var s = sNow - x, w = sstep(L.div-36, L.div+36, x);
+          var v = clean(ch,s) + (1-w)*artifact(ch,s);
+          var y = yc - v*amp;
+          if(x===xs) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        }
+        if(pass===0){ ctx.strokeStyle = rgba(c%2?C.sec:C.acc, 0.10); ctx.lineWidth = 4; }
+        else { ctx.strokeStyle = grad; ctx.lineWidth = 1.15; }
+        ctx.stroke();
+      }
+    }
+
+    // divider
+    ctx.save();
+    ctx.setLineDash([4,5]); ctx.strokeStyle = rgba(C.acc,0.55); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(L.div+0.5, L.y0 - L.gap*0.2 - fs*1.6); ctx.lineTo(L.div+0.5, L.y1); ctx.stroke();
+    ctx.restore();
+    var bandG = ctx.createLinearGradient(L.div-26,0,L.div+26,0);
+    bandG.addColorStop(0,'rgba(57,255,136,0)'); bandG.addColorStop(0.5,'rgba(57,255,136,0.07)'); bandG.addColorStop(1,'rgba(57,255,136,0)');
+    ctx.fillStyle = bandG; ctx.fillRect(L.div-26, L.y0 - L.gap*0.5, 52, L.y1 - L.y0 + L.gap*0.5);
+    // divider label
+    var lbl = 'clean()', lw = ctx.measureText(lbl).width;
+    ctx.font = '600 '+fs+'px '+MONO; lw = ctx.measureText(lbl).width;
+    var ly = L.y0 - L.gap*0.5 - fs*1.3;
+    ctx.fillStyle = C.bg; ctx.fillRect(L.div - lw/2 - 10, ly - fs*0.85, lw+20, fs*1.7);
+    ctx.strokeStyle = rgba(C.acc,0.7); ctx.lineWidth=1; ctx.strokeRect(L.div - lw/2 - 10 + 0.5, ly - fs*0.85 + 0.5, lw+20, fs*1.7);
+    ctx.fillStyle = C.acc; ctx.textAlign='center'; ctx.fillText(lbl, L.div, ly);
+    // zone tags
+    ctx.font = '500 '+(fs*0.82)+'px '+MONO;
+    ctx.textAlign='left'; ctx.fillStyle = rgba(C.fg,0.45);
+    if(L.div - L.x0 > fs*22) ctx.fillText('raw  ~ line noise · EOG · EMG · drift', L.x0, ly);
+    ctx.textAlign='right'; ctx.fillStyle = rgba(C.acc,0.7);
+    if(L.x1 - L.div > fs*16) ctx.fillText('clean  ✓ ICA · notch · re-ref', L.x1, ly);
+
+    // top status bar
+    ctx.fillStyle = 'rgba(201,209,217,0.035)'; ctx.fillRect(0,0,W,L.topBar);
+    ctx.fillStyle = 'rgba(201,209,217,0.10)'; ctx.fillRect(0,L.topBar,W,1);
+    ctx.font = '500 '+fs+'px '+MONO; ctx.textAlign='left'; ctx.textBaseline='middle';
+    var ty = L.topBar/2, x = 14;
+    ctx.fillStyle = C.acc; ctx.beginPath(); ctx.arc(x+4, ty, 3.5, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = rgba(C.acc, 0.25*(0.5+0.5*Math.sin(t*3))); ctx.beginPath(); ctx.arc(x+4, ty, 7, 0, Math.PI*2); ctx.fill();
+    x += 18;
+    var parts = [['$ ',C.sec],['stream: ',rgba(C.fg,0.6)],['lsl://headset-01',C.fg],[' | ',rgba(C.fg,0.3)],['256 Hz',C.fg],[' | ',rgba(C.fg,0.3)],['32 ch',C.fg],[' | ',rgba(C.fg,0.3)],['artifacts: ',rgba(C.fg,0.6)],['ICA-removed',C.acc]];
+    for(var i=0;i<parts.length;i++){
+      if(x > W - 20) break;
+      ctx.fillStyle = parts[i][1]; ctx.fillText(parts[i][0], x, ty); x += ctx.measureText(parts[i][0]).width;
+    }
+    if(Math.floor(t*1.6)%2===0 && x < W-16){ ctx.fillStyle = rgba(C.acc,0.85); ctx.fillRect(x+4, ty - fs*0.55, fs*0.55, fs*1.1); }
+
+    // bottom bar
+    var by = H - L.botBar/2;
+    ctx.fillStyle = 'rgba(201,209,217,0.10)'; ctx.fillRect(0,H-L.botBar,W,1);
+    ctx.font = '500 '+(fs*0.85)+'px '+MONO; ctx.textAlign='left'; ctx.fillStyle = rgba(C.fg,0.45);
+    var bl = 't+'+fmtTime(t)+'   buf 2.0 s   view '+L.n+'/32 ch   scale 50 µV/div';
+    ctx.fillText(bl, 14, by);
+    ctx.textAlign='right'; ctx.fillStyle = rgba(C.sec,0.75);
+    if(W > ctx.measureText(bl).width + 200) ctx.fillText('[synthetic demo signal]', W-14, by);
+  }
+
+  var t = 12.48, raf=0, running=false, last=0, inView=true;
+  function frame(now){ var dt=Math.min(0.05,(now-last)/1000)||0; last=now; t+=dt; draw(t); raf=requestAnimationFrame(frame); }
+  function start(){ if(running||RM.matches||document.hidden||!inView) return; running=true; last=performance.now(); raf=requestAnimationFrame(frame); }
+  function stop(){ running=false; cancelAnimationFrame(raf); }
+  document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+  var onRM = function(){ if(RM.matches){ stop(); draw(t); } else start(); };
+  if(RM.addEventListener) RM.addEventListener('change', onRM); else if(RM.addListener) RM.addListener(onRM);
+  if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ inView=es[0].isIntersecting; inView?start():stop(); }).observe(stage); }
+  if('ResizeObserver' in window){ new ResizeObserver(function(){ layout(); draw(t); }).observe(stage); }
+  else window.addEventListener('resize', function(){ layout(); draw(t); });
+  layout(); draw(t); start();
+})();
+</script>
+</body>
+</html>

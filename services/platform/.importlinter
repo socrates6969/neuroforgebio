@@ -1,0 +1,81 @@
+; Module boundaries of the modular monolith (BLUEPRINT §3.1, M2-CONTRACTS §1).
+; Run: .venv/Scripts/lint-imports --config services/platform/.importlinter  (also run by tests/core/test_imports.py)
+; Parenthesised layers are optional: they may not exist yet (other workers' modules land in parallel).
+[importlinter]
+root_package = nf_platform
+include_external_packages = False
+
+[importlinter:contract:layers]
+name = api -> (sweeps, registry) -> (governance, evidence, placement) -> (jobs) -> (webhooks, limits, site) -> (ingest, signals, storage, provenance, pipelines, auth, audit) -> db
+type = layers
+containers = nf_platform
+layers =
+    api
+    (sweeps) : (registry)
+    (governance) : (evidence) : (placement)
+    (jobs)
+    (webhooks) : (limits) : (site)
+    (ingest) : (signals) : (storage) : (provenance) : (pipelines) : auth : audit
+    db
+
+[importlinter:contract:storage-signals-no-api]
+name = storage and signals never import the API
+type = forbidden
+source_modules =
+    nf_platform.storage
+    nf_platform.signals
+forbidden_modules =
+    nf_platform.api
+    nf_platform.app
+allow_indirect_imports = False
+
+[importlinter:contract:registry-only-from-api]
+; M6 (m6-registry): the model registry sits above governance (layers contract); only the API layer,
+; the app and the workers (services/workers) use it. Nothing below it, nor config, may import it.
+name = the registry (M6) is used only by api/app (and the workers)
+type = forbidden
+source_modules =
+    nf_platform.ingest
+    nf_platform.signals
+    nf_platform.storage
+    nf_platform.auth
+    nf_platform.audit
+    nf_platform.provenance
+    nf_platform.pipelines
+    nf_platform.db
+    nf_platform.config
+    nf_platform.governance
+    nf_platform.jobs
+    nf_platform.sweeps
+    nf_platform.evidence
+    nf_platform.placement
+forbidden_modules =
+    nf_platform.registry
+
+[importlinter:contract:db-is-bottom]
+name = db and config import no other platform module
+type = forbidden
+source_modules =
+    nf_platform.db
+    nf_platform.config
+forbidden_modules =
+    nf_platform.api
+    nf_platform.app
+    nf_platform.ingest
+    nf_platform.signals
+    nf_platform.storage
+    nf_platform.auth
+    nf_platform.audit
+    nf_platform.provenance
+    nf_platform.pipelines
+
+[importlinter:contract:api-no-converters]
+name = SEC-060: file converters run in the worker, never in the API process
+type = forbidden
+source_modules =
+    nf_platform.api
+    nf_platform.app
+    nf_platform.auth
+    nf_platform.audit
+forbidden_modules =
+    nf_platform.ingest.convert

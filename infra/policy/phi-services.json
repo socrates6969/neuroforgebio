@@ -1,0 +1,36 @@
+{
+  "schema": "nf.phi-services/v1",
+  "status": "DRAFT for owner and counsel review. No provider BAA is signed (owner action). Nothing here claims compliance.",
+  "source": {
+    "doc": "market/regulation.md §3",
+    "citation": "AWS HIPAA reference, updated 3 Sep 2026",
+    "grade": "D",
+    "quote": "AWS lists \"175+\" HIPAA-eligible services, including S3, Timestream and SageMaker AI, under an AWS BAA"
+  },
+  "note": "Only the services our research notes name are listed. Every other service is denied for phi=true tenants until the owner checks it against the provider's current HIPAA-eligible list and adds it here with its citation. Consequence today: the platform's database (RDS PostgreSQL), compute (ECS Fargate), KMS, Secrets Manager and VPC endpoints are NOT listed, so no phi=true tenant can be placed on the current stack.",
+  "baa_covered": [
+    { "id": "aws_s3", "name": "Amazon S3", "cited_as": "S3" },
+    { "id": "aws_timestream", "name": "Amazon Timestream", "cited_as": "Timestream" },
+    { "id": "aws_sagemaker_ai", "name": "Amazon SageMaker AI", "cited_as": "SageMaker AI" }
+  ],
+  "catalog": {
+    "local_fs": "storage",
+    "local_postgres": "database",
+    "local_process": "compute",
+    "aws_s3": "storage",
+    "aws_timestream": "database",
+    "aws_sagemaker_ai": "compute",
+    "aws_rds_postgres": "database",
+    "aws_ecs_fargate": "compute",
+    "aws_kms": "keys",
+    "aws_secrets_manager": "secrets",
+    "aws_vpc_endpoints": "network"
+  },
+  "iac_modules": {
+    "bucket": ["aws_s3"],
+    "kms": ["aws_kms"],
+    "network": ["aws_vpc_endpoints"],
+    "postgres": ["aws_rds_postgres", "aws_secrets_manager"],
+    "container-service": ["aws_ecs_fargate"]
+  }
+}

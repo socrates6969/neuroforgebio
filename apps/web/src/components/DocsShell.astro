@@ -1,0 +1,58 @@
+---
+// Docs layout: side navigation (overview, quickstarts, API reference, changelog) + page head.
+// Shared by both builds; the canonical copy is on the clinical host (rel=canonical in Base).
+import Base from '../layouts/Base.astro';
+import StatusPill from '@nf/ui/components/StatusPill.astro';
+import { overview, quickstarts } from '../lib/docs.ts';
+import { statusLabels, statusPrefix } from '../lib/site.ts';
+import type { Status } from '@nf/content';
+
+interface Props { title: string; description: string; eyebrow: string; heading: string; lede?: string; status?: Status }
+const { title, description, eyebrow, heading, lede, status } = Astro.props;
+const here = Astro.url.pathname.replace(/index\.html$/, '');
+const nav = overview.nav;
+const links = [
+  { href: '/docs/', label: nav.overview },
+  ...quickstarts.map((q) => ({ href: `/docs/quickstart/${q.slug}/`, label: q.navLabel })),
+  { href: '/docs/api/', label: nav.api },
+  { href: '/docs/changelog/', label: nav.changelog },
+];
+const isHere = (href: string) => here === href || here === href.replace(/\/$/, '');
+---
+<Base title={title} description={description}>
+  <div class="nf-wrap docs">
+    <nav class="side" aria-label={nav.label}>
+      <ul>
+        {links.map((l) => <li><a href={l.href} aria-current={isHere(l.href) ? 'page' : undefined}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="body">
+      <header class="head">
+        <p class="nf-label">{eyebrow}</p>
+        <h1 set:html={heading} />
+        {lede && <p class="lede">{lede}</p>}
+        {status && <p class="st"><StatusPill status={status} label={statusLabels[status]} prefix={statusPrefix} /></p>}
+      </header>
+      <slot />
+    </div>
+  </div>
+</Base>
+<style>
+  .docs { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 40px; padding-top: 40px; padding-bottom: 64px; }
+  .side ul { list-style: none; margin: 0; padding: 0; position: sticky; top: 24px; display: grid; gap: 6px; }
+  .side a { display: block; padding: 5px 0; color: var(--color-muted); text-decoration: none; font-size: 15px; }
+  .side a[aria-current='page'] { color: var(--color-ink); font-weight: 600; }
+  .side a:hover, .side a:focus-visible { color: var(--color-ink); text-decoration: underline; }
+  .head h1 { max-width: 24ch; }
+  .lede { margin-top: 16px; font-size: 18px; max-width: 68ch; color: var(--color-ink); }
+  .st { margin-top: 12px; }
+  .body { min-width: 0; }
+  .body :global(section) { padding: 28px 0; border-top: 1px solid var(--color-line); }
+  .body :global(section:first-of-type) { margin-top: 28px; }
+  .body :global(p.body) { color: var(--color-muted); margin-top: 12px; max-width: 72ch; }
+  .body :global(pre.code) { margin-top: 16px; padding: 16px 18px; overflow-x: auto; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-card); font-size: 14px; line-height: 1.55; }
+  .body :global(table) { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14.5px; }
+  .body :global(th), .body :global(td) { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--color-line); vertical-align: top; }
+  .body :global(.scroll) { overflow-x: auto; }
+  @media (max-width: 860px) { .docs { grid-template-columns: 1fr; gap: 16px; } .side ul { position: static; grid-auto-flow: row; } }
+</style>

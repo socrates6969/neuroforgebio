@@ -1,0 +1,94 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroVisual from '@theme/slots/HeroVisual.astro';
+import SectionOrnament from '@theme/slots/SectionOrnament.astro';
+import SecurityVisual from '@theme/slots/SecurityVisual.astro';
+import Hero from '@nf/ui/components/Hero.astro';
+import SectionHead from '@nf/ui/components/SectionHead.astro';
+import PipelineSteps from '@nf/ui/components/PipelineSteps.astro';
+import AudienceTabs from '@nf/ui/components/AudienceTabs.astro';
+import ComplianceGrid from '@nf/ui/components/ComplianceGrid.astro';
+import PricingTeaser from '@nf/ui/components/PricingTeaser.astro';
+import ResearchCards from '@nf/ui/components/ResearchCards.astro';
+import CTA from '@nf/ui/components/CTA.astro';
+import StatusPill from '@nf/ui/components/StatusPill.astro';
+import Evidence from '../components/Evidence.astro';
+import { THEME, content, site, statusLabels, statusPrefix, uiEn } from '../lib/site.ts';
+
+const h = content.home;
+const heroLabel = site.aria.heroVisual[THEME];
+---
+<Base title={h.meta.title} description={h.meta.description}>
+  <Hero eyebrow={h.hero.eyebrow} heading={h.hero.heading} sub={h.hero.sub} ctas={h.hero.ctas}
+    formats={{ lead: h.formats.lead, items: h.formats.items, note: h.formats.note, label: site.aria.formats }}>
+    <HeroVisual slot="visual" label={heroLabel} caption={site.aria.heroVisualCaption} />
+  </Hero>
+
+  <section class="nf-section" id="platform" aria-labelledby="h-plat">
+    <div class="nf-wrap">
+      <SectionHead id="h-plat" eyebrow={h.pipeline.eyebrow} heading={h.pipeline.heading} lede={h.pipeline.lede}><SectionOrnament slot="ornament" index={1} /></SectionHead>
+      <PipelineSteps steps={h.pipeline.steps} statusLabels={statusLabels} statusPrefix={statusPrefix}
+        code={{ heading: h.pipeline.code.heading, body: h.pipeline.code.body, lines: h.pipeline.code.lines, note: h.pipeline.code.note, label: site.aria.codeSample }} />
+      {h.pipeline.steps.some((s) => s.evidence?.length) && <Evidence claims={h.pipeline.steps.flatMap((s) => s.evidence ?? [])} />}
+    </div>
+  </section>
+
+  <section class="nf-section band" id="governance" aria-labelledby="h-gov">
+    <div class="nf-wrap">
+      <SectionHead id="h-gov" eyebrow={h.governance.eyebrow} heading={h.governance.heading} lede={h.governance.lede}><SectionOrnament slot="ornament" index={2} /></SectionHead>
+      <ul class="points">
+        {h.governance.points.map((p) => (
+          <li class="nf-card"><h3>{p.heading}</h3><p>{p.body}</p><StatusPill status={p.status} label={statusLabels[p.status]} prefix={statusPrefix} /></li>
+        ))}
+      </ul>
+      <p class="more"><a href={h.governance.link.href}>{h.governance.link.label}</a></p>
+      {h.governance.evidence.length > 0 && <Evidence claims={h.governance.evidence} />}
+    </div>
+  </section>
+
+  <section class="nf-section" id="audience" aria-labelledby="h-aud">
+    <div class="nf-wrap">
+      <SectionHead id="h-aud" eyebrow={h.audience.eyebrow} heading={h.audience.heading} lede={h.audience.lede}><SectionOrnament slot="ornament" index={3} /></SectionHead>
+      <AudienceTabs label={site.aria.audienceTabs} panels={h.audience.panels} statusLabels={statusLabels} statusPrefix={statusPrefix} />
+    </div>
+  </section>
+
+  <section class="nf-section" id="security" aria-labelledby="h-sec">
+    <div class="nf-wrap">
+      <SectionHead id="h-sec" eyebrow={h.compliance.eyebrow} heading={h.compliance.heading} lede={h.compliance.lede}><SectionOrnament slot="ornament" index={4} /></SectionHead>
+      <ComplianceGrid rows={h.compliance.rows} legal={h.compliance.legal} statusLabels={statusLabels} statusPrefix={statusPrefix}>
+        <SecurityVisual slot="visual" label={uiEn.securityVisual} />
+      </ComplianceGrid>
+      <p class="more"><a href={h.compliance.link.href}>{h.compliance.link.label}</a></p>
+    </div>
+  </section>
+
+  <section class="nf-section" id="pricing" aria-labelledby="h-price">
+    <div class="nf-wrap">
+      <SectionHead id="h-price" eyebrow={h.pricing.eyebrow} heading={h.pricing.heading} lede={h.pricing.lede}><SectionOrnament slot="ornament" index={5} /></SectionHead>
+      <PricingTeaser tiers={h.pricing.tiers} statusLabels={statusLabels} statusPrefix={statusPrefix} />
+      <p class="more"><a href={h.pricing.link.href}>{h.pricing.link.label}</a></p>
+    </div>
+  </section>
+
+  <section class="nf-section" id="research" aria-labelledby="h-res">
+    <div class="nf-wrap">
+      <SectionHead id="h-res" eyebrow={h.research.eyebrow} heading={h.research.heading} lede={h.research.lede}><SectionOrnament slot="ornament" index={6} /></SectionHead>
+      <ResearchCards cards={h.research.cards} statusLabels={statusLabels} statusPrefix={statusPrefix} />
+      <p class="more"><a href={h.research.link.href}>{h.research.link.label}</a></p>
+    </div>
+  </section>
+
+  <section class="nf-section" id="contact" aria-labelledby="h-cta">
+    <div class="nf-wrap">
+      <CTA heading={h.cta.heading} body={h.cta.body} ctas={h.cta.ctas} />
+    </div>
+  </section>
+</Base>
+<style>
+  .band { background: var(--color-surface); border-top: 1px solid var(--color-line); border-bottom: 1px solid var(--color-line); }
+  .points { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .points li { padding: 24px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+  .points p { color: var(--color-muted); font-size: 15px; }
+  .more { margin-top: 20px; }
+</style>

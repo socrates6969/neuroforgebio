@@ -1,0 +1,75 @@
+# --- Python / tooling
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.claude-flow/
+
+# --- Secrets (never commit; see SECURITY.md)
+.env
+*.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+*.tfvars
+!*.tfvars.example
+
+# --- JS / web
+node_modules/
+**/node_modules/
+dist/
+apps/web/dist/
+.astro/
+apps/web/.astro/
+.turbo/
+coverage/
+playwright-report/
+test-results/
+.lighthouseci/
+
+# --- Rust
+target/
+
+# --- OpenTofu / Terraform (state can contain secrets; never commit)
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+
+# --- Neural data files: NEVER commit real or generated recordings (BLUEPRINT §7, §8.1).
+# tools/repo-guard also fails CI if one is tracked.
+*.edf
+*.EDF
+*.bdf
+*.BDF
+*.nwb
+*.xdf
+*.xdfz
+*.set
+*.fdt
+*.fif
+*.fif.gz
+*.vhdr
+*.vmrk
+*.eeg
+*.mat
+*.npy
+*.gdf
+*.cnt
+*.mff/
+*.zarr
+*.zarr/
+data/
+# Generated synthetic fixtures (tools/synth writes here by default)
+.synth-out/
+tools/synth/out/
+.import_linter_cache/
+
+# Local agent memory database (ruflo/ruvector), never commit
+ruvector.db

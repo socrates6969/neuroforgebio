@@ -1,0 +1,247 @@
+{
+  "order": 1,
+  "meta": {
+    "title": "Python SDK · {brand}",
+    "description": "The Python SDK on the shared Rust core: install from source, authenticate, a first script, and which SDK call reaches each v1 endpoint. In development; not published yet."
+  },
+  "navLabel": "Python SDK",
+  "eyebrow": "Docs · SDK",
+  "heading": "Python <em>SDK.</em>",
+  "lede": "An idiomatic Python layer on the shared Rust core nf-core (PyO3, abi3 for Python 3.12 and later). Hashing, canonical JSON, retries, the encrypted stream buffer and the offline provenance recorder run in the core.",
+  "status": "in-preparation",
+  "source": "bindings/python/README.md; the code blocks are named under each block.",
+  "sections": [
+    {
+      "id": "state",
+      "heading": "Status",
+      "body": [
+        "The SDK is in development and not published to a package index. Its API can still change.",
+        "Release wheels (abi3; Windows, macOS and Linux) are built in CI by a manually started workflow that has no publish step. Each release will state its end-of-support date.",
+        "Nothing in this package sends anything to acquisition hardware.",
+        "Source: bindings/python/README.md."
+      ]
+    },
+    {
+      "id": "modules",
+      "heading": "What is in it",
+      "body": [
+        "Optional extras: {pkg}[stream] (grpcio) for streaming, {pkg}[lsl] (pylsl) for the LSL inlet bridge, {pkg}[mne] (MNE-Python) for MNE interop.",
+        "Source: bindings/python/README.md."
+      ],
+      "items": [
+        {
+          "heading": "nf.open, nf.recordings",
+          "body": "Local files, hashed on your machine, and platform recordings (read, to_mne)."
+        },
+        {
+          "heading": "nf.pipelines",
+          "body": "get(ref), publish(spec), Pipeline.run(rec). The pipeline ID is recomputed locally."
+        },
+        {
+          "heading": "nf.runs",
+          "body": "Run.wait(), Run.record, Run.provenance with lineage() and export(\"prov-json\")."
+        },
+        {
+          "heading": "nf.streaming",
+          "body": "Device keys, open_stream, Stream.push, run_acquisition (stream extra)."
+        },
+        {
+          "heading": "nf.lsl",
+          "body": "LSL inlet bridge that records clock offsets (lsl extra)."
+        },
+        {
+          "heading": "nf.local",
+          "body": "Offline provenance recorder, Zarr v3 nf-signal/1 store, chunk cache."
+        },
+        {
+          "heading": "nf.canonical",
+          "body": "Canonical JSON (NF-CJSON) and content IDs."
+        }
+      ]
+    },
+    {
+      "id": "build",
+      "heading": "Build from source",
+      "body": [
+        "Until wheels are published, build a debug version of the package from a source checkout with maturin and run its tests. These are the development commands of the SDK README (Windows paths)."
+      ],
+      "code": {
+        "language": "sh",
+        "source": "bindings/python/README.md",
+        "lines": [
+          "VIRTUAL_ENV=.venv CARGO_BUILD_JOBS=1 .venv/Scripts/maturin develop --uv -m bindings/python/Cargo.toml",
+          ".venv/Scripts/python -m pytest bindings/python/tests"
+        ]
+      }
+    },
+    {
+      "id": "configure",
+      "heading": "Authenticate and configure",
+      "body": [
+        "nf.configure(api_url=..., token=..., session=...) sets the client that nf.open, nf.pipelines and the other modules use, and returns it as an nf.Client. Without it, the client reads NF_API_URL, NF_API_TOKEN and NF_SESSION from the environment; streaming also reads NF_INGEST_TARGET, the host and port of the ingest service.",
+        "The token is an API key or an access token, sent as a bearer credential. Pass refresh=, a function that returns a new token, and the client calls it once after a 401 response.",
+        "There is no hosted service yet; the quickstarts run against a local test instance with demo data.",
+        "Source: bindings/python/python/{pkg}/client.py (Client, configure)."
+      ]
+    },
+    {
+      "id": "first",
+      "heading": "A first script",
+      "body": [
+        "Resolve a pinned pipeline version. The SDK recomputes its content ID from the steps, images, parameters and seed, so a version cannot change under its name. This block is the first step of the pipeline-run quickstart and runs in CI."
+      ],
+      "code": {
+        "language": "python",
+        "doctest": "pipeline-run#get",
+        "lines": []
+      }
+    },
+    {
+      "id": "run",
+      "heading": "Run it on a recording",
+      "body": [
+        "run uploads a local file first, queues the pipeline and returns at once; wait polls until the run ends and raises if it failed. Errors from the API are RFC 9457 problem documents, raised as NfApiError.",
+        "Source: bindings/python/python/{pkg}/pipelines.py (Pipeline.run) and runs.py (Run.wait); errors in client.py (NfApiError)."
+      ],
+      "code": {
+        "language": "python",
+        "doctest": "pipeline-run#run",
+        "lines": []
+      }
+    }
+  ],
+  "endpoints": {
+    "heading": "One call per v1 endpoint",
+    "body": [
+      "Every operation of the v1 API reference, with the SDK function that calls it. Operations without a wrapper yet are reached through the configured client: nf.get_client() returns it, and its get, post and request methods add the credentials, retry idempotent requests and raise problem documents as NfApiError.",
+      "This table is checked against the SDK source: each named function exists and contains the call to its endpoint.",
+      "Source: bindings/python/python/{pkg}/ (the file named for each wrapper in the test) and openapi/v1.yaml."
+    ],
+    "labels": {
+      "endpoint": "Endpoint",
+      "call": "Python SDK call"
+    },
+    "wrapped": [
+      {
+        "operationId": "getPipeline",
+        "call": "nf.pipelines.get(ref)",
+        "file": "bindings/python/python/{pkg}/pipelines.py",
+        "needle": "c.get(f\"/v1/pipelines/{quote(ref"
+      },
+      {
+        "operationId": "publishPipeline",
+        "call": "nf.pipelines.publish(spec)",
+        "file": "bindings/python/python/{pkg}/pipelines.py",
+        "needle": "c.post(\"/v1/pipelines\", spec)"
+      },
+      {
+        "operationId": "createRun",
+        "call": "Pipeline.run(recording)",
+        "file": "bindings/python/python/{pkg}/pipelines.py",
+        "needle": "\"/v1/runs\","
+      },
+      {
+        "operationId": "getRun",
+        "call": "Run.refresh(), Run.wait()",
+        "file": "bindings/python/python/{pkg}/runs.py",
+        "needle": "get(f\"/v1/runs/{self.id}\")"
+      },
+      {
+        "operationId": "getNode",
+        "call": "Provenance.node()",
+        "file": "bindings/python/python/{pkg}/runs.py",
+        "needle": "get(f\"/v1/provenance/{self.id}\")"
+      },
+      {
+        "operationId": "getLineage",
+        "call": "Provenance.lineage(direction, depth)",
+        "file": "bindings/python/python/{pkg}/runs.py",
+        "needle": "f\"/v1/provenance/{self.id}/lineage\""
+      },
+      {
+        "operationId": "exportLineage",
+        "call": "Provenance.export(fmt)",
+        "file": "bindings/python/python/{pkg}/runs.py",
+        "needle": "f\"/v1/provenance/{self.id}/export\""
+      },
+      {
+        "operationId": "getSession",
+        "call": "LocalFile.upload()",
+        "file": "bindings/python/python/{pkg}/recordings.py",
+        "needle": "c.get(f\"/v1/sessions/{sid}\")"
+      },
+      {
+        "operationId": "getSubject",
+        "call": "LocalFile.upload()",
+        "file": "bindings/python/python/{pkg}/recordings.py",
+        "needle": "c.get(f\"/v1/subjects/{sess['subject_id']}\")"
+      },
+      {
+        "operationId": "createUpload",
+        "call": "LocalFile.upload()",
+        "file": "bindings/python/python/{pkg}/recordings.py",
+        "needle": "f\"/v1/datasets/{subject['dataset_id']}/uploads\""
+      },
+      {
+        "operationId": "putUploadPart",
+        "call": "LocalFile.upload()",
+        "file": "bindings/python/python/{pkg}/recordings.py",
+        "needle": "c.put_bytes(t[\"url\"], data)"
+      },
+      {
+        "operationId": "completeUpload",
+        "call": "LocalFile.upload()",
+        "file": "bindings/python/python/{pkg}/recordings.py",
+        "needle": "c.post(f\"/v1/uploads/{self.upload_id}/complete\""
+      },
+      {
+        "operationId": "getUpload",
+        "call": "LocalFile.upload()",
+        "file": "bindings/python/python/{pkg}/recordings.py",
+        "needle": "c.get(f\"/v1/uploads/{self.upload_id}\")"
+      },
+      {
+        "operationId": "getRecording",
+        "call": "RemoteRecording.info()",
+        "file": "bindings/python/python/{pkg}/recordings.py",
+        "needle": "get(f\"/v1/recordings/{self.id}\")"
+      },
+      {
+        "operationId": "readRecordingData",
+        "call": "RemoteRecording.read(start, end)",
+        "file": "bindings/python/python/{pkg}/recordings.py",
+        "needle": "f\"/v1/recordings/{self.id}/data\""
+      },
+      {
+        "operationId": "registerDevice",
+        "call": "nf.streaming.register_device(name, key)",
+        "file": "bindings/python/python/{pkg}/streaming.py",
+        "needle": "\"/v1/devices\", {\"name\": name"
+      },
+      {
+        "operationId": "openStream",
+        "call": "nf.streaming.open_stream(device_id=..., key=..., sfreq=..., channels=...)",
+        "file": "bindings/python/python/{pkg}/streaming.py",
+        "needle": "f\"/v1/sessions/{sid}/streams\""
+      },
+      {
+        "operationId": "whoami",
+        "call": "nf.streaming.open_stream(device_id=..., key=..., sfreq=..., channels=...)",
+        "file": "bindings/python/python/{pkg}/streaming.py",
+        "needle": "c.get(\"/v1/whoami\")"
+      }
+    ],
+    "unsupported": [
+      {
+        "operationId": "streamRunEvents",
+        "reason": "server-sent events; the client reads whole JSON responses, so use Run.wait() to follow a run"
+      }
+    ],
+    "generic": {
+      "GET": "nf.get_client().get(\"{path}\")",
+      "POST": "nf.get_client().post(\"{path}\", body)",
+      "other": "nf.get_client().request(\"{method}\", \"{path}\")"
+    },
+    "genericNote": "no wrapper yet; replace the {braces} with IDs"
+  }
+}

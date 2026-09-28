@@ -1,0 +1,17 @@
+<!-- Row 7 PLANTED FAILURE: the range has a companion readout, <output for="gain">, placed outside
+     its <label> (so only the for= link ties them), and shows "+3 dB" where the native value is the
+     raw step "3" -- but the range has no aria-valuetext. Expected: 1 range with a companion,
+     1 finding (7a). -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div class="control">
+      <label for="gain">Gain</label>
+      <input type="range" id="gain" min="0" max="12" step="3" value="3" />
+    </div>
+    <p>Current gain: <output for="gain">+3 dB</output></p>
+  </body>
+</html>

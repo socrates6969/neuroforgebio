@@ -1,0 +1,13 @@
+---
+// /security (SEC-158). Norwegian: /no/security.
+import Base from '../layouts/Base.astro';
+import JsonLd from '../components/JsonLd.astro';
+import SecurityPage from '../components/SecurityPage.astro';
+import { getContent } from '@nf/content';
+import { organizationJsonLd } from '../lib/site.ts';
+const { meta } = getContent('en').security;
+---
+<Base title={meta.title} description={meta.description} locale="en">
+  <JsonLd schema={organizationJsonLd} />
+  <SecurityPage locale="en" />
+</Base>

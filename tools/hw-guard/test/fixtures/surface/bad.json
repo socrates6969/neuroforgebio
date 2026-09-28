@@ -1,0 +1,33 @@
+{
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/devices/{device_id}/stimulate": {
+      "post": {
+        "operationId": "sendPulseTrain",
+        "x-nf-action": "device:actuate",
+        "parameters": [{ "name": "amplitudeSet", "in": "query", "schema": { "type": "number" } }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mode": { "type": "string", "enum": ["idle", "trigger_out"] },
+                  "writeRegister": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "ok" } }
+      }
+    }
+  },
+  "webhooks": {
+    "deviceCommand": {
+      "post": { "responses": { "2XX": { "description": "ok" } } }
+    }
+  },
+  "components": { "schemas": { "StimParams": { "type": "object" } } },
+  "x-nf-grpc": { "methods": ["StreamChunks", "ActuatorSet"] }
+}

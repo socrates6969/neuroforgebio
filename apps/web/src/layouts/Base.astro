@@ -1,0 +1,72 @@
+---
+// Page shell: static data-theme, <html lang> per locale (en / nb), canonical to the clinical host,
+// hreflang alternates for pages that exist in both languages, theme tokens, nav + footer.
+// Norwegian pages keep the English site chrome (nav items, footer copy) marked lang="en": marketing
+// copy is not translated; only /security and the legal pages exist in Norwegian.
+import '@theme/tokens.css';
+import '@nf/ui/styles/base.css';
+import BrandMark from '@theme/slots/BrandMark.astro';
+import Nav from '@nf/ui/components/Nav.astro';
+import Footer from '@nf/ui/components/Footer.astro';
+import LangSwitch from '@nf/ui/components/LangSwitch.astro';
+import { THEME, content, site, canonicalUrl, LEGAL_KEYS, statusLabels as siteStatusLabels } from '../lib/site.ts';
+import { HTML_LANG, LOCALES, alternates, localeOf, localiseHref, pathIn, prefix, ui as uiFor, type Locale } from '../lib/i18n.ts';
+
+interface Props { title: string; description: string; noindex?: boolean; locale?: Locale }
+const { title, description, noindex = false } = Astro.props;
+const path = Astro.url.pathname;
+const locale: Locale = Astro.props.locale ?? localeOf(path);
+const ui = uiFor(locale);
+const lang = HTML_LANG[locale];
+const siteLang = locale === 'en' ? undefined : HTML_LANG.en; // English chrome on other locales
+const canonical = canonicalUrl(path);
+const brandName = content.brand.name;
+const alts = alternates(path);
+const switchLinks = LOCALES.filter((l) => l !== locale)
+  .map((l) => ({ l, href: pathIn(path, l) }))
+  .filter((x): x is { l: Locale; href: string } => x.href !== null && alts.length > 0)
+  .map(({ l, href }) => ({ href, hreflang: HTML_LANG[l], lang: HTML_LANG[l], name: ui.languageSwitch.names[l] }));
+const navItems = site.nav.items.map((it) => ({ ...it, href: localiseHref(it.href, locale) }));
+// Nav/footer items (and their status pills) are English site copy, so they use the English labels.
+const groups = [
+  ...site.footer.groups.map((g) => ({ ...g, lang: siteLang, links: g.links.map((l) => ({ ...l, href: localiseHref(l.href, locale) })) })),
+  { heading: ui.legal.heading, links: LEGAL_KEYS.map((k) => ({ label: ui.legal[k], href: `${prefix(locale)}/legal/${k}/` })) },
+];
+---
+<!doctype html>
+<html lang={lang} data-theme={THEME}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alts.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="color-scheme" content={THEME === 'cosmos' ? 'dark' : 'light'} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={brandName} />
+    <meta property="og:locale" content={locale === 'no' ? 'nb_NO' : 'en_US'} />
+  </head>
+  <body>
+    <a class="nf-skip" href="#main">{ui.skipLink}</a>
+    <Nav homeLabel={ui.brandHomeLabel} navLabel={ui.primaryNav} items={navItems} cta={site.nav.cta}
+      menuOpenLabel={ui.menuOpenLabel} menuCloseLabel={ui.menuCloseLabel} current={path} statusLabels={siteStatusLabels} itemsLang={siteLang}>
+      <BrandMark slot="brand" name={brandName} />
+      <LangSwitch slot="lang" label={ui.languageSwitch.label} links={switchLinks} />
+    </Nav>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer tagline={site.footer.tagline} disclaimer={site.footer.disclaimer} copyright={site.footer.copyright}
+      groups={groups} navLabel={ui.footerNav} statusLabels={siteStatusLabels} textLang={siteLang}>
+      <BrandMark slot="brand" name={brandName} />
+    </Footer>
+  </body>
+</html>
+<style is:global>
+  main:focus { outline: none; }
+</style>

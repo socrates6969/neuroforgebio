@@ -1,0 +1,31 @@
+---
+// /no/platform /no/sdks /no/governance /no/pricing: Norwegian translations of the generic content
+// pages ([page].astro). Every page is always built (so the owner can review the real rendered page
+// by URL on a preview build - lead ruling 2026-09-27), but a page whose translation isn't reviewed
+// yet is noindex and absent from the sitemap and from lib/i18n.ts's LOCALISED_ROUTES, so no hreflang
+// tag or language-switch link ever points at it. See @nf/content's publishedInnerPages() and
+// Page.reviewed. Nothing else on the site links to /no/<page> either way (no nav/footer change).
+import Base from '../../layouts/Base.astro';
+import PageBody from '../../components/PageBody.astro';
+import { getContent, INNER_PAGE_KEYS, type InnerPageKey } from '@nf/content';
+
+export function getStaticPaths() {
+  return INNER_PAGE_KEYS.map((page) => ({ params: { page } }));
+}
+const key = Astro.params.page as InnerPageKey;
+const page = getContent('no').innerPages[key];
+const reviewed = page.reviewed === true;
+---
+<Base title={page.meta.title} description={page.meta.description} noindex={!reviewed} locale="no">
+  <PageBody page={page} locale="no">
+    {key === 'pricing' && page.earlyAccessNote && (
+      <p class="ea-note" slot="section-early-access">
+        {page.earlyAccessNote.text}{' '}
+        <a href={page.earlyAccessNote.href} hreflang="en">{page.earlyAccessNote.linkLabel}</a>
+      </p>
+    )}
+  </PageBody>
+</Base>
+<style>
+  .ea-note { color: var(--color-muted); }
+</style>

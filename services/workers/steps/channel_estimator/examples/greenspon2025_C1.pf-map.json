@@ -1,0 +1,582 @@
+{
+  "schema": "nf.pf-map/v1",
+  "map_id": "greenspon2025-C1",
+  "electrodes": [
+    {
+      "electrode_id": "33",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-pu+D2d-pr",
+      "dorsum_segment": "",
+      "x_mm": 0.0,
+      "y_mm": 0.0
+    },
+    {
+      "electrode_id": "40",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2m-u+D2m-r",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.8,
+      "y_mm": 0.0
+    },
+    {
+      "electrode_id": "53",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "",
+      "x_mm": 1.6,
+      "y_mm": 0.0
+    },
+    {
+      "electrode_id": "59",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "",
+      "x_mm": 2.0,
+      "y_mm": 0.0
+    },
+    {
+      "electrode_id": "45",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2p-u+D2p-r",
+      "dorsum_segment": "",
+      "x_mm": 0.4,
+      "y_mm": 0.4
+    },
+    {
+      "electrode_id": "49",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2p",
+      "x_mm": 1.2,
+      "y_mm": 0.4
+    },
+    {
+      "electrode_id": "60",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "",
+      "x_mm": 2.0,
+      "y_mm": 0.4
+    },
+    {
+      "electrode_id": "35",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.0,
+      "y_mm": 0.8
+    },
+    {
+      "electrode_id": "42",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.8,
+      "y_mm": 0.8
+    },
+    {
+      "electrode_id": "55",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 1.6,
+      "y_mm": 0.8
+    },
+    {
+      "electrode_id": "47",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.4,
+      "y_mm": 1.2
+    },
+    {
+      "electrode_id": "50",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D1d-r+D1d-u",
+      "x_mm": 1.2,
+      "y_mm": 1.2
+    },
+    {
+      "electrode_id": "61",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 2.0,
+      "y_mm": 1.2
+    },
+    {
+      "electrode_id": "37",
+      "array_id": "LateralSensory",
+      "has_pf": false,
+      "palm_segment": "",
+      "dorsum_segment": "",
+      "x_mm": 0.0,
+      "y_mm": 1.6
+    },
+    {
+      "electrode_id": "44",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.8,
+      "y_mm": 1.6
+    },
+    {
+      "electrode_id": "56",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 1.6,
+      "y_mm": 1.6
+    },
+    {
+      "electrode_id": "34",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.4,
+      "y_mm": 2.0
+    },
+    {
+      "electrode_id": "52",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 1.2,
+      "y_mm": 2.0
+    },
+    {
+      "electrode_id": "62",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 2.0,
+      "y_mm": 2.0
+    },
+    {
+      "electrode_id": "39",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.0,
+      "y_mm": 2.4
+    },
+    {
+      "electrode_id": "46",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-pu+D2d-pr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.8,
+      "y_mm": 2.4
+    },
+    {
+      "electrode_id": "57",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2m-u+D2m-r",
+      "dorsum_segment": "D1d-r+D1d-u",
+      "x_mm": 1.6,
+      "y_mm": 2.4
+    },
+    {
+      "electrode_id": "36",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D1d-pu+D1d-pr",
+      "dorsum_segment": "D2m",
+      "x_mm": 0.4,
+      "y_mm": 2.8
+    },
+    {
+      "electrode_id": "51",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-pu+D2d-pr",
+      "dorsum_segment": "D1d-r+D1d-u",
+      "x_mm": 1.2,
+      "y_mm": 2.8
+    },
+    {
+      "electrode_id": "64",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D1d-du+D1d-dr",
+      "dorsum_segment": "D1d-r+D1d-u",
+      "x_mm": 2.0,
+      "y_mm": 2.8
+    },
+    {
+      "electrode_id": "41",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D1d-pu+D1d-pr",
+      "dorsum_segment": "D1d-r+D1d-u",
+      "x_mm": 0.0,
+      "y_mm": 3.2
+    },
+    {
+      "electrode_id": "48",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D1d-r+D1d-u",
+      "x_mm": 0.8,
+      "y_mm": 3.2
+    },
+    {
+      "electrode_id": "58",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "",
+      "dorsum_segment": "D1d-r+D1d-u",
+      "x_mm": 1.6,
+      "y_mm": 3.2
+    },
+    {
+      "electrode_id": "43",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D1d-du+D1d-dr",
+      "dorsum_segment": "D1d-r+D1d-u",
+      "x_mm": 0.0,
+      "y_mm": 3.6
+    },
+    {
+      "electrode_id": "38",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "D1d-pu+D1d-pr",
+      "dorsum_segment": "D1d-r+D1d-u",
+      "x_mm": 0.4,
+      "y_mm": 3.6
+    },
+    {
+      "electrode_id": "54",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "",
+      "dorsum_segment": "D1d-r+D1d-u",
+      "x_mm": 1.2,
+      "y_mm": 3.6
+    },
+    {
+      "electrode_id": "63",
+      "array_id": "LateralSensory",
+      "has_pf": true,
+      "palm_segment": "",
+      "dorsum_segment": "D1d-r+D1d-u",
+      "x_mm": 2.0,
+      "y_mm": 3.6
+    },
+    {
+      "electrode_id": "1",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D3d-du+D3d-dr",
+      "dorsum_segment": "D3d-r+D3d-u",
+      "x_mm": 0.0,
+      "y_mm": 0.0
+    },
+    {
+      "electrode_id": "8",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D4d-du+D4d-dr",
+      "dorsum_segment": "D3d-r+D3d-u",
+      "x_mm": 0.8,
+      "y_mm": 0.0
+    },
+    {
+      "electrode_id": "21",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D3m-u+D3m-r",
+      "dorsum_segment": "",
+      "x_mm": 1.6,
+      "y_mm": 0.0
+    },
+    {
+      "electrode_id": "27",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D4d-pu+D4d-pr",
+      "dorsum_segment": "D4d-r+D4d-u",
+      "x_mm": 2.0,
+      "y_mm": 0.0
+    },
+    {
+      "electrode_id": "13",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D3d-du+D3d-dr",
+      "dorsum_segment": "D3d-r+D3d-u",
+      "x_mm": 0.4,
+      "y_mm": 0.4
+    },
+    {
+      "electrode_id": "17",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D4d-du+D4d-dr",
+      "dorsum_segment": "D4d-r+D4d-u",
+      "x_mm": 1.2,
+      "y_mm": 0.4
+    },
+    {
+      "electrode_id": "28",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "",
+      "dorsum_segment": "D4d-r+D4d-u",
+      "x_mm": 2.0,
+      "y_mm": 0.4
+    },
+    {
+      "electrode_id": "3",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D3d-r+D3d-u",
+      "x_mm": 0.0,
+      "y_mm": 0.8
+    },
+    {
+      "electrode_id": "10",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D3d-du+D3d-dr",
+      "dorsum_segment": "D4d-r+D4d-u",
+      "x_mm": 0.8,
+      "y_mm": 0.8
+    },
+    {
+      "electrode_id": "23",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D4d-du+D4d-dr",
+      "dorsum_segment": "D4d-r+D4d-u",
+      "x_mm": 1.6,
+      "y_mm": 0.8
+    },
+    {
+      "electrode_id": "15",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D3d-r+D3d-u",
+      "x_mm": 0.4,
+      "y_mm": 1.2
+    },
+    {
+      "electrode_id": "18",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D3d-pu+D3d-pr",
+      "dorsum_segment": "D3d-r+D3d-u",
+      "x_mm": 1.2,
+      "y_mm": 1.2
+    },
+    {
+      "electrode_id": "29",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D3d-pu+D3d-pr",
+      "dorsum_segment": "D3d-r+D3d-u",
+      "x_mm": 2.0,
+      "y_mm": 1.2
+    },
+    {
+      "electrode_id": "5",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "",
+      "x_mm": 0.0,
+      "y_mm": 1.6
+    },
+    {
+      "electrode_id": "12",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D3d-du+D3d-dr",
+      "dorsum_segment": "D3d-r+D3d-u",
+      "x_mm": 0.8,
+      "y_mm": 1.6
+    },
+    {
+      "electrode_id": "24",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "",
+      "dorsum_segment": "D4d-r+D4d-u",
+      "x_mm": 1.6,
+      "y_mm": 1.6
+    },
+    {
+      "electrode_id": "2",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.4,
+      "y_mm": 2.0
+    },
+    {
+      "electrode_id": "20",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D3d-du+D3d-dr",
+      "dorsum_segment": "D3d-r+D3d-u",
+      "x_mm": 1.2,
+      "y_mm": 2.0
+    },
+    {
+      "electrode_id": "30",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "",
+      "dorsum_segment": "D4d-r+D4d-u",
+      "x_mm": 2.0,
+      "y_mm": 2.0
+    },
+    {
+      "electrode_id": "7",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.0,
+      "y_mm": 2.4
+    },
+    {
+      "electrode_id": "14",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-pu+D2d-pr",
+      "dorsum_segment": "D3d-r+D3d-u",
+      "x_mm": 0.8,
+      "y_mm": 2.4
+    },
+    {
+      "electrode_id": "25",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D3d-pu+D3d-pr",
+      "dorsum_segment": "D3m",
+      "x_mm": 1.6,
+      "y_mm": 2.4
+    },
+    {
+      "electrode_id": "4",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.4,
+      "y_mm": 2.8
+    },
+    {
+      "electrode_id": "19",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D3d-pu+D3d-pr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 1.2,
+      "y_mm": 2.8
+    },
+    {
+      "electrode_id": "32",
+      "array_id": "MedialSensory",
+      "has_pf": false,
+      "palm_segment": "",
+      "dorsum_segment": "",
+      "x_mm": 2.0,
+      "y_mm": 2.8
+    },
+    {
+      "electrode_id": "9",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-pu+D2d-pr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.0,
+      "y_mm": 3.2
+    },
+    {
+      "electrode_id": "16",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-du+D2d-dr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.8,
+      "y_mm": 3.2
+    },
+    {
+      "electrode_id": "26",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D3d-pu+D3d-pr",
+      "dorsum_segment": "D3m",
+      "x_mm": 1.6,
+      "y_mm": 3.2
+    },
+    {
+      "electrode_id": "11",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-pu+D2d-pr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.0,
+      "y_mm": 3.6
+    },
+    {
+      "electrode_id": "6",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D2d-pu+D2d-pr",
+      "dorsum_segment": "D2d-r+D2d-u",
+      "x_mm": 0.4,
+      "y_mm": 3.6
+    },
+    {
+      "electrode_id": "22",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D3d-pu+D3d-pr",
+      "dorsum_segment": "D3d-r+D3d-u",
+      "x_mm": 1.2,
+      "y_mm": 3.6
+    },
+    {
+      "electrode_id": "31",
+      "array_id": "MedialSensory",
+      "has_pf": true,
+      "palm_segment": "D3d-pu+D3d-pr",
+      "dorsum_segment": "D3m",
+      "x_mm": 2.0,
+      "y_mm": 3.6
+    }
+  ]
+}

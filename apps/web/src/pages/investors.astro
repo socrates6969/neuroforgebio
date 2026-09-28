@@ -1,0 +1,12 @@
+---
+// /investors: draft investor page (noindex, not in the sitemaps, not linked from / or the nav).
+// Every factual claim sits in a section's evidence list; claim sources: docs/hive/INVESTOR-PAGE-SOURCES.md.
+import Base from '../layouts/Base.astro';
+import PageBody from '../components/PageBody.astro';
+import { content } from '../lib/site.ts';
+
+const page = content.pages.investors;
+---
+<Base title={page.meta.title} description={page.meta.description} noindex>
+  <PageBody page={page} />
+</Base>

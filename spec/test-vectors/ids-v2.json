@@ -1,0 +1,777 @@
+{
+  "spec": "docs/spec/hashing.md v2 \u00a78-\u00a710 (v1 vectors stay in ids.json, frozen)",
+  "test_key": {
+    "note": "RFC 8032 section 7.1 TEST 1 key pair: a published test key, never a real one",
+    "key_id": "test-rfc8032-1",
+    "secret_hex": "9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60",
+    "public_hex": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a"
+  },
+  "audit_batch_chain": [
+    {
+      "batch": {
+        "schema": "nf.audit-batch/v1",
+        "scope": "00000000-0000-4000-8000-0000000000a1",
+        "seq": 0,
+        "prev": null,
+        "created_at": "2026-09-26T11:05:00.000Z",
+        "period": {
+          "start": "2026-09-26T10:00:00.000Z",
+          "end": "2026-09-26T11:00:00.000Z"
+        },
+        "events": [
+          {
+            "seq": 1,
+            "id": "00000000-0000-4000-8000-000000000e01",
+            "ts": "2026-09-26T10:15:00.123Z",
+            "type": "auth",
+            "action": "login",
+            "outcome": "success",
+            "actor": {
+              "kind": "user",
+              "id": "usr_1",
+              "auth": "oidc"
+            },
+            "resource": {
+              "type": "tenant",
+              "id": "00000000-0000-4000-8000-0000000000a1"
+            },
+            "request_id": "req-1",
+            "details": {}
+          },
+          {
+            "seq": 2,
+            "id": "00000000-0000-4000-8000-000000000e02",
+            "ts": "2026-09-26T10:40:00.000Z",
+            "type": "data",
+            "action": "recording.read",
+            "outcome": "denied",
+            "actor": {
+              "kind": "api_key",
+              "id": "key_1",
+              "auth": "api_key"
+            },
+            "resource": {
+              "type": "recording",
+              "id": "rec-1"
+            },
+            "request_id": null,
+            "details": {
+              "reason": "consent",
+              "note": "Cafe\u0301"
+            }
+          }
+        ]
+      },
+      "payload": "{\"created_at\":\"2026-09-26T11:05:00.000Z\",\"events\":[{\"action\":\"login\",\"actor\":{\"auth\":\"oidc\",\"id\":\"usr_1\",\"kind\":\"user\"},\"details\":{},\"id\":\"00000000-0000-4000-8000-000000000e01\",\"outcome\":\"success\",\"request_id\":\"req-1\",\"resource\":{\"id\":\"00000000-0000-4000-8000-0000000000a1\",\"type\":\"tenant\"},\"seq\":1,\"ts\":\"2026-09-26T10:15:00.123Z\",\"type\":\"auth\"},{\"action\":\"recording.read\",\"actor\":{\"auth\":\"api_key\",\"id\":\"key_1\",\"kind\":\"api_key\"},\"details\":{\"note\":\"Caf\u00e9\",\"reason\":\"consent\"},\"id\":\"00000000-0000-4000-8000-000000000e02\",\"outcome\":\"denied\",\"request_id\":null,\"resource\":{\"id\":\"rec-1\",\"type\":\"recording\"},\"seq\":2,\"ts\":\"2026-09-26T10:40:00.000Z\",\"type\":\"data\"}],\"period\":{\"end\":\"2026-09-26T11:00:00.000Z\",\"start\":\"2026-09-26T10:00:00.000Z\"},\"prev\":null,\"schema\":\"nf.audit-batch/v1\",\"scope\":\"00000000-0000-4000-8000-0000000000a1\",\"seq\":0}",
+      "id": "auditb:sha256:ababf9fbda56310e733efa92d5567e89310bc4ac31a8cf43c1be5f62fa40ea8c"
+    },
+    {
+      "batch": {
+        "schema": "nf.audit-batch/v1",
+        "scope": "00000000-0000-4000-8000-0000000000a1",
+        "seq": 1,
+        "prev": "auditb:sha256:ababf9fbda56310e733efa92d5567e89310bc4ac31a8cf43c1be5f62fa40ea8c",
+        "created_at": "2026-09-26T12:05:00.000Z",
+        "period": {
+          "start": "2026-09-26T11:00:00.000Z",
+          "end": "2026-09-26T12:00:00.000Z"
+        },
+        "events": [
+          {
+            "seq": 3,
+            "id": "00000000-0000-4000-8000-000000000e03",
+            "ts": "2026-09-26T11:05:00.500Z",
+            "type": "admin",
+            "action": "role.grant",
+            "outcome": "success",
+            "actor": {
+              "kind": "user",
+              "id": "usr_1",
+              "auth": "oidc"
+            },
+            "resource": {
+              "type": "user",
+              "id": "usr_2"
+            },
+            "request_id": "req-3",
+            "details": {
+              "role": "analyst"
+            }
+          }
+        ]
+      },
+      "payload": "{\"created_at\":\"2026-09-26T12:05:00.000Z\",\"events\":[{\"action\":\"role.grant\",\"actor\":{\"auth\":\"oidc\",\"id\":\"usr_1\",\"kind\":\"user\"},\"details\":{\"role\":\"analyst\"},\"id\":\"00000000-0000-4000-8000-000000000e03\",\"outcome\":\"success\",\"request_id\":\"req-3\",\"resource\":{\"id\":\"usr_2\",\"type\":\"user\"},\"seq\":3,\"ts\":\"2026-09-26T11:05:00.500Z\",\"type\":\"admin\"}],\"period\":{\"end\":\"2026-09-26T12:00:00.000Z\",\"start\":\"2026-09-26T11:00:00.000Z\"},\"prev\":\"auditb:sha256:ababf9fbda56310e733efa92d5567e89310bc4ac31a8cf43c1be5f62fa40ea8c\",\"schema\":\"nf.audit-batch/v1\",\"scope\":\"00000000-0000-4000-8000-0000000000a1\",\"seq\":1}",
+      "id": "auditb:sha256:223e12826185d626e07c22d5122660cfb88bb50e2bce19df47a8e88d96ac93ef"
+    }
+  ],
+  "prov_node": [
+    {
+      "name": "entity-full",
+      "args": {
+        "node_id": "00000000-0000-4000-8000-000000000c01",
+        "kind": "entity",
+        "type": "recording",
+        "ref": "rec-1",
+        "content": "blob:sha256:a14b61c087a2e50563c1d12eef4ac9194949abfa9e2f1d14a4945d0e68354709",
+        "attrs": {
+          "modality": "eeg",
+          "n_channels": 8,
+          "label": "A\u030a"
+        }
+      },
+      "record": {
+        "type": "entity",
+        "id": "00000000-0000-4000-8000-000000000c01",
+        "label": "recording",
+        "ref": "rec-1",
+        "content": "blob:sha256:a14b61c087a2e50563c1d12eef4ac9194949abfa9e2f1d14a4945d0e68354709",
+        "attrs": {
+          "modality": "eeg",
+          "n_channels": 8,
+          "label": "A\u030a"
+        }
+      },
+      "payload": "{\"attrs\":{\"label\":\"\u00c5\",\"modality\":\"eeg\",\"n_channels\":8},\"content\":\"blob:sha256:a14b61c087a2e50563c1d12eef4ac9194949abfa9e2f1d14a4945d0e68354709\",\"id\":\"00000000-0000-4000-8000-000000000c01\",\"label\":\"recording\",\"ref\":\"rec-1\",\"type\":\"entity\"}",
+      "hash": "425552b50a16cc8a7e0684530deb0134899e3f596292d9e8b4f9f1ddbce7777c"
+    },
+    {
+      "name": "activity-minimal",
+      "args": {
+        "node_id": "00000000-0000-4000-8000-000000000c02",
+        "kind": "activity",
+        "type": "run",
+        "ref": null,
+        "content": null,
+        "attrs": null
+      },
+      "record": {
+        "type": "activity",
+        "id": "00000000-0000-4000-8000-000000000c02",
+        "label": "run"
+      },
+      "payload": "{\"id\":\"00000000-0000-4000-8000-000000000c02\",\"label\":\"run\",\"type\":\"activity\"}",
+      "hash": "f037fea7a79de789be62510dddea2ea8db96f69f0118ba14f4762549101812be"
+    },
+    {
+      "name": "agent-empty-attrs-omitted",
+      "args": {
+        "node_id": "00000000-0000-4000-8000-000000000c03",
+        "kind": "agent",
+        "type": "pipeline_version",
+        "ref": "pv:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "content": null,
+        "attrs": {}
+      },
+      "record": {
+        "type": "agent",
+        "id": "00000000-0000-4000-8000-000000000c03",
+        "label": "pipeline_version",
+        "ref": "pv:sha256:0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "payload": "{\"id\":\"00000000-0000-4000-8000-000000000c03\",\"label\":\"pipeline_version\",\"ref\":\"pv:sha256:0000000000000000000000000000000000000000000000000000000000000000\",\"type\":\"agent\"}",
+      "hash": "9a28c54854fdb2a68fdbd17847b3e7a2dec7905718af5d10d0f54427e438a849"
+    }
+  ],
+  "consent_record_chain": [
+    {
+      "args": {
+        "record_id": "00000000-0000-4000-8000-000000000d01",
+        "subject_id": "00000000-0000-4000-8000-0000000000b1",
+        "kind": "grant",
+        "scopes": [
+          "processing",
+          "collection",
+          "model_training",
+          "collection"
+        ],
+        "document_id": "00000000-0000-4000-8000-000000000f01",
+        "document_sha256": "8e2a6ce82e328eb9f71f65bdd62aa360798665e56d76937045cbcf2a0840e6a8",
+        "basis": "GDPR Art. 9(2)(a)",
+        "collector": "usr_1",
+        "evidence": "paper-form-17",
+        "recorded_at": "2026-09-26T09:00:00.000Z"
+      },
+      "record": {
+        "schema": "nf.consent-record/v1",
+        "tenant": "00000000-0000-4000-8000-0000000000a1",
+        "seq": 0,
+        "prev": null,
+        "id": "00000000-0000-4000-8000-000000000d01",
+        "subject": "00000000-0000-4000-8000-0000000000b1",
+        "kind": "grant",
+        "scopes": [
+          "collection",
+          "model_training",
+          "processing"
+        ],
+        "document": {
+          "id": "00000000-0000-4000-8000-000000000f01",
+          "sha256": "8e2a6ce82e328eb9f71f65bdd62aa360798665e56d76937045cbcf2a0840e6a8"
+        },
+        "basis": "GDPR Art. 9(2)(a)",
+        "collector": "usr_1",
+        "evidence": "paper-form-17",
+        "recorded_at": "2026-09-26T09:00:00.000Z"
+      },
+      "payload": "{\"basis\":\"GDPR Art. 9(2)(a)\",\"collector\":\"usr_1\",\"document\":{\"id\":\"00000000-0000-4000-8000-000000000f01\",\"sha256\":\"8e2a6ce82e328eb9f71f65bdd62aa360798665e56d76937045cbcf2a0840e6a8\"},\"evidence\":\"paper-form-17\",\"id\":\"00000000-0000-4000-8000-000000000d01\",\"kind\":\"grant\",\"prev\":null,\"recorded_at\":\"2026-09-26T09:00:00.000Z\",\"schema\":\"nf.consent-record/v1\",\"scopes\":[\"collection\",\"model_training\",\"processing\"],\"seq\":0,\"subject\":\"00000000-0000-4000-8000-0000000000b1\",\"tenant\":\"00000000-0000-4000-8000-0000000000a1\"}",
+      "hash": "91583098353c7259dc3d496a2463aa0ebd32821e84f6e572a96d598886d3f74a"
+    },
+    {
+      "args": {
+        "record_id": "00000000-0000-4000-8000-000000000d02",
+        "subject_id": "00000000-0000-4000-8000-0000000000b1",
+        "kind": "withdraw",
+        "scopes": [
+          "model_training"
+        ],
+        "document_id": null,
+        "document_sha256": null,
+        "basis": null,
+        "collector": "usr_2",
+        "evidence": null,
+        "recorded_at": "2026-09-26T09:30:00.250Z"
+      },
+      "record": {
+        "schema": "nf.consent-record/v1",
+        "tenant": "00000000-0000-4000-8000-0000000000a1",
+        "seq": 1,
+        "prev": "91583098353c7259dc3d496a2463aa0ebd32821e84f6e572a96d598886d3f74a",
+        "id": "00000000-0000-4000-8000-000000000d02",
+        "subject": "00000000-0000-4000-8000-0000000000b1",
+        "kind": "withdraw",
+        "scopes": [
+          "model_training"
+        ],
+        "document": null,
+        "basis": null,
+        "collector": "usr_2",
+        "evidence": null,
+        "recorded_at": "2026-09-26T09:30:00.250Z"
+      },
+      "payload": "{\"basis\":null,\"collector\":\"usr_2\",\"document\":null,\"evidence\":null,\"id\":\"00000000-0000-4000-8000-000000000d02\",\"kind\":\"withdraw\",\"prev\":\"91583098353c7259dc3d496a2463aa0ebd32821e84f6e572a96d598886d3f74a\",\"recorded_at\":\"2026-09-26T09:30:00.250Z\",\"schema\":\"nf.consent-record/v1\",\"scopes\":[\"model_training\"],\"seq\":1,\"subject\":\"00000000-0000-4000-8000-0000000000b1\",\"tenant\":\"00000000-0000-4000-8000-0000000000a1\"}",
+      "hash": "8a4492c943f8e07eff09d7ab10b8f34efc0959ca2ad409128e0fce9da9706d59"
+    }
+  ],
+  "consent_record_noncanonical_scopes": {
+    "note": "scopes are de-duplicated and sorted before hashing (= consent_record_chain[0])",
+    "record": {
+      "schema": "nf.consent-record/v1",
+      "tenant": "00000000-0000-4000-8000-0000000000a1",
+      "seq": 0,
+      "prev": null,
+      "id": "00000000-0000-4000-8000-000000000d01",
+      "subject": "00000000-0000-4000-8000-0000000000b1",
+      "kind": "grant",
+      "scopes": [
+        "processing",
+        "collection",
+        "model_training",
+        "collection"
+      ],
+      "document": {
+        "id": "00000000-0000-4000-8000-000000000f01",
+        "sha256": "8e2a6ce82e328eb9f71f65bdd62aa360798665e56d76937045cbcf2a0840e6a8"
+      },
+      "basis": "GDPR Art. 9(2)(a)",
+      "collector": "usr_1",
+      "evidence": "paper-form-17",
+      "recorded_at": "2026-09-26T09:00:00.000Z"
+    },
+    "payload": "{\"basis\":\"GDPR Art. 9(2)(a)\",\"collector\":\"usr_1\",\"document\":{\"id\":\"00000000-0000-4000-8000-000000000f01\",\"sha256\":\"8e2a6ce82e328eb9f71f65bdd62aa360798665e56d76937045cbcf2a0840e6a8\"},\"evidence\":\"paper-form-17\",\"id\":\"00000000-0000-4000-8000-000000000d01\",\"kind\":\"grant\",\"prev\":null,\"recorded_at\":\"2026-09-26T09:00:00.000Z\",\"schema\":\"nf.consent-record/v1\",\"scopes\":[\"collection\",\"model_training\",\"processing\"],\"seq\":0,\"subject\":\"00000000-0000-4000-8000-0000000000b1\",\"tenant\":\"00000000-0000-4000-8000-0000000000a1\"}",
+    "hash": "91583098353c7259dc3d496a2463aa0ebd32821e84f6e572a96d598886d3f74a"
+  },
+  "ruleset": {
+    "rules": [
+      {
+        "id": "xx-test-1",
+        "jurisdiction": "XX",
+        "title": "Illustrative neural-data rule",
+        "instrument": "Test Act 2026",
+        "status_text": "Test vector only; not a statement about any law.",
+        "effective_date": "2026-01-01",
+        "citation": {
+          "section": "1(a)",
+          "url": null
+        },
+        "predicate": {
+          "attr": "nervous_system",
+          "eq": true
+        },
+        "assumptions": [],
+        "obligations": [
+          {
+            "id": "consent",
+            "text": "Obtain opt-in consent.",
+            "flag": "consent"
+          }
+        ],
+        "review_status": "draft",
+        "review": null,
+        "draft": true,
+        "badge": "DRAFT: not counsel-reviewed",
+        "notes": null
+      },
+      {
+        "id": "xx-test-2",
+        "jurisdiction": "XX",
+        "title": "Illustrative unverified rule",
+        "instrument": "Test Act 2026",
+        "status_text": "Test vector only.",
+        "effective_date": null,
+        "citation": {
+          "section": "2"
+        },
+        "predicate": null,
+        "assumptions": [
+          "source not verified"
+        ],
+        "obligations": [
+          {
+            "id": "notice",
+            "text": "Give notice."
+          }
+        ],
+        "review_status": "unverified",
+        "review": null,
+        "draft": true,
+        "badge": "UNVERIFIED: source not verified; draft, not counsel-reviewed",
+        "notes": "Illustrative."
+      }
+    ],
+    "payload": "[{\"assumptions\":[],\"badge\":\"DRAFT: not counsel-reviewed\",\"citation\":{\"section\":\"1(a)\",\"url\":null},\"draft\":true,\"effective_date\":\"2026-01-01\",\"id\":\"xx-test-1\",\"instrument\":\"Test Act 2026\",\"jurisdiction\":\"XX\",\"notes\":null,\"obligations\":[{\"flag\":\"consent\",\"id\":\"consent\",\"text\":\"Obtain opt-in consent.\"}],\"predicate\":{\"attr\":\"nervous_system\",\"eq\":true},\"review\":null,\"review_status\":\"draft\",\"status_text\":\"Test vector only; not a statement about any law.\",\"title\":\"Illustrative neural-data rule\"},{\"assumptions\":[\"source not verified\"],\"badge\":\"UNVERIFIED: source not verified; draft, not counsel-reviewed\",\"citation\":{\"section\":\"2\"},\"draft\":true,\"effective_date\":null,\"id\":\"xx-test-2\",\"instrument\":\"Test Act 2026\",\"jurisdiction\":\"XX\",\"notes\":\"Illustrative.\",\"obligations\":[{\"id\":\"notice\",\"text\":\"Give notice.\"}],\"predicate\":null,\"review\":null,\"review_status\":\"unverified\",\"status_text\":\"Test vector only.\",\"title\":\"Illustrative unverified rule\"}]",
+    "content_sha256": "6a9ab6110bf834f4c8df3165800780bf66ee60a98fefedc94ad6ebb9d0d045d7"
+  },
+  "sweep_variant": [
+    {
+      "name": "one-factor",
+      "base": "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047",
+      "params": {
+        "filter.l_freq": 1.0
+      },
+      "payload": "{\"base\":\"pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047\",\"params\":{\"filter.l_freq\":1}}",
+      "label": "824fe3362380"
+    },
+    {
+      "name": "two-factors",
+      "base": "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047",
+      "params": {
+        "filter.l_freq": 0.5,
+        "filter.method": "iir"
+      },
+      "payload": "{\"base\":\"pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047\",\"params\":{\"filter.l_freq\":0.5,\"filter.method\":\"iir\"}}",
+      "label": "96426e000dc3"
+    },
+    {
+      "name": "factor-order-irrelevant",
+      "base": "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047",
+      "params": {
+        "filter.method": "iir",
+        "filter.l_freq": 0.5
+      },
+      "payload": "{\"base\":\"pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047\",\"params\":{\"filter.l_freq\":0.5,\"filter.method\":\"iir\"}}",
+      "label": "96426e000dc3"
+    }
+  ],
+  "training_subject": [
+    {
+      "tenant_id": "00000000-0000-4000-8000-0000000000a1",
+      "subject_id": "00000000-0000-4000-8000-0000000000b1",
+      "preimage_hex": "6e662e747261696e696e672d7375626a6563742e76310030303030303030302d303030302d343030302d383030302d3030303030303030303061310030303030303030302d303030302d343030302d383030302d303030303030303030306231",
+      "hash": "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67"
+    },
+    {
+      "tenant_id": "00000000-0000-4000-8000-0000000000a1",
+      "subject_id": "00000000-0000-4000-8000-0000000000b2",
+      "preimage_hex": "6e662e747261696e696e672d7375626a6563742e76310030303030303030302d303030302d343030302d383030302d3030303030303030303061310030303030303030302d303030302d343030302d383030302d303030303030303030306232",
+      "hash": "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271"
+    },
+    {
+      "tenant_id": "00000000-0000-4000-8000-0000000000a2",
+      "subject_id": "00000000-0000-4000-8000-0000000000b1",
+      "preimage_hex": "6e662e747261696e696e672d7375626a6563742e76310030303030303030302d303030302d343030302d383030302d3030303030303030303061320030303030303030302d303030302d343030302d383030302d303030303030303030306231",
+      "hash": "db6dc502f413cd6d35895444ebd09b9c3bfbd25f9b80a41a720c4bdfdb5399aa"
+    },
+    {
+      "tenant_id": "00000000-0000-4000-8000-0000000000A1",
+      "subject_id": "00000000-0000-4000-8000-0000000000B2",
+      "preimage_hex": "6e662e747261696e696e672d7375626a6563742e76310030303030303030302d303030302d343030302d383030302d3030303030303030303061310030303030303030302d303030302d343030302d383030302d303030303030303030306232",
+      "hash": "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271"
+    }
+  ],
+  "training_manifest": [
+    {
+      "name": "weights-source-upload",
+      "args": {
+        "tenant_id": "00000000-0000-4000-8000-0000000000a1",
+        "input_node_ids": [
+          "00000000-0000-4000-8000-000000000c02",
+          "00000000-0000-4000-8000-000000000c01"
+        ],
+        "subject_hashes": [
+          "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271",
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67",
+          "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271"
+        ],
+        "n_source_recordings": 3,
+        "shards": null,
+        "excluded_subject_hashes": [],
+        "pipeline_version_ids": [
+          "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047"
+        ],
+        "code_commit": "0000000000000000000000000000000000000000",
+        "recipe": null,
+        "parent_version_id": null,
+        "weights_source": "upload"
+      },
+      "manifest": {
+        "schema": "nf.training-manifest/v1",
+        "tenant": "00000000-0000-4000-8000-0000000000a1",
+        "inputs": [
+          "00000000-0000-4000-8000-000000000c01",
+          "00000000-0000-4000-8000-000000000c02"
+        ],
+        "subjects": [
+          "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271",
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67"
+        ],
+        "n_subjects": 2,
+        "n_source_recordings": 3,
+        "excluded_subjects": [],
+        "pipeline_version_ids": [
+          "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047"
+        ],
+        "code_commit": "0000000000000000000000000000000000000000",
+        "recipe": null,
+        "parent_version": null,
+        "weights_source": "upload"
+      },
+      "payload": "{\"code_commit\":\"0000000000000000000000000000000000000000\",\"excluded_subjects\":[],\"inputs\":[\"00000000-0000-4000-8000-000000000c01\",\"00000000-0000-4000-8000-000000000c02\"],\"n_source_recordings\":3,\"n_subjects\":2,\"parent_version\":null,\"pipeline_version_ids\":[\"pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047\"],\"recipe\":null,\"schema\":\"nf.training-manifest/v1\",\"subjects\":[\"8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271\",\"ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67\"],\"tenant\":\"00000000-0000-4000-8000-0000000000a1\",\"weights_source\":\"upload\"}",
+      "digest": "8b1622aac3344dca0bf0f83f9acf994377f7fd0b43ecf7aa2c0fb291d03bc04a"
+    },
+    {
+      "name": "weights-source-platform",
+      "args": {
+        "tenant_id": "00000000-0000-4000-8000-0000000000a1",
+        "input_node_ids": [
+          "00000000-0000-4000-8000-000000000c02",
+          "00000000-0000-4000-8000-000000000c01"
+        ],
+        "subject_hashes": [
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67"
+        ],
+        "n_source_recordings": 3,
+        "shards": {
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67": 0,
+          "fb51739bdf1f0225cfd9e7b19905423c129c1db565a3639aacb5802475e6fd65": 1
+        },
+        "excluded_subject_hashes": [
+          "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271"
+        ],
+        "pipeline_version_ids": [
+          "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047"
+        ],
+        "code_commit": "0000000000000000000000000000000000000000",
+        "recipe": "sisa",
+        "parent_version_id": "00000000-0000-4000-8000-0000000000e9",
+        "weights_source": "platform"
+      },
+      "manifest": {
+        "schema": "nf.training-manifest/v1",
+        "tenant": "00000000-0000-4000-8000-0000000000a1",
+        "inputs": [
+          "00000000-0000-4000-8000-000000000c01",
+          "00000000-0000-4000-8000-000000000c02"
+        ],
+        "subjects": [
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67"
+        ],
+        "n_subjects": 1,
+        "n_source_recordings": 3,
+        "excluded_subjects": [
+          "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271"
+        ],
+        "pipeline_version_ids": [
+          "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047"
+        ],
+        "code_commit": "0000000000000000000000000000000000000000",
+        "recipe": "sisa",
+        "parent_version": "00000000-0000-4000-8000-0000000000e9",
+        "shards": {
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67": 0,
+          "fb51739bdf1f0225cfd9e7b19905423c129c1db565a3639aacb5802475e6fd65": 1
+        },
+        "weights_source": "platform"
+      },
+      "payload": "{\"code_commit\":\"0000000000000000000000000000000000000000\",\"excluded_subjects\":[\"8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271\"],\"inputs\":[\"00000000-0000-4000-8000-000000000c01\",\"00000000-0000-4000-8000-000000000c02\"],\"n_source_recordings\":3,\"n_subjects\":1,\"parent_version\":\"00000000-0000-4000-8000-0000000000e9\",\"pipeline_version_ids\":[\"pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047\"],\"recipe\":\"sisa\",\"schema\":\"nf.training-manifest/v1\",\"shards\":{\"ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67\":0,\"fb51739bdf1f0225cfd9e7b19905423c129c1db565a3639aacb5802475e6fd65\":1},\"subjects\":[\"ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67\"],\"tenant\":\"00000000-0000-4000-8000-0000000000a1\",\"weights_source\":\"platform\"}",
+      "digest": "c0361edc2ab115e6b9cfa3adad80d0f7806181ad767697b03e9fb0bfa8b25007"
+    },
+    {
+      "name": "duplicate-inputs",
+      "args": {
+        "tenant_id": "00000000-0000-4000-8000-0000000000a1",
+        "input_node_ids": [
+          "00000000-0000-4000-8000-000000000c02",
+          "00000000-0000-4000-8000-000000000c01",
+          "00000000-0000-4000-8000-000000000c02",
+          "00000000-0000-4000-8000-000000000C01"
+        ],
+        "subject_hashes": [
+          "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271",
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67",
+          "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271"
+        ],
+        "n_source_recordings": 3,
+        "shards": null,
+        "excluded_subject_hashes": [],
+        "pipeline_version_ids": [
+          "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047"
+        ],
+        "code_commit": "0000000000000000000000000000000000000000",
+        "recipe": null,
+        "parent_version_id": null
+      },
+      "manifest": {
+        "schema": "nf.training-manifest/v1",
+        "tenant": "00000000-0000-4000-8000-0000000000a1",
+        "inputs": [
+          "00000000-0000-4000-8000-000000000c01",
+          "00000000-0000-4000-8000-000000000c02"
+        ],
+        "subjects": [
+          "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271",
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67"
+        ],
+        "n_subjects": 2,
+        "n_source_recordings": 3,
+        "excluded_subjects": [],
+        "pipeline_version_ids": [
+          "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047"
+        ],
+        "code_commit": "0000000000000000000000000000000000000000",
+        "recipe": null,
+        "parent_version": null
+      },
+      "payload": "{\"code_commit\":\"0000000000000000000000000000000000000000\",\"excluded_subjects\":[],\"inputs\":[\"00000000-0000-4000-8000-000000000c01\",\"00000000-0000-4000-8000-000000000c02\"],\"n_source_recordings\":3,\"n_subjects\":2,\"parent_version\":null,\"pipeline_version_ids\":[\"pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047\"],\"recipe\":null,\"schema\":\"nf.training-manifest/v1\",\"subjects\":[\"8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271\",\"ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67\"],\"tenant\":\"00000000-0000-4000-8000-0000000000a1\"}",
+      "digest": "cc94d23558fa0ab98386a4ac87a568a947e2b7a9f167cab9e88e06917c8a8e0b"
+    },
+    {
+      "name": "plain",
+      "args": {
+        "tenant_id": "00000000-0000-4000-8000-0000000000a1",
+        "input_node_ids": [
+          "00000000-0000-4000-8000-000000000c02",
+          "00000000-0000-4000-8000-000000000c01"
+        ],
+        "subject_hashes": [
+          "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271",
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67",
+          "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271"
+        ],
+        "n_source_recordings": 3,
+        "shards": null,
+        "excluded_subject_hashes": [],
+        "pipeline_version_ids": [
+          "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047"
+        ],
+        "code_commit": "0000000000000000000000000000000000000000",
+        "recipe": null,
+        "parent_version_id": null
+      },
+      "manifest": {
+        "schema": "nf.training-manifest/v1",
+        "tenant": "00000000-0000-4000-8000-0000000000a1",
+        "inputs": [
+          "00000000-0000-4000-8000-000000000c01",
+          "00000000-0000-4000-8000-000000000c02"
+        ],
+        "subjects": [
+          "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271",
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67"
+        ],
+        "n_subjects": 2,
+        "n_source_recordings": 3,
+        "excluded_subjects": [],
+        "pipeline_version_ids": [
+          "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047"
+        ],
+        "code_commit": "0000000000000000000000000000000000000000",
+        "recipe": null,
+        "parent_version": null
+      },
+      "payload": "{\"code_commit\":\"0000000000000000000000000000000000000000\",\"excluded_subjects\":[],\"inputs\":[\"00000000-0000-4000-8000-000000000c01\",\"00000000-0000-4000-8000-000000000c02\"],\"n_source_recordings\":3,\"n_subjects\":2,\"parent_version\":null,\"pipeline_version_ids\":[\"pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047\"],\"recipe\":null,\"schema\":\"nf.training-manifest/v1\",\"subjects\":[\"8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271\",\"ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67\"],\"tenant\":\"00000000-0000-4000-8000-0000000000a1\"}",
+      "digest": "cc94d23558fa0ab98386a4ac87a568a947e2b7a9f167cab9e88e06917c8a8e0b"
+    },
+    {
+      "name": "sisa-retrain",
+      "args": {
+        "tenant_id": "00000000-0000-4000-8000-0000000000a1",
+        "input_node_ids": [
+          "00000000-0000-4000-8000-000000000c02",
+          "00000000-0000-4000-8000-000000000c01"
+        ],
+        "subject_hashes": [
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67"
+        ],
+        "n_source_recordings": 3,
+        "shards": {
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67": 0,
+          "fb51739bdf1f0225cfd9e7b19905423c129c1db565a3639aacb5802475e6fd65": 1
+        },
+        "excluded_subject_hashes": [
+          "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271"
+        ],
+        "pipeline_version_ids": [
+          "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047"
+        ],
+        "code_commit": "0000000000000000000000000000000000000000",
+        "recipe": "sisa",
+        "parent_version_id": "00000000-0000-4000-8000-0000000000e9"
+      },
+      "manifest": {
+        "schema": "nf.training-manifest/v1",
+        "tenant": "00000000-0000-4000-8000-0000000000a1",
+        "inputs": [
+          "00000000-0000-4000-8000-000000000c01",
+          "00000000-0000-4000-8000-000000000c02"
+        ],
+        "subjects": [
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67"
+        ],
+        "n_subjects": 1,
+        "n_source_recordings": 3,
+        "excluded_subjects": [
+          "8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271"
+        ],
+        "pipeline_version_ids": [
+          "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047"
+        ],
+        "code_commit": "0000000000000000000000000000000000000000",
+        "recipe": "sisa",
+        "parent_version": "00000000-0000-4000-8000-0000000000e9",
+        "shards": {
+          "ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67": 0,
+          "fb51739bdf1f0225cfd9e7b19905423c129c1db565a3639aacb5802475e6fd65": 1
+        }
+      },
+      "payload": "{\"code_commit\":\"0000000000000000000000000000000000000000\",\"excluded_subjects\":[\"8c1145fae787a96ea55485f0297d57d0a1fde70b0eec36c767c29b14b01b9271\"],\"inputs\":[\"00000000-0000-4000-8000-000000000c01\",\"00000000-0000-4000-8000-000000000c02\"],\"n_source_recordings\":3,\"n_subjects\":1,\"parent_version\":\"00000000-0000-4000-8000-0000000000e9\",\"pipeline_version_ids\":[\"pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047\"],\"recipe\":\"sisa\",\"schema\":\"nf.training-manifest/v1\",\"shards\":{\"ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67\":0,\"fb51739bdf1f0225cfd9e7b19905423c129c1db565a3639aacb5802475e6fd65\":1},\"subjects\":[\"ee98627ee3de45f12744e38818e9d7e1e6373e659eaf37ffcde841beb72dce67\"],\"tenant\":\"00000000-0000-4000-8000-0000000000a1\"}",
+      "digest": "f0434e539addebe56caec545eb70744f56f22859a3d32f64120ccbde92dbb71b"
+    }
+  ],
+  "stream_chunk_signature": {
+    "chunk": {
+      "stream_id": "00000000-0000-4000-8000-0000000000c5",
+      "seq": 7,
+      "n_samples": 2,
+      "n_channels": 2,
+      "dtype": "float32",
+      "samples": [
+        0.5,
+        -0.25,
+        1e-07,
+        -0.0
+      ],
+      "chunk_id": "chunk:sha256:2a4529a5ad79f4b6167c756196db4cdd3f951bd56b6aa281bf4f68eff388a997",
+      "lsl_timestamps": [
+        1000.0,
+        1000.004
+      ],
+      "clock_offsets": [
+        [
+          999.5,
+          -0.0012
+        ]
+      ],
+      "local_clock": [
+        [
+          1000.0,
+          52341.25
+        ],
+        [
+          1000.004,
+          52341.254
+        ]
+      ]
+    },
+    "timing_sha256": "4aa82fa35e01d2e63b1d216c1a01db57659578f94f0a8cbd797926e40394e2f6",
+    "body": "{\"chunk_id\":\"chunk:sha256:2a4529a5ad79f4b6167c756196db4cdd3f951bd56b6aa281bf4f68eff388a997\",\"n_channels\":2,\"n_clock_offsets\":1,\"n_local_clock\":2,\"n_samples\":2,\"seq\":7,\"stream_id\":\"00000000-0000-4000-8000-0000000000c5\",\"t_first\":1000,\"t_last\":1000.004,\"timing_sha256\":\"4aa82fa35e01d2e63b1d216c1a01db57659578f94f0a8cbd797926e40394e2f6\"}",
+    "preimage_hex": "6e662e73747265616d2d6368756e6b2e7631007b226368756e6b5f6964223a226368756e6b3a7368613235363a32613435323961356164373966346236313637633735363139366462346364643366393531626435366236616132383162663466363865666633383861393937222c226e5f6368616e6e656c73223a322c226e5f636c6f636b5f6f666673657473223a312c226e5f6c6f63616c5f636c6f636b223a322c226e5f73616d706c6573223a322c22736571223a372c2273747265616d5f6964223a2230303030303030302d303030302d343030302d383030302d303030303030303030306335222c22745f6669727374223a313030302c22745f6c617374223a313030302e3030342c2274696d696e675f736861323536223a2234616138326661333565303164326536336231643231366331613031646235373635393537386639346630613863626437393739323665343033393465326636227d",
+    "signature_hex": "009225bc633113211c182d84a75139f4ff696089c4fe8e86edb8c5844f8d6e4b652600c1a5038d17b604b1bdee86b3cb5165f29ccc9b9e9aa67e684dd66d2607"
+  },
+  "device_token": {
+    "claims": {
+      "aud": "nf-ingest/v1",
+      "device_id": "dev-0001",
+      "exp": 1790000300,
+      "iat": 1790000000,
+      "stream_id": "00000000-0000-4000-8000-0000000000c5",
+      "tenant_id": "00000000-0000-4000-8000-0000000000a1"
+    },
+    "payload": "{\"aud\":\"nf-ingest/v1\",\"device_id\":\"dev-0001\",\"exp\":1790000300,\"iat\":1790000000,\"stream_id\":\"00000000-0000-4000-8000-0000000000c5\",\"tenant_id\":\"00000000-0000-4000-8000-0000000000a1\"}",
+    "preimage_hex": "6e662e6465766963652d746f6b656e2e7631007b22617564223a226e662d696e676573742f7631222c226465766963655f6964223a226465762d30303031222c22657870223a313739303030303330302c22696174223a313739303030303030302c2273747265616d5f6964223a2230303030303030302d303030302d343030302d383030302d303030303030303030306335222c2274656e616e745f6964223a2230303030303030302d303030302d343030302d383030302d303030303030303030306131227d",
+    "signature_hex": "6a15f64edf5663271be86dc89185769600bba9ae19232be655edb50918d7d97f50bc76f963bdb5e37addcca1bf3a79256b4520a6761beb60e11d6f4f6682bb05",
+    "token": "nfd1.eyJhdWQiOiJuZi1pbmdlc3QvdjEiLCJkZXZpY2VfaWQiOiJkZXYtMDAwMSIsImV4cCI6MTc5MDAwMDMwMCwiaWF0IjoxNzkwMDAwMDAwLCJzdHJlYW1faWQiOiIwMDAwMDAwMC0wMDAwLTQwMDAtODAwMC0wMDAwMDAwMDAwYzUiLCJ0ZW5hbnRfaWQiOiIwMDAwMDAwMC0wMDAwLTQwMDAtODAwMC0wMDAwMDAwMDAwYTEifQ.ahX2Tt9WYycb6G3IkYV2lgC7qa4ZIyvmVe21CRjX2X9QvHb5Y72143rdzKG_Onkla0UgpnYb62DhHW9PZoK7BQ"
+  },
+  "provb_signature": {
+    "batch_id": "provb:sha256:7cafa0a30a7b6a801763b3a7cc97dccd349844c1ba4e1514a1cf5679cca347ec",
+    "message_hex": "70726f76623a7368613235363a37636166613061333061376236613830313736336233613763633937646363643334393834346331626134653135313461316366353637396363613334376563",
+    "signature_hex": "6ebc310d9e5ae9b7f666ad0436727ff529bbfb9b96fbf9a3710f1b537fdf1ebc915f78de7ed21e2fe59df62ea24b650f6ceff1c683d3460cde3b305d687f290e"
+  },
+  "prov_anchor": {
+    "document": {
+      "schema": "nf.prov-anchor/v1",
+      "tenant": "00000000-0000-4000-8000-0000000000a1",
+      "seq": 0,
+      "head": "provb:sha256:7cafa0a30a7b6a801763b3a7cc97dccd349844c1ba4e1514a1cf5679cca347ec",
+      "anchored_at": "2026-09-27T00:00:00.000Z",
+      "key_id": "test-rfc8032-1",
+      "sig": "e85b29985bf0aaf6dce84e5fb57f720721bb8da3c8ca8ab05816205433437df82f71c62affd209376a080847c873a717f9a660abea7566e9bbb3b99142686c09"
+    },
+    "signed_part": "{\"anchored_at\":\"2026-09-27T00:00:00.000Z\",\"head\":\"provb:sha256:7cafa0a30a7b6a801763b3a7cc97dccd349844c1ba4e1514a1cf5679cca347ec\",\"key_id\":\"test-rfc8032-1\",\"schema\":\"nf.prov-anchor/v1\",\"seq\":0,\"tenant\":\"00000000-0000-4000-8000-0000000000a1\"}"
+  },
+  "consent_anchor": {
+    "document": {
+      "schema": "nf.consent-anchor/v1",
+      "tenant": "00000000-0000-4000-8000-0000000000a1",
+      "seq": 1,
+      "head": "8a4492c943f8e07eff09d7ab10b8f34efc0959ca2ad409128e0fce9da9706d59",
+      "anchored_at": "2026-09-27T00:00:00.000Z",
+      "key_id": "test-rfc8032-1",
+      "sig": "42de03cd2318dba2f89de4766eda262ac978c50adfe8c33508e8ceff8b6394f653605ba06c33d85580cd71cbe995d55e8a609c6d910f16bf40167bc207cba000"
+    },
+    "signed_part": "{\"anchored_at\":\"2026-09-27T00:00:00.000Z\",\"head\":\"8a4492c943f8e07eff09d7ab10b8f34efc0959ca2ad409128e0fce9da9706d59\",\"key_id\":\"test-rfc8032-1\",\"schema\":\"nf.consent-anchor/v1\",\"seq\":1,\"tenant\":\"00000000-0000-4000-8000-0000000000a1\"}"
+  },
+  "deletion_certificate": {
+    "document": {
+      "schema": "nf.deletion-certificate/v1",
+      "certificate_id": "00000000-0000-4000-8000-0000000000d9",
+      "tenant": "00000000-0000-4000-8000-0000000000a1",
+      "subject_pseudonym": "P-017",
+      "requested_at": "2026-09-26T12:00:00.123456+00:00",
+      "completed_at": "2026-09-26T12:00:05.654321+00:00",
+      "duration_s": 5.531,
+      "objects_deleted": {
+        "raw": 2,
+        "derived": 1
+      },
+      "statement": "Illustrative test vector (fields abbreviated).",
+      "signature": {
+        "alg": "Ed25519",
+        "key_id": "test-rfc8032-1",
+        "value": "Fht00B4bru7h30EAKszjsh3QLsZg2KxYh2l6/Rn0kOgUAew1tcdgR0FFy/HKFnUrX6HXPk56xfxRQ16Q/cxJDA=="
+      }
+    },
+    "signed_part": "{\"certificate_id\":\"00000000-0000-4000-8000-0000000000d9\",\"completed_at\":\"2026-09-26T12:00:05.654321+00:00\",\"duration_s\":5.531,\"objects_deleted\":{\"derived\":1,\"raw\":2},\"requested_at\":\"2026-09-26T12:00:00.123456+00:00\",\"schema\":\"nf.deletion-certificate/v1\",\"statement\":\"Illustrative test vector (fields abbreviated).\",\"subject_pseudonym\":\"P-017\",\"tenant\":\"00000000-0000-4000-8000-0000000000a1\"}"
+  },
+  "wal_aad": [
+    {
+      "stream_id": "00000000-0000-4000-8000-0000000000c5",
+      "seq": 0,
+      "aad_hex": "6e662e77616c2e76310030303030303030302d303030302d343030302d383030302d3030303030303030303063350030"
+    },
+    {
+      "stream_id": "stream-\u00e9",
+      "seq": 12345,
+      "aad_hex": "6e662e77616c2e76310073747265616d2dc3a9003132333435"
+    }
+  ]
+}

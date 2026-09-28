@@ -1,0 +1,139 @@
+{
+  "nav": {
+    "items": [
+      {
+        "label": "Platform",
+        "href": "/platform"
+      },
+      {
+        "label": "Governance",
+        "href": "/governance"
+      },
+      {
+        "label": "SDKs",
+        "href": "/sdks"
+      },
+      {
+        "label": "Research",
+        "href": "/research"
+      },
+      {
+        "label": "Pricing",
+        "href": "/pricing"
+      },
+      {
+        "label": "Security",
+        "href": "/security"
+      }
+    ],
+    "cta": {
+      "label": "Early access",
+      "href": "/pricing#early-access",
+      "variant": "primary"
+    }
+  },
+  "footer": {
+    "tagline": "Neural data infrastructure, from electrode to model. For research and development use.",
+    "disclaimer": "{brand} is in development. Nothing on this site is a product you can use today, and statuses show what is designed, planned or on the roadmap.",
+    "copyright": "© 2026 {legalName}",
+    "groups": [
+      {
+        "heading": "Product",
+        "links": [
+          {
+            "label": "Platform",
+            "href": "/platform"
+          },
+          {
+            "label": "Governance",
+            "href": "/governance"
+          },
+          {
+            "label": "SDKs",
+            "href": "/sdks"
+          },
+          {
+            "label": "Pricing",
+            "href": "/pricing"
+          },
+          {
+            "label": "Docs",
+            "href": "/docs",
+            "status": "roadmap"
+          }
+        ]
+      },
+      {
+        "heading": "Company",
+        "links": [
+          {
+            "label": "Research",
+            "href": "/research"
+          },
+          {
+            "label": "Security",
+            "href": "/security"
+          },
+          {
+            "label": "Neural-data law tracker",
+            "href": "/law-tracker"
+          }
+        ]
+      }
+    ]
+  },
+  "aria": {
+    "heroVisual": {
+      "clinical": "Animated EEG montage: synthetic traces scrolling across scalp channels. Demo data, not a recording.",
+      "cosmos": "Point cloud shaped like a brain, slowly rotating in dark space, with pulses travelling between points. Decorative illustration, not data."
+    },
+    "heroVisualCaption": "Synthetic signal, demo data.",
+    "formats": "Open data formats and protocols the platform is designed for",
+    "audienceTabs": "Who it is for",
+    "codeSample": "Illustrative Python example"
+  },
+  "earlyAccess": {
+    "heading": "Join the <em>early-access list.</em>",
+    "body": "Hear first when pipelines, the law tracker and the consent ledger reach early access.",
+    "emailLabel": "Work email",
+    "emailPlaceholder": "name@example.org",
+    "submitLabel": "Join the early-access list",
+    "disabled": true,
+    "disabledNote": "The early-access list opens soon. We are not collecting any email addresses until our privacy policy is published.",
+    "status": "planned"
+  },
+  "banners": {
+    "notLegalAdvice": "Not legal advice. This is a research summary for product planning. Engage qualified counsel before relying on it.",
+    "irbFda": "Computational/theoretical work; any clinical application requires IRB/FDA oversight",
+    "demoData": "Demo data",
+    "illustrativeApi": "Illustrative API, subject to change"
+  },
+  "notFound": {
+    "meta": {
+      "title": "Page not found · {brand}",
+      "description": "This page does not exist."
+    },
+    "heading": "This page <em>does not exist.</em>",
+    "body": "The link may be wrong, or the page may have moved. The home page lists everything that is published.",
+    "homeLink": {
+      "label": "Back to the home page",
+      "href": "/"
+    }
+  },
+  "figureUi": {
+    "dataTableSummary": "Data table for this figure",
+    "readoutLabel": "Value at the selected point",
+    "keyboardHint": "Use the arrow keys to move between data points.",
+    "downloadSvg": "Download SVG",
+    "reproduceLink": "Reproduce this figure: script and result file",
+    "manifestLabel": "Figure provenance",
+    "statusPreliminary": "Preliminary"
+  },
+  "gallery": {
+    "meta": {
+      "title": "Component gallery · {brand}",
+      "description": "Internal component gallery. Not indexed."
+    },
+    "heading": "Component gallery"
+  }
+}

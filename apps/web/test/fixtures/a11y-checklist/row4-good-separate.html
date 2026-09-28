@@ -1,0 +1,22 @@
+<!-- Row 4 PASSING fixture, structural fallback (no script given): a hidden status line in one
+     section and an unrelated visible live region (a copy-to-clipboard confirmation) in another.
+     Their nearest common ancestor is <main>, not a section/article/form/fieldset or a data-*
+     component root, so they are not treated as one event. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <main>
+      <section aria-labelledby="h-demo">
+        <h2 id="h-demo">Demo</h2>
+        <p class="nf-visually-hidden" aria-live="polite" data-demo-live></p>
+      </section>
+      <section aria-labelledby="h-install">
+        <h2 id="h-install">Install</h2>
+        <p class="copied" role="status" data-copy-status></p>
+      </section>
+    </main>
+  </body>
+</html>

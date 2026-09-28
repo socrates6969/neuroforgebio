@@ -1,0 +1,31 @@
+<!-- Row 4 PLANTED FAILURE: the real /arena bug (docs/hive/A11Y-AUDIT.md; apps/web/src/pages/arena/
+     index.astro at 8e72f73, trimmed): the hidden status line [data-arena-live] announces "Run complete:
+     mean R² …", and the visible card [data-arena-card] was ALSO aria-live="polite" and re-rendered by
+     the same run (see row4-bad-arena.ts: runOnce() writes the status line and calls renderCard()).
+     Expected: one finding from the script evidence; with no script, one finding from structure
+     (both regions sit in the same data-* component root, div.arena[data-arena]). -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <section class="nf-section" aria-labelledby="h-arena">
+      <div class="nf-wrap">
+        <h1 id="h-arena">Decoder Arena</h1>
+        <div class="arena" data-arena>
+          <form class="arena-controls nf-card" data-arena-controls aria-labelledby="h-arena-controls">
+            <h2 id="h-arena-controls" class="nf-visually-hidden">Decoder settings</h2>
+            <button type="button" class="nf-btn nf-btn--primary" data-arena-run disabled>Run evaluation</button>
+          </form>
+
+          <p class="nf-visually-hidden" aria-live="polite" data-arena-live></p>
+
+          <div class="arena-card nf-card" data-arena-card aria-live="polite">
+            <p class="arena-empty">Run a decoder to see its evaluation card.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

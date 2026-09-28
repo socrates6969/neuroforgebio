@@ -1,0 +1,184 @@
+{
+  "meta": {
+    "title": "Privacy policy · {brand}",
+    "description": "Draft privacy policy: what data we process when you visit or contact us, your GDPR rights, and what we do not collect. Not legal advice; pending advokat review."
+  },
+  "draft": true,
+  "draftNotice": "DRAFT – not legal advice. Must be reviewed by a Norwegian lawyer (advokat) before use.",
+  "title": "Privacy policy – [{domain}] website",
+  "shortTitle": "Privacy policy",
+  "blocks": [
+    {
+      "type": "p",
+      "text": "Version [1.0] · Last updated [DATE] · Language: this policy exists in English and Norwegian. [Proposal: the English version prevails in case of conflict – choice for the advokat.]"
+    },
+    {
+      "type": "p",
+      "text": "This policy explains what personal data we process **when you visit our website or contact us**. It does **not** cover data that our business customers upload to the {brand} platform (for example research recordings). For that data our customer is the controller and we act as its processor under a separate data processing agreement; ask the organisation that collected your data. We never sell or license data we hold for customers. If {brand} ever collects research data itself (for example from volunteers), you will get a separate information and consent form before anything is collected."
+    },
+    {
+      "type": "quote",
+      "text": "Status: {brand} is pre-product. The platform is designed/planned, not live. ASSUMPTION: the company will be a Norwegian aksjeselskap (AS); it is **not yet incorporated**, so the name and registration number below are placeholders."
+    },
+    {
+      "type": "h2",
+      "id": "s-1-who-is-responsible-controller",
+      "text": "1. Who is responsible (controller)"
+    },
+    {
+      "type": "p",
+      "text": "[{brand} AS] (under formation), org.nr. [●], [street address], [postcode] [city], Norway.\nContact for privacy questions: [privacy@{domain}]. [Data protection officer: none appointed / [name, email] – advokat to confirm whether a DPO is required.]"
+    },
+    {
+      "type": "h2",
+      "id": "s-2-what-we-process-why-and-on-which-legal-basis",
+      "text": "2. What we process, why, and on which legal basis"
+    },
+    {
+      "type": "table",
+      "head": [
+        "What",
+        "Why",
+        "Legal basis (GDPR)",
+        "How long we keep it"
+      ],
+      "rows": [
+        [
+          "**Technical request data** handled by our hosting/CDN provider: IP address, date/time, requested page, browser type (user agent), referrer, error codes",
+          "Deliver the site, keep it secure, find and stop abuse",
+          "Art. 6(1)(f) – our legitimate interest in a working, secure website",
+          "[30] days (ESTIMATE), longer only if needed to investigate a specific security incident"
+        ],
+        [
+          "**Early-access list** (when opened; the form is currently disabled): email address, optionally name, organisation, role, and the date and proof of your confirmation (double opt-in)",
+          "Tell you when the product opens and send occasional product news you asked for",
+          "Art. 6(1)(a) – your consent. You can withdraw at any time (unsubscribe link in every email or email us)",
+          "Until you unsubscribe, or [24] months after your sign-up confirmation or your last reply to us (ESTIMATE; we do not track email opens or clicks), whichever comes first"
+        ],
+        [
+          "**Messages you send us** (email): name, contact details, content",
+          "Answer you, and follow up if you ask for a meeting or offer",
+          "Art. 6(1)(f) – legitimate interest in answering enquiries; Art. 6(1)(b) where you ask for steps before a contract",
+          "[24] months after the conversation ends (ESTIMATE), unless needed for a contract or legal claim"
+        ],
+        [
+          "**Business records** if you become a customer or supplier",
+          "Invoicing and accounting",
+          "Art. 6(1)(c) – legal obligation under Norwegian bookkeeping law",
+          "As required by bokføringsloven (**UNVERIFIED**: period to be confirmed by advokat/accountant)"
+        ]
+      ]
+    },
+    {
+      "type": "p",
+      "text": "**What we do not do:** no cookies for tracking, no analytics or advertising tools, no third-party scripts, no social-media pixels, no profiling, no automated decisions with legal or similarly significant effects (Art. 22). Fonts are hosted on our own server, so your browser does not contact a font provider. See our [Cookie statement](/legal/cookies)."
+    },
+    {
+      "type": "p",
+      "text": "**We do not collect neural or health data through the website.** Please do not send us such data by email."
+    },
+    {
+      "type": "h2",
+      "id": "s-3-who-receives-the-data-recipients",
+      "text": "3. Who receives the data (recipients)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**Hosting/CDN provider:** [name, country] – processes request data on our behalf (processor, Art. 28).",
+        "**Email provider:** [name, country] – hosts our mailbox and, if used, the early-access mailing (processor).",
+        "**Accountant / auditor**, if you become a customer or supplier.",
+        "**Authorities**, only where the law requires it."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "We do **not sell** personal data and do not share it for advertising."
+    },
+    {
+      "type": "h2",
+      "id": "s-4-transfers-outside-the-eu-eea",
+      "text": "4. Transfers outside the EU/EEA"
+    },
+    {
+      "type": "p",
+      "text": "[If a provider above is located, or can access data, outside the EEA:] we transfer only with a valid safeguard under GDPR Chapter V: an adequacy decision (Art. 45) [e.g. the EU–US Data Privacy Framework for certified US recipients – **UNVERIFIED** status, advokat to confirm], or the EU Standard Contractual Clauses (Commission Implementing Decision (EU) 2021/914, Art. 46(2)(c)). You can ask us for a copy of the safeguard."
+    },
+    {
+      "type": "h2",
+      "id": "s-5-your-rights",
+      "text": "5. Your rights"
+    },
+    {
+      "type": "p",
+      "text": "You can ask us to: see your data (access, Art. 15); correct it (Art. 16); delete it (Art. 17); restrict processing (Art. 18); receive it in a portable format (Art. 20, for consent/contract data); **object** to processing based on legitimate interest (Art. 21); and **withdraw consent** at any time, without affecting earlier processing (Art. 7(3)).\nWrite to [privacy@{domain}]. We answer within one month (Art. 12(3)); for complex or many requests this can be extended by up to two further months, and we will tell you why within the first month. We may ask you to confirm your identity."
+    },
+    {
+      "type": "p",
+      "text": "**Complaints:** you may complain to the Norwegian Data Protection Authority, **Datatilsynet** (www.datatilsynet.no), or to the supervisory authority where you live or work. We would appreciate the chance to fix the issue first."
+    },
+    {
+      "type": "h2",
+      "id": "s-6-must-you-give-us-data",
+      "text": "6. Must you give us data?"
+    },
+    {
+      "type": "p",
+      "text": "No. You can browse the site without giving us anything. Without an email address we cannot add you to the early-access list or reply to you."
+    },
+    {
+      "type": "h2",
+      "id": "s-7-security",
+      "text": "7. Security"
+    },
+    {
+      "type": "p",
+      "text": "The site is served over HTTPS, loads no third-party code, and keeps request logs for a short time. We limit who in the company can read enquiries and the early-access list."
+    },
+    {
+      "type": "h2",
+      "id": "s-8-children",
+      "text": "8. Children"
+    },
+    {
+      "type": "p",
+      "text": "The site is for professionals and researchers and is not aimed at children. If the early-access list opens, it is for adults signing up in a professional capacity. (For reference: the Norwegian age limit for a child's own consent to information-society services is 13 years, personopplysningsloven § 5.)"
+    },
+    {
+      "type": "h2",
+      "id": "s-9-visitors-from-us-states",
+      "text": "9. Visitors from US states"
+    },
+    {
+      "type": "p",
+      "text": "We do not sell or \"share\" (for cross-context behavioural advertising) personal information and do not collect sensitive personal information or neural data via this website. [Whether any US state privacy law applies to {brand} depends on revenue/volume thresholds – advokat to confirm.]"
+    },
+    {
+      "type": "h2",
+      "id": "s-10-changes",
+      "text": "10. Changes"
+    },
+    {
+      "type": "p",
+      "text": "We will update this page if our processing changes (for example if we ever add analytics – which would require your prior consent). The date at the top shows the latest version. Material changes will be announced on the site [and by email to the early-access list]."
+    },
+    {
+      "type": "h2",
+      "id": "s-hjemmel-legal-basis",
+      "text": "Hjemmel / Legal basis"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Regulation (EU) 2016/679 (GDPR) Art. 6, 7, 9, 12–13, 15–22, 28, 44–46 – as incorporated into Norwegian law by personopplysningsloven § 1. EUR-Lex (https://eur-lex.europa.eu/eli/reg/2016/679/oj and the CELEX HTML view) **failed to load** (empty page) on 2026-09-26; article wording relied on from the incorporated Norwegian text's structure and drafter knowledge – **verbatim wording UNVERIFIED**.",
+        "Personopplysningsloven (LOV-2018-06-15-38) § 1 (incorporation), § 20 (Datatilsynet), § 22 (Personvernnemnda): https://lovdata.no/dokument/NL/lov/2018-06-15-38 (opened 2026-09-26). § 5 (age 13): https://lovdata.no/lov/2018-06-15-38/§5 (opened 2026-09-26 by nfb-legal-privacy).",
+        "GDPR Norwegian text is available on Lovdata per article (e.g. https://lovdata.no/lov/2018-06-15-38/gdpr/a7, opened 2026-09-26: Art. 4, 7, 9, 17, 19, 26, 28, 35, 46, 89). Art. 6, 12 (incl. the two-month extension in 12(3)), 13, 15–22, 45 not yet opened there – **UNVERIFIED** verbatim.",
+        "Ekomloven (LOV-2024-12-13-76) § 3-15 (storage/access on terminal equipment), in force 1 Jan 2025: https://lovdata.no/dokument/NL/lov/2024-12-13-76 (opened 2026-09-26).",
+        "Datatilsynet, cookie guidance: https://www.datatilsynet.no/personvern-pa-ulike-omrader/internett-og-apper/cookies/ (opened 2026-09-26).",
+        "Commission Implementing Decision (EU) 2021/914 (SCC) – not opened – **UNVERIFIED**. EU–US Data Privacy Framework status – **UNVERIFIED**.",
+        "Bokføringsloven retention period – **UNVERIFIED**.",
+        "Product facts: architecture\\BLUEPRINT.md §2.4 (early-access form disabled until a privacy policy exists; double opt-in), DECISIONS.md D9 (no trackers, self-hosted fonts)."
+      ]
+    }
+  ]
+}

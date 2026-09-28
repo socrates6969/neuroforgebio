@@ -1,0 +1,106 @@
+# Python toolchain for the monorepo (BUILD-GUIDE 0.1). uv project; not a distributable package yet.
+# Local (Windows, no global uv): uv lives in .venv (see docs/dev/python.md).
+#   .venv/Scripts/uv sync --locked      # installs the dev group into .venv (uv stays: it is in the group)
+# CI: astral-sh/setup-uv, then `uv sync --locked` and `uv run pytest`.
+[project]
+name = "nf-monorepo"
+version = "0.0.0"
+description = "Monorepo tooling: canonical hashing reference, synthetic data generator (tools/synth)."
+requires-python = "==3.12.*"
+dependencies = []
+
+[dependency-groups]
+dev = [
+  "numpy>=2.1,<3",
+  "pytest>=8.3,<9",
+  "ruff>=0.13,<0.14",
+  "uv>=0.12,<0.13",
+  # services/platform (M2): the platform package + its test tools (pgserver = local Postgres 16).
+  "nf-platform[test]",
+  # m3-exec: step library v1 wraps MNE (3.4). MNE + scipy fit the dev PC (import ~35 MB, ICA run
+  # ~110 MB peak), so the reference tests run locally, not CI-only.
+  "mne==1.13.2",
+  "scipy==1.18.1",
+  # m4-sdk (4.3): builds the `neuroforge` PyO3 extension locally (`maturin develop`, debug only).
+  "maturin>=1.9,<2",
+]
+# CI-only readers used by tools/synth open-tests (skipped when absent). Not installed locally (RAM).
+readers = [
+  "mne>=1.10",
+  "pynwb>=3.0",
+  "pyxdf>=1.17",
+]
+
+[tool.uv]
+package = false
+default-groups = ["dev"]
+
+[tool.uv.workspace]
+members = ["services/platform"]
+
+[tool.uv.sources]
+nf-platform = { workspace = true }
+
+[tool.pytest.ini_options]
+testpaths = [
+  "spec/reference/python",
+  "tools/synth/tests",
+  "services/workers/steps/channel_estimator/tests",
+  "services/platform/tests",
+  # m3-exec (M3 3.3-3.5): step library, worker runner, reproducibility harness
+  "services/workers/steps/nf_steps/tests",
+  "services/workers/runner/tests",
+  "tools/repro-check/tests",
+  "tools/playground/tests",
+  # m4-api (M4 4.1): OpenAPI breaking-change check
+  "tools/openapi-diff/tests",
+  # m4 (4.5): docs API reference generator
+  "tools/doc-snippets/tests",
+  # EXC-150-1 condition 4: offline CycloneDX 1.6 schema validation
+  "tools/sbom-validate/tests",
+]
+pythonpath = [
+  "spec/reference/python",
+  "tools/synth",
+  "services/workers/steps/channel_estimator",
+  "services/platform",
+  "services/workers/steps/nf_steps",
+  "services/workers/runner",
+  "tools/repro-check",
+  "tools/openapi-diff",
+  # m6-sisa (6.4): toy decoder + SISA training; tests in services/platform/tests/sisa
+  "services/workers/steps/nf_train",
+  # Neural Playground offline pipeline (numpy-only unit tests; the dataset run is manual)
+  "tools/playground",
+]
+addopts = "-q"
+markers = [
+  "integration: needs the CI stack (services/platform/docker-compose.ci.yml: Postgres 16 + MinIO); skipped locally",
+  "postgres: needs a real PostgreSQL (local pgserver or NF_TEST_DATABASE_URL); skipped if neither is available",
+]
+filterwarnings = [
+  # Starlette 1.x nudges TestClient users towards `httpx2`; we stay on httpx until that package is vetted.
+  "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = [
+  "research",
+  "market",
+  "design",
+  "architecture",
+  "investor",
+  "legal/financing",
+  "node_modules",
+  "dist",
+  "services/platform/nf_platform/ingest/stream/_proto",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+line-ending = "lf"

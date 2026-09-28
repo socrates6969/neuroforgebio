@@ -1,0 +1,24 @@
+<!-- Row 2 PASSING fixture: the "class on the item" escape used by PageBody.astro/SecurityPage.astro
+     -- `.grid` (220px 1fr: the 1fr track is content-sized) whose `.main` item carries its own
+     `min-width:0`. The two rules are copied verbatim from the real build (security.*.css). `.main`
+     holds a <pre>, so without that rule this WOULD be a finding (the test strips it to prove so).
+     Expected: 1 container examined, no findings. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      .grid[data-astro-cid-dvvtwyfj]{display:grid;grid-template-columns:220px 1fr;gap:32px}
+      .main[data-astro-cid-dvvtwyfj]{max-width:900px;min-width:0}
+    </style>
+  </head>
+  <body>
+    <div class="nf-wrap grid" data-astro-cid-dvvtwyfj>
+      <div class="side" data-astro-cid-dvvtwyfj>On this page</div>
+      <div class="main" data-astro-cid-dvvtwyfj>
+        <p>Verify the signed manifest before trusting a build:</p>
+        <pre><code>nf verify --manifest dist/manifest.json --key keys/release-2026.pub --strict --print-chain</code></pre>
+      </div>
+    </div>
+  </body>
+</html>

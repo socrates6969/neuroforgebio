@@ -1,0 +1,133 @@
+{
+ "N1_verdict": "FAIL",
+ "N1c": {
+  "c1_input_hashes": {
+   "all_match_manifest_and_SHA256SUMS": true,
+   "note": "run_n2.py raises InputHashError on any mismatch; the run completed",
+   "verified": {
+    "edf": 29,
+    "seizures": 21,
+    "summary": 3
+   }
+  },
+  "c2_split_hash": {
+   "matches": true,
+   "value": "433d818f305ba2095ef854b1f7f8b594895ad070f5fc28584a5507bdc7d9f1e2"
+  },
+  "c3_rerun_identity": {
+   "hashes": {
+    "run1": {
+     "N2_run_card.json": {
+      "recomputed": "cf2913d8d71f839725a14ff6fa875189f2ecc68a5354b1ecc43aea5daef78e17",
+      "stored": "cf2913d8d71f839725a14ff6fa875189f2ecc68a5354b1ecc43aea5daef78e17"
+     },
+     "cards/chb01_card.json": {
+      "recomputed": "58ee1fc942f5ead8291c1258579890f3e877f83659b09469b8c99c1f1a9bdf11",
+      "stored": "58ee1fc942f5ead8291c1258579890f3e877f83659b09469b8c99c1f1a9bdf11"
+     },
+     "cards/chb03_card.json": {
+      "recomputed": "feff67ae6a6ce2d09629b3385d0394a6ebe22b0cad76d7792e876e12edfc6337",
+      "stored": "feff67ae6a6ce2d09629b3385d0394a6ebe22b0cad76d7792e876e12edfc6337"
+     },
+     "cards/chb10_card.json": {
+      "recomputed": "8a6a2ce32f74dc40a3ec8f1cf619a09695f0f5377b9fb36d1c88018dc684c8b1",
+      "stored": "8a6a2ce32f74dc40a3ec8f1cf619a09695f0f5377b9fb36d1c88018dc684c8b1"
+     }
+    },
+    "run2": {
+     "N2_run_card.json": {
+      "recomputed": "cf2913d8d71f839725a14ff6fa875189f2ecc68a5354b1ecc43aea5daef78e17",
+      "stored": "cf2913d8d71f839725a14ff6fa875189f2ecc68a5354b1ecc43aea5daef78e17"
+     },
+     "cards/chb01_card.json": {
+      "recomputed": "58ee1fc942f5ead8291c1258579890f3e877f83659b09469b8c99c1f1a9bdf11",
+      "stored": "58ee1fc942f5ead8291c1258579890f3e877f83659b09469b8c99c1f1a9bdf11"
+     },
+     "cards/chb03_card.json": {
+      "recomputed": "feff67ae6a6ce2d09629b3385d0394a6ebe22b0cad76d7792e876e12edfc6337",
+      "stored": "feff67ae6a6ce2d09629b3385d0394a6ebe22b0cad76d7792e876e12edfc6337"
+     },
+     "cards/chb10_card.json": {
+      "recomputed": "8a6a2ce32f74dc40a3ec8f1cf619a09695f0f5377b9fb36d1c88018dc684c8b1",
+      "stored": "8a6a2ce32f74dc40a3ec8f1cf619a09695f0f5377b9fb36d1c88018dc684c8b1"
+     }
+    }
+   },
+   "identical": true
+  },
+  "c4_prereg_before_first_label_read": true
+ },
+ "N1d_real_run_guard_calls_all_silent": {
+  "F1": 901,
+  "F2": 164,
+  "F3": 26713,
+  "F4": 1471,
+  "F5": 82,
+  "F6": 63,
+  "F7": 1,
+  "F8": 517,
+  "F9": 26566,
+  "S1": 3,
+  "S5": 3,
+  "S7": 1
+ },
+ "consequence": "harness not validated: N2 reported as 'not verifiable: code'",
+ "parts": {
+  "a": "PASS",
+  "b": "FAIL",
+  "c": "PASS",
+  "d": "PASS",
+  "e": "PASS"
+ },
+ "provenance": {
+  "code_sha256": {
+   "edf_reader.py": "f5a62fb9a277b37bfa05a17bcfd5ff3f2ca2613907173c7774ada288d3c27ddf",
+   "nfharness/__init__.py": "9efc7a844dc73e533957c92f644c38cd96df0851b52c58a7448e14a89df2937d",
+   "nfharness/card.py": "83b6bedde5bfd01607b4d6f778f8d4739aa1e51f27631a38142ffa98b1f3ee2c",
+   "nfharness/config.py": "dfca97f440fe098a5c966d245c4dc5401c745623e0383d3b40c5977263498632",
+   "nfharness/data.py": "243c9db3912886620f82b955fd5f3cd03f17ac938b2ea0ad1be9313f38b5a9e0",
+   "nfharness/errors.py": "7133afc13a2561096d54bb58c15463ccf07774868e5fc55fc15d883958c4b6aa",
+   "nfharness/features.py": "29acae0789a5e5a297ad489d962ce26f81bdd38bb41c3e82074a6581ad96f32e",
+   "nfharness/labels.py": "4679d0fabe44b4d313862321d9d2b3c7dd713370b2635563a321f35978f23a27",
+   "nfharness/model.py": "08305ee1f64f8c7b237e6592bddbfa93e5b7b200e0bfe895e5e520a5094ca10a",
+   "nfharness/pipeline.py": "76a2773a9e7bc94cb261d3a2acf3ca2261561bb60d3d0330886fba3ffebc202b",
+   "nfharness/postprocess.py": "faa04421f2167935c72ed102c9c9e63750ad7775a56045212559e230e68244c9",
+   "nfharness/provenance.py": "ade7554aa6990c5a27b27d171087c88dfb02378eb4a63a0279cf816302570b6b",
+   "nfharness/scoring.py": "b23ed292bed2235e67cb09e7a7698f44ff2e16c6e16680ef4ec98e42bfffc1ef",
+   "nfharness/splits.py": "1fcecb0af87f00709dc84a99fbc7f243444e342ff210031aae8e50660161ec29",
+   "nfharness/stats.py": "5dc8cf597a76e5b5251cb6ba73139d7fd939d2eee37b8b2f8a7055464e3eb4ee",
+   "nfharness/windows.py": "2898848e8984f84cef5ce637b6c810068e8a7db1b2e50e7eb62e7e67480cb36f",
+   "run_n1.py": "30354eba0dfdc6ea6311909de117eb47024ba38ec69718e40e346d712328b2be",
+   "tests/conftest.py": "118c154f3590c36ff4e3cfc625eea7644e596e20eace51bac79eba3ef79ded6a",
+   "tests/test_units.py": "1aaf420595b78372d95110a07aa311657cc06839d8f463c849ef3a179a5ad1df",
+   "tests/test_violations.py": "8853bcfe40488de1549e072ee7ba467b2591b12f13216bfbabbda28068d87cca"
+  },
+  "environment": {
+   "blas_threads": {
+    "MKL_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+   },
+   "machine": "AMD64",
+   "packages": {
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.3",
+    "pytest": "8.4.2",
+    "scipy": "1.18.1",
+    "timescoring": "0.0.7"
+   },
+   "platform": "Windows-11-10.0.26200-SP0",
+   "processor": "AMD64 Family 25 Model 117 Stepping 2, AuthenticAMD",
+   "python": "3.12.10"
+  },
+  "prereg_sha256": {
+   "N1_harness_controls.md": "27db9d27f5b6ac2e0f49826c6b3eb9625b8e1633434ae70cf62a7e10f09fc93b",
+   "N2_baseline_detection.md": "ed929ae0e5182827352928225cf40865a8bee5f6b5da089be5a6600e6678e21c"
+  },
+  "seed": 20261001
+ },
+ "runtime": {
+  "finished_utc": "2026-09-26T17:10:33.549825+00:00"
+ },
+ "status_label": "RESEARCH USE ONLY. NOT A MEDICAL DEVICE."
+}

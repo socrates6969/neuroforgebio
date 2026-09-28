@@ -1,0 +1,35 @@
+# All values QUOTED (not estimated) from opened full texts; see notes/data_cycle3.md for URLs and verbatim quotes.
+source,pmid,participant,quantity,value,unit,figure_or_section
+Greenspon2025,39643730,pooled C1/P2/P3,PF area median (after 33% pixel threshold),2.5,cm2,Fig 2f text
+Greenspon2025,39643730,pooled C1/P2/P3,PF area 5th percentile,0.3,cm2,Fig 2f text
+Greenspon2025,39643730,pooled C1/P2/P3,PF area 95th percentile,11.3,cm2,Fig 2f text
+Greenspon2025,39643730,C1,union of PFs,12,cm2,Fig 2e
+Greenspon2025,39643730,P2,union of PFs,33,cm2,Fig 2e
+Greenspon2025,39643730,P3,union of PFs,30,cm2,Fig 2e
+Greenspon2025,39643730,all,palmar hand surface used for %,165,cm2,Fig 2e text
+Greenspon2025,39643730,C1/P2/P3,n electrodes in PF size distribution,62/63/63,count,Fig 2f legend
+Greenspon2025,39643730,C1/P2 (C1&P2) / P3,fraction electrodes excluded (no pixel >=33%),25% / 25% / 58%,percent,Results
+Greenspon2025,39643730,range across participants,mean single-day-to-aggregate centroid distance,3.5-8.7,mm,Fig 2g text
+Greenspon2025,39643730,C1+P2 within-day repeats,repeat centroid distance median (IQR),3.5 (1.6-4.8),mm,Fig 2i text
+Greenspon2025,39643730,pooled,centroid drift slope mean +/- sd,0.006 +/- 0.019,mm/day,Ext Data Fig 2g text
+Greenspon2025,39643730,pooled,corr(PF area; centroid variability),0.33,r,Fig 2h
+Greenspon2025,39643730,pooled within digit,corr(cortical distance; PF-centroid distance) across arrays,0.69 (n=5892 pairs),r,Fig 3e
+Greenspon2025,39643730,each array,corr(cortical distance; PF-centroid distance) within array,>0.4,r,Fig 3e
+Greenspon2025,39643730,pooled,cortex-to-skin scaling,2 mm cortex ~ 10 mm skin,ratio,Fig 3e text
+Greenspon2025,39643730,subset,PF size change 40->80 uA at 100 Hz median (IQR),170% (142-330%),percent,Ext Data Fig 4a
+Greenspon2025,39643730,subset,PF size change 50->200 Hz at 60 uA median (IQR),129% (121-185%),percent,Ext Data Fig 4b
+Greenspon2025,39643730,subset,corr(PF size; magnitude estimate),0.77,r,Ext Data Fig 4c
+Greenspon2025,39643730,C1,pairwise additive PF model pixel correlation mean,0.61,r,Fig 4c
+Greenspon2025,39643730,C1,single-electrode no localizable sensation vs multi,30% vs 0%,percent,Fig 4e text
+Greenspon2025,39643730,C1,mislocalized single vs multi,42% vs 7%,percent,Fig 4e text
+Greenspon2025,39643730,C1/P3,median fraction of PF inside RF,1 (25th pct 0.83 / 0.72),fraction,Fig 3h
+Greenspon2025,39643730,all,S1 array geometry,2.4 x 4 mm; 60 shanks; 32 wired (chequerboard); 1.5 mm shanks,,Methods
+Hughes2022,35671947,P2 (Pitt),electrode spacing,400,um,Methods
+Hughes2021JNE,34320481,P2 (Pitt),electrodes eliciting hand sensations on a given day,50-60 of 64,count,Methods 2.2
+GreensponDecade2025preprint,40832410,5 participants,electrodes still reliably evoking sensation,62 +/- 15%,percent,Abstract/Results
+GreensponDecade2025preprint,40832410,one participant,electrodes functional after 10 years,55%,percent,Abstract
+Fifer2022,34880087,JHU participant (bilateral; 3 stim arrays),blinded digit identification accuracy (5-7 digit sets + null),99.0% (386/390),percent,Results
+Fifer2022,34880087,JHU participant,PF size vs finger pad,33% larger on average,percent,Abstract
+Fifer2022,34880087,JHU participant,PF size growth 20->80 uA,21%,percent,Abstract
+Fifer2022,34880087,JHU participant,stim array geometry,4 x 2.4 mm; 400 um pitch; 32 ch in 6x10,,Methods
+Downey2024HBM,39720868,C1 C2 P2 P3 P4,lateral distance of digit fMRI/MEG peak from hand knob,1.5-28.1 (Table 4),mm,Table 4

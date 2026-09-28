@@ -1,0 +1,16 @@
+name: unlocked
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: pnpm install
+      - run: |
+          uv sync
+          cargo build --release
+          npm install left-pad
+      - run: npx -y @cyclonedx/cdxgen -o sbom.json .
+      - run: pip install requests

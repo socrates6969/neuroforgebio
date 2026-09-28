@@ -1,0 +1,17 @@
+---
+// Renders one or more schema.org nodes as JSON-LD, inside the page body (never in <head>: Base.astro
+// is frozen, see apps/web/test/homepage.test.mjs, so it cannot auto-inject this). Google explicitly
+// supports JSON-LD anywhere in the document, not only <head>.
+// `type="application/ld+json"` is data, not code: scripts/inline-check.mjs (SEC-150a) exempts it from
+// the CSP inline-script-hash requirement, so this needs no entry in security-headers.mjs. Every raw
+// "<" in a value is replaced by its 6-character JSON escape sequence below, never a literal angle
+// bracket, so a value can never break out into `</script>`.
+import type { JsonLdNode } from '../lib/jsonld.ts';
+
+interface Props { schema: JsonLdNode | JsonLdNode[] }
+const { schema } = Astro.props;
+const nodes = Array.isArray(schema) ? schema : [schema];
+---
+{nodes.map((node) => (
+  <script type="application/ld+json" set:html={JSON.stringify(node).replace(/</g, '\\u003c')} />
+))}

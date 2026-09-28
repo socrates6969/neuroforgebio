@@ -1,0 +1,25 @@
+{
+  "schema": "nf.pipeline-version/v1",
+  "meta": {
+    "name": "eeg-basic",
+    "version": "1.0.0",
+    "description": "Example PipelineVersion (validates against pipeline-version.schema.json)"
+  },
+  "steps": [
+    {
+      "name": "filter",
+      "image": "registry.example.invalid/nf-steps@sha256:abababababababababababababababababababababababababababababababab",
+      "entrypoint": ["nf-step", "filter"],
+      "params": { "l_freq": 0.1, "h_freq": 40.0, "method": "fir", "phase": "zero" },
+      "tolerance": { "kind": "exact" }
+    },
+    {
+      "name": "rereference",
+      "image": "registry.example.invalid/nf-steps@sha256:abababababababababababababababababababababababababababababababab",
+      "entrypoint": ["nf-step", "reref"],
+      "params": { "ref_channels": "average" },
+      "tolerance": { "kind": "abs", "value": 1e-9 }
+    }
+  ],
+  "seed": 42
+}

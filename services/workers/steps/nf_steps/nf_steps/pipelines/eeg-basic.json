@@ -1,0 +1,153 @@
+{
+  "schema": "nf.pipeline-version/v1",
+  "meta": {
+    "name": "eeg-basic",
+    "version": "1.0.0",
+    "description": "Line-noise notch, 1-40 Hz band-pass, bad channels, average reference, seeded ICA (EOG proxies), event epochs, band power."
+  },
+  "steps": [
+    {
+      "name": "notch",
+      "step": "nf_steps.notch@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": ["nf-step", "run"],
+      "params": {
+        "freqs": [50.0],
+        "notch_widths": 1.0,
+        "trans_bandwidth": 1.0,
+        "method": "fir",
+        "filter_length": "auto",
+        "phase": "zero",
+        "fir_window": "hamming",
+        "fir_design": "firwin",
+        "pad": "reflect_limited",
+        "iir_order": 4,
+        "iir_ftype": "butter"
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-9
+      }
+    },
+    {
+      "name": "bandpass",
+      "step": "nf_steps.filter@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": ["nf-step", "run"],
+      "params": {
+        "l_freq": 1.0,
+        "h_freq": 40.0,
+        "method": "fir",
+        "filter_length": "auto",
+        "l_trans_bandwidth": "auto",
+        "h_trans_bandwidth": "auto",
+        "phase": "zero",
+        "fir_window": "hamming",
+        "fir_design": "firwin",
+        "pad": "reflect_limited",
+        "iir_order": 4,
+        "iir_ftype": "butter"
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-9
+      }
+    },
+    {
+      "name": "bads",
+      "step": "nf_steps.bad_channels@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": ["nf-step", "run"],
+      "params": {
+        "method": "robust_deviation",
+        "z_threshold": 5.0,
+        "flat_threshold": 1e-9,
+        "ch_types": ["eeg"]
+      },
+      "tolerance": {
+        "kind": "exact"
+      }
+    },
+    {
+      "name": "reref",
+      "step": "nf_steps.rereference@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": ["nf-step", "run"],
+      "params": {
+        "ref_channels": "average"
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-9
+      }
+    },
+    {
+      "name": "ica",
+      "step": "nf_steps.ica@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": ["nf-step", "run"],
+      "params": {
+        "n_components": 5,
+        "method": "infomax",
+        "extended": true,
+        "max_iter": 500,
+        "eog_channels": ["Fp1", "Fp2"],
+        "eog_measure": "correlation",
+        "eog_threshold": 0.5,
+        "eog_l_freq": 1.0,
+        "eog_h_freq": 10.0,
+        "exclude": []
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-6
+      }
+    },
+    {
+      "name": "epochs",
+      "step": "nf_steps.epochs@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": ["nf-step", "run"],
+      "params": {
+        "event_source": "events",
+        "event_codes": [1, 2],
+        "fixed_length_s": 2.0,
+        "tmin": -0.2,
+        "tmax": 0.8,
+        "baseline": [null, 0.0],
+        "detrend": null,
+        "decim": 1
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-9
+      }
+    },
+    {
+      "name": "bandpower",
+      "step": "nf_steps.band_power@1",
+      "image": "registry.invalid/nf-steps@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entrypoint": ["nf-step", "run"],
+      "params": {
+        "bands": [
+          ["delta", 1.0, 4.0],
+          ["theta", 4.0, 8.0],
+          ["alpha", 8.0, 13.0],
+          ["beta", 13.0, 30.0]
+        ],
+        "n_fft": 256,
+        "n_overlap": 64,
+        "n_per_seg": 128,
+        "window": "hamming",
+        "average": "mean",
+        "remove_dc": true,
+        "relative": false
+      },
+      "tolerance": {
+        "kind": "rel",
+        "value": 1e-9
+      }
+    }
+  ],
+  "seed": 42
+}

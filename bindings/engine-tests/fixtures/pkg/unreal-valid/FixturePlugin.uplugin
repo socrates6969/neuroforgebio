@@ -1,0 +1,11 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.1.0",
+  "FriendlyName": "Fixture Plugin",
+  "Description": "Fixture proving checkUpluginModules() passes when Modules[].Name has a matching Source/<Name>/<Name>.Build.cs class.",
+  "Category": "Data",
+  "Modules": [
+    { "Name": "FixturePlugin", "Type": "Runtime", "LoadingPhase": "Default", "PlatformAllowList": ["Win64"] }
+  ]
+}

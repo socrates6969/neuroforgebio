@@ -1,0 +1,22 @@
+// Fixture for T3 (nfb-security): a second shipped WinHTTP header, distinct from
+// nf_winhttp_transport.hpp, that carries a revocation-weakening flag. Proves the forbidden-flags
+// half of T3 is applied to every file under bindings/transport-conformance/winhttp/include/**, not
+// only nf_winhttp_transport.hpp -- a flag like this could land in a companion header (a future
+// diagnostics or retry helper, say) just as easily as in the main transport file.
+#ifndef NF_WINHTTP_DIAGNOSTICS_HPP
+#define NF_WINHTTP_DIAGNOSTICS_HPP
+
+namespace nf {
+namespace transport {
+namespace diagnostics {
+
+inline void log_relaxed_mode() {
+    DWORD flags = SECURITY_FLAG_IGNORE_CERT_REV_FAILED;
+    (void)flags;
+}
+
+}  // namespace diagnostics
+}  // namespace transport
+}  // namespace nf
+
+#endif  // NF_WINHTTP_DIAGNOSTICS_HPP

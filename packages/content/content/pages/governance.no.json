@@ -1,0 +1,116 @@
+{
+  "reviewed": false,
+  "meta": {
+    "title": "Styring · {brand}",
+    "description": "Klassifisering per jurisdiksjon, en versjonert samtykkelogg, sletting som følger dataene inn i avledede data og modeller, og bruksbegrensninger på modeller. Bygget og testet internt; ikke tatt i bruk ennå."
+  },
+  "hero": {
+    "eyebrow": "Styring",
+    "heading": "Styr nevrale data <em>uansett hvor de havner.</em>",
+    "lede": "Klassifisering, samtykke og sletting spores på den samme proveniensgrafen som løypene dine, slik at en tilbaketrekking når alle avledede data og modeller som er bygget på dataene."
+  },
+  "banner": "Ikke juridisk rådgivning. Dette er et forskningssammendrag for produktplanlegging. Kontakt kvalifisert advokat før du legger det til grunn.",
+  "sections": [
+    {
+      "id": "why-now",
+      "heading": "Lovene finnes, og <em>de er uenige.</em>",
+      "body": [
+        "Tre amerikanske delstater har lagt nevrale data til de sensitive dataene personvernlovene deres beskytter, og en fagfellevurdert oversiktsartikkel rapporterer en fjerde (Montana). Definisjonene er ulike. Ett EEG- eller EMG-opptak kan være nevrale data i én delstat og ikke i en annen, så klassifiseringen må gjøres per kanal og per avledet egenskap."
+      ],
+      "evidence": [
+        {
+          "text": "Colorado (i kraft 7. aug. 2024), California (Ch. 887, 28. sep. 2024) og Connecticut (signert 24. jun. 2025; endringsbestemmelsene i kraft 1. juli 2026) har bestemmelser om nevrale data.",
+          "source": "market/regulation.md §1",
+          "grade": "A"
+        },
+        {
+          "text": "En fagfellevurdert oversiktsartikkel rapporterer at Montana vedtok SB 163 i mai 2025 for å regulere nevrologiske data. Vi har ennå ikke kontrollert selve lovteksten.",
+          "source": "market/regulation.md §1"
+        },
+        {
+          "text": "Colorado og California omfatter det sentrale eller perifere nervesystemet; Connecticut omfatter bare sentralnervesystemet; California utelater data som er utledet av ikke-nevral informasjon.",
+          "source": "market/regulation.md §1",
+          "grade": "A"
+        },
+        {
+          "text": "Blant programvareverktøyene som ble gjennomgått, fant vi ingen personvernverktøy laget spesielt for nevrale data.",
+          "source": "market/landscape.md §3"
+        }
+      ]
+    },
+    {
+      "id": "capabilities",
+      "heading": "Hva styringslaget <em>er bygget for å gjøre.</em>",
+      "body": [
+        "Hver funksjon nedenfor er bygget og testet internt. Ingen av dem er tatt i bruk eller tilgjengelig for kunder ennå."
+      ],
+      "items": [
+        {
+          "heading": "Klassifisering per jurisdiksjon",
+          "body": "Klassifiser hver kanal og hver avledet egenskap mot definisjonene i Colorado, California og Connecticut, og registrer begrunnelsen. Montana vises som ikke vurdert til lovteksten er verifisert.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.2"
+        },
+        {
+          "heading": "Versjonert samtykkelogg",
+          "body": "Registrer aktivt samtykke med versjon og omfang, og behold et revisjonsspor over hver endring.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.3"
+        },
+        {
+          "heading": "Sletting som følger dataene",
+          "body": "Før tilbaketrukket samtykke videre til rådata, avledede data og trente modeller, og merk modeller som må trenes på nytt.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.5"
+        },
+        {
+          "heading": "Merke for begrenset bruk",
+          "body": "Merk data som California regner som sensitive personopplysninger, der forbrukere har rett til å begrense bruken.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.2; services/platform/tests/governance/test_gov_rules.py"
+        },
+        {
+          "heading": "Bruksbegrensninger på modeller",
+          "body": "Knytt metadata om bruksbegrensninger til modeller, for eksempel for gjenkjenning av følelser på arbeidsplasser og i utdanning i EU.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M6-REPORT.md step 6.2"
+        },
+        {
+          "heading": "Revisjonseksport",
+          "body": "Eksporter revisjonssporet, inkludert endringer i klassifisering og slettehendelser, og signerte slettebevis for granskere og advokater.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.5; services/platform/tests/governance/test_gov_audit_integrity.py"
+        }
+      ]
+    },
+    {
+      "id": "eu",
+      "heading": "EU-reglene <em>når også modellene.</em>",
+      "body": [
+        "EUs KI-forordning begrenser enkelte bruksområder for modeller uansett hvordan dataene ble samlet inn, så bruksbegrensninger hører hjemme i modellens register."
+      ],
+      "evidence": [
+        {
+          "text": "KI-forordningen art. 5 nr. 1 bokstav f, gjeldende fra 2. feb. 2025, forbyr KI som utleder følelser på arbeidsplasser og i utdanningsinstitusjoner, unntatt av medisinske eller sikkerhetsmessige grunner.",
+          "source": "market/regulation.md §5",
+          "sourceUrl": "https://artificialintelligenceact.eu/article/5",
+          "grade": "B"
+        }
+      ]
+    }
+  ],
+  "cta": [
+    {
+      "label": "Les lovoversikten",
+      "href": "/law-tracker",
+      "variant": "primary"
+    },
+    {
+      "label": "Bli med i tidlig tilgang",
+      "href": "/pricing#early-access",
+      "variant": "ghost",
+      "disabled": true,
+      "note": "Listen for tidlig tilgang åpner snart"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+<!-- Row 3 PLANTED FAILURE: a visible (not .nf-visually-hidden) aria-live region containing a table
+     -- the "results panel doubling as a live region" shape (docs/hive/A11Y-AUDIT.md's /arena finding,
+     before the fix). Screen readers would announce the whole table on every update. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div class="results-card" aria-live="polite" data-results-card>
+      <table>
+        <thead>
+          <tr><th>Decoder</th><th>R2</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ridge</td><td>0.81</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+{
+ "dprime_known_gaussians(d'=1)": true,
+ "auc_ties_vs_bruteforce": true,
+ "auc_weighted_vs_bruteforce": true,
+ "calibration_MC_JND_tau=inf": true,
+ "calibration_MC_JND_tau=0.3": true,
+ "adapt_inf_identity": true,
+ "adapt_steady_state_(1-k)a": true,
+ "bio_alpha1_beta0_equals_linear": true,
+ "charge_match_exact": true,
+ "events_>=300ms_apart": true,
+ "noise_free_null_scores_zero": true
+}

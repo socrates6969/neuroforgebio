@@ -1,0 +1,93 @@
+<!doctype html>
+<!-- DRAFT — not sent/posted. Owner review required. Placeholders in [brackets]. -->
+<!-- Fonts load from Google Fonts for this draft only; the public site must self-host fonts (DECISIONS.md D9). No other external resources. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NeuroForge Bio One-Pager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F9FB; --ink:#0B2540; --accent:#0E7C86; --accent-ink:#0A5F67;
+    --sec:#5B8DEF; --line:#DDE4EC; --muted:#4A5B6E; --card:#FFFFFF;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  body{font:15px/1.55 "IBM Plex Sans",system-ui,sans-serif}
+  .draft{background:#FFF4D6;color:#5A4300;border-bottom:1px solid #E9D48E;padding:8px 16px;font:500 13px/1.4 "IBM Plex Mono",monospace;text-align:center}
+  main{max-width:880px;margin:0 auto;padding:32px 16px 48px}
+  header{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:22px}
+  .brand{font-weight:700;font-size:28px;letter-spacing:-.01em;margin:0}
+  .brand span{color:var(--accent)}
+  .line{font-size:19px;font-weight:500;margin:6px 0 10px;color:var(--ink)}
+  .note{color:var(--muted);font-size:13px;margin:0}
+  h2{font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-ink);margin:26px 0 10px}
+  ul{margin:0;padding-left:20px}
+  li{margin:6px 0}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px}
+  .card h3{margin:0 0 6px;font-size:16px}
+  .card p{margin:0 0 10px;color:var(--muted);font-size:14px}
+  .tag{display:inline-block;font:500 12px/1 "IBM Plex Mono",monospace;padding:5px 8px;border-radius:4px;border:1px solid var(--accent);color:var(--accent-ink)}
+  .tag.road{border-color:var(--sec);color:#2C5BB8}
+  .posture{display:flex;flex-wrap:wrap;gap:8px}
+  .posture span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:13px}
+  .cta{margin-top:26px;background:var(--ink);color:#fff;border-radius:8px;padding:16px 18px}
+  .cta strong{color:#9FE3E8}
+  footer{margin-top:24px;border-top:1px solid var(--line);padding-top:12px;color:var(--muted);font:12px/1.5 "IBM Plex Mono",monospace}
+  @media (max-width:640px){.grid{grid-template-columns:1fr}.brand{font-size:24px}.line{font-size:17px}}
+  @media print{.draft{display:none} body{font-size:12.5px} main{padding:12px}}
+</style>
+</head>
+<body>
+<div class="draft" role="note">DRAFT — not sent/posted. Owner review required. Placeholders in [brackets].</div>
+<main>
+  <header>
+    <p class="brand">NeuroForge <span>Bio</span></p>
+    <p class="line">Versioned, comparable pipelines and neural-data governance, from electrode to model.</p>
+    <p class="note">Research and development software. Pre-product: every capability is designed, planned or on the roadmap. Not a medical device; no diagnostic or therapeutic claims.</p>
+  </header>
+
+  <section aria-labelledby="p">
+    <h2 id="p">The problem</h2>
+    <ul>
+      <li><strong>Pipelines change results.</strong> Artifact-correction steps reduced decoding performance (Kessler et al., <em>Commun Biol</em> 2025). 43 pipelines, "no single best pipeline" (Huang et al., <em>Psychophysiology</em> 2025).</li>
+      <li><strong>Pipelines are rarely shared.</strong> Code or pipeline availability in 20.9% of 129 EEG-BCI papers (Peksa et al., <em>Sensors</em> 2026).</li>
+      <li><strong>Neural data is regulated, inconsistently.</strong> Colorado, California and Connecticut (effective 1 Jul 2026) treat neural data as sensitive data with different definitions, and Montana adopted SB 163 in 2025 (per a peer-reviewed review; statute text not yet reviewed); EU AI Act Art. 5(1)(f) bans emotion inference in workplaces and education except for medical or safety reasons. <em>Not legal advice.</em></li>
+      <li><strong>Regulated devices need documentation.</strong> FDA's implanted-BCI guidance points to the Enhanced Documentation Level for device software.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="b">
+    <h2 id="b">One lineage graph, three views</h2>
+    <div class="grid">
+      <div class="card"><h3>Open core</h3><p>Python SDK, validator, local provenance graph and multiverse runner, with plug-ins for MNE, BIDS, NWB, LSL and BrainFlow. Apache-2.0 planned.</p><span class="tag">PLANNED</span></div>
+      <div class="card"><h3>Consent &amp; Deletion Ledger</h3><p>Per-jurisdiction classification of each channel and derived feature, versioned consent, withdrawal propagated to derivatives and flagged on models, audit export.</p><span class="tag">PLANNED</span></div>
+      <div class="card"><h3>Evidence Kit + latency harness</h3><p>Traceable lineage, test evidence and OTS/SOUP inventories for documentation work, plus reproducible timing reports.</p><span class="tag road">ROADMAP</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="w">
+    <h2 id="w">Who it's for</h2>
+    <p>Clinical-stage neurotech teams · consumer EEG companies selling in CO/CA/CT/MT · university spinouts · CNS research sponsors and CROs · NIH-funded labs and core facilities.</p>
+  </section>
+
+  <section aria-labelledby="s">
+    <h2 id="s">Security &amp; compliance posture (planned)</h2>
+    <div class="posture">
+      <span>Designed for HIPAA-aligned workflows</span><span>BAA for enterprise (planned)</span><span>SOC 2 Type II: on roadmap</span><span>AES-256 at rest, TLS 1.3 in transit (planned)</span><span>RBAC + audit logs (planned)</span><span>No third-party trackers on our site</span>
+    </div>
+  </section>
+
+  <div class="cta"><strong>Work with us.</strong> We are recruiting [3–5] design partners and holding short discovery conversations. [CONTACT EMAIL] · [WEBSITE]</div>
+
+  <footer>
+    Sources: Kessler 2025 doi:10.1038/s42003-025-08464-3 · Huang 2025 doi:10.1111/psyp.70197 · Peksa 2026 doi:10.3390/s26175562 · CO HB24-1058, CA SB 1223, CT PA 25-113, MT SB 163 (via Cabrera et al., Bioethics 2026) · EU AI Act Art. 5 · FDA implanted-BCI guidance, fda.gov/media/120362/download.<br>
+    NeuroForge Bio: name subject to trademark clearance. © [YEAR]
+  </footer>
+</main>
+</body>
+</html>

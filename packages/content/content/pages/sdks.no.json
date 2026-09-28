@@ -1,0 +1,84 @@
+{
+  "reviewed": false,
+  "meta": {
+    "title": "SDK-er · {brand}",
+    "description": "Et Python-SDK først, bygget og testet internt, på én felles kjerne. Et C-grensesnitt for C++ og spillmotorer er planlagt. Lisensen avventer eierens beslutning."
+  },
+  "hero": {
+    "eyebrow": "SDK-er",
+    "heading": "Python først. <em>Én felles kjerne.</em>",
+    "lede": "Alle SDK-er registrerer proveniens på samme måte, fordi alle bruker den samme kjernen. Signalbehandlingen blir værende i Python-verktøyene laboratoriet ditt allerede stoler på."
+  },
+  "sections": [
+    {
+      "id": "example",
+      "heading": "Hver kjøring har <em>sin egen proveniens.</em>",
+      "body": [
+        "Åpne et opptak, kjør en låst versjon av en løype, og få et proveniens-håndtak som registrerer hver parameter, versjon og inndata-hash."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "import {pkg} as nf            # Illustrative API, subject to change",
+          "rec = nf.open(\"sub-01_task-motor_eeg.edf\")",
+          "run = nf.pipelines.get(\"eeg-basic@1.0.0\").run(rec)",
+          "print(run.provenance.id)          # every parameter, version and input hash"
+        ],
+        "note": "Illustrerende API, kan endres"
+      }
+    },
+    {
+      "id": "languages",
+      "heading": "Språk, <em>i rekkefølge.</em>",
+      "body": [
+        "Vi bygger for språkene brukerne våre allerede jobber i, i den rekkefølgen de ber om dem."
+      ],
+      "items": [
+        {
+          "heading": "Python",
+          "body": "Det første SDK-et, laget for å fungere sammen med MNE-Python, BIDS- og NWB-verktøy. Ikke publisert ennå.",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M4-REPORT.md step 4.2–4.3"
+        },
+        {
+          "heading": "C og C++",
+          "body": "Et C-grensesnitt på den felles kjernen, med samspill via LSL og BrainFlow.",
+          "status": "planned"
+        },
+        {
+          "heading": "Unity og Unreal",
+          "body": "Planlagt, på det samme C-grensesnittet.",
+          "status": "roadmap"
+        }
+      ],
+      "evidence": [
+        {
+          "text": "MNE-Python hadde rundt 308 000 nedlastinger fra PyPI i måneden fram til 26. september 2026.",
+          "source": "market/landscape.md §2"
+        }
+      ]
+    },
+    {
+      "id": "licence",
+      "heading": "Åpent der det <em>hjelper deg.</em>",
+      "body": [
+        "SDK-ene, den felles kjernen, formatkonverterne og biblioteket av løypetrinn er planlagt som åpen kildekode (Apache-2.0 er foreslått), i påvente av eierens beslutning. Den hostede plattformen, inkludert samtykkeloggen og modellregisteret, er proprietær.",
+        "Ingen SDK-kode er publisert ennå."
+      ]
+    }
+  ],
+  "cta": [
+    {
+      "label": "Bli med i tidlig tilgang",
+      "href": "/pricing#early-access",
+      "variant": "primary",
+      "disabled": true,
+      "note": "Listen for tidlig tilgang åpner snart"
+    },
+    {
+      "label": "Se plattformen",
+      "href": "/platform",
+      "variant": "ghost"
+    }
+  ]
+}

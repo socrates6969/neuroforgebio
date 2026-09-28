@@ -1,0 +1,25 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.1.0-preview.1",
+  "FriendlyName": "NeuroForge SDK",
+  "Description": "PREVIEW, UNVERIFIED IN-EDITOR: the engine-free core is tested with MSVC, the Unreal module has never been compiled by UBT (see README). Replay NeuroForge neural recordings and verify content IDs through the NeuroForge C ABI (nf-core). Read-only: it cannot send anything to a device.",
+  "Category": "Data",
+  "CreatedBy": "NeuroForge Bio",
+  "CreatedByURL": "",
+  "DocsURL": "",
+  "MarketplaceURL": "",
+  "SupportURL": "",
+  "CanContainContent": false,
+  "IsBetaVersion": true,
+  "IsExperimentalVersion": true,
+  "Installed": false,
+  "Modules": [
+    {
+      "Name": "NeuroForge",
+      "Type": "Runtime",
+      "LoadingPhase": "Default",
+      "PlatformAllowList": [ "Win64" ]
+    }
+  ]
+}

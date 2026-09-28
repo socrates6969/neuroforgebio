@@ -1,0 +1,64 @@
+---
+// One interactive figure: server-rendered SVG (works with JS off) + accessible data table
+// + hover/keyboard readout island. Data comes only from the manifest-pinned result file.
+import type { FigureEntry } from './manifest.ts';
+import { readResult } from './manifest.ts';
+import { extract } from './extract.ts';
+import { renderSvg, tableRows } from './svg.ts';
+
+interface Ui { dataTableSummary: string; keyboardHint: string; readoutLabel: string }
+interface Props { entry: FigureEntry; repoRoot: string; ariaLabel: string; ui: Ui }
+const { entry, repoRoot, ariaLabel, ui } = Astro.props;
+const data = extract(entry.plot, readResult(entry, repoRoot));
+const svg = renderSvg(data, { ariaLabel });
+const table = tableRows(data);
+const hintId = `${entry.id}-hint`;
+---
+<div class="nf-plot" data-nf-fig role="group" aria-label={ariaLabel} aria-describedby={hintId}>
+  <Fragment set:html={svg} />
+  <p class="readout" data-readout-out data-label={ui.readoutLabel} aria-live="polite" hidden></p>
+  <p class="hint" id={hintId}>{ui.keyboardHint}</p>
+  <details class="table">
+    <summary>{ui.dataTableSummary}</summary>
+    <div class="scroll" tabindex="0" role="region" aria-label={`${ui.dataTableSummary}: ${ariaLabel}`}>
+      <table>
+        <thead><tr>{table.head.map((h) => <th scope="col">{h}</th>)}</tr></thead>
+        <tbody>{table.rows.map((r) => <tr>{r.map((c, i) => (i === 0 ? <th scope="row">{c}</th> : <td>{c}</td>))}</tr>)}</tbody>
+      </table>
+    </div>
+  </details>
+</div>
+<script>
+  import { enhanceFigures } from './enhance.ts';
+  enhanceFigures();
+</script>
+<style>
+  .nf-plot { position: relative; min-width: 0; border-radius: var(--radius-card); }
+  .nf-plot :global(svg) { display: block; width: 100%; height: auto; overflow: visible; }
+  .nf-plot :global(text) { font: 400 11px var(--font-mono); fill: var(--color-muted); }
+  .nf-plot :global(.alabel) { fill: var(--color-ink); font-size: 12px; }
+  .nf-plot :global(.axis) { stroke: var(--color-muted); stroke-width: 1; }
+  .nf-plot :global(.grid) { stroke: var(--color-line); stroke-width: 1; }
+  .nf-plot :global(.ln) { fill: none; stroke-width: 2; }
+  .nf-plot :global(.ln.s0) { stroke: var(--color-accent); }
+  .nf-plot :global(.ln.s1) { stroke: var(--color-secondary); stroke-dasharray: 6 4; }
+  .nf-plot :global(.ln.s2) { stroke: var(--color-ink); stroke-dasharray: 2 3; }
+  .nf-plot :global(.mk.s0) { fill: var(--color-accent); }
+  .nf-plot :global(.mk.s1) { fill: var(--color-secondary); }
+  .nf-plot :global(.mk.s2) { fill: var(--color-ink); }
+  .nf-plot :global(.mk) { stroke: var(--color-bg); stroke-width: 1; }
+  .nf-plot :global(.hm) { fill: var(--color-accent); stroke: none; }
+  .nf-plot :global(.cv) { fill: var(--color-ink); font-size: 10.5px; pointer-events: none; }
+  .nf-plot :global(.cv.on) { fill: var(--color-on-accent, var(--color-bg)); }
+  .nf-plot :global(.mk.active) { stroke: var(--color-ink); stroke-width: 3; }
+  .nf-plot :global(.hm.active) { stroke: var(--color-ink); stroke-width: 3; }
+  .readout { min-height: 1.5em; font: 500 12.5px/1.5 var(--font-mono); color: var(--color-ink); margin-top: 6px; }
+  .hint { font: 400 11.5px/1.4 var(--font-mono); color: var(--color-muted); margin-top: 4px; }
+  .table { margin-top: 8px; font-size: 13px; }
+  .table summary { cursor: pointer; color: var(--color-accent-ink); font: 500 12.5px var(--font-mono); }
+  .scroll { overflow-x: auto; max-width: 100%; }
+  table { border-collapse: collapse; margin-top: 8px; font: 400 12px var(--font-mono); }
+  th, td { padding: 4px 10px; border-top: 1px solid var(--color-line); text-align: right; white-space: nowrap; }
+  th[scope="row"] { text-align: left; font-weight: 500; }
+  @media print { .hint, .readout { display: none; } details.table { display: none; } }
+</style>

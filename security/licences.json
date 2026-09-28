@@ -1,0 +1,19 @@
+{
+  "$comment": "SEC-084 machine-readable licence policy for browser-shipped packages (apps/web, packages/*). Human-readable copy and rationale: docs/security/licences.md (a test keeps both in sync). Changes need the security role (CODEOWNERS).",
+  "allowed": [
+    "MIT",
+    "MIT-0",
+    "ISC",
+    "0BSD",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "Apache-2.0",
+    "Unlicense",
+    "CC0-1.0",
+    "OFL-1.1",
+    "BlueOak-1.0.0",
+    "Zlib"
+  ],
+  "buildOnly": ["astro"],
+  "exceptions": {}
+}

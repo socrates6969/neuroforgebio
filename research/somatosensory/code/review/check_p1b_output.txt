@@ -1,0 +1,28 @@
+=== 1. failure among trials with >=1 delivered detection (coder's simulate, N=1000) ===
+NAT: F* = 0.581 at SM 0.7
+   SM 0.2: frac trials with delivery 0.858; fail|delivery 0.679 (crush 0.196, drop 0.484); fail|no delivery 0.359
+   SM 0.4: frac trials with delivery 0.713; fail|delivery 0.835 (crush 0.729, drop 0.105); fail|no delivery 0.216
+   SM 0.6: frac trials with delivery 0.368; fail|delivery 1.000 (crush 0.946, drop 0.054); fail|no delivery 0.378
+   SM 0.7: frac trials with delivery 0.224; fail|delivery 1.000 (crush 0.933, drop 0.067); fail|no delivery 0.460
+   SM 1.0: frac trials with delivery 0.038; fail|delivery 1.000 (crush 0.895, drop 0.105); fail|no delivery 0.763
+NOFB: F* = 0.401 at SM 0.6
+ART+100: F* = 0.581 at SM 0.7
+   SM 0.2: frac trials with delivery 0.312; fail|delivery 0.564 (crush 0.163, drop 0.401); fail|no delivery 0.866
+   SM 0.4: frac trials with delivery 0.370; fail|delivery 0.822 (crush 0.784, drop 0.038); fail|no delivery 0.643
+   SM 0.6: frac trials with delivery 0.254; fail|delivery 1.000 (crush 0.984, drop 0.016); fail|no delivery 0.473
+   SM 0.7: frac trials with delivery 0.165; fail|delivery 1.000 (crush 0.994, drop 0.006); fail|no delivery 0.498
+   SM 1.0: frac trials with delivery 0.025; fail|delivery 1.000 (crush 1.000, drop 0.000); fail|no delivery 0.766
+
+=== 2. analytic compounding bound (noise-free, worst-case prior r = 1/1.1) ===
+SM 0.2: (1+SM)^2/(0.99 c) > 1 for c < 1.45  -> crush certain for all c in [1.6,2.5]: False
+SM 0.4: (1+SM)^2/(0.99 c) > 1 for c < 1.98  -> crush certain for all c in [1.6,2.5]: False
+SM 0.5: (1+SM)^2/(0.99 c) > 1 for c < 2.27  -> crush certain for all c in [1.6,2.5]: False
+SM 0.6: (1+SM)^2/(0.99 c) > 1 for c < 2.59  -> crush certain for all c in [1.6,2.5]: True
+SM 0.7: (1+SM)^2/(0.99 c) > 1 for c < 2.92  -> crush certain for all c in [1.6,2.5]: True
+SM 1.0: (1+SM)^2/(0.99 c) > 1 for c < 4.04  -> crush certain for all c in [1.6,2.5]: True
+SM threshold for certainty at c = 2.5: 0.573
+
+=== 3. counterfactual component knock-outs (reviewer patches; not prereg arms) ===
+a_no_Lfb_hold: F*_NAT 0.366 (SM 0.5), F*_NOFB 0.401; ratio 0.91; SM0.7 fail|delivery 0.509 crush|delivery 0.304
+b_no_mu_update: F*_NAT 0.555 (SM 0.4), F*_NOFB 0.401; ratio 1.38; SM0.7 fail|delivery 0.991 crush|delivery 0.911
+c_neither: F*_NAT 0.401 (SM 0.6), F*_NOFB 0.401; ratio 1.00; SM0.7 fail|delivery 0.366 crush|delivery 0.022

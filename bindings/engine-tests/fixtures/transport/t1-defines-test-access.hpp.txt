@@ -1,0 +1,18 @@
+// Regression fixture for T1 (nfb-security, WinHTTP transport packaging): a "shipped" header that
+// DEFINES struct TestAccess instead of only forward-declaring it. Shipping the definition would
+// ship the test-only trust-bypass hook's friend-access point (SECURITY_FLAG_IGNORE_UNKNOWN_CA, the
+// pinned-CA callback) in production builds. This file is text only, read by
+// transport-guards.test.mjs to prove definesTestAccess() flags this pattern (and finds only the
+// allowed forward declaration `struct TestAccess;` in the real shipped
+// nf_winhttp_transport.hpp).
+namespace nf {
+namespace transport {
+namespace detail {
+
+struct TestAccess {
+    static void arm() {}
+};
+
+}  // namespace detail
+}  // namespace transport
+}  // namespace nf

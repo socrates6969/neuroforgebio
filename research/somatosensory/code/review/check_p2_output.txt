@@ -1,0 +1,16 @@
+calibrated w (tau=inf) = 0.2155
+train-level sd at 60 uA = 13.93 -> approx JND 14.74
+T_train=0.5: w=0.3114, per-sample sd at r=62 uA = 143.6
+T_train=1.0: w=0.2155, per-sample sd at r=62 uA = 143.6
+T_train=2.0: w=0.1476, per-sample sd at r=62 uA = 143.6
+lin step: mean |signal| 7.34 uA; mean sd of D2 difference 53.2 uA; SNR 0.134
+linear |D2| AUC (independent) = 0.5060, d' = 0.021  (coder: AUC_D2 0.5048, d' 0.017)
+linear SIGNED D2, increases only: AUC 0.5452, d' 0.161  (upper-level cue with sign known)
+analytic-model |D2| AUC for these SNRs = 0.5025
+counterfactual no-sqrt(n_T) noise (NOT the prereg): linear |D2| AUC 0.6936, d' 0.716
+Weber (prereg)             w x1.0 : d'_bio 0.516  d'_lin -0.014
+Weber (prereg)             w x0.5 : d'_bio 0.623  d'_lin 0.021
+Weber (prereg)             w x0.25: d'_bio 0.898  d'_lin 0.105
+homoscedastic sd=139       w x1.0 : d'_bio 0.099  d'_lin 0.008
+homoscedastic sd=139       w x0.5 : d'_bio 0.312  d'_lin 0.056
+homoscedastic sd=139       w x0.25: d'_bio 0.932  d'_lin 0.205

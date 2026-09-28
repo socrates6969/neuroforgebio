@@ -1,0 +1,71 @@
+{
+  "order": 4,
+  "meta": {
+    "title": "Quickstart: lineage export · {brand}",
+    "description": "Walk a run's lineage and export it as W3C PROV-JSON or OpenLineage; record provenance offline."
+  },
+  "navLabel": "Lineage export",
+  "eyebrow": "Quickstart 4",
+  "heading": "Export <em>lineage.</em>",
+  "lede": "Every run links its outputs to the exact inputs, pipeline version and parameters that produced them. You can walk that graph and export it in standard formats.",
+  "sections": [
+    {
+      "id": "walk",
+      "heading": "Walk the graph",
+      "body": [
+        "lineage returns the ancestors (up) or descendants (down) of a provenance node, with depth-limited traversal."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "import json",
+          "import {pkg} as nf",
+          "",
+          "run = nf.pipelines.get(\"eeg-basic@1.0.0\").run(nf.open(\"sub-01_task-motor_eeg.edf\"), synthetic=True)",
+          "prov = run.provenance                            # waits for the run",
+          "graph = prov.lineage(\"up\")",
+          "print(len(graph[\"nodes\"]), \"nodes,\", len(graph[\"edges\"]), \"edges\")"
+        ]
+      }
+    },
+    {
+      "id": "export",
+      "heading": "Export",
+      "body": [
+        "prov-json follows the W3C PROV-JSON serialisation; openlineage emits OpenLineage run events for data catalogues."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "doc = prov.export(\"prov-json\")",
+          "with open(\"lineage.prov.json\", \"w\", encoding=\"utf-8\") as f:",
+          "    json.dump(doc, f, indent=2)",
+          "events = prov.export(\"openlineage\")",
+          "print(sorted(doc)[:3], type(events).__name__)"
+        ]
+      }
+    },
+    {
+      "id": "offline",
+      "heading": "Record provenance offline",
+      "body": [
+        "On a machine without a network, the SDK keeps a local hash chain of provenance batches. The chain is verified every time it is opened, so an edited file is detected. Uploading the chain to the platform is designed, not built."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "from {pkg}.local import ProvRecorder",
+          "",
+          "chain = ProvRecorder(\"prov-chain\", chain=\"local:lab-pc-1\")",
+          "raw = nf.canonical.blob_id_file(\"sub-01_task-motor_eeg.edf\")[0]",
+          "seq, batch_id = chain.record([",
+          "    {\"type\": \"entity\", \"id\": \"e1\", \"label\": \"raw\", \"content\": raw},",
+          "    {\"type\": \"activity\", \"id\": \"a1\", \"label\": \"acquire\"},",
+          "    {\"type\": \"edge\", \"rel\": \"wasGeneratedBy\", \"from\": \"e1\", \"to\": \"a1\"},",
+          "])",
+          "print(seq, batch_id)"
+        ]
+      }
+    }
+  ]
+}

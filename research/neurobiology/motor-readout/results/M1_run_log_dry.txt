@@ -1,0 +1,18 @@
+2026-09-26T23:44:12 +    4.0s M1 start tag=dry dry=True python=3.12.10 torch=2.14.0+cpu
+2026-09-26T23:44:12 +    4.0s input hashes verified against DANDI/PhysioNet digests: 1 files
+2026-09-26T23:44:31 +   23.0s pytest: ........................................                                 [100%]
+
+2026-09-26T23:44:31 +   23.0s split lock written: M1_split_lock_dry.json (sha f887891b99d3)
+2026-09-26T23:44:31 +   23.0s FIRST DATA READ (D1 behaviour + spikes)
+2026-09-26T23:44:32 +   23.1s FIRST MODEL FIT (D1 honest)
+2026-09-26T23:44:37 +   28.8s D1 honest fitted: val R2 ridge 0.478 kf 0.127 gru 0.470
+2026-09-26T23:44:39 +   30.2s D1 NC1 fitted
+2026-09-26T23:45:30 +   81.1s D1 condition-held-out fitted
+2026-09-26T23:45:35 +   86.7s D1 bin 10 ms fitted
+2026-09-26T23:45:35 +   86.8s D1 bin 50 ms fitted
+2026-09-26T23:45:35 +   86.8s D1 bin 100 ms fitted
+2026-09-26T23:46:15 +  126.8s D1 NC2b lag sweep fitted
+2026-09-26T23:46:15 +  126.8s models frozen: 39 hashes -> M1_frozen_models_dry.json (sha cd3a1183b603)
+2026-09-26T23:47:24 +  195.9s planted-leak fits done
+2026-09-26T23:47:24 +  195.9s VAULT OPEN (final scores)
+2026-09-26T23:47:24 +  196.0s card written M1_card_dry.json sha 3d257c0fd1b7819b373a3a30802675bfc82b982bcf01a52d39486b0ff14b0c74 wall 196s peak RSS 802 MB

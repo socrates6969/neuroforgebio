@@ -1,0 +1,37 @@
+---
+// /docs: overview of the SDK docs (BUILD-GUIDE 4.5).
+import DocsShell from '../../components/DocsShell.astro';
+import DocSections from '../../components/DocSections.astro';
+import { guides, overview, quickstarts } from '../../lib/docs.ts';
+import DocsJsonLd from '../../components/DocsJsonLd.astro';
+const o = overview;
+---
+<DocsShell title={o.meta.title} description={o.meta.description} eyebrow={o.eyebrow} heading={o.heading} lede={o.lede} status={o.status}>
+  <DocsJsonLd title={o.meta.title} description={o.meta.description} path="/docs/" />
+  <DocSections sections={o.sections.filter((s) => s.id !== 'quickstarts' && s.id !== 'reference')} />
+  {o.sections.filter((s) => s.id === 'quickstarts').map((s) => (
+    <section id={s.id} aria-labelledby={`h-${s.id}`}>
+      <h2 id={`h-${s.id}`}>{s.heading}</h2>
+      {s.body.map((p) => <p class="body">{p}</p>)}
+      <ol class="qs">
+        {quickstarts.map((q) => (
+          <li><a href={`/docs/quickstart/${q.slug}/`}>{q.navLabel}</a>: {q.meta.description}</li>
+        ))}
+      </ol>
+    </section>
+  ))}
+  {o.sections.filter((s) => s.id === 'reference').map((s) => (
+    <section id={s.id} aria-labelledby={`h-${s.id}`}>
+      <h2 id={`h-${s.id}`}>{s.heading}</h2>
+      {s.body.map((p) => <p class="body">{p}</p>)}
+      <ul class="qs">
+        {guides.map((g) => <li><a href={`/docs/${g.slug}/`}>{g.navLabel}</a></li>)}
+        <li><a href="/docs/api/">{o.nav.api}</a></li>
+        <li><a href="/docs/changelog/">{o.nav.changelog}</a></li>
+      </ul>
+    </section>
+  ))}
+</DocsShell>
+<style>
+  .qs { margin: 14px 0 0; padding-left: 22px; display: grid; gap: 8px; max-width: 72ch; color: var(--color-muted); }
+</style>

@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "com.neuroforge.sdk": "file:../../..",
+    "com.unity.test-framework": "1.4.5",
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  },
+  "testables": [
+    "com.neuroforge.sdk"
+  ]
+}

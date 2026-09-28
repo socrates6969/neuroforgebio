@@ -1,0 +1,8 @@
+# maturin develop builds the extension in place (debug); never commit it
+python/neuroforge/_native.*
+!python/neuroforge/_native.pyi
+*.pyd
+*.so
+*.pdb
+*.dylib
+dist/

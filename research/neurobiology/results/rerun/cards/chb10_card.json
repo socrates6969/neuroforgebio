@@ -1,0 +1,373 @@
+{
+ "card_sha256_excl_runtime": "8a6a2ce32f74dc40a3ec8f1cf619a09695f0f5377b9fb36d1c88018dc684c8b1",
+ "controls": {
+  "N1a": {
+   "C2a_converged": true,
+   "C2a_n_test": 28711,
+   "C2a_n_train": 21746,
+   "C2b_minus_honest": -0.0003311928934368602,
+   "C2b_norm_leak_auroc": 0.974492503329566,
+   "D": 0.01574030531369064,
+   "E": 0.37479681477023913,
+   "honest_auroc": 0.9748236962230029,
+   "leak_auroc_C2a": 0.9905640015366936,
+   "p_train": 0.429
+  },
+  "NC1_mean_auroc": 0.49445425067864407,
+  "NC2_mean_auroc": 0.38734868801052225,
+  "S-a_held_out": {
+   "f1": 0.12280701754385964,
+   "fa_per_24h": 171.2111604311985,
+   "fp": 100,
+   "hours": 14.017777777777777,
+   "latency_median": -13.0,
+   "n_ref": 7,
+   "precision": 0.06542056074766354,
+   "prevalence": 0.008720296490080662,
+   "sensitivity": 1.0,
+   "tau": 0.92,
+   "tp": 7,
+   "window_auprc": 0.04622622874852056,
+   "window_auroc": 0.8896237324764126
+  },
+  "S-b": {
+   "auroc_causal": 0.9748236962230029,
+   "auroc_future": 0.9725434421305836,
+   "f1_causal": 1.0,
+   "f1_future": 0.8,
+   "fp": 2,
+   "n_ref": 4,
+   "taus": [
+    0.46,
+    0.5,
+    0.98,
+    0.05
+   ],
+   "tp": 4
+  }
+ },
+ "data": {
+  "dataset": "CHB-MIT Scalp EEG Database v1.0.0, DOI 10.13026/C2K01R, ODC-By 1.0",
+  "exclusions": "none within the 29-file subset (see notes\\data_subset.md for subset selection)",
+  "hours_scored_test": {
+   "chb01": 3.6458333333333335,
+   "chb03": 8.0,
+   "chb10": 8.009444444444444
+  },
+  "subjects": "chb01, chb03, chb10 (chb01/chb21 same patient; chb21 not used)",
+  "test_seizures_N_ref": {
+   "chb01": 4,
+   "chb03": 4,
+   "chb10": 4
+  }
+ },
+ "leakage_checklist": {
+  "L1.1 no test set / test in training": "train/test file-disjoint; F8 LabelVault (tests F8), F6 causal (tests F6)",
+  "L1.2 preprocessing on train+test": "F1 normaliser fit-ID guard (tests F1); C2b quantifies",
+  "L1.3 feature selection / tuning on test": "F2 config hash + inner-CV test-ID refusal; F3 tau from train_oof only",
+  "L1.4 duplicates": "windows never cross files (F4); duplicate T8-P8 channel dropped",
+  "L2 illegitimate features": "F7 whitelist of 132 signal features",
+  "L3.1 temporal leakage": "F6 causal split; S-b quantifies the non-causal alternative",
+  "L3.2 non-independence train/test": "F4 buffer B=10 s; S5 random window split forbidden (C2a quantifies)",
+  "L3.3 sampling bias test distribution": "continuous full test recordings (S6); no sub-sampling"
+ },
+ "metrics": {
+  "chb10": {
+   "auroc_bootstrap_nan_draws": 0,
+   "auroc_ci_block_bootstrap_files": [
+    0.9527359211874022,
+    0.9976652892561984
+   ],
+   "f1": 1.0,
+   "fa_ci_garwood_per_24h": [
+    0.0,
+    11.053588986455019
+   ],
+   "fa_per_24h": 0.0,
+   "flags": [
+    "CI uninformative (N_ref = 4)",
+    "FA on peri-ictal data only"
+   ],
+   "fp": 0,
+   "honest_train_window_fraction": 0.42862239134312385,
+   "hours": 8.009444444444444,
+   "latency_frac_le_10s": 1.0,
+   "latency_iqr": [
+    1.0,
+    3.25
+   ],
+   "latency_median": 2.0,
+   "latency_s": [
+    1,
+    3,
+    4,
+    1
+   ],
+   "lr_converged_all_fits": true,
+   "n_buffer_dropped_windows": 0,
+   "n_fits": 4,
+   "n_pos_windows": 273,
+   "n_ref": 4,
+   "n_test_windows": 28830,
+   "n_train_pos_windows": 167,
+   "n_train_windows": 21627,
+   "per_file": {
+    "chb10_30.edf": {
+     "dur_s": 7213.0,
+     "fp": 0,
+     "latencies": [
+      1
+     ],
+     "n_ref": 1,
+     "s_fp": 0,
+     "s_nref": 58,
+     "s_tp": 55,
+     "tp": 1,
+     "tp_indicators": [
+      1
+     ]
+    },
+    "chb10_31.edf": {
+     "dur_s": 7221.0,
+     "fp": 0,
+     "latencies": [
+      3
+     ],
+     "n_ref": 1,
+     "s_fp": 0,
+     "s_nref": 76,
+     "s_tp": 73,
+     "tp": 1,
+     "tp_indicators": [
+      1
+     ]
+    },
+    "chb10_38.edf": {
+     "dur_s": 7200.0,
+     "fp": 0,
+     "latencies": [
+      4
+     ],
+     "n_ref": 1,
+     "s_fp": 1,
+     "s_nref": 89,
+     "s_tp": 77,
+     "tp": 1,
+     "tp_indicators": [
+      1
+     ]
+    },
+    "chb10_89.edf": {
+     "dur_s": 7200.0,
+     "fp": 0,
+     "latencies": [
+      1
+     ],
+     "n_ref": 1,
+     "s_fp": 0,
+     "s_nref": 54,
+     "s_tp": 50,
+     "tp": 1,
+     "tp_indicators": [
+      1
+     ]
+    }
+   },
+   "precision": 1.0,
+   "prevalence": 0.00946930280957336,
+   "sample_f1": 0.9568480300187617,
+   "sample_precision": 0.99609375,
+   "sample_sensitivity": 0.9205776173285198,
+   "scores_complete": true,
+   "sens_ci_bootstrap_by_event": [
+    1.0,
+    1.0
+   ],
+   "sens_ci_clopper_pearson": [
+    0.3976353643835253,
+    1.0
+   ],
+   "sensitivity": 1.0,
+   "tau": 0.06,
+   "tp": 4,
+   "verdict": "PASS",
+   "window_auprc": 0.92469934282397,
+   "window_auroc": 0.9748236962230029
+  }
+ },
+ "model": {
+  "classifier": "L2 logistic regression C=1, balanced weights, scipy L-BFGS-B gtol 1e-6 maxiter 1000",
+  "config_sha256": "b6775e9aad8958cfce6cbfe805674c55fd13b1c8969a8320b681edb451bd1e4f",
+  "features": "132 = 22 ch x [log10 LL, log10 BP 1-4, 4-8, 8-13, 13-30, 30-55 Hz], 2-s windows, 1-s step",
+  "normaliser": "z-score fitted on training windows only (F1 guard)",
+  "postprocessing": "causal 4-of-5, no minimum duration; timescoring merge 90 s / split 300 s",
+  "threshold": "tau* = smallest grid tau (0.05..0.99) with inner-LOFO train FA <= 12/24h"
+ },
+ "provenance": {
+  "code_sha256": {
+   "edf_reader.py": "f5a62fb9a277b37bfa05a17bcfd5ff3f2ca2613907173c7774ada288d3c27ddf",
+   "nfharness/__init__.py": "9efc7a844dc73e533957c92f644c38cd96df0851b52c58a7448e14a89df2937d",
+   "nfharness/card.py": "83b6bedde5bfd01607b4d6f778f8d4739aa1e51f27631a38142ffa98b1f3ee2c",
+   "nfharness/config.py": "dfca97f440fe098a5c966d245c4dc5401c745623e0383d3b40c5977263498632",
+   "nfharness/data.py": "243c9db3912886620f82b955fd5f3cd03f17ac938b2ea0ad1be9313f38b5a9e0",
+   "nfharness/errors.py": "7133afc13a2561096d54bb58c15463ccf07774868e5fc55fc15d883958c4b6aa",
+   "nfharness/features.py": "29acae0789a5e5a297ad489d962ce26f81bdd38bb41c3e82074a6581ad96f32e",
+   "nfharness/labels.py": "4679d0fabe44b4d313862321d9d2b3c7dd713370b2635563a321f35978f23a27",
+   "nfharness/model.py": "08305ee1f64f8c7b237e6592bddbfa93e5b7b200e0bfe895e5e520a5094ca10a",
+   "nfharness/pipeline.py": "76a2773a9e7bc94cb261d3a2acf3ca2261561bb60d3d0330886fba3ffebc202b",
+   "nfharness/postprocess.py": "faa04421f2167935c72ed102c9c9e63750ad7775a56045212559e230e68244c9",
+   "nfharness/provenance.py": "ade7554aa6990c5a27b27d171087c88dfb02378eb4a63a0279cf816302570b6b",
+   "nfharness/scoring.py": "b23ed292bed2235e67cb09e7a7698f44ff2e16c6e16680ef4ec98e42bfffc1ef",
+   "nfharness/splits.py": "1fcecb0af87f00709dc84a99fbc7f243444e342ff210031aae8e50660161ec29",
+   "nfharness/stats.py": "5dc8cf597a76e5b5251cb6ba73139d7fd939d2eee37b8b2f8a7055464e3eb4ee",
+   "nfharness/windows.py": "2898848e8984f84cef5ce637b6c810068e8a7db1b2e50e7eb62e7e67480cb36f",
+   "run_n2.py": "964716ccb7e5ec2cb8a435895fc5239075093865640555cde87927157e8dd6b8"
+  },
+  "config_hash": "b6775e9aad8958cfce6cbfe805674c55fd13b1c8969a8320b681edb451bd1e4f",
+  "deviations_sha256": "2767a6e7584fcefff36e55a1d9ad99cc8802de4a8b6c9e747acfea4afbbeaaec",
+  "environment": {
+   "blas_threads": {
+    "MKL_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+   },
+   "machine": "AMD64",
+   "packages": {
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.3",
+    "pytest": "8.4.2",
+    "scipy": "1.18.1",
+    "timescoring": "0.0.7"
+   },
+   "platform": "Windows-11-10.0.26200-SP0",
+   "processor": "AMD64 Family 25 Model 117 Stepping 2, AuthenticAMD",
+   "python": "3.12.10"
+  },
+  "input_sha256": {
+   "chb01/chb01-summary.txt": "77e86183845192d147c88a9bb4263c2b4a32e936c6236029770f86ca2ea023db",
+   "chb01/chb01_01.edf": "92ec026f633dca94ee74c2e2b67cf9d58aa50da700b650a1696cf497dac073e3",
+   "chb01/chb01_02.edf": "185bebea970f5dfac5b3044d04b9f7c4fa007b8c6bbea744e8b69f8b39d1f060",
+   "chb01/chb01_03.edf": "4c4a95a9b4331aeaadadd538763eb2e735950d9aa615b85ee6246c784be8ae90",
+   "chb01/chb01_03.edf.seizures": "eb521b5e1a521f70fb8224e4205f0826c5ade093f29765d057b5db4d6b6594ab",
+   "chb01/chb01_04.edf": "d91d190b2362697fe2cdef922a593baabadcb12fde437bd8d50c01b084ca9030",
+   "chb01/chb01_04.edf.seizures": "4881a6c210e5018a9d1756479ca80e38b034d2d6b0cc41ddd9eaeb60948a6adc",
+   "chb01/chb01_05.edf": "935accfd943e9ab372e65e21fbfd1e93a5c84e32dc717b685548f3301cc2fd6e",
+   "chb01/chb01_06.edf": "bfe5d1a037e7ecb14b01365a86c00dd7605ff2ad262ed272619053baa9ed44a6",
+   "chb01/chb01_15.edf": "00157966600e41bec0754d189d4fb92b020b214cb7e559df1421c6dc29ee8eca",
+   "chb01/chb01_15.edf.seizures": "91608b1905e50a08f9ed6c1583fcf2bbc1192dcd2bc64f9c4041098051f8658d",
+   "chb01/chb01_16.edf": "6c90e98a1938c9c2308ac9777ba3221dc5811d93db4186ff09f50b9a4ee7c710",
+   "chb01/chb01_16.edf.seizures": "28e68edfd7cd7d2645fd9bc92270dde0b36aac0b93143f84b0f83e8ff88ce731",
+   "chb01/chb01_18.edf": "da6c386c78d6f8348b38886b90bf67e4dc2e6f26e5eb657c1920d612fc0651b5",
+   "chb01/chb01_18.edf.seizures": "008166da5a7c5e6a9c437b6290b81d64f18edf41f4ac94411e96ccad1004b573",
+   "chb01/chb01_21.edf": "ceb3e5c3e6d513ed8894d6d5d5fd4599c5650e98a1a1c960660b0031b720e559",
+   "chb01/chb01_21.edf.seizures": "95f4e4bd5af60ebb22acfcfcff0afadaaa8aced95d6c4f2375e82e8cb0b93191",
+   "chb01/chb01_26.edf": "c70832d28f4e2905e5f0179fdb7d5ec24c4f24006adf6a9905b60072a75cc630",
+   "chb01/chb01_26.edf.seizures": "77450c22c744402033c34ee31f02321a36b8a5ff4f6d550165b8ffe9953f4040",
+   "chb03/chb03-summary.txt": "8d74eb131a96959c7b2aec82215d232dc26c3012c4d98c2a1c5f5dac520f52b4",
+   "chb03/chb03_01.edf": "74f1ebc1334c4d52a132513c8ecab03d15d5b8ecbd91c7fdc71346bf69797d02",
+   "chb03/chb03_01.edf.seizures": "3f3600ed4f605ad17252a5595a3d7a8d00ee296500850d6266153b9d29e88c14",
+   "chb03/chb03_02.edf": "de8bdcd1f1edd0da5b56d97056ddee16b95d98f6a9ee1d5759342f3cae6b8d22",
+   "chb03/chb03_02.edf.seizures": "32bc5c2318d5425a18e8a50eb12a299896467aad18cacf95e4778307371940b1",
+   "chb03/chb03_03.edf": "71311de31a52c67d4890aff2d94ef95cc347995aca9728f46ee47ff73af4bd8d",
+   "chb03/chb03_03.edf.seizures": "d305dbccd624defd6016c39d58f3d64f9a861be2bb050f60e90595103fe00fb0",
+   "chb03/chb03_04.edf": "631134f5bd08668085d498d2ea848630aa2238199c3240dccf3408fb3952157e",
+   "chb03/chb03_04.edf.seizures": "c47ceaa39c8589b82128b03a5dcefe9c64bee96973655db5d05dc830f3b150cf",
+   "chb03/chb03_05.edf": "6e400cf6457c5045d5783b188b9dd4362e267967f74d356f4f43923ccd7248ec",
+   "chb03/chb03_06.edf": "c2ae9e30d316058e213691c45cdfc19630075b7d446e83bcb366df918816f315",
+   "chb03/chb03_07.edf": "316a98d251bd6bebd2468f589437483ca93088e347edd611dea160eb708db366",
+   "chb03/chb03_08.edf": "ac8b4aa61083add1199229c833c9db1be620450630d60e9db625b66212fba76b",
+   "chb03/chb03_34.edf": "abbd5931fbed8cf0f890d7a87a6811036c4f8c137994570b2282c8297d4db3ed",
+   "chb03/chb03_34.edf.seizures": "2c8b53f784b9f362b03ee6fec0d9c88c65c33c8f71716a85e696a2f97db7a06e",
+   "chb03/chb03_35.edf": "b3eaa6fde574179ee0d61ce524d6ab443b5f540ef7294aff2177df3d58cd97dc",
+   "chb03/chb03_35.edf.seizures": "0d254a27f6dacd4a6fe3fb60b719876c121b53ffce65339a71c673b96b09874b",
+   "chb03/chb03_36.edf": "c8247c41e3902837d6c51510a7b80c39ec28f1c7785f17abb377d090c790b7cc",
+   "chb03/chb03_36.edf.seizures": "e08034547c15851e9dee4bcacc1714508b6b348b7ae6c931d950d846f585604c",
+   "chb10/chb10-summary.txt": "f63fbc9359c894a81f92ed126f0b813eb3cfc279f9a17b068ed3680abc575353",
+   "chb10/chb10_12.edf": "1ef27c219149ded4633a5ee1e8468d300a84f5f6881cd3a45cf2152e8b15c62d",
+   "chb10/chb10_12.edf.seizures": "2110bcd3ad691d8c03d46cf940afa9b41621c97d3c7093d222458c7095c0e699",
+   "chb10/chb10_20.edf": "f3be2bdfdbb1525068a7d64ac1a1df8d5e18e8188aa574f8f9cfffc936691ced",
+   "chb10/chb10_20.edf.seizures": "52c8ad1950b47d567bc65d0a3fdacee6e1c2772ad58bfbf756b021e38199e8aa",
+   "chb10/chb10_27.edf": "854131336dca0e548e4cfb175d1b40edaa59a2bec3c17eb09991a31ae8959fb0",
+   "chb10/chb10_27.edf.seizures": "4fec591229fe9564d35432e1d4aec0f6b43f10443ee586bbe4cacda9a5cab98f",
+   "chb10/chb10_30.edf": "88f383c33fb37ac9bfa235edb9b3a07f8d33bc40033a47d2485f77aee2f63bff",
+   "chb10/chb10_30.edf.seizures": "6fdfa6c83a2d6ae8ad5676bc39a8a0c3622098c31b38a482c2c753ab2498ef5e",
+   "chb10/chb10_31.edf": "82fd895dd55765769b75b5415794348115e5967aa7e05d2a15af7700f87f20dc",
+   "chb10/chb10_31.edf.seizures": "ebea4f44e18458c762abc4c08d476ad7833b10e20ed37089b77b6240b8f9fff4",
+   "chb10/chb10_38.edf": "1a941b8f94b1f6272b90c49ec6defbaafa5c3ca1e996f610772c1b4488137016",
+   "chb10/chb10_38.edf.seizures": "693ce5bc1bee753a02e017b253e92b4ded7a50803f5f4aae801260efff86f16d",
+   "chb10/chb10_89.edf": "58534c515a35c37696ff041afe593254c5ab86a95d81873748c8a54eca8cf1c7",
+   "chb10/chb10_89.edf.seizures": "fea69cb9df20123108c8680f272dc734635445298b245542cbb4d9e9b6595d88"
+  },
+  "label_vault": {
+   "chain_sha256": "b560a71641f530340623ea77b4ef652fe67eb1125779b0ecf948b8b91970f8e3",
+   "scorer_reads": 172,
+   "vault": "N2-chb10"
+  },
+  "manifest_sha256": "d4fdc4084eab2ca652fb062bd93dcd5d68efd87590dd1efd14176ad24e5311f5",
+  "n_inputs_verified": {
+   "edf": 29,
+   "seizures": 21,
+   "summary": 3
+  },
+  "prereg_sha256": {
+   "N1_harness_controls.md": "27db9d27f5b6ac2e0f49826c6b3eb9625b8e1633434ae70cf62a7e10f09fc93b",
+   "N2_baseline_detection.md": "ed929ae0e5182827352928225cf40865a8bee5f6b5da089be5a6600e6678e21c"
+  },
+  "rng_streams": {
+   "0": "leak split",
+   "1": "iid label permutation",
+   "2": "circular shift",
+   "3": "bootstraps",
+   "4": "chance-shift nulls then random-alarm draws",
+   "5": "synthetic fixtures"
+  },
+  "seed": 20261001,
+  "sha256sums_sha256": "f1698efeb9fef887e55cedf6eda13386d9a888db663aec48b2aa194b7b753d2b",
+  "split_hash": "433d818f305ba2095ef854b1f7f8b594895ad070f5fc28584a5507bdc7d9f1e2"
+ },
+ "run_id": "N2-chb10-433d818f305b",
+ "runtime": {
+  "first_test_label_read_unix": 1790442012.0674284,
+  "hostname": "Marius",
+  "peak_ram_mb": 695.93359375,
+  "prereg_hash_precedes_first_label_read": true,
+  "prereg_hashed_at_unix": 1790441979.8626678,
+  "stage_s": {
+   "features_s": 23.765308618545532,
+   "hash_inputs_s": 1.1250128746032715,
+   "n1a_s": 4.244643211364746,
+   "n1b_s": 294.04837107658386,
+   "n2_primary_s": 9.034838438034058,
+   "s_a_s": 45.01632213592529,
+   "s_b_s": 259.2991518974304
+  },
+  "started_utc": "2026-09-26T16:59:39.854421+00:00",
+  "wall_s": 636.6741077899933
+ },
+ "split": {
+  "buffer_s": 10,
+  "folds": {
+   "chb10": {
+    "test": [
+     "chb10_30.edf",
+     "chb10_31.edf",
+     "chb10_38.edf",
+     "chb10_89.edf"
+    ],
+    "train": [
+     "chb10_12.edf",
+     "chb10_20.edf",
+     "chb10_27.edf"
+    ]
+   }
+  },
+  "hash": "433d818f305ba2095ef854b1f7f8b594895ad070f5fc28584a5507bdc7d9f1e2",
+  "hash_matches_prereg": true,
+  "note": "split computed from manifest + per-file seizure counts before feature extraction (S7)",
+  "scheme": "causal: train through the file with the 3rd seizure; test = later files"
+ },
+ "status_label": "RESEARCH USE ONLY. NOT A MEDICAL DEVICE. No clinical claims. Software intended for diagnosis, monitoring or treatment decisions may be a medical device under EU MDR 2017/745 (e.g. Rule 11) or FDA SaMD rules. Any clinical use requires regulatory clearance and clinical validation (IRB/ethics approval).",
+ "task": "seizure DETECTION, patient-specific causal split (S2 variant, N2 \u00a71); CHB-MIT bipolar, 22 unique channels of the 23-channel double-banana montage (duplicate T8-P8 dropped)",
+ "verdict": "not verifiable: code (harness not validated: N1 b failed) (subject chb10: PASS)",
+ "verdict_note": "Subject-level decision-rule verdict: PASS. Overall N2: not verifiable: code (harness not validated: N1 b failed)."
+}

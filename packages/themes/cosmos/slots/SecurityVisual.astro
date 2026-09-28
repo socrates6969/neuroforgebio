@@ -1,0 +1,127 @@
+---
+// Cosmos SecurityVisual: the "vault" from design/option-3.html (orbit rings around a gradient
+// shield with a lock), as one SVG with no text of its own, labelled by the content-supplied
+// `label`. Ring rotation is CSS only and stops under prefers-reduced-motion.
+import type { SlotContract } from '../../contract.ts';
+type Props = SlotContract['SecurityVisual'];
+const { label } = Astro.props;
+const locals = Astro.locals as Record<string, number | undefined>;
+locals.nfCosmosIds = (locals.nfCosmosIds ?? 0) + 1;
+const id = `nf-sv${locals.nfCosmosIds}`;
+---
+
+<svg class="nf-sv" role="img" aria-label={label} viewBox="0 0 240 240">
+  <defs>
+    <linearGradient id={`${id}-edge`} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" class="s0"></stop>
+      <stop offset="0.6" class="s1"></stop>
+      <stop offset="1" class="s2"></stop>
+    </linearGradient>
+    <radialGradient id={`${id}-fill`} cx="0.5" cy="0.4" r="0.6">
+      <stop offset="0" class="f0"></stop>
+      <stop offset="1" class="f1"></stop>
+    </radialGradient>
+  </defs>
+  <g class="ring a"><circle cx="120" cy="120" r="112"></circle><circle class="dot c" cx="8" cy="120" r="4.5"></circle></g>
+  <g class="ring b"><circle cx="120" cy="120" r="92"></circle><circle class="dot p" cx="212" cy="120" r="4.5"></circle></g>
+  <circle class="ring c" cx="120" cy="120" r="72"></circle>
+  <g transform="translate(60 52)">
+    <path d="M60 6l48 18v38c0 34-21 58-48 72C33 120 12 96 12 62V24z" fill={`url(#${id}-fill)`} stroke={`url(#${id}-edge)`} stroke-width="2"></path>
+    <path class="inner" d="M60 22l34 13v28c0 24-15 42-34 52-19-10-34-28-34-52V35z"></path>
+    <rect class="lock" x="44" y="62" width="32" height="26" rx="5"></rect>
+    <path class="lock" d="M50 62v-8a10 10 0 0 1 20 0v8"></path>
+    <circle class="key" cx="60" cy="74" r="3"></circle>
+    <path class="keyline" d="M60 77v5"></path>
+  </g>
+</svg>
+
+<style>
+  .nf-sv {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    margin: 0 auto 32px;
+    overflow: visible;
+  }
+  .ring circle:not(.dot),
+  circle.ring {
+    fill: none;
+    stroke-width: 1;
+  }
+  .ring.a circle:not(.dot) {
+    stroke: var(--color-line);
+    stroke-dasharray: 4 5;
+  }
+  .ring.b circle:not(.dot) {
+    stroke: var(--color-accent);
+    stroke-opacity: 0.4;
+  }
+  circle.ring.c {
+    stroke: var(--color-secondary);
+    stroke-opacity: 0.3;
+  }
+  .ring.a,
+  .ring.b {
+    transform-origin: 120px 120px;
+    animation: nf-sv-spin 60s linear infinite;
+  }
+  .ring.b {
+    animation-duration: 40s;
+    animation-direction: reverse;
+  }
+  .dot.c {
+    fill: var(--color-secondary);
+    filter: drop-shadow(0 0 6px var(--color-secondary));
+  }
+  .dot.p {
+    /* cosmos palette pink (design/option-3.html --pink); decorative only */
+    fill: #f472b6;
+    filter: drop-shadow(0 0 6px #f472b6);
+  }
+  .s0 {
+    stop-color: var(--color-accent-ink);
+  }
+  .s1 {
+    stop-color: var(--color-secondary);
+  }
+  .s2 {
+    stop-color: #f472b6;
+  }
+  .f0 {
+    stop-color: var(--color-accent);
+    stop-opacity: 0.35;
+  }
+  .f1 {
+    stop-color: var(--color-bg);
+    stop-opacity: 0.9;
+  }
+  .inner {
+    fill: none;
+    stroke: var(--color-line);
+  }
+  .lock {
+    fill: none;
+    stroke: var(--color-ink);
+    stroke-width: 2.2;
+  }
+  .key {
+    fill: var(--color-secondary);
+  }
+  .keyline {
+    stroke: var(--color-secondary);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+  }
+  @keyframes nf-sv-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ring.a,
+    .ring.b {
+      animation: none;
+    }
+  }
+</style>

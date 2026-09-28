@@ -1,0 +1,81 @@
+---
+// Renders a generic content Page (platform, governance, sdks, security, pricing, legal/*).
+import type { Page } from '@nf/content';
+import SectionHead from '@nf/ui/components/SectionHead.astro';
+import Banner from '@nf/ui/components/Banner.astro';
+import Button from '@nf/ui/components/Button.astro';
+import StatusPill from '@nf/ui/components/StatusPill.astro';
+import BuildStatePill from './BuildStatePill.astro';
+import SectionOrnament from '@theme/slots/SectionOrnament.astro';
+import Evidence from './Evidence.astro';
+import { site } from '../lib/site.ts';
+import { ui, type Locale } from '../lib/i18n.ts';
+interface Props { page: Page; locale?: Locale }
+const { page, locale = 'en' } = Astro.props;
+// statusLabels/statusPill/buildStateLabels are all locale-aware (ui.no.json already has
+// translations for all three); this page's own copy (page.hero/sections/items) is a separate,
+// per-locale content concern the caller is responsible for passing in `page`.
+const strings = ui(locale);
+const NL = String.fromCharCode(10);
+const codeText = (lines: string[]) => lines.join(NL);
+// Pages may inject extra markup at the end of a section via a slot named `section-<id>`.
+const extra: Record<string, string> = {};
+for (const s of page.sections) {
+  if (Astro.slots.has(`section-${s.id}`)) extra[s.id] = await Astro.slots.render(`section-${s.id}`);
+}
+---
+<section class:list={['nf-section', 'head', { 'is-placeholder': page.placeholder }]} aria-labelledby="h-page" data-placeholder={page.placeholder ? "true" : undefined}>
+  <div class="nf-wrap">
+    <SectionHead id="h-page" level={1} eyebrow={page.hero.eyebrow} heading={page.hero.heading} lede={page.hero.lede} />
+    {page.banner && <Banner text={page.banner} tone="caution" />}
+  </div>
+</section>
+{page.sections.map((s, i) => (
+  <section class="nf-section sec" id={s.id} aria-labelledby={`h-${s.id}`}>
+    <div class="nf-wrap grid">
+      <div class="side"><SectionOrnament index={i + 1} /></div>
+      <div class="main">
+        <h2 id={`h-${s.id}`} set:html={s.heading} />
+        {s.body.map((p) => <p class="body">{p}</p>)}
+        {s.items && s.items.length > 0 && (
+          <ul class="items">
+            {s.items.map((it) => (
+              <li class="nf-card">
+                <h3>{it.heading}</h3>
+                <p>{it.body}</p>
+                <div class="pills">
+                  {it.status && <StatusPill status={it.status} label={strings.statusLabels[it.status]} prefix={strings.statusPill} />}
+                  {it.buildState && <BuildStatePill buildState={it.buildState} label={strings.buildStateLabels?.[it.buildState]} buildSource={it.buildSource} />}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+        {s.code && <pre class="code" aria-label={site.aria.codeSample} tabindex="0"><code>{codeText(s.code.lines)}</code><span class="note">{s.code.note}</span></pre>}
+        {s.evidence && s.evidence.length > 0 && <Evidence claims={s.evidence} />}
+        {extra[s.id] && <div class="extra"><Fragment set:html={extra[s.id]} /></div>}
+      </div>
+    </div>
+  </section>
+))}
+{page.cta && page.cta.length > 0 && (
+  <div class="nf-wrap ctas">{page.cta.map((c) => <Button cta={c} />)}</div>
+)}
+<style>
+  .head { padding-bottom: 24px; }
+  .head :global(h1) { max-width: 22ch; }
+  .is-placeholder :global(.sec-head) { border-left: 3px dashed var(--color-muted); padding-left: 16px; }
+  .sec { padding: 40px 0; border-top: 1px solid var(--color-line); }
+  .grid { display: grid; grid-template-columns: 220px 1fr; gap: 32px; }
+  .main { max-width: 820px; min-width: 0; }
+  .body { color: var(--color-muted); margin-top: 14px; font-size: 16.5px; max-width: 68ch; }
+  .items { list-style: none; padding: 0; margin: 24px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .items li { padding: 20px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+  .items p { color: var(--color-muted); font-size: 14.5px; }
+  .pills { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .code { margin: 20px 0 0; padding: 20px 22px; background: var(--color-ink); color: var(--color-bg); font: 400 13.5px/1.75 var(--font-mono); overflow-x: auto; border-radius: var(--radius-card); }
+  .code .note { display: block; margin-top: 12px; opacity: .8; }
+  .ctas { display: flex; gap: 12px; flex-wrap: wrap; padding-top: 24px; }
+  .extra { margin-top: 24px; }
+  @media (max-width: 800px) { .grid { grid-template-columns: 1fr; gap: 8px; } }
+</style>

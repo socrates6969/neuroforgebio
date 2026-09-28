@@ -1,0 +1,26 @@
+# TEST-ONLY dependencies for the CABI-M1 case-10 gRPC conformance server (grpc_server.py).
+# NOT INSTALLED. Waits for the owner's OK, relayed by the lead (install rule).
+#
+# Intended use, into a NEW dedicated venv (never the project venv):
+#   py -3.12 -m venv %USERPROFILE%\venvs\nf-grpc-test
+#   %USERPROFILE%\venvs\nf-grpc-test\Scripts\python.exe -m pip install --only-binary=:all: --require-hashes ^
+#       -r bindings\transport-conformance\requirements-grpc-test.txt
+# --only-binary: prebuilt wheels only (no build step, no compiler, no downloads by build scripts).
+# --require-hashes: pip refuses any file whose sha256 differs from the one pinned here, so a wrong
+#   hash can only make the install FAIL, never install something else.
+#
+# Only grpcio is needed: the server uses grpcio's generic byte handlers plus a small hand-written
+# protobuf codec for the 5 ingest messages, so `protobuf`/`grpcio-tools` are NOT required.
+# Same stack as the platform's ingest server (services/platform/nf_platform/ingest/stream/server.py).
+#
+# Provenance of the pins: PyPI JSON API (pypi.org/pypi/<name>/<version>/json), read on 2026-09-27
+# through a summarising fetch tool. Before installing, reviewers should re-check both digests on
+# pypi.org (a mismatch just makes pip refuse, per above). Python 3.12, Windows x64 only.
+
+# grpcio 1.84.0, uploaded 2026-09-14, not yanked; requires Python >= 3.10; depends on typing-extensions~=4.12
+grpcio==1.84.0 \
+    --hash=sha256:49717e857899f4136d7657bf5aded61ac479110a075438290923a4d86af7cd02
+
+# typing-extensions 4.16.0 (grpcio's only runtime dependency; pure-Python wheel)
+typing-extensions==4.16.0 \
+    --hash=sha256:481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8

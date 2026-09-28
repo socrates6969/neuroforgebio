@@ -1,0 +1,14 @@
+{
+ "chb01": {
+  "leak_auroc_all_heldout": 0.9969403863094851,
+  "leak_auroc_causal_test_files_only": 0.9982704757603131
+ },
+ "chb03": {
+  "leak_auroc_all_heldout": 0.9993712001110275,
+  "leak_auroc_causal_test_files_only": 0.9994748468912603
+ },
+ "chb10": {
+  "leak_auroc_all_heldout": 0.9905640015366936,
+  "leak_auroc_causal_test_files_only": 0.9842230333814557
+ }
+}

@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "title": "Inside a neural interface · {brand}",
+    "description": "An illustrative view of a microelectrode array in motor cortex, with firing replayed from an open monkey recording and a precomputed decoder moving a cursor and a simulated arm. Research demo; not a medical device; no hardware is controlled."
+  },
+  "hero": {
+    "eyebrow": "Research demo · illustrative",
+    "heading": "Inside a <em>neural interface</em>",
+    "lede": "Follow a signal from neurons in the motor cortex, up an implanted electrode array and its lead, into a decoder, and out as movement. The anatomy and the device are drawings; the firing is replayed from a real, openly published monkey recording."
+  },
+  "banner": "Illustrative anatomy and device; not a specific product. Firing replayed from open data. Not a medical device. Offline replay; no hardware is controlled.",
+  "sceneLabel": "Interactive three-dimensional scene of an illustrative electrode array in motor cortex. Use the controls below the scene to play, take the guided tour, show or hide layers and inspect an electrode.",
+  "loading": "Loading the interactive scene…",
+  "fallback": {
+    "alt": "Still image of the interactive scene: a translucent block of motor cortex with a grid electrode array inserted, glowing neurons near the electrode tips, a lead to a headstage, a decoder, a cursor screen and a simulated arm.",
+    "noWebgl": "Your browser could not start WebGL, so a still image is shown instead.",
+    "reducedMotion": "Reduced motion is on, so a still image is shown. You can still open the interactive scene; it will not move until you press play.",
+    "show": "Show the interactive scene",
+    "caption": "A still frame of the scene. The anatomy and the device are drawings; the firing shown is replayed from the open recording.",
+    "noscript": "The interactive scene needs JavaScript and WebGL, so a still frame is shown. The notes below say what is real and what is drawn."
+  },
+  "controls": {
+    "heading": "Scene controls",
+    "play": "Play",
+    "pause": "Pause",
+    "tour": "Guided tour",
+    "reset": "Reset view",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "layers": "Layers",
+    "layerNames": {
+      "tissue": "Tissue",
+      "electrodes": "Electrodes",
+      "signals": "Signal path",
+      "decoder": "Decoder and output"
+    },
+    "inspect": "Inspect an electrode",
+    "inspectNone": "None",
+    "electrode": "Electrode",
+    "unitWord": "unit",
+    "unitsWord": "units",
+    "trial": "Test reach",
+    "of": "of",
+    "orbitHint": "Drag to orbit, scroll or pinch to zoom, click a shank to inspect it. With the keyboard: focus the scene, then use the arrow keys to orbit, plus and minus to zoom and Home to reset; the electrode list inspects a shank."
+  },
+  "tour": {
+    "overview": "An illustrative block of motor cortex, cut open, with a grid electrode array on its surface.",
+    "array": "Each shank of the array ends in a recording tip in the cortex. The grid layout of channels here is a drawing convention.",
+    "neurons": "Neurons near the tips glow when they fire. The spike times are replayed from the open recording.",
+    "signal": "Each spike travels up its shank and the lead to a headstage, which digitises it.",
+    "decoder": "Every fifty milliseconds the counts go to a decoder, whose estimate moves the cursor and the simulated arm."
+  },
+  "labels": {
+    "cortex": "Motor cortex (illustrative)",
+    "array": "Utah-style array (illustrative)",
+    "neurons": "Recorded neurons",
+    "headstage": "Headstage",
+    "decoder": "Decoder (precomputed)",
+    "screen": "Cursor",
+    "arm": "Simulated arm"
+  },
+  "inspect": {
+    "heading": "Electrode detail",
+    "empty": "Click a shank in the scene, or choose an electrode above, to see its activity.",
+    "trace": "Voltage trace (illustrative)",
+    "traceNote": "The open file holds spike times, not raw voltage. The trace is drawn: its spikes sit at the real spike times, but the waveform shape and background noise are illustrative.",
+    "raster": "Spike raster, this reach",
+    "noUnits": "No sorted units were recorded on this electrode."
+  },
+  "notes": {
+    "heading": "What is real here, and what is drawn",
+    "items": [
+      "Real: the spike times of every neuron, the reaches and the decoded path. They are the same held-out test reaches and ridge-filter output shown on the Neural Playground.",
+      "Drawn: the tissue, the array, the lead, the headstage and the arm. They are illustrative and do not depict a specific product or implant.",
+      "Drawn: where each recorded neuron sits. The file names the electrode each neuron was recorded on, but not the physical layout of the array.",
+      "Replay runs at half speed so single spikes stay visible. Nothing is decoded in real time, and no hardware is controlled.",
+      "Derived from MC_RTT (CC BY 4.0); changes were made: we excerpted twelve held-out reaches, counted spikes in fifty-millisecond bins and replay them at half speed; the moving cursor and arm follow a linear decoder's output, with positions rounded to a tenth of a millimetre. The dataset's creators do not endorse {brand}."
+    ]
+  },
+  "playgroundLink": {
+    "label": "Change neurons, noise and decoder in the Neural Playground",
+    "href": "/playground/"
+  },
+  "recordCredit": "Illustrative anatomy and device · firing replayed from open data"
+}

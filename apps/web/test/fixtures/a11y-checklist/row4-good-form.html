@@ -1,0 +1,22 @@
+<!-- Row 4 PASSING fixture (paired with row4-good-form.js): two live regions with DIFFERENT,
+     non-overlapping purposes in the same <form> -- a visible error summary (role="alert", filled on
+     submit when validation fails) and a hidden "Draft saved." confirmation (written by autosave on
+     change). Different events, different content: fine. Both sit in one <form>, so the structural
+     fallback alone WOULD flag them (the test checks that too); the resolved script is what clears
+     them. The error summary is empty at render, so row 3's structure check doesn't apply either. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <main>
+      <form class="profile" data-profile-form novalidate>
+        <div class="error-summary" role="alert" data-form-errors></div>
+        <label>Display name <input name="name" data-name required /></label>
+        <p class="nf-visually-hidden" aria-live="polite" data-saved-status></p>
+        <button type="submit">Save</button>
+      </form>
+    </main>
+  </body>
+</html>

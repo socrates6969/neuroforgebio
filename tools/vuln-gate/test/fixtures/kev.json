@@ -1,0 +1,6 @@
+{
+  "title": "fixture: CISA Catalog of Known Exploited Vulnerabilities (shape only)",
+  "catalogVersion": "fixture",
+  "count": 2,
+  "vulnerabilities": [{ "cveID": "CVE-2099-0002" }, { "cveID": "CVE-1999-0001" }]
+}

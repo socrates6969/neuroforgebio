@@ -1,0 +1,32 @@
+<!-- Row 5 PASSING fixture: every allowed title= shape, 8 title attributes in <body>, 0 findings.
+       1. <img title="X" alt="X"> -- the alt already carries the title text (the test also blanks
+          this alt and expects one finding, so this case isn't vacuous);
+       2. <iframe title> -- the title IS its accessible name;
+       3. aria-label on the element;
+       4. aria-labelledby on the element;
+       5. a form control whose <label> contains the title text;
+       6. a title that just repeats the element's own visible text;
+       7. an <abbr> whose expansion also exists elsewhere as .nf-visually-hidden text (the actual
+          /law-tracker fix);
+       8. a span whose title text is present elsewhere on the page as visible text.
+     The <title> element in <head> is not a title= attribute and is never checked. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Row 5 fixture</title>
+  </head>
+  <body>
+    <img src="/fig.png" width="10" height="10" title="Mean R² by decoder" alt="Mean R² by decoder" />
+    <iframe title="Embedded status board" src="/embed"></iframe>
+    <button type="button" title="Close" aria-label="Close dialog">×</button>
+    <span id="lbl-sort">Sort order</span>
+    <button type="button" title="Sort by date" aria-labelledby="lbl-sort">↓</button>
+    <label for="gain">Gain in decibels</label>
+    <input id="gain" type="number" title="Gain in decibels" />
+    <span class="pill" title="Designed">Designed</span>
+    <p>The <abbr title="General Data Protection Regulation">GDPR</abbr> applies.</p>
+    <p class="nf-visually-hidden">GDPR: General Data Protection Regulation</p>
+    <p>Status: <span title="Built, tested internally">✓</span> Built, tested internally.</p>
+  </body>
+</html>

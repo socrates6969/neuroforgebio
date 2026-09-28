@@ -1,0 +1,21 @@
+<!-- Row 5 PLANTED FAILURES: information reachable only by hovering a title=.
+       1. <span title="…">200</span> -- the real /docs/api bug (docs/hive/A11Y-AUDIT.md) before its
+          fix: the visible text "200" doesn't carry the response description the title adds;
+       2. an icon-only <span> whose only content is its title (no text, no aria-label);
+       3. <abbr title="World Health Organization">WHO</abbr> with the expansion nowhere else on the
+          page -- the expansion is hover-only too.
+     None has aria-label/aria-labelledby and none of the title texts appears elsewhere as text.
+     Expected: 3 findings. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Row 5 fixture</title>
+  </head>
+  <body>
+    <h1>Runs</h1>
+    <p>Response <span title="text/event-stream of run.state events, one per line">200</span></p>
+    <p>Checksum <span class="icon-verified" title="Verified against the DANDI checksum"></span></p>
+    <p>The <abbr title="World Health Organization">WHO</abbr> published the guidance.</p>
+  </body>
+</html>

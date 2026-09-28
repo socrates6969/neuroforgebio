@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "title": "Pricing · {brand}",
+    "description": "Free for individual researchers and students, a banded subscription for startups, custom for enterprise. No final prices yet."
+  },
+  "hero": {
+    "eyebrow": "Pricing",
+    "heading": "Free for researchers. <em>Fair for startups.</em>",
+    "lede": "No prices are final and nothing on this page is an offer. We set prices after discovery interviews with the teams who would pay them."
+  },
+  "sections": [
+    {
+      "id": "tiers",
+      "heading": "Three tiers, <em>one platform.</em>",
+      "body": [
+        "Every tier runs on the same provenance graph. Higher tiers add hosting, governance and the controls regulated teams need."
+      ],
+      "items": [
+        {
+          "heading": "Academic: free for individuals",
+          "body": "For individual researchers and students, with fair-use limits. The Python SDK (licence pending), local provenance, and BIDS, NWB and LSL integrations. Labs and core facilities are planned for a separate paid plan; pricing at launch.",
+          "status": "planned"
+        },
+        {
+          "heading": "Startup: banded subscription",
+          "body": "For seed-stage neurotech teams. Hosted pipelines, the consent and deletion ledger for core US states, and SSO. A subscription priced in bands of data subjects and devices; pricing at launch.",
+          "status": "planned"
+        },
+        {
+          "heading": "Enterprise: custom",
+          "body": "For organizations with regulated data. BAA available for enterprise (planned), SSO and advanced RBAC, and single-tenant or on-prem deployment on the roadmap.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "why-no-prices",
+      "heading": "Why there are <em>no prices yet.</em>",
+      "body": [
+        "We would rather publish a price we have tested than one we guessed. Early-access members will see pricing first and can help shape it."
+      ]
+    },
+    {
+      "id": "early-access",
+      "heading": "Join the <em>early-access list.</em>",
+      "body": [
+        "The early-access list opens soon. We are not collecting any email addresses until our privacy policy is published."
+      ]
+    }
+  ]
+}

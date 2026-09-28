@@ -1,0 +1,17 @@
+{
+  "name": "com.neuroforge.sdk",
+  "version": "0.1.0-preview.1",
+  "displayName": "NeuroForge SDK",
+  "description": "PREVIEW, UNVERIFIED: not yet compiled or tested inside Unity (see README 'Verification status'). Read, replay and verify NeuroForge neural recordings in Unity through the NeuroForge C ABI (nf-core). Read-only: it cannot send anything to a device.",
+  "unity": "2021.3",
+  "author": { "name": "NeuroForge Bio" },
+  "license": "UNLICENSED",
+  "keywords": ["neuroforge", "eeg", "bci", "neuroscience", "replay"],
+  "samples": [
+    {
+      "displayName": "NeuroStream demo",
+      "description": "A NeuroStream component that replays a recording and drives a cube's scale from one channel.",
+      "path": "Samples~/NeuroStreamDemo"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+---
+// Cosmos BrandMark: gradient orbit-and-wave mark (design/option-3.html logo) and the brand name
+// from packages/content. The enclosing link carries the aria-label. Gradient ids are numbered
+// per page render so the mark can appear twice (nav + footer) without duplicate ids.
+import type { SlotContract } from '../../contract.ts';
+type Props = SlotContract['BrandMark'];
+const { name } = Astro.props;
+const locals = Astro.locals as Record<string, number | undefined>;
+locals.nfCosmosIds = (locals.nfCosmosIds ?? 0) + 1;
+const gid = `nf-bm-g${locals.nfCosmosIds}`;
+---
+
+<span class="nf-bm">
+  <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id={gid} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" class="s0"></stop>
+        <stop offset="0.55" class="s1"></stop>
+        <stop offset="1" class="s2"></stop>
+      </linearGradient>
+    </defs>
+    <circle cx="16" cy="16" r="14" fill="none" stroke={`url(#${gid})`} stroke-width="1.6"></circle>
+    <path d="M8 19c3-7 5 3 8-4s5 3 8-2" fill="none" stroke={`url(#${gid})`} stroke-width="2" stroke-linecap="round"></path>
+    <circle cx="16" cy="16" r="2.2" class="core"></circle>
+  </svg>
+  <span class="nf-bm-name">{name}</span>
+</span>
+
+<style>
+  .nf-bm {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+  .nf-bm svg {
+    flex: none;
+    display: block;
+  }
+  .s0 {
+    stop-color: var(--color-accent-ink);
+  }
+  .s1 {
+    stop-color: var(--color-secondary);
+  }
+  .s2 {
+    /* third gradient stop of the cosmos palette (design/option-3.html --pink); decorative only */
+    stop-color: #f472b6;
+  }
+  .core {
+    fill: var(--color-ink);
+  }
+</style>

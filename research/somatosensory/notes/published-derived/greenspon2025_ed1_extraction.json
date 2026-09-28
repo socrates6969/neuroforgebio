@@ -1,0 +1,8748 @@
+{
+ "report": [
+  {
+   "participant": "C1",
+   "array": "MedialSensory",
+   "surface": "palm",
+   "agreement": "60/60",
+   "variant": [
+    1,
+    1,
+    1
+   ],
+   "cell_px": 25.24
+  },
+  {
+   "participant": "C1",
+   "array": "MedialSensory",
+   "surface": "dors",
+   "agreement": "60/60",
+   "variant": [
+    1,
+    1,
+    1
+   ],
+   "cell_px": 25.24
+  },
+  {
+   "participant": "C1",
+   "array": "LateralSensory",
+   "surface": "palm",
+   "agreement": "60/60",
+   "variant": [
+    1,
+    1,
+    1
+   ],
+   "cell_px": 25.18
+  },
+  {
+   "participant": "C1",
+   "array": "LateralSensory",
+   "surface": "dors",
+   "agreement": "60/60",
+   "variant": [
+    1,
+    1,
+    1
+   ],
+   "cell_px": 25.22
+  },
+  {
+   "participant": "P2",
+   "array": "MedialSensory",
+   "surface": "palm",
+   "agreement": "60/60",
+   "variant": [
+    1,
+    1,
+    1
+   ],
+   "cell_px": 25.26
+  },
+  {
+   "participant": "P2",
+   "array": "MedialSensory",
+   "surface": "dors",
+   "agreement": "60/60",
+   "variant": [
+    1,
+    1,
+    1
+   ],
+   "cell_px": 25.23
+  },
+  {
+   "participant": "P2",
+   "array": "LateralSensory",
+   "surface": "palm",
+   "agreement": "60/60",
+   "variant": [
+    1,
+    1,
+    1
+   ],
+   "cell_px": 25.3
+  },
+  {
+   "participant": "P2",
+   "array": "LateralSensory",
+   "surface": "dors",
+   "agreement": "60/60",
+   "variant": [
+    1,
+    1,
+    1
+   ],
+   "cell_px": 25.27
+  },
+  {
+   "participant": "P3",
+   "array": "MedialSensory",
+   "surface": "palm",
+   "agreement": "60/60",
+   "variant": [
+    1,
+    1,
+    1
+   ],
+   "cell_px": 25.23
+  },
+  {
+   "participant": "P3",
+   "array": "MedialSensory",
+   "surface": "dors",
+   "agreement": "60/60",
+   "variant": [
+    1,
+    1,
+    1
+   ],
+   "cell_px": 25.2
+  },
+  {
+   "participant": "P3",
+   "array": "LateralSensory",
+   "surface": "palm",
+   "agreement": "60/60",
+   "variant": [
+    1,
+    1,
+    1
+   ],
+   "cell_px": 25.26
+  },
+  {
+   "participant": "P3",
+   "array": "LateralSensory",
+   "surface": "dors",
+   "agreement": "60/60",
+   "variant": [
+    1,
+    1,
+    1
+   ],
+   "cell_px": 25.26
+  }
+ ],
+ "records": [
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 0,
+   "channel": 1,
+   "channel_label": 65,
+   "seg": "D3d-du+D3d-dr",
+   "rgb": [
+    101,
+    59,
+    183
+   ],
+   "dist": 1.2,
+   "margin": 38.6,
+   "px": 524.1,
+   "py": 305.8
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 2,
+   "channel": 8,
+   "channel_label": 72,
+   "seg": "D4d-du+D4d-dr",
+   "rgb": [
+    4,
+    168,
+    244
+   ],
+   "dist": 1.7,
+   "margin": 37.5,
+   "px": 511.1,
+   "py": 257.1
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 4,
+   "channel": 21,
+   "channel_label": 85,
+   "seg": "D3m-u+D3m-r",
+   "rgb": [
+    147,
+    118,
+    203
+   ],
+   "dist": 1.5,
+   "margin": 36.5,
+   "px": 498.0,
+   "py": 208.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 5,
+   "channel": 27,
+   "channel_label": 91,
+   "seg": "D4d-pu+D4d-pr",
+   "rgb": [
+    42,
+    181,
+    246
+   ],
+   "dist": 1.8,
+   "margin": 38.3,
+   "px": 491.5,
+   "py": 183.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 1,
+   "channel": 13,
+   "channel_label": 77,
+   "seg": "D3d-du+D3d-dr",
+   "rgb": [
+    101,
+    59,
+    185
+   ],
+   "dist": 1.8,
+   "margin": 37.6,
+   "px": 542.0,
+   "py": 274.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 3,
+   "channel": 17,
+   "channel_label": 81,
+   "seg": "D4d-du+D4d-dr",
+   "rgb": [
+    0,
+    169,
+    244
+   ],
+   "dist": 2.8,
+   "margin": 39.9,
+   "px": 528.9,
+   "py": 226.1
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 5,
+   "channel": 28,
+   "channel_label": 92,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 26.1,
+   "px": 515.8,
+   "py": 177.4
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 0,
+   "channel": 3,
+   "channel_label": 67,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    67,
+    54
+   ],
+   "dist": 1.2,
+   "margin": 29.5,
+   "px": 572.9,
+   "py": 292.7
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 2,
+   "channel": 10,
+   "channel_label": 74,
+   "seg": "D3d-du+D3d-dr",
+   "rgb": [
+    100,
+    60,
+    183
+   ],
+   "dist": 2.5,
+   "margin": 37.3,
+   "px": 559.8,
+   "py": 244.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 4,
+   "channel": 23,
+   "channel_label": 87,
+   "seg": "D4d-du+D4d-dr",
+   "rgb": [
+    4,
+    167,
+    242
+   ],
+   "dist": 3.4,
+   "margin": 36.3,
+   "px": 546.7,
+   "py": 195.2
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 1,
+   "channel": 15,
+   "channel_label": 79,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    54
+   ],
+   "dist": 1.0,
+   "margin": 30.3,
+   "px": 590.7,
+   "py": 261.8
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 3,
+   "channel": 18,
+   "channel_label": 82,
+   "seg": "D3d-pu+D3d-pr",
+   "rgb": [
+    128,
+    87,
+    194
+   ],
+   "dist": 0.6,
+   "margin": 37.0,
+   "px": 577.7,
+   "py": 213.1
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 5,
+   "channel": 29,
+   "channel_label": 93,
+   "seg": "D3d-pu+D3d-pr",
+   "rgb": [
+    128,
+    86,
+    194
+   ],
+   "dist": 0.9,
+   "margin": 37.5,
+   "px": 564.6,
+   "py": 164.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 0,
+   "channel": 5,
+   "channel_label": 69,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    243,
+    67,
+    54
+   ],
+   "dist": 2.0,
+   "margin": 28.6,
+   "px": 621.6,
+   "py": 279.7
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 2,
+   "channel": 12,
+   "channel_label": 76,
+   "seg": "D3d-du+D3d-dr",
+   "rgb": [
+    101,
+    59,
+    183
+   ],
+   "dist": 1.2,
+   "margin": 38.6,
+   "px": 608.6,
+   "py": 230.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 4,
+   "channel": 24,
+   "channel_label": 88,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 26.1,
+   "px": 595.5,
+   "py": 182.2
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 1,
+   "channel": 2,
+   "channel_label": 66,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    52
+   ],
+   "dist": 1.8,
+   "margin": 31.1,
+   "px": 639.5,
+   "py": 248.8
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 3,
+   "channel": 20,
+   "channel_label": 84,
+   "seg": "D3d-du+D3d-dr",
+   "rgb": [
+    100,
+    60,
+    183
+   ],
+   "dist": 2.5,
+   "margin": 37.3,
+   "px": 626.4,
+   "py": 200.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 5,
+   "channel": 30,
+   "channel_label": 94,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 26.1,
+   "px": 613.3,
+   "py": 151.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 0,
+   "channel": 7,
+   "channel_label": 71,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    54
+   ],
+   "dist": 1.0,
+   "margin": 30.3,
+   "px": 670.4,
+   "py": 266.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 2,
+   "channel": 14,
+   "channel_label": 78,
+   "seg": "D2d-pu+D2d-pr",
+   "rgb": [
+    241,
+    84,
+    77
+   ],
+   "dist": 2.4,
+   "margin": 27.2,
+   "px": 657.3,
+   "py": 217.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 4,
+   "channel": 25,
+   "channel_label": 89,
+   "seg": "D3d-pu+D3d-pr",
+   "rgb": [
+    128,
+    87,
+    194
+   ],
+   "dist": 0.6,
+   "margin": 37.0,
+   "px": 644.3,
+   "py": 169.1
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 1,
+   "channel": 4,
+   "channel_label": 68,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    246,
+    65,
+    54
+   ],
+   "dist": 1.8,
+   "margin": 30.3,
+   "px": 688.2,
+   "py": 235.7
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 3,
+   "channel": 19,
+   "channel_label": 83,
+   "seg": "D3d-pu+D3d-pr",
+   "rgb": [
+    128,
+    86,
+    196
+   ],
+   "dist": 2.4,
+   "margin": 35.6,
+   "px": 675.2,
+   "py": 187.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 5,
+   "channel": 32,
+   "channel_label": 96,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 26.1,
+   "px": 662.1,
+   "py": 138.2
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 0,
+   "channel": 9,
+   "channel_label": 73,
+   "seg": "D2d-pu+D2d-pr",
+   "rgb": [
+    239,
+    84,
+    78
+   ],
+   "dist": 1.3,
+   "margin": 29.5,
+   "px": 719.1,
+   "py": 253.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 2,
+   "channel": 16,
+   "channel_label": 80,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    246,
+    66,
+    54
+   ],
+   "dist": 1.3,
+   "margin": 30.3,
+   "px": 706.1,
+   "py": 204.8
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 4,
+   "channel": 26,
+   "channel_label": 90,
+   "seg": "D3d-pu+D3d-pr",
+   "rgb": [
+    126,
+    87,
+    193
+   ],
+   "dist": 1.7,
+   "margin": 36.6,
+   "px": 693.0,
+   "py": 156.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 0,
+   "channel": 11,
+   "channel_label": 75,
+   "seg": "D2d-pu+D2d-pr",
+   "rgb": [
+    239,
+    84,
+    79
+   ],
+   "dist": 0.7,
+   "margin": 30.8,
+   "px": 743.5,
+   "py": 247.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 1,
+   "channel": 6,
+   "channel_label": 70,
+   "seg": "D2d-pu+D2d-pr",
+   "rgb": [
+    241,
+    84,
+    77
+   ],
+   "dist": 2.4,
+   "margin": 27.2,
+   "px": 737.0,
+   "py": 222.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 3,
+   "channel": 22,
+   "channel_label": 86,
+   "seg": "D3d-pu+D3d-pr",
+   "rgb": [
+    126,
+    87,
+    194
+   ],
+   "dist": 1.5,
+   "margin": 37.0,
+   "px": 723.9,
+   "py": 173.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 5,
+   "channel": 31,
+   "channel_label": 95,
+   "seg": "D3d-pu+D3d-pr",
+   "rgb": [
+    128,
+    87,
+    194
+   ],
+   "dist": 0.6,
+   "margin": 37.0,
+   "px": 710.9,
+   "py": 125.1
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 0,
+   "channel": 1,
+   "channel_label": 65,
+   "seg": "D3d-r+D3d-u",
+   "rgb": [
+    128,
+    86,
+    193
+   ],
+   "dist": 1.2,
+   "margin": 37.5,
+   "px": 966.4,
+   "py": 305.8
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 2,
+   "channel": 8,
+   "channel_label": 72,
+   "seg": "D3d-r+D3d-u",
+   "rgb": [
+    128,
+    86,
+    194
+   ],
+   "dist": 0.9,
+   "margin": 37.5,
+   "px": 953.3,
+   "py": 257.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 4,
+   "channel": 21,
+   "channel_label": 85,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 940.3,
+   "py": 208.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 5,
+   "channel": 27,
+   "channel_label": 91,
+   "seg": "D4d-r+D4d-u",
+   "rgb": [
+    42,
+    181,
+    248
+   ],
+   "dist": 1.4,
+   "margin": 38.7,
+   "px": 933.7,
+   "py": 183.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 1,
+   "channel": 13,
+   "channel_label": 77,
+   "seg": "D3d-r+D3d-u",
+   "rgb": [
+    128,
+    86,
+    194
+   ],
+   "dist": 0.9,
+   "margin": 37.5,
+   "px": 984.2,
+   "py": 274.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 3,
+   "channel": 17,
+   "channel_label": 81,
+   "seg": "D4d-r+D4d-u",
+   "rgb": [
+    42,
+    181,
+    250
+   ],
+   "dist": 2.9,
+   "margin": 37.3,
+   "px": 971.2,
+   "py": 226.1
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 5,
+   "channel": 28,
+   "channel_label": 92,
+   "seg": "D4d-r+D4d-u",
+   "rgb": [
+    40,
+    182,
+    248
+   ],
+   "dist": 1.4,
+   "margin": 40.2,
+   "px": 958.1,
+   "py": 177.4
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 0,
+   "channel": 3,
+   "channel_label": 67,
+   "seg": "D3d-r+D3d-u",
+   "rgb": [
+    128,
+    86,
+    196
+   ],
+   "dist": 2.4,
+   "margin": 35.6,
+   "px": 1015.2,
+   "py": 292.7
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 2,
+   "channel": 10,
+   "channel_label": 74,
+   "seg": "D4d-r+D4d-u",
+   "rgb": [
+    43,
+    181,
+    246
+   ],
+   "dist": 2.6,
+   "margin": 36.6,
+   "px": 1002.1,
+   "py": 244.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 4,
+   "channel": 23,
+   "channel_label": 87,
+   "seg": "D4d-r+D4d-u",
+   "rgb": [
+    42,
+    181,
+    246
+   ],
+   "dist": 1.8,
+   "margin": 38.3,
+   "px": 989.0,
+   "py": 195.2
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 1,
+   "channel": 15,
+   "channel_label": 79,
+   "seg": "D3d-r+D3d-u",
+   "rgb": [
+    128,
+    86,
+    194
+   ],
+   "dist": 0.9,
+   "margin": 37.5,
+   "px": 1033.0,
+   "py": 261.8
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 3,
+   "channel": 18,
+   "channel_label": 82,
+   "seg": "D3d-r+D3d-u",
+   "rgb": [
+    128,
+    86,
+    193
+   ],
+   "dist": 1.2,
+   "margin": 37.5,
+   "px": 1019.9,
+   "py": 213.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 5,
+   "channel": 29,
+   "channel_label": 93,
+   "seg": "D3d-r+D3d-u",
+   "rgb": [
+    128,
+    87,
+    194
+   ],
+   "dist": 0.6,
+   "margin": 37.0,
+   "px": 1006.9,
+   "py": 164.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 0,
+   "channel": 5,
+   "channel_label": 69,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1063.9,
+   "py": 279.7
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 2,
+   "channel": 12,
+   "channel_label": 76,
+   "seg": "D3d-r+D3d-u",
+   "rgb": [
+    128,
+    86,
+    194
+   ],
+   "dist": 0.9,
+   "margin": 37.5,
+   "px": 1050.9,
+   "py": 230.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 4,
+   "channel": 24,
+   "channel_label": 88,
+   "seg": "D4d-r+D4d-u",
+   "rgb": [
+    42,
+    181,
+    248
+   ],
+   "dist": 1.4,
+   "margin": 38.7,
+   "px": 1037.8,
+   "py": 182.1
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 1,
+   "channel": 2,
+   "channel_label": 66,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    84,
+    79
+   ],
+   "dist": 0.7,
+   "margin": 47.4,
+   "px": 1081.8,
+   "py": 248.7
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 3,
+   "channel": 20,
+   "channel_label": 84,
+   "seg": "D3d-r+D3d-u",
+   "rgb": [
+    128,
+    87,
+    194
+   ],
+   "dist": 0.6,
+   "margin": 37.0,
+   "px": 1068.7,
+   "py": 200.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 5,
+   "channel": 30,
+   "channel_label": 94,
+   "seg": "D4d-r+D4d-u",
+   "rgb": [
+    42,
+    181,
+    248
+   ],
+   "dist": 1.4,
+   "margin": 38.7,
+   "px": 1055.6,
+   "py": 151.2
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 0,
+   "channel": 7,
+   "channel_label": 71,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    84,
+    79
+   ],
+   "dist": 0.7,
+   "margin": 47.4,
+   "px": 1112.7,
+   "py": 266.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 2,
+   "channel": 14,
+   "channel_label": 78,
+   "seg": "D3d-r+D3d-u",
+   "rgb": [
+    129,
+    86,
+    193
+   ],
+   "dist": 1.8,
+   "margin": 36.3,
+   "px": 1099.6,
+   "py": 217.8
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 4,
+   "channel": 25,
+   "channel_label": 89,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    118,
+    203
+   ],
+   "dist": 1.5,
+   "margin": 36.5,
+   "px": 1086.6,
+   "py": 169.1
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 1,
+   "channel": 4,
+   "channel_label": 68,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    84,
+    79
+   ],
+   "dist": 0.7,
+   "margin": 47.4,
+   "px": 1130.5,
+   "py": 235.7
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 3,
+   "channel": 19,
+   "channel_label": 83,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    238,
+    85,
+    79
+   ],
+   "dist": 1.9,
+   "margin": 45.4,
+   "px": 1117.5,
+   "py": 186.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 5,
+   "channel": 32,
+   "channel_label": 96,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1104.4,
+   "py": 138.2
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 0,
+   "channel": 9,
+   "channel_label": 73,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    237,
+    85,
+    79
+   ],
+   "dist": 2.8,
+   "margin": 44.3,
+   "px": 1161.5,
+   "py": 253.5
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 2,
+   "channel": 16,
+   "channel_label": 80,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    85,
+    79
+   ],
+   "dist": 1.1,
+   "margin": 46.4,
+   "px": 1148.4,
+   "py": 204.8
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 4,
+   "channel": 26,
+   "channel_label": 90,
+   "seg": "D3m",
+   "rgb": [
+    146,
+    118,
+    203
+   ],
+   "dist": 2.3,
+   "margin": 35.2,
+   "px": 1135.3,
+   "py": 156.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 0,
+   "channel": 11,
+   "channel_label": 75,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    84,
+    79
+   ],
+   "dist": 0.7,
+   "margin": 47.4,
+   "px": 1185.8,
+   "py": 247.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 1,
+   "channel": 6,
+   "channel_label": 70,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    84,
+    79
+   ],
+   "dist": 0.7,
+   "margin": 47.4,
+   "px": 1179.3,
+   "py": 222.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 3,
+   "channel": 22,
+   "channel_label": 86,
+   "seg": "D3d-r+D3d-u",
+   "rgb": [
+    128,
+    87,
+    193
+   ],
+   "dist": 1.0,
+   "margin": 36.9,
+   "px": 1166.2,
+   "py": 173.8
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "MedialSensory",
+   "rotation": -105,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 5,
+   "channel": 31,
+   "channel_label": 95,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    117,
+    205
+   ],
+   "dist": 1.4,
+   "margin": 36.4,
+   "px": 1153.2,
+   "py": 125.1
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 0,
+   "channel": 33,
+   "channel_label": 193,
+   "seg": "D2d-pu+D2d-pr",
+   "rgb": [
+    241,
+    84,
+    80
+   ],
+   "dist": 1.6,
+   "margin": 30.4,
+   "px": 653.3,
+   "py": 481.8
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 2,
+   "channel": 40,
+   "channel_label": 200,
+   "seg": "D2m-u+D2m-r",
+   "rgb": [
+    229,
+    116,
+    115
+   ],
+   "dist": 1.4,
+   "margin": 47.8,
+   "px": 689.0,
+   "py": 517.4
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 4,
+   "channel": 53,
+   "channel_label": 213,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    56
+   ],
+   "dist": 2.6,
+   "margin": 27.1,
+   "px": 724.6,
+   "py": 553.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 5,
+   "channel": 59,
+   "channel_label": 219,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    56
+   ],
+   "dist": 2.6,
+   "margin": 27.1,
+   "px": 742.4,
+   "py": 570.8
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 1,
+   "channel": 45,
+   "channel_label": 205,
+   "seg": "D2p-u+D2p-r",
+   "rgb": [
+    239,
+    154,
+    152
+   ],
+   "dist": 1.6,
+   "margin": 53.4,
+   "px": 653.3,
+   "py": 517.4
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 3,
+   "channel": 49,
+   "channel_label": 209,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    54
+   ],
+   "dist": 1.0,
+   "margin": 30.3,
+   "px": 689.0,
+   "py": 553.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 5,
+   "channel": 60,
+   "channel_label": 220,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    54
+   ],
+   "dist": 1.0,
+   "margin": 30.3,
+   "px": 724.6,
+   "py": 588.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 0,
+   "channel": 35,
+   "channel_label": 195,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    54
+   ],
+   "dist": 1.0,
+   "margin": 30.3,
+   "px": 617.7,
+   "py": 517.4
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 2,
+   "channel": 42,
+   "channel_label": 202,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    54
+   ],
+   "dist": 1.0,
+   "margin": 30.3,
+   "px": 653.3,
+   "py": 553.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 4,
+   "channel": 55,
+   "channel_label": 215,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    243,
+    67,
+    54
+   ],
+   "dist": 2.0,
+   "margin": 28.6,
+   "px": 689.0,
+   "py": 588.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 1,
+   "channel": 47,
+   "channel_label": 207,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    54
+   ],
+   "dist": 1.0,
+   "margin": 30.3,
+   "px": 617.7,
+   "py": 553.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 3,
+   "channel": 50,
+   "channel_label": 210,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    54
+   ],
+   "dist": 1.0,
+   "margin": 30.3,
+   "px": 653.3,
+   "py": 588.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 5,
+   "channel": 61,
+   "channel_label": 221,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    243,
+    67,
+    54
+   ],
+   "dist": 2.0,
+   "margin": 28.6,
+   "px": 689.0,
+   "py": 624.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 0,
+   "channel": 37,
+   "channel_label": 197,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 26.1,
+   "px": 582.1,
+   "py": 553.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 2,
+   "channel": 44,
+   "channel_label": 204,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    246,
+    65,
+    54
+   ],
+   "dist": 1.8,
+   "margin": 30.3,
+   "px": 617.7,
+   "py": 588.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 4,
+   "channel": 56,
+   "channel_label": 216,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    245,
+    66,
+    54
+   ],
+   "dist": 0.6,
+   "margin": 30.8,
+   "px": 653.3,
+   "py": 624.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 1,
+   "channel": 34,
+   "channel_label": 194,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    246,
+    65,
+    54
+   ],
+   "dist": 1.8,
+   "margin": 30.3,
+   "px": 582.1,
+   "py": 588.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 3,
+   "channel": 52,
+   "channel_label": 212,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    54
+   ],
+   "dist": 1.0,
+   "margin": 30.3,
+   "px": 617.7,
+   "py": 624.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 5,
+   "channel": 62,
+   "channel_label": 222,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    65,
+    54
+   ],
+   "dist": 1.6,
+   "margin": 30.2,
+   "px": 653.3,
+   "py": 659.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 0,
+   "channel": 39,
+   "channel_label": 199,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    54
+   ],
+   "dist": 1.0,
+   "margin": 30.3,
+   "px": 546.5,
+   "py": 588.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 2,
+   "channel": 46,
+   "channel_label": 206,
+   "seg": "D2d-pu+D2d-pr",
+   "rgb": [
+    241,
+    84,
+    77
+   ],
+   "dist": 2.4,
+   "margin": 27.2,
+   "px": 582.1,
+   "py": 624.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 4,
+   "channel": 57,
+   "channel_label": 217,
+   "seg": "D2m-u+D2m-r",
+   "rgb": [
+    229,
+    115,
+    117
+   ],
+   "dist": 2.3,
+   "margin": 47.7,
+   "px": 617.7,
+   "py": 659.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 1,
+   "channel": 36,
+   "channel_label": 196,
+   "seg": "D1d-pu+D1d-pr",
+   "rgb": [
+    253,
+    184,
+    80
+   ],
+   "dist": 4.1,
+   "margin": 40.6,
+   "px": 546.5,
+   "py": 624.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 3,
+   "channel": 51,
+   "channel_label": 211,
+   "seg": "D2d-pu+D2d-pr",
+   "rgb": [
+    239,
+    85,
+    77
+   ],
+   "dist": 2.3,
+   "margin": 28.2,
+   "px": 582.1,
+   "py": 659.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 5,
+   "channel": 64,
+   "channel_label": 224,
+   "seg": "D1d-du+D1d-dr",
+   "rgb": [
+    253,
+    169,
+    35
+   ],
+   "dist": 3.9,
+   "margin": 40.2,
+   "px": 617.7,
+   "py": 695.5
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 0,
+   "channel": 41,
+   "channel_label": 201,
+   "seg": "D1d-pu+D1d-pr",
+   "rgb": [
+    255,
+    183,
+    78
+   ],
+   "dist": 1.6,
+   "margin": 40.8,
+   "px": 510.9,
+   "py": 624.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 2,
+   "channel": 48,
+   "channel_label": 208,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    244,
+    66,
+    58
+   ],
+   "dist": 4.5,
+   "margin": 23.6,
+   "px": 546.5,
+   "py": 659.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 4,
+   "channel": 58,
+   "channel_label": 218,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 26.1,
+   "px": 582.1,
+   "py": 695.5
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 0,
+   "channel": 43,
+   "channel_label": 203,
+   "seg": "D1d-du+D1d-dr",
+   "rgb": [
+    254,
+    168,
+    35
+   ],
+   "dist": 3.4,
+   "margin": 40.9,
+   "px": 493.1,
+   "py": 642.1
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 1,
+   "channel": 38,
+   "channel_label": 198,
+   "seg": "D1d-pu+D1d-pr",
+   "rgb": [
+    255,
+    184,
+    78
+   ],
+   "dist": 1.6,
+   "margin": 41.2,
+   "px": 510.9,
+   "py": 659.9
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 3,
+   "channel": 54,
+   "channel_label": 214,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 26.1,
+   "px": 546.5,
+   "py": 695.5
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 5,
+   "channel": 63,
+   "channel_label": 223,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 26.1,
+   "px": 582.1,
+   "py": 731.1
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 0,
+   "channel": 33,
+   "channel_label": 193,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1095.7,
+   "py": 481.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 2,
+   "channel": 40,
+   "channel_label": 200,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    238,
+    85,
+    79
+   ],
+   "dist": 1.9,
+   "margin": 45.4,
+   "px": 1131.4,
+   "py": 517.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 4,
+   "channel": 53,
+   "channel_label": 213,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1167.0,
+   "py": 553.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 5,
+   "channel": 59,
+   "channel_label": 219,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1184.9,
+   "py": 570.8
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 1,
+   "channel": 45,
+   "channel_label": 205,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1095.7,
+   "py": 517.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 3,
+   "channel": 49,
+   "channel_label": 209,
+   "seg": "D2p",
+   "rgb": [
+    239,
+    154,
+    152
+   ],
+   "dist": 1.6,
+   "margin": 53.4,
+   "px": 1131.4,
+   "py": 553.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 5,
+   "channel": 60,
+   "channel_label": 220,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1167.0,
+   "py": 588.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 0,
+   "channel": 35,
+   "channel_label": 195,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    238,
+    85,
+    79
+   ],
+   "dist": 1.9,
+   "margin": 45.4,
+   "px": 1060.0,
+   "py": 517.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 2,
+   "channel": 42,
+   "channel_label": 202,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    85,
+    77
+   ],
+   "dist": 2.3,
+   "margin": 46.7,
+   "px": 1095.7,
+   "py": 553.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 4,
+   "channel": 55,
+   "channel_label": 215,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    85,
+    79
+   ],
+   "dist": 1.1,
+   "margin": 46.4,
+   "px": 1131.4,
+   "py": 588.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 1,
+   "channel": 47,
+   "channel_label": 207,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    84,
+    80
+   ],
+   "dist": 1.2,
+   "margin": 46.2,
+   "px": 1060.0,
+   "py": 553.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 3,
+   "channel": 50,
+   "channel_label": 210,
+   "seg": "D1d-r+D1d-u",
+   "rgb": [
+    255,
+    168,
+    39
+   ],
+   "dist": 0.8,
+   "margin": 39.8,
+   "px": 1095.7,
+   "py": 588.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 5,
+   "channel": 61,
+   "channel_label": 221,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    241,
+    84,
+    77
+   ],
+   "dist": 2.4,
+   "margin": 47.6,
+   "px": 1131.4,
+   "py": 624.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 0,
+   "channel": 37,
+   "channel_label": 197,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1024.4,
+   "py": 553.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 2,
+   "channel": 44,
+   "channel_label": 204,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    84,
+    79
+   ],
+   "dist": 0.7,
+   "margin": 47.4,
+   "px": 1060.0,
+   "py": 588.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 4,
+   "channel": 56,
+   "channel_label": 216,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    238,
+    85,
+    79
+   ],
+   "dist": 1.9,
+   "margin": 45.4,
+   "px": 1095.7,
+   "py": 624.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 1,
+   "channel": 34,
+   "channel_label": 194,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    241,
+    84,
+    79
+   ],
+   "dist": 1.3,
+   "margin": 47.2,
+   "px": 1024.4,
+   "py": 588.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 3,
+   "channel": 52,
+   "channel_label": 212,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    84,
+    79
+   ],
+   "dist": 0.7,
+   "margin": 47.4,
+   "px": 1060.0,
+   "py": 624.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 5,
+   "channel": 62,
+   "channel_label": 222,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    85,
+    77
+   ],
+   "dist": 2.3,
+   "margin": 46.7,
+   "px": 1095.7,
+   "py": 660.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 0,
+   "channel": 39,
+   "channel_label": 199,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    84,
+    79
+   ],
+   "dist": 0.7,
+   "margin": 47.4,
+   "px": 988.7,
+   "py": 588.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 2,
+   "channel": 46,
+   "channel_label": 206,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    85,
+    77
+   ],
+   "dist": 2.3,
+   "margin": 46.7,
+   "px": 1024.4,
+   "py": 624.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 4,
+   "channel": 57,
+   "channel_label": 217,
+   "seg": "D1d-r+D1d-u",
+   "rgb": [
+    255,
+    168,
+    37
+   ],
+   "dist": 1.3,
+   "margin": 41.2,
+   "px": 1060.0,
+   "py": 660.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 1,
+   "channel": 36,
+   "channel_label": 196,
+   "seg": "D2m",
+   "rgb": [
+    229,
+    115,
+    115
+   ],
+   "dist": 0.6,
+   "margin": 48.0,
+   "px": 988.7,
+   "py": 624.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 3,
+   "channel": 51,
+   "channel_label": 211,
+   "seg": "D1d-r+D1d-u",
+   "rgb": [
+    255,
+    168,
+    37
+   ],
+   "dist": 1.3,
+   "margin": 41.2,
+   "px": 1024.4,
+   "py": 660.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 5,
+   "channel": 64,
+   "channel_label": 224,
+   "seg": "D1d-r+D1d-u",
+   "rgb": [
+    255,
+    167,
+    37
+   ],
+   "dist": 1.8,
+   "margin": 41.0,
+   "px": 1060.0,
+   "py": 695.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 0,
+   "channel": 41,
+   "channel_label": 201,
+   "seg": "D1d-r+D1d-u",
+   "rgb": [
+    255,
+    167,
+    37
+   ],
+   "dist": 1.8,
+   "margin": 41.0,
+   "px": 953.0,
+   "py": 624.3
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 2,
+   "channel": 48,
+   "channel_label": 208,
+   "seg": "D1d-r+D1d-u",
+   "rgb": [
+    253,
+    168,
+    37
+   ],
+   "dist": 2.4,
+   "margin": 40.1,
+   "px": 988.7,
+   "py": 660.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 4,
+   "channel": 58,
+   "channel_label": 218,
+   "seg": "D1d-r+D1d-u",
+   "rgb": [
+    253,
+    169,
+    35
+   ],
+   "dist": 3.9,
+   "margin": 40.2,
+   "px": 1024.4,
+   "py": 695.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 0,
+   "channel": 43,
+   "channel_label": 203,
+   "seg": "D1d-r+D1d-u",
+   "rgb": [
+    255,
+    168,
+    37
+   ],
+   "dist": 1.3,
+   "margin": 41.2,
+   "px": 935.2,
+   "py": 642.1
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 1,
+   "channel": 38,
+   "channel_label": 198,
+   "seg": "D1d-r+D1d-u",
+   "rgb": [
+    255,
+    167,
+    37
+   ],
+   "dist": 1.8,
+   "margin": 41.0,
+   "px": 953.0,
+   "py": 660.0
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 3,
+   "channel": 54,
+   "channel_label": 214,
+   "seg": "D1d-r+D1d-u",
+   "rgb": [
+    255,
+    168,
+    35
+   ],
+   "dist": 3.3,
+   "margin": 41.1,
+   "px": 988.7,
+   "py": 695.6
+  },
+  {
+   "participant": "C1",
+   "subject_code": "BCI02",
+   "array": "LateralSensory",
+   "rotation": 45,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 5,
+   "channel": 63,
+   "channel_label": 223,
+   "seg": "D1d-r+D1d-u",
+   "rgb": [
+    255,
+    168,
+    37
+   ],
+   "dist": 1.3,
+   "margin": 41.2,
+   "px": 1024.4,
+   "py": 731.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 0,
+   "channel": 33,
+   "channel_label": 193,
+   "seg": "D2d-du+D2d-dr",
+   "rgb": [
+    243,
+    67,
+    52
+   ],
+   "dist": 2.5,
+   "margin": 29.7,
+   "px": 586.2,
+   "py": 913.8
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 2,
+   "channel": 40,
+   "channel_label": 200,
+   "seg": "P5-mcp",
+   "rgb": [
+    199,
+    229,
+    201
+   ],
+   "dist": 0.7,
+   "margin": 25.0,
+   "px": 635.0,
+   "py": 926.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 4,
+   "channel": 53,
+   "channel_label": 213,
+   "seg": "P5-mcp",
+   "rgb": [
+    199,
+    229,
+    201
+   ],
+   "dist": 0.7,
+   "margin": 25.0,
+   "px": 683.8,
+   "py": 939.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 5,
+   "channel": 59,
+   "channel_label": 219,
+   "seg": "P5-mcp",
+   "rgb": [
+    199,
+    229,
+    201
+   ],
+   "dist": 0.7,
+   "margin": 25.0,
+   "px": 708.2,
+   "py": 946.5
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 1,
+   "channel": 45,
+   "channel_label": 205,
+   "seg": "P5-mcp",
+   "rgb": [
+    199,
+    229,
+    201
+   ],
+   "dist": 0.7,
+   "margin": 25.0,
+   "px": 604.1,
+   "py": 944.7
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 3,
+   "channel": 49,
+   "channel_label": 209,
+   "seg": "P5-mcp",
+   "rgb": [
+    199,
+    229,
+    203
+   ],
+   "dist": 1.6,
+   "margin": 23.9,
+   "px": 652.9,
+   "py": 957.8
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 5,
+   "channel": 60,
+   "channel_label": 220,
+   "seg": "P5-mcp",
+   "rgb": [
+    198,
+    229,
+    201
+   ],
+   "dist": 1.1,
+   "margin": 24.8,
+   "px": 701.7,
+   "py": 970.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 0,
+   "channel": 35,
+   "channel_label": 195,
+   "seg": "P5-mcp",
+   "rgb": [
+    199,
+    229,
+    201
+   ],
+   "dist": 0.7,
+   "margin": 25.0,
+   "px": 573.1,
+   "py": 962.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 2,
+   "channel": 42,
+   "channel_label": 202,
+   "seg": "P5-mcp",
+   "rgb": [
+    199,
+    229,
+    203
+   ],
+   "dist": 1.6,
+   "margin": 23.9,
+   "px": 621.9,
+   "py": 975.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 4,
+   "channel": 55,
+   "channel_label": 215,
+   "seg": "P5-mcp",
+   "rgb": [
+    199,
+    229,
+    203
+   ],
+   "dist": 1.6,
+   "margin": 23.9,
+   "px": 670.7,
+   "py": 988.7
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 1,
+   "channel": 47,
+   "channel_label": 207,
+   "seg": "P5-mcp",
+   "rgb": [
+    199,
+    229,
+    203
+   ],
+   "dist": 1.6,
+   "margin": 23.9,
+   "px": 591.0,
+   "py": 993.5
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 3,
+   "channel": 50,
+   "channel_label": 210,
+   "seg": "P5-mcp",
+   "rgb": [
+    200,
+    229,
+    203
+   ],
+   "dist": 2.0,
+   "margin": 23.4,
+   "px": 639.8,
+   "py": 1006.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 5,
+   "channel": 62,
+   "channel_label": 222,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 26.1,
+   "px": 688.6,
+   "py": 1019.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 0,
+   "channel": 37,
+   "channel_label": 197,
+   "seg": "P5-mcp",
+   "rgb": [
+    199,
+    229,
+    201
+   ],
+   "dist": 0.7,
+   "margin": 25.0,
+   "px": 560.1,
+   "py": 1011.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 2,
+   "channel": 44,
+   "channel_label": 204,
+   "seg": "P5-mcp",
+   "rgb": [
+    200,
+    228,
+    203
+   ],
+   "dist": 2.4,
+   "margin": 21.9,
+   "px": 608.9,
+   "py": 1024.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 4,
+   "channel": 56,
+   "channel_label": 216,
+   "seg": "P4-mcp",
+   "rgb": [
+    181,
+    229,
+    251
+   ],
+   "dist": 2.9,
+   "margin": 29.7,
+   "px": 657.7,
+   "py": 1037.5
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 1,
+   "channel": 34,
+   "channel_label": 194,
+   "seg": "P5-mcp",
+   "rgb": [
+    200,
+    229,
+    201
+   ],
+   "dist": 1.3,
+   "margin": 24.2,
+   "px": 577.9,
+   "py": 1042.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 3,
+   "channel": 52,
+   "channel_label": 212,
+   "seg": "P4-mcp",
+   "rgb": [
+    178,
+    229,
+    252
+   ],
+   "dist": 0.8,
+   "margin": 32.6,
+   "px": 626.7,
+   "py": 1055.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 5,
+   "channel": 61,
+   "channel_label": 221,
+   "seg": "P4-mcp",
+   "rgb": [
+    181,
+    229,
+    252
+   ],
+   "dist": 2.6,
+   "margin": 31.0,
+   "px": 675.5,
+   "py": 1068.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 0,
+   "channel": 39,
+   "channel_label": 199,
+   "seg": "P4-mcp",
+   "rgb": [
+    181,
+    229,
+    251
+   ],
+   "dist": 2.9,
+   "margin": 29.7,
+   "px": 547.0,
+   "py": 1060.2
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 2,
+   "channel": 46,
+   "channel_label": 206,
+   "seg": "P4-mcp",
+   "rgb": [
+    179,
+    229,
+    254
+   ],
+   "dist": 1.7,
+   "margin": 33.7,
+   "px": 595.8,
+   "py": 1073.2
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 4,
+   "channel": 57,
+   "channel_label": 217,
+   "seg": "P4-mcp",
+   "rgb": [
+    179,
+    230,
+    254
+   ],
+   "dist": 1.7,
+   "margin": 33.9,
+   "px": 644.6,
+   "py": 1086.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 1,
+   "channel": 36,
+   "channel_label": 196,
+   "seg": "P4-mcp",
+   "rgb": [
+    179,
+    229,
+    252
+   ],
+   "dist": 0.8,
+   "margin": 32.6,
+   "px": 564.9,
+   "py": 1091.1
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 3,
+   "channel": 51,
+   "channel_label": 211,
+   "seg": "P4-mcp",
+   "rgb": [
+    179,
+    229,
+    252
+   ],
+   "dist": 0.8,
+   "margin": 32.6,
+   "px": 613.6,
+   "py": 1104.2
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 5,
+   "channel": 64,
+   "channel_label": 224,
+   "seg": "P4-mcp",
+   "rgb": [
+    179,
+    230,
+    251
+   ],
+   "dist": 1.6,
+   "margin": 31.1,
+   "px": 662.4,
+   "py": 1117.2
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 0,
+   "channel": 41,
+   "channel_label": 201,
+   "seg": "P4-mcp",
+   "rgb": [
+    181,
+    229,
+    252
+   ],
+   "dist": 2.6,
+   "margin": 31.0,
+   "px": 533.9,
+   "py": 1108.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 2,
+   "channel": 48,
+   "channel_label": 208,
+   "seg": "P4-mcp",
+   "rgb": [
+    179,
+    229,
+    252
+   ],
+   "dist": 0.8,
+   "margin": 32.6,
+   "px": 582.7,
+   "py": 1122.0
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 4,
+   "channel": 58,
+   "channel_label": 218,
+   "seg": "P4-mcp",
+   "rgb": [
+    178,
+    230,
+    254
+   ],
+   "dist": 1.7,
+   "margin": 33.9,
+   "px": 631.5,
+   "py": 1135.1
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 0,
+   "channel": 43,
+   "channel_label": 203,
+   "seg": "P5-mcp",
+   "rgb": [
+    199,
+    230,
+    199
+   ],
+   "dist": 2.5,
+   "margin": 24.4,
+   "px": 527.4,
+   "py": 1133.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 1,
+   "channel": 38,
+   "channel_label": 198,
+   "seg": "P4-mcp",
+   "rgb": [
+    179,
+    230,
+    252
+   ],
+   "dist": 0.8,
+   "margin": 32.9,
+   "px": 551.8,
+   "py": 1139.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 3,
+   "channel": 54,
+   "channel_label": 214,
+   "seg": "P4-mcp",
+   "rgb": [
+    179,
+    229,
+    252
+   ],
+   "dist": 0.8,
+   "margin": 32.6,
+   "px": 600.6,
+   "py": 1152.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 5,
+   "channel": 63,
+   "channel_label": 223,
+   "seg": "P4-mcp",
+   "rgb": [
+    179,
+    229,
+    252
+   ],
+   "dist": 0.8,
+   "margin": 32.6,
+   "px": 649.4,
+   "py": 1166.0
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 0,
+   "channel": 33,
+   "channel_label": 193,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1028.5,
+   "py": 913.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 2,
+   "channel": 40,
+   "channel_label": 200,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1077.3,
+   "py": 927.0
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 4,
+   "channel": 53,
+   "channel_label": 213,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1126.0,
+   "py": 940.0
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 5,
+   "channel": 59,
+   "channel_label": 219,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1150.4,
+   "py": 946.5
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 1,
+   "channel": 45,
+   "channel_label": 205,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1046.4,
+   "py": 944.8
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 3,
+   "channel": 49,
+   "channel_label": 209,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1095.1,
+   "py": 957.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 5,
+   "channel": 60,
+   "channel_label": 220,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1143.8,
+   "py": 970.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 0,
+   "channel": 35,
+   "channel_label": 195,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1015.5,
+   "py": 962.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 2,
+   "channel": 42,
+   "channel_label": 202,
+   "seg": "D5p",
+   "rgb": [
+    166,
+    213,
+    167
+   ],
+   "dist": 1.8,
+   "margin": 49.9,
+   "px": 1064.2,
+   "py": 975.7
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 4,
+   "channel": 55,
+   "channel_label": 215,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1112.9,
+   "py": 988.7
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 1,
+   "channel": 47,
+   "channel_label": 207,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1033.3,
+   "py": 993.5
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 3,
+   "channel": 50,
+   "channel_label": 210,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1082.0,
+   "py": 1006.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 5,
+   "channel": 62,
+   "channel_label": 222,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1130.8,
+   "py": 1019.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 0,
+   "channel": 37,
+   "channel_label": 197,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1002.4,
+   "py": 1011.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 2,
+   "channel": 44,
+   "channel_label": 204,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1051.1,
+   "py": 1024.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 4,
+   "channel": 56,
+   "channel_label": 216,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1099.9,
+   "py": 1037.5
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 1,
+   "channel": 34,
+   "channel_label": 194,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1020.2,
+   "py": 1042.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 3,
+   "channel": 52,
+   "channel_label": 212,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1069.0,
+   "py": 1055.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 5,
+   "channel": 61,
+   "channel_label": 221,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1117.7,
+   "py": 1068.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 0,
+   "channel": 39,
+   "channel_label": 199,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 989.3,
+   "py": 1060.1
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 2,
+   "channel": 46,
+   "channel_label": 206,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1038.1,
+   "py": 1073.2
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 4,
+   "channel": 57,
+   "channel_label": 217,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1086.8,
+   "py": 1086.2
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 1,
+   "channel": 36,
+   "channel_label": 196,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1007.2,
+   "py": 1091.0
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 3,
+   "channel": 51,
+   "channel_label": 211,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1055.9,
+   "py": 1104.1
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 5,
+   "channel": 64,
+   "channel_label": 224,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1104.7,
+   "py": 1117.1
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 0,
+   "channel": 41,
+   "channel_label": 201,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 976.3,
+   "py": 1108.8
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 2,
+   "channel": 48,
+   "channel_label": 208,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1025.0,
+   "py": 1121.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 4,
+   "channel": 58,
+   "channel_label": 218,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1073.8,
+   "py": 1134.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 0,
+   "channel": 43,
+   "channel_label": 203,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 969.8,
+   "py": 1133.2
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 1,
+   "channel": 38,
+   "channel_label": 198,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 994.1,
+   "py": 1139.7
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 3,
+   "channel": 54,
+   "channel_label": 214,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1042.9,
+   "py": 1152.8
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "MedialSensory",
+   "rotation": 15,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 5,
+   "channel": 63,
+   "channel_label": 223,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1091.6,
+   "py": 1165.8
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 0,
+   "channel": 1,
+   "channel_label": 65,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    203,
+    209
+   ],
+   "dist": 1.0,
+   "margin": 17.5,
+   "px": 687.2,
+   "py": 1319.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 2,
+   "channel": 8,
+   "channel_label": 72,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 712.5,
+   "py": 1363.7
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 4,
+   "channel": 21,
+   "channel_label": 85,
+   "seg": "P2-mcp",
+   "rgb": [
+    253,
+    205,
+    209
+   ],
+   "dist": 2.2,
+   "margin": 17.4,
+   "px": 737.8,
+   "py": 1407.5
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 5,
+   "channel": 27,
+   "channel_label": 91,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 750.5,
+   "py": 1429.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 1,
+   "channel": 13,
+   "channel_label": 77,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 678.0,
+   "py": 1354.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 3,
+   "channel": 17,
+   "channel_label": 81,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 703.3,
+   "py": 1398.2
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 5,
+   "channel": 28,
+   "channel_label": 92,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 728.6,
+   "py": 1442.0
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 0,
+   "channel": 3,
+   "channel_label": 67,
+   "seg": "P3-mcp",
+   "rgb": [
+    210,
+    196,
+    232
+   ],
+   "dist": 1.0,
+   "margin": 14.2,
+   "px": 643.4,
+   "py": 1345.2
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 2,
+   "channel": 10,
+   "channel_label": 74,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    211
+   ],
+   "dist": 1.9,
+   "margin": 17.6,
+   "px": 668.7,
+   "py": 1389.0
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 4,
+   "channel": 23,
+   "channel_label": 87,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    203,
+    209
+   ],
+   "dist": 1.0,
+   "margin": 17.5,
+   "px": 694.0,
+   "py": 1432.8
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 3,
+   "channel": 18,
+   "channel_label": 82,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    203,
+    209
+   ],
+   "dist": 1.0,
+   "margin": 17.5,
+   "px": 659.5,
+   "py": 1423.5
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 5,
+   "channel": 30,
+   "channel_label": 94,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 684.8,
+   "py": 1467.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 0,
+   "channel": 5,
+   "channel_label": 69,
+   "seg": "P2-mcp",
+   "rgb": [
+    254,
+    205,
+    209
+   ],
+   "dist": 1.4,
+   "margin": 18.6,
+   "px": 599.6,
+   "py": 1370.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 1,
+   "channel": 15,
+   "channel_label": 79,
+   "seg": "P2-mcp",
+   "rgb": [
+    254,
+    205,
+    209
+   ],
+   "dist": 1.4,
+   "margin": 18.6,
+   "px": 612.2,
+   "py": 1392.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 2,
+   "channel": 12,
+   "channel_label": 76,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 624.9,
+   "py": 1414.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 4,
+   "channel": 24,
+   "channel_label": 88,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 650.2,
+   "py": 1458.1
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 1,
+   "channel": 2,
+   "channel_label": 66,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 590.3,
+   "py": 1405.0
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 3,
+   "channel": 20,
+   "channel_label": 84,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 615.6,
+   "py": 1448.8
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 5,
+   "channel": 29,
+   "channel_label": 93,
+   "seg": "D1d-pu+D1d-pr",
+   "rgb": [
+    255,
+    185,
+    78
+   ],
+   "dist": 2.1,
+   "margin": 41.1,
+   "px": 640.9,
+   "py": 1492.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 0,
+   "channel": 7,
+   "channel_label": 71,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 555.8,
+   "py": 1395.7
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 2,
+   "channel": 14,
+   "channel_label": 78,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 581.1,
+   "py": 1439.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 4,
+   "channel": 25,
+   "channel_label": 89,
+   "seg": "D1d-pu+D1d-pr",
+   "rgb": [
+    255,
+    183,
+    78
+   ],
+   "dist": 1.6,
+   "margin": 40.8,
+   "px": 606.4,
+   "py": 1483.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 1,
+   "channel": 4,
+   "channel_label": 68,
+   "seg": "D1d-pu+D1d-pr",
+   "rgb": [
+    255,
+    184,
+    78
+   ],
+   "dist": 1.6,
+   "margin": 41.2,
+   "px": 546.5,
+   "py": 1430.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 3,
+   "channel": 19,
+   "channel_label": 83,
+   "seg": "D1d-pu+D1d-pr",
+   "rgb": [
+    255,
+    184,
+    78
+   ],
+   "dist": 1.6,
+   "margin": 41.2,
+   "px": 571.8,
+   "py": 1474.1
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 5,
+   "channel": 32,
+   "channel_label": 96,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 26.1,
+   "px": 597.1,
+   "py": 1517.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 0,
+   "channel": 9,
+   "channel_label": 73,
+   "seg": "D1d-pu+D1d-pr",
+   "rgb": [
+    255,
+    184,
+    80
+   ],
+   "dist": 3.5,
+   "margin": 41.1,
+   "px": 512.0,
+   "py": 1421.0
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 2,
+   "channel": 16,
+   "channel_label": 80,
+   "seg": "D1d-pu+D1d-pr",
+   "rgb": [
+    255,
+    184,
+    78
+   ],
+   "dist": 1.6,
+   "margin": 41.2,
+   "px": 537.3,
+   "py": 1464.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 4,
+   "channel": 26,
+   "channel_label": 90,
+   "seg": "D1d-pu+D1d-pr",
+   "rgb": [
+    255,
+    183,
+    78
+   ],
+   "dist": 1.6,
+   "margin": 40.8,
+   "px": 562.6,
+   "py": 1508.7
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 0,
+   "channel": 11,
+   "channel_label": 75,
+   "seg": "D1d-pu+D1d-pr",
+   "rgb": [
+    255,
+    184,
+    78
+   ],
+   "dist": 1.6,
+   "margin": 41.2,
+   "px": 490.1,
+   "py": 1433.7
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 1,
+   "channel": 6,
+   "channel_label": 70,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 502.7,
+   "py": 1455.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 3,
+   "channel": 22,
+   "channel_label": 86,
+   "seg": "D1d-pu+D1d-pr",
+   "rgb": [
+    255,
+    184,
+    76
+   ],
+   "dist": 0.6,
+   "margin": 40.2,
+   "px": 528.0,
+   "py": 1499.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 5,
+   "channel": 31,
+   "channel_label": 95,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 26.1,
+   "px": 553.3,
+   "py": 1543.2
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 0,
+   "channel": 1,
+   "channel_label": 65,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1126.9,
+   "py": 1320.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 2,
+   "channel": 8,
+   "channel_label": 72,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1152.2,
+   "py": 1364.1
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 4,
+   "channel": 21,
+   "channel_label": 85,
+   "seg": "D2m",
+   "rgb": [
+    228,
+    116,
+    115
+   ],
+   "dist": 2.0,
+   "margin": 47.5,
+   "px": 1177.4,
+   "py": 1407.8
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 5,
+   "channel": 27,
+   "channel_label": 91,
+   "seg": "D2m",
+   "rgb": [
+    230,
+    114,
+    117
+   ],
+   "dist": 2.4,
+   "margin": 46.8,
+   "px": 1190.1,
+   "py": 1429.7
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 1,
+   "channel": 13,
+   "channel_label": 77,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1117.7,
+   "py": 1354.8
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 3,
+   "channel": 17,
+   "channel_label": 81,
+   "seg": "D2m",
+   "rgb": [
+    229,
+    115,
+    115
+   ],
+   "dist": 0.6,
+   "margin": 48.0,
+   "px": 1142.9,
+   "py": 1398.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 5,
+   "channel": 28,
+   "channel_label": 92,
+   "seg": "D2m",
+   "rgb": [
+    229,
+    115,
+    115
+   ],
+   "dist": 0.6,
+   "margin": 48.0,
+   "px": 1168.2,
+   "py": 1442.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 0,
+   "channel": 3,
+   "channel_label": 67,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1083.2,
+   "py": 1345.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 2,
+   "channel": 10,
+   "channel_label": 74,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1108.4,
+   "py": 1389.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 4,
+   "channel": 23,
+   "channel_label": 87,
+   "seg": "D2p",
+   "rgb": [
+    241,
+    153,
+    152
+   ],
+   "dist": 1.6,
+   "margin": 53.0,
+   "px": 1133.7,
+   "py": 1433.1
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 3,
+   "channel": 18,
+   "channel_label": 82,
+   "seg": "D2p",
+   "rgb": [
+    239,
+    153,
+    152
+   ],
+   "dist": 1.2,
+   "margin": 53.0,
+   "px": 1099.2,
+   "py": 1423.8
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 5,
+   "channel": 30,
+   "channel_label": 94,
+   "seg": "D2m",
+   "rgb": [
+    228,
+    115,
+    115
+   ],
+   "dist": 1.5,
+   "margin": 47.3,
+   "px": 1124.4,
+   "py": 1467.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 0,
+   "channel": 5,
+   "channel_label": 69,
+   "seg": "D2p",
+   "rgb": [
+    238,
+    154,
+    154
+   ],
+   "dist": 2.2,
+   "margin": 53.9,
+   "px": 1039.4,
+   "py": 1370.8
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 1,
+   "channel": 15,
+   "channel_label": 79,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    118,
+    202
+   ],
+   "dist": 2.3,
+   "margin": 35.5,
+   "px": 1052.0,
+   "py": 1392.7
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 2,
+   "channel": 12,
+   "channel_label": 76,
+   "seg": "D2p",
+   "rgb": [
+    239,
+    153,
+    152
+   ],
+   "dist": 1.2,
+   "margin": 53.0,
+   "px": 1064.7,
+   "py": 1414.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 4,
+   "channel": 24,
+   "channel_label": 88,
+   "seg": "D2p",
+   "rgb": [
+    241,
+    153,
+    152
+   ],
+   "dist": 1.6,
+   "margin": 53.0,
+   "px": 1089.9,
+   "py": 1458.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 1,
+   "channel": 2,
+   "channel_label": 66,
+   "seg": "D2p",
+   "rgb": [
+    239,
+    153,
+    152
+   ],
+   "dist": 1.2,
+   "margin": 53.0,
+   "px": 1030.1,
+   "py": 1405.3
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 3,
+   "channel": 20,
+   "channel_label": 84,
+   "seg": "D2p",
+   "rgb": [
+    239,
+    153,
+    152
+   ],
+   "dist": 1.2,
+   "margin": 53.0,
+   "px": 1055.4,
+   "py": 1449.1
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 5,
+   "channel": 29,
+   "channel_label": 93,
+   "seg": "D2m",
+   "rgb": [
+    229,
+    114,
+    117
+   ],
+   "dist": 2.4,
+   "margin": 47.0,
+   "px": 1080.7,
+   "py": 1492.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 0,
+   "channel": 7,
+   "channel_label": 71,
+   "seg": "D2p",
+   "rgb": [
+    238,
+    154,
+    152
+   ],
+   "dist": 2.2,
+   "margin": 52.6,
+   "px": 995.6,
+   "py": 1396.1
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 2,
+   "channel": 14,
+   "channel_label": 78,
+   "seg": "D2p",
+   "rgb": [
+    239,
+    154,
+    152
+   ],
+   "dist": 1.6,
+   "margin": 53.4,
+   "px": 1020.9,
+   "py": 1439.8
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 4,
+   "channel": 25,
+   "channel_label": 89,
+   "seg": "D2m",
+   "rgb": [
+    229,
+    115,
+    115
+   ],
+   "dist": 0.6,
+   "margin": 48.0,
+   "px": 1046.2,
+   "py": 1483.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 1,
+   "channel": 4,
+   "channel_label": 68,
+   "seg": "D2p",
+   "rgb": [
+    238,
+    154,
+    152
+   ],
+   "dist": 2.2,
+   "margin": 52.6,
+   "px": 986.4,
+   "py": 1430.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 3,
+   "channel": 19,
+   "channel_label": 83,
+   "seg": "D2m",
+   "rgb": [
+    228,
+    115,
+    117
+   ],
+   "dist": 2.7,
+   "margin": 47.6,
+   "px": 1011.6,
+   "py": 1474.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 5,
+   "channel": 32,
+   "channel_label": 96,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1036.9,
+   "py": 1518.1
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 0,
+   "channel": 9,
+   "channel_label": 73,
+   "seg": "D2p",
+   "rgb": [
+    239,
+    153,
+    154
+   ],
+   "dist": 1.2,
+   "margin": 54.4,
+   "px": 951.9,
+   "py": 1421.4
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 2,
+   "channel": 16,
+   "channel_label": 80,
+   "seg": "D2m",
+   "rgb": [
+    230,
+    114,
+    115
+   ],
+   "dist": 0.9,
+   "margin": 46.8,
+   "px": 977.1,
+   "py": 1465.1
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 4,
+   "channel": 26,
+   "channel_label": 90,
+   "seg": "D2p",
+   "rgb": [
+    239,
+    153,
+    152
+   ],
+   "dist": 1.2,
+   "margin": 53.0,
+   "px": 1002.4,
+   "py": 1508.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 0,
+   "channel": 11,
+   "channel_label": 75,
+   "seg": "D2m",
+   "rgb": [
+    229,
+    115,
+    115
+   ],
+   "dist": 0.6,
+   "margin": 48.0,
+   "px": 930.0,
+   "py": 1434.0
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 1,
+   "channel": 6,
+   "channel_label": 70,
+   "seg": "D2m",
+   "rgb": [
+    230,
+    115,
+    114
+   ],
+   "dist": 0.9,
+   "margin": 46.7,
+   "px": 942.6,
+   "py": 1455.9
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 3,
+   "channel": 22,
+   "channel_label": 86,
+   "seg": "D2m",
+   "rgb": [
+    229,
+    115,
+    115
+   ],
+   "dist": 0.6,
+   "margin": 48.0,
+   "px": 967.9,
+   "py": 1499.6
+  },
+  {
+   "participant": "P2",
+   "subject_code": "CRS02",
+   "array": "LateralSensory",
+   "rotation": 60,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 5,
+   "channel": 31,
+   "channel_label": 95,
+   "seg": "D2m",
+   "rgb": [
+    229,
+    115,
+    115
+   ],
+   "dist": 0.6,
+   "margin": 48.0,
+   "px": 993.2,
+   "py": 1543.4
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 0,
+   "channel": 33,
+   "channel_label": 193,
+   "seg": "D4m-u+D4m-r",
+   "rgb": [
+    79,
+    197,
+    247
+   ],
+   "dist": 0.7,
+   "margin": 40.7,
+   "px": 535.9,
+   "py": 1764.4
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 2,
+   "channel": 40,
+   "channel_label": 200,
+   "seg": "D4p-u+D4p-r",
+   "rgb": [
+    130,
+    213,
+    250
+   ],
+   "dist": 1.4,
+   "margin": 49.9,
+   "px": 585.6,
+   "py": 1755.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 4,
+   "channel": 53,
+   "channel_label": 213,
+   "seg": "D3p-u+D3p-r",
+   "rgb": [
+    179,
+    157,
+    219
+   ],
+   "dist": 1.2,
+   "margin": 50.0,
+   "px": 635.3,
+   "py": 1746.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 5,
+   "channel": 59,
+   "channel_label": 219,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 660.2,
+   "py": 1742.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 1,
+   "channel": 45,
+   "channel_label": 205,
+   "seg": "D4p-u+D4p-r",
+   "rgb": [
+    130,
+    212,
+    250
+   ],
+   "dist": 0.4,
+   "margin": 51.3,
+   "px": 565.2,
+   "py": 1784.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 3,
+   "channel": 49,
+   "channel_label": 209,
+   "seg": "D3p-u+D3p-r",
+   "rgb": [
+    179,
+    158,
+    219
+   ],
+   "dist": 0.6,
+   "margin": 49.9,
+   "px": 614.8,
+   "py": 1776.1
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 5,
+   "channel": 60,
+   "channel_label": 220,
+   "seg": "D3p-u+D3p-r",
+   "rgb": [
+    179,
+    157,
+    219
+   ],
+   "dist": 1.2,
+   "margin": 50.0,
+   "px": 664.5,
+   "py": 1767.3
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 0,
+   "channel": 35,
+   "channel_label": 195,
+   "seg": "D3m-u+D3m-r",
+   "rgb": [
+    147,
+    117,
+    203
+   ],
+   "dist": 1.4,
+   "margin": 35.8,
+   "px": 544.7,
+   "py": 1814.1
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 2,
+   "channel": 42,
+   "channel_label": 202,
+   "seg": "D4m-u+D4m-r",
+   "rgb": [
+    79,
+    197,
+    249
+   ],
+   "dist": 1.8,
+   "margin": 39.7,
+   "px": 594.4,
+   "py": 1805.3
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 4,
+   "channel": 55,
+   "channel_label": 215,
+   "seg": "D3p-u+D3p-r",
+   "rgb": [
+    179,
+    157,
+    219
+   ],
+   "dist": 1.2,
+   "margin": 50.0,
+   "px": 644.1,
+   "py": 1796.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 1,
+   "channel": 47,
+   "channel_label": 207,
+   "seg": "D3m-u+D3m-r",
+   "rgb": [
+    147,
+    117,
+    203
+   ],
+   "dist": 1.4,
+   "margin": 35.8,
+   "px": 573.9,
+   "py": 1834.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 3,
+   "channel": 50,
+   "channel_label": 210,
+   "seg": "D3p-u+D3p-r",
+   "rgb": [
+    179,
+    157,
+    221
+   ],
+   "dist": 2.1,
+   "margin": 48.7,
+   "px": 623.6,
+   "py": 1825.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 5,
+   "channel": 61,
+   "channel_label": 221,
+   "seg": "D3m-u+D3m-r",
+   "rgb": [
+    147,
+    117,
+    203
+   ],
+   "dist": 1.4,
+   "margin": 35.8,
+   "px": 673.3,
+   "py": 1817.0
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 0,
+   "channel": 37,
+   "channel_label": 197,
+   "seg": "D3d-pu+D3d-pr",
+   "rgb": [
+    128,
+    86,
+    194
+   ],
+   "dist": 0.9,
+   "margin": 37.5,
+   "px": 553.4,
+   "py": 1863.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 2,
+   "channel": 44,
+   "channel_label": 204,
+   "seg": "P3-mcp",
+   "rgb": [
+    210,
+    196,
+    232
+   ],
+   "dist": 1.0,
+   "margin": 14.2,
+   "px": 603.1,
+   "py": 1855.0
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 4,
+   "channel": 56,
+   "channel_label": 216,
+   "seg": "D3m-u+D3m-r",
+   "rgb": [
+    147,
+    117,
+    205
+   ],
+   "dist": 1.4,
+   "margin": 36.4,
+   "px": 652.8,
+   "py": 1846.2
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 1,
+   "channel": 34,
+   "channel_label": 194,
+   "seg": "D3m-u+D3m-r",
+   "rgb": [
+    147,
+    117,
+    203
+   ],
+   "dist": 1.4,
+   "margin": 35.8,
+   "px": 582.7,
+   "py": 1884.2
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 3,
+   "channel": 52,
+   "channel_label": 212,
+   "seg": "D2p-u+D2p-r",
+   "rgb": [
+    239,
+    153,
+    152
+   ],
+   "dist": 1.2,
+   "margin": 53.0,
+   "px": 632.4,
+   "py": 1875.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 5,
+   "channel": 62,
+   "channel_label": 222,
+   "seg": "D3p-u+D3p-r",
+   "rgb": [
+    179,
+    157,
+    219
+   ],
+   "dist": 1.2,
+   "margin": 50.0,
+   "px": 682.1,
+   "py": 1866.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 0,
+   "channel": 39,
+   "channel_label": 199,
+   "seg": "D3m-u+D3m-r",
+   "rgb": [
+    147,
+    117,
+    203
+   ],
+   "dist": 1.4,
+   "margin": 35.8,
+   "px": 562.2,
+   "py": 1913.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 2,
+   "channel": 46,
+   "channel_label": 206,
+   "seg": "D3m-u+D3m-r",
+   "rgb": [
+    147,
+    117,
+    203
+   ],
+   "dist": 1.4,
+   "margin": 35.8,
+   "px": 611.9,
+   "py": 1904.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 4,
+   "channel": 57,
+   "channel_label": 217,
+   "seg": "D3p-u+D3p-r",
+   "rgb": [
+    179,
+    157,
+    219
+   ],
+   "dist": 1.2,
+   "margin": 50.0,
+   "px": 661.6,
+   "py": 1895.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 1,
+   "channel": 36,
+   "channel_label": 196,
+   "seg": "D3p-u+D3p-r",
+   "rgb": [
+    179,
+    158,
+    221
+   ],
+   "dist": 1.8,
+   "margin": 48.2,
+   "px": 591.4,
+   "py": 1933.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 3,
+   "channel": 51,
+   "channel_label": 211,
+   "seg": "D2m-u+D2m-r",
+   "rgb": [
+    229,
+    115,
+    114
+   ],
+   "dist": 0.9,
+   "margin": 46.9,
+   "px": 641.1,
+   "py": 1925.2
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 5,
+   "channel": 64,
+   "channel_label": 224,
+   "seg": "D3p-u+D3p-r",
+   "rgb": [
+    179,
+    157,
+    219
+   ],
+   "dist": 1.2,
+   "margin": 50.0,
+   "px": 690.8,
+   "py": 1916.4
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 0,
+   "channel": 41,
+   "channel_label": 201,
+   "seg": "D3m-u+D3m-r",
+   "rgb": [
+    149,
+    117,
+    202
+   ],
+   "dist": 2.3,
+   "margin": 35.7,
+   "px": 571.0,
+   "py": 1963.2
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 2,
+   "channel": 48,
+   "channel_label": 208,
+   "seg": "D3p-u+D3p-r",
+   "rgb": [
+    179,
+    158,
+    219
+   ],
+   "dist": 0.6,
+   "margin": 49.9,
+   "px": 620.7,
+   "py": 1954.4
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 4,
+   "channel": 58,
+   "channel_label": 218,
+   "seg": "P2-mcp",
+   "rgb": [
+    254,
+    205,
+    209
+   ],
+   "dist": 1.4,
+   "margin": 18.6,
+   "px": 670.4,
+   "py": 1945.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 0,
+   "channel": 43,
+   "channel_label": 203,
+   "seg": "D3d-pu+D3d-pr",
+   "rgb": [
+    126,
+    87,
+    194
+   ],
+   "dist": 1.5,
+   "margin": 37.0,
+   "px": 575.4,
+   "py": 1988.0
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 1,
+   "channel": 38,
+   "channel_label": 198,
+   "seg": "D3d-pu+D3d-pr",
+   "rgb": [
+    128,
+    87,
+    193
+   ],
+   "dist": 1.0,
+   "margin": 36.9,
+   "px": 600.2,
+   "py": 1983.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 3,
+   "channel": 54,
+   "channel_label": 214,
+   "seg": "D2p-u+D2p-r",
+   "rgb": [
+    239,
+    153,
+    152
+   ],
+   "dist": 1.2,
+   "margin": 53.0,
+   "px": 649.9,
+   "py": 1974.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 5,
+   "channel": 63,
+   "channel_label": 223,
+   "seg": "D3p-u+D3p-r",
+   "rgb": [
+    179,
+    157,
+    219
+   ],
+   "dist": 1.2,
+   "margin": 50.0,
+   "px": 699.6,
+   "py": 1966.1
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 0,
+   "channel": 33,
+   "channel_label": 193,
+   "seg": "D4m",
+   "rgb": [
+    79,
+    197,
+    245
+   ],
+   "dist": 2.4,
+   "margin": 39.0,
+   "px": 978.3,
+   "py": 1764.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 2,
+   "channel": 40,
+   "channel_label": 200,
+   "seg": "D5m",
+   "rgb": [
+    130,
+    199,
+    134
+   ],
+   "dist": 1.4,
+   "margin": 39.5,
+   "px": 1028.0,
+   "py": 1755.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 4,
+   "channel": 53,
+   "channel_label": 213,
+   "seg": "P-dr",
+   "rgb": [
+    248,
+    186,
+    209
+   ],
+   "dist": 0.7,
+   "margin": 47.1,
+   "px": 1077.6,
+   "py": 1747.0
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 5,
+   "channel": 59,
+   "channel_label": 219,
+   "seg": "NONE",
+   "rgb": [
+    203,
+    205,
+    204
+   ],
+   "dist": 1.4,
+   "margin": 32.0,
+   "px": 1102.4,
+   "py": 1742.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 1,
+   "channel": 45,
+   "channel_label": 205,
+   "seg": "D4p",
+   "rgb": [
+    132,
+    211,
+    250
+   ],
+   "dist": 2.1,
+   "margin": 52.9,
+   "px": 1007.5,
+   "py": 1785.0
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 3,
+   "channel": 49,
+   "channel_label": 209,
+   "seg": "D4p",
+   "rgb": [
+    130,
+    212,
+    250
+   ],
+   "dist": 0.4,
+   "margin": 53.0,
+   "px": 1057.2,
+   "py": 1776.2
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 5,
+   "channel": 60,
+   "channel_label": 220,
+   "seg": "P-dr",
+   "rgb": [
+    248,
+    186,
+    209
+   ],
+   "dist": 0.7,
+   "margin": 47.1,
+   "px": 1106.8,
+   "py": 1767.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 0,
+   "channel": 35,
+   "channel_label": 195,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    117,
+    205
+   ],
+   "dist": 1.4,
+   "margin": 36.4,
+   "px": 987.1,
+   "py": 1814.2
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 2,
+   "channel": 42,
+   "channel_label": 202,
+   "seg": "D4m",
+   "rgb": [
+    79,
+    196,
+    247
+   ],
+   "dist": 0.5,
+   "margin": 40.5,
+   "px": 1036.7,
+   "py": 1805.4
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 4,
+   "channel": 55,
+   "channel_label": 215,
+   "seg": "D1d-r+D1d-u",
+   "rgb": [
+    255,
+    167,
+    37
+   ],
+   "dist": 1.8,
+   "margin": 41.0,
+   "px": 1086.4,
+   "py": 1796.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 1,
+   "channel": 47,
+   "channel_label": 207,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    118,
+    202
+   ],
+   "dist": 2.3,
+   "margin": 35.5,
+   "px": 1016.3,
+   "py": 1834.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 3,
+   "channel": 50,
+   "channel_label": 210,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1065.9,
+   "py": 1825.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 5,
+   "channel": 61,
+   "channel_label": 221,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    117,
+    203
+   ],
+   "dist": 1.4,
+   "margin": 35.8,
+   "px": 1115.6,
+   "py": 1817.1
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 0,
+   "channel": 37,
+   "channel_label": 197,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    117,
+    203
+   ],
+   "dist": 1.4,
+   "margin": 35.8,
+   "px": 995.8,
+   "py": 1863.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 2,
+   "channel": 44,
+   "channel_label": 204,
+   "seg": "D3p",
+   "rgb": [
+    179,
+    157,
+    217
+   ],
+   "dist": 2.6,
+   "margin": 49.5,
+   "px": 1045.5,
+   "py": 1855.0
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 4,
+   "channel": 56,
+   "channel_label": 216,
+   "seg": "D3d-r+D3d-u",
+   "rgb": [
+    128,
+    86,
+    194
+   ],
+   "dist": 0.9,
+   "margin": 37.5,
+   "px": 1095.1,
+   "py": 1846.3
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 1,
+   "channel": 34,
+   "channel_label": 194,
+   "seg": "D3p",
+   "rgb": [
+    179,
+    157,
+    221
+   ],
+   "dist": 2.1,
+   "margin": 51.1,
+   "px": 1025.0,
+   "py": 1884.2
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 3,
+   "channel": 52,
+   "channel_label": 212,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1074.7,
+   "py": 1875.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 5,
+   "channel": 62,
+   "channel_label": 222,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    117,
+    203
+   ],
+   "dist": 1.4,
+   "margin": 35.8,
+   "px": 1124.3,
+   "py": 1866.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 0,
+   "channel": 39,
+   "channel_label": 199,
+   "seg": "D3m",
+   "rgb": [
+    146,
+    117,
+    205
+   ],
+   "dist": 2.2,
+   "margin": 35.1,
+   "px": 1004.6,
+   "py": 1913.4
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 2,
+   "channel": 46,
+   "channel_label": 206,
+   "seg": "D3m",
+   "rgb": [
+    146,
+    118,
+    203
+   ],
+   "dist": 2.3,
+   "margin": 35.2,
+   "px": 1054.2,
+   "py": 1904.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 4,
+   "channel": 57,
+   "channel_label": 217,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    117,
+    203
+   ],
+   "dist": 1.4,
+   "margin": 35.8,
+   "px": 1103.9,
+   "py": 1895.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 1,
+   "channel": 36,
+   "channel_label": 196,
+   "seg": "D3m",
+   "rgb": [
+    149,
+    117,
+    203
+   ],
+   "dist": 1.5,
+   "margin": 36.8,
+   "px": 1033.8,
+   "py": 1933.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 3,
+   "channel": 51,
+   "channel_label": 211,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    118,
+    202
+   ],
+   "dist": 2.3,
+   "margin": 35.5,
+   "px": 1083.4,
+   "py": 1925.1
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 5,
+   "channel": 64,
+   "channel_label": 224,
+   "seg": "D3p",
+   "rgb": [
+    178,
+    158,
+    219
+   ],
+   "dist": 0.6,
+   "margin": 52.2,
+   "px": 1133.1,
+   "py": 1916.4
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 0,
+   "channel": 41,
+   "channel_label": 201,
+   "seg": "D2p",
+   "rgb": [
+    239,
+    153,
+    152
+   ],
+   "dist": 1.2,
+   "margin": 53.0,
+   "px": 1013.3,
+   "py": 1963.1
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 2,
+   "channel": 48,
+   "channel_label": 208,
+   "seg": "D3p",
+   "rgb": [
+    178,
+    158,
+    219
+   ],
+   "dist": 0.6,
+   "margin": 52.2,
+   "px": 1063.0,
+   "py": 1954.3
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 4,
+   "channel": 58,
+   "channel_label": 218,
+   "seg": "D4m",
+   "rgb": [
+    79,
+    197,
+    247
+   ],
+   "dist": 0.7,
+   "margin": 40.7,
+   "px": 1112.6,
+   "py": 1945.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 0,
+   "channel": 43,
+   "channel_label": 203,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    118,
+    203
+   ],
+   "dist": 1.5,
+   "margin": 36.5,
+   "px": 1017.7,
+   "py": 1987.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 1,
+   "channel": 38,
+   "channel_label": 198,
+   "seg": "D2m",
+   "rgb": [
+    229,
+    114,
+    115
+   ],
+   "dist": 0.9,
+   "margin": 47.0,
+   "px": 1042.5,
+   "py": 1983.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 3,
+   "channel": 54,
+   "channel_label": 214,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    84,
+    80
+   ],
+   "dist": 1.2,
+   "margin": 46.2,
+   "px": 1092.2,
+   "py": 1974.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "MedialSensory",
+   "rotation": -10,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 5,
+   "channel": 63,
+   "channel_label": 223,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    118,
+    203
+   ],
+   "dist": 1.5,
+   "margin": 36.5,
+   "px": 1141.8,
+   "py": 1966.0
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 0,
+   "channel": 1,
+   "channel_label": 65,
+   "seg": "D3m-u+D3m-r",
+   "rgb": [
+    147,
+    117,
+    203
+   ],
+   "dist": 1.4,
+   "margin": 35.8,
+   "px": 711.0,
+   "py": 2167.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 2,
+   "channel": 8,
+   "channel_label": 72,
+   "seg": "D2p-u+D2p-r",
+   "rgb": [
+    238,
+    154,
+    152
+   ],
+   "dist": 2.2,
+   "margin": 52.6,
+   "px": 724.0,
+   "py": 2216.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 4,
+   "channel": 21,
+   "channel_label": 85,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    211
+   ],
+   "dist": 1.9,
+   "margin": 17.6,
+   "px": 737.1,
+   "py": 2265.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 0,
+   "grid_col": 5,
+   "channel": 27,
+   "channel_label": 91,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 743.7,
+   "py": 2289.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 1,
+   "channel": 13,
+   "channel_label": 77,
+   "seg": "D2p-u+D2p-r",
+   "rgb": [
+    238,
+    154,
+    152
+   ],
+   "dist": 2.2,
+   "margin": 52.6,
+   "px": 693.1,
+   "py": 2198.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 3,
+   "channel": 17,
+   "channel_label": 81,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 706.2,
+   "py": 2247.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 1,
+   "grid_col": 5,
+   "channel": 28,
+   "channel_label": 92,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 719.2,
+   "py": 2296.4
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 0,
+   "channel": 3,
+   "channel_label": 67,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 662.2,
+   "py": 2180.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 2,
+   "channel": 10,
+   "channel_label": 74,
+   "seg": "D2p-u+D2p-r",
+   "rgb": [
+    239,
+    153,
+    154
+   ],
+   "dist": 1.2,
+   "margin": 54.4,
+   "px": 675.2,
+   "py": 2229.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 2,
+   "grid_col": 4,
+   "channel": 23,
+   "channel_label": 87,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 688.3,
+   "py": 2278.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 1,
+   "channel": 15,
+   "channel_label": 79,
+   "seg": "D2p-u+D2p-r",
+   "rgb": [
+    239,
+    153,
+    152
+   ],
+   "dist": 1.2,
+   "margin": 53.0,
+   "px": 644.3,
+   "py": 2211.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 3,
+   "channel": 18,
+   "channel_label": 82,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 657.4,
+   "py": 2260.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 3,
+   "grid_col": 5,
+   "channel": 29,
+   "channel_label": 93,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    210
+   ],
+   "dist": 0.9,
+   "margin": 18.5,
+   "px": 670.4,
+   "py": 2309.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 0,
+   "channel": 5,
+   "channel_label": 69,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 613.3,
+   "py": 2194.0
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 2,
+   "channel": 12,
+   "channel_label": 76,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    203,
+    209
+   ],
+   "dist": 1.0,
+   "margin": 17.5,
+   "px": 626.4,
+   "py": 2242.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 4,
+   "grid_col": 4,
+   "channel": 24,
+   "channel_label": 88,
+   "seg": "D1p-u+D1p-r",
+   "rgb": [
+    255,
+    204,
+    129
+   ],
+   "dist": 1.5,
+   "margin": 54.8,
+   "px": 639.5,
+   "py": 2291.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 1,
+   "channel": 2,
+   "channel_label": 66,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 595.5,
+   "py": 2224.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 3,
+   "channel": 20,
+   "channel_label": 84,
+   "seg": "D1p-u+D1p-r",
+   "rgb": [
+    255,
+    204,
+    128
+   ],
+   "dist": 0.5,
+   "margin": 54.9,
+   "px": 608.6,
+   "py": 2273.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 5,
+   "grid_col": 5,
+   "channel": 30,
+   "channel_label": 94,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 621.6,
+   "py": 2322.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 0,
+   "channel": 7,
+   "channel_label": 71,
+   "seg": "D2p-u+D2p-r",
+   "rgb": [
+    239,
+    153,
+    152
+   ],
+   "dist": 1.2,
+   "margin": 53.0,
+   "px": 564.5,
+   "py": 2207.1
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 2,
+   "channel": 14,
+   "channel_label": 78,
+   "seg": "D2p-u+D2p-r",
+   "rgb": [
+    241,
+    152,
+    152
+   ],
+   "dist": 1.9,
+   "margin": 52.0,
+   "px": 577.6,
+   "py": 2255.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 6,
+   "grid_col": 4,
+   "channel": 25,
+   "channel_label": 89,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 590.7,
+   "py": 2304.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 1,
+   "channel": 4,
+   "channel_label": 68,
+   "seg": "D2p-u+D2p-r",
+   "rgb": [
+    239,
+    154,
+    152
+   ],
+   "dist": 1.6,
+   "margin": 53.4,
+   "px": 546.7,
+   "py": 2238.0
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 3,
+   "channel": 19,
+   "channel_label": 83,
+   "seg": "D1p-u+D1p-r",
+   "rgb": [
+    254,
+    205,
+    128
+   ],
+   "dist": 1.5,
+   "margin": 54.3,
+   "px": 559.8,
+   "py": 2286.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 7,
+   "grid_col": 5,
+   "channel": 32,
+   "channel_label": 96,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 26.1,
+   "px": 572.8,
+   "py": 2335.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 0,
+   "channel": 9,
+   "channel_label": 73,
+   "seg": "D2m-u+D2m-r",
+   "rgb": [
+    230,
+    114,
+    115
+   ],
+   "dist": 0.9,
+   "margin": 46.8,
+   "px": 515.7,
+   "py": 2220.1
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 2,
+   "channel": 16,
+   "channel_label": 80,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 528.8,
+   "py": 2269.0
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 8,
+   "grid_col": 4,
+   "channel": 26,
+   "channel_label": 90,
+   "seg": "D1p-u+D1p-r",
+   "rgb": [
+    254,
+    205,
+    128
+   ],
+   "dist": 1.5,
+   "margin": 54.3,
+   "px": 541.9,
+   "py": 2317.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 0,
+   "channel": 11,
+   "channel_label": 75,
+   "seg": "D2m-u+D2m-r",
+   "rgb": [
+    229,
+    114,
+    117
+   ],
+   "dist": 2.4,
+   "margin": 47.0,
+   "px": 491.3,
+   "py": 2226.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 1,
+   "channel": 6,
+   "channel_label": 70,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 26.1,
+   "px": 497.9,
+   "py": 2251.1
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 3,
+   "channel": 22,
+   "channel_label": 86,
+   "seg": "P2-mcp",
+   "rgb": [
+    255,
+    204,
+    209
+   ],
+   "dist": 0.1,
+   "margin": 19.3,
+   "px": 510.9,
+   "py": 2299.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "palm",
+   "grid_row": 9,
+   "grid_col": 5,
+   "channel": 31,
+   "channel_label": 95,
+   "seg": "D1d-pu+D1d-pr",
+   "rgb": [
+    253,
+    184,
+    78
+   ],
+   "dist": 2.5,
+   "margin": 40.3,
+   "px": 524.0,
+   "py": 2348.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 0,
+   "channel": 1,
+   "channel_label": 65,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1153.3,
+   "py": 2167.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 2,
+   "channel": 8,
+   "channel_label": 72,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1166.4,
+   "py": 2216.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 4,
+   "channel": 21,
+   "channel_label": 85,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1179.4,
+   "py": 2265.4
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 0,
+   "grid_col": 5,
+   "channel": 27,
+   "channel_label": 91,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    117,
+    203
+   ],
+   "dist": 1.4,
+   "margin": 35.8,
+   "px": 1186.0,
+   "py": 2289.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 1,
+   "channel": 13,
+   "channel_label": 77,
+   "seg": "D2m",
+   "rgb": [
+    230,
+    114,
+    115
+   ],
+   "dist": 0.9,
+   "margin": 46.8,
+   "px": 1135.4,
+   "py": 2198.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 3,
+   "channel": 17,
+   "channel_label": 81,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1148.5,
+   "py": 2247.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 1,
+   "grid_col": 5,
+   "channel": 28,
+   "channel_label": 92,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1161.6,
+   "py": 2296.3
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 0,
+   "channel": 3,
+   "channel_label": 67,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1104.5,
+   "py": 2180.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 2,
+   "channel": 10,
+   "channel_label": 74,
+   "seg": "D2p",
+   "rgb": [
+    241,
+    153,
+    152
+   ],
+   "dist": 1.6,
+   "margin": 53.0,
+   "px": 1117.5,
+   "py": 2229.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 2,
+   "grid_col": 4,
+   "channel": 23,
+   "channel_label": 87,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1130.6,
+   "py": 2278.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 1,
+   "channel": 15,
+   "channel_label": 79,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1086.6,
+   "py": 2211.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 3,
+   "channel": 18,
+   "channel_label": 82,
+   "seg": "D3p",
+   "rgb": [
+    179,
+    157,
+    219
+   ],
+   "dist": 1.2,
+   "margin": 51.4,
+   "px": 1099.7,
+   "py": 2260.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 3,
+   "grid_col": 5,
+   "channel": 29,
+   "channel_label": 93,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1112.8,
+   "py": 2309.4
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 0,
+   "channel": 5,
+   "channel_label": 69,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1055.7,
+   "py": 2193.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 2,
+   "channel": 12,
+   "channel_label": 76,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1068.7,
+   "py": 2242.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 4,
+   "grid_col": 4,
+   "channel": 24,
+   "channel_label": 88,
+   "seg": "P-dr",
+   "rgb": [
+    248,
+    186,
+    209
+   ],
+   "dist": 0.7,
+   "margin": 47.1,
+   "px": 1081.8,
+   "py": 2291.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 1,
+   "channel": 2,
+   "channel_label": 66,
+   "seg": "D2p",
+   "rgb": [
+    239,
+    153,
+    152
+   ],
+   "dist": 1.2,
+   "margin": 53.0,
+   "px": 1037.8,
+   "py": 2224.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 3,
+   "channel": 20,
+   "channel_label": 84,
+   "seg": "P-dr",
+   "rgb": [
+    248,
+    186,
+    209
+   ],
+   "dist": 0.7,
+   "margin": 47.1,
+   "px": 1050.9,
+   "py": 2273.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 5,
+   "grid_col": 5,
+   "channel": 30,
+   "channel_label": 94,
+   "seg": "D1p",
+   "rgb": [
+    255,
+    184,
+    78
+   ],
+   "dist": 1.6,
+   "margin": 41.2,
+   "px": 1064.0,
+   "py": 2322.5
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 0,
+   "channel": 7,
+   "channel_label": 71,
+   "seg": "D2p",
+   "rgb": [
+    239,
+    154,
+    151
+   ],
+   "dist": 2.3,
+   "margin": 51.9,
+   "px": 1006.9,
+   "py": 2207.0
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 2,
+   "channel": 14,
+   "channel_label": 78,
+   "seg": "D2p",
+   "rgb": [
+    239,
+    154,
+    152
+   ],
+   "dist": 1.6,
+   "margin": 53.4,
+   "px": 1019.9,
+   "py": 2255.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 6,
+   "grid_col": 4,
+   "channel": 25,
+   "channel_label": 89,
+   "seg": "P-dr",
+   "rgb": [
+    248,
+    186,
+    209
+   ],
+   "dist": 0.7,
+   "margin": 47.1,
+   "px": 1033.0,
+   "py": 2304.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 1,
+   "channel": 4,
+   "channel_label": 68,
+   "seg": "D2p",
+   "rgb": [
+    241,
+    153,
+    154
+   ],
+   "dist": 1.6,
+   "margin": 54.4,
+   "px": 989.0,
+   "py": 2237.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 3,
+   "channel": 19,
+   "channel_label": 83,
+   "seg": "P-dr",
+   "rgb": [
+    248,
+    186,
+    209
+   ],
+   "dist": 0.7,
+   "margin": 47.1,
+   "px": 1002.1,
+   "py": 2286.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 7,
+   "grid_col": 5,
+   "channel": 32,
+   "channel_label": 96,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 1015.2,
+   "py": 2335.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 0,
+   "channel": 9,
+   "channel_label": 73,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 958.1,
+   "py": 2220.1
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 2,
+   "channel": 16,
+   "channel_label": 80,
+   "seg": "D2p",
+   "rgb": [
+    241,
+    153,
+    151
+   ],
+   "dist": 2.4,
+   "margin": 51.6,
+   "px": 971.1,
+   "py": 2268.9
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 8,
+   "grid_col": 4,
+   "channel": 26,
+   "channel_label": 90,
+   "seg": "D1d-r+D1d-u",
+   "rgb": [
+    253,
+    168,
+    41
+   ],
+   "dist": 3.4,
+   "margin": 35.4,
+   "px": 984.2,
+   "py": 2317.7
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 0,
+   "channel": 11,
+   "channel_label": 75,
+   "seg": "D2d-r+D2d-u",
+   "rgb": [
+    239,
+    85,
+    79
+   ],
+   "dist": 1.1,
+   "margin": 46.4,
+   "px": 933.7,
+   "py": 2226.6
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 1,
+   "channel": 6,
+   "channel_label": 70,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 940.2,
+   "py": 2251.0
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 3,
+   "channel": 22,
+   "channel_label": 86,
+   "seg": "NONE",
+   "rgb": [
+    204,
+    204,
+    204
+   ],
+   "dist": 0.0,
+   "margin": 34.7,
+   "px": 953.3,
+   "py": 2299.8
+  },
+  {
+   "participant": "P3",
+   "subject_code": "CRS07",
+   "array": "LateralSensory",
+   "rotation": 75,
+   "surface": "dors",
+   "grid_row": 9,
+   "grid_col": 5,
+   "channel": 31,
+   "channel_label": 95,
+   "seg": "D3m",
+   "rgb": [
+    147,
+    117,
+    203
+   ],
+   "dist": 1.4,
+   "margin": 35.8,
+   "px": 966.3,
+   "py": 2348.6
+  }
+ ],
+ "segments": {
+  "palm": [
+   {
+    "label": "D5d-du+D5d-dr",
+    "rgb": [
+     0.3,
+     0.69,
+     0.31
+    ],
+    "cx": 136.57333890514,
+    "cy": 296.91349770162975,
+    "area_mm2": 95.72
+   },
+   {
+    "label": "D5d-pu+D5d-pr",
+    "rgb": [
+     0.4,
+     0.73,
+     0.41
+    ],
+    "cx": 154.121138996139,
+    "cy": 346.84797297297297,
+    "area_mm2": 82.88
+   },
+   {
+    "label": "D5m-u+D5m-r",
+    "rgb": [
+     0.51,
+     0.78,
+     0.52
+    ],
+    "cx": 181.54217148182664,
+    "cy": 406.307082945014,
+    "area_mm2": 171.68
+   },
+   {
+    "label": "D5p-u+D5p-r",
+    "rgb": [
+     0.65,
+     0.84,
+     0.66
+    ],
+    "cx": 225.96531120331952,
+    "cy": 488.32597510373444,
+    "area_mm2": 241.0
+   },
+   {
+    "label": "P5-mcp",
+    "rgb": [
+     0.78,
+     0.9,
+     0.79
+    ],
+    "cx": 271.1843086259211,
+    "cy": 594.4965756393585,
+    "area_mm2": 461.4
+   },
+   {
+    "label": "P0-du",
+    "rgb": [
+     0.7,
+     0.87,
+     0.86
+    ],
+    "cx": 330.6055056307587,
+    "cy": 735.0756834641489,
+    "area_mm2": 1054.92
+   },
+   {
+    "label": "P0-pu",
+    "rgb": [
+     0.88,
+     0.97,
+     0.98
+    ],
+    "cx": 383.5355803098422,
+    "cy": 883.062942069242,
+    "area_mm2": 1396.84
+   },
+   {
+    "label": "D4d-du+D4d-dr",
+    "rgb": [
+     0.01,
+     0.66,
+     0.96
+    ],
+    "cx": 294.3755856324831,
+    "cy": 126.4612181155648,
+    "area_mm2": 153.68
+   },
+   {
+    "label": "D4d-pu+D4d-pr",
+    "rgb": [
+     0.16,
+     0.71,
+     0.97
+    ],
+    "cx": 299.939778557926,
+    "cy": 191.06400216041047,
+    "area_mm2": 148.12
+   },
+   {
+    "label": "D4m-u+D4m-r",
+    "rgb": [
+     0.31,
+     0.77,
+     0.97
+    ],
+    "cx": 316.4878428927681,
+    "cy": 272.2314526184539,
+    "area_mm2": 256.64
+   },
+   {
+    "label": "W",
+    "rgb": [
+     0.94,
+     0.92,
+     0.91
+    ],
+    "cx": 476.86279453645085,
+    "cy": 1062.690525857534,
+    "area_mm2": 2205.16
+   },
+   {
+    "label": "D4p-u+D4p-r",
+    "rgb": [
+     0.51,
+     0.83,
+     0.98
+    ],
+    "cx": 343.37740054869687,
+    "cy": 397.15980795610426,
+    "area_mm2": 466.56
+   },
+   {
+    "label": "P4-mcp",
+    "rgb": [
+     0.7,
+     0.9,
+     0.99
+    ],
+    "cx": 372.7259637410825,
+    "cy": 540.2794685516068,
+    "area_mm2": 611.16
+   },
+   {
+    "label": "P0-d",
+    "rgb": [
+     0.88,
+     0.75,
+     0.91
+    ],
+    "cx": 449.4153052450559,
+    "cy": 654.7348237317283,
+    "area_mm2": 697.8
+   },
+   {
+    "label": "P3-mcp",
+    "rgb": [
+     0.82,
+     0.77,
+     0.91
+    ],
+    "cx": 486.9293300380736,
+    "cy": 515.7631420746777,
+    "area_mm2": 598.84
+   },
+   {
+    "label": "D3p-u+D3p-r",
+    "rgb": [
+     0.7,
+     0.62,
+     0.86
+    ],
+    "cx": 478.5576201536537,
+    "cy": 378.97909594425585,
+    "area_mm2": 447.76
+   },
+   {
+    "label": "D3d-du+D3d-dr",
+    "rgb": [
+     0.4,
+     0.23,
+     0.72
+    ],
+    "cx": 470.67807080066524,
+    "cy": 74.48895224518888,
+    "area_mm2": 168.36
+   },
+   {
+    "label": "D3d-pu+D3d-pr",
+    "rgb": [
+     0.5,
+     0.34,
+     0.76
+    ],
+    "cx": 476.5396688884111,
+    "cy": 142.51709309825844,
+    "area_mm2": 186.04
+   },
+   {
+    "label": "D3m-u+D3m-r",
+    "rgb": [
+     0.58,
+     0.46,
+     0.8
+    ],
+    "cx": 479.2792883857273,
+    "cy": 242.99898918427172,
+    "area_mm2": 395.72
+   },
+   {
+    "label": "P0-dr",
+    "rgb": [
+     0.97,
+     0.73,
+     0.82
+    ],
+    "cx": 617.2969352174711,
+    "cy": 729.8977794090658,
+    "area_mm2": 1743.68
+   },
+   {
+    "label": "P0-pr",
+    "rgb": [
+     1.0,
+     0.99,
+     0.9
+    ],
+    "cx": 567.8342629765161,
+    "cy": 886.428180623157,
+    "area_mm2": 1125.88
+   },
+   {
+    "label": "P2-mcp",
+    "rgb": [
+     1.0,
+     0.8,
+     0.82
+    ],
+    "cx": 598.5193996247655,
+    "cy": 530.5566228893058,
+    "area_mm2": 533.0
+   },
+   {
+    "label": "D2p-u+D2p-r",
+    "rgb": [
+     0.94,
+     0.6,
+     0.6
+    ],
+    "cx": 627.8041074249605,
+    "cy": 411.80625141051684,
+    "area_mm2": 354.48
+   },
+   {
+    "label": "D2m-u+D2m-r",
+    "rgb": [
+     0.9,
+     0.45,
+     0.45
+    ],
+    "cx": 664.1146672102742,
+    "cy": 296.29548466007543,
+    "area_mm2": 392.44
+   },
+   {
+    "label": "D2d-pu+D2d-pr",
+    "rgb": [
+     0.94,
+     0.33,
+     0.31
+    ],
+    "cx": 691.3686056708565,
+    "cy": 209.49546916106402,
+    "area_mm2": 136.84
+   },
+   {
+    "label": "D2d-du+D2d-dr",
+    "rgb": [
+     0.96,
+     0.26,
+     0.21
+    ],
+    "cx": 706.4791929382093,
+    "cy": 154.58543505674652,
+    "area_mm2": 126.88
+   },
+   {
+    "label": "D1p-u+D1p-r",
+    "rgb": [
+     1.0,
+     0.8,
+     0.5
+    ],
+    "cx": 782.7810415321713,
+    "cy": 668.3610931783946,
+    "area_mm2": 371.76
+   },
+   {
+    "label": "D1d-pu+D1d-pr",
+    "rgb": [
+     1.0,
+     0.72,
+     0.3
+    ],
+    "cx": 849.0856332215631,
+    "cy": 592.6806809388703,
+    "area_mm2": 155.08
+   },
+   {
+    "label": "D1d-du+D1d-dr",
+    "rgb": [
+     1.0,
+     0.66,
+     0.15
+    ],
+    "cx": 906.7909319899244,
+    "cy": 564.7682619647355,
+    "area_mm2": 127.04
+   }
+  ],
+  "dors": [
+   {
+    "label": "D1d-r+D1d-u",
+    "rgb": [
+     1.0,
+     0.66,
+     0.15
+    ],
+    "cx": 210.58169692478697,
+    "cy": 584.0053723601334,
+    "area_mm2": 431.84
+   },
+   {
+    "label": "D1p",
+    "rgb": [
+     1.0,
+     0.72,
+     0.3
+    ],
+    "cx": 287.97517590323343,
+    "cy": 687.6021029330382,
+    "area_mm2": 505.96
+   },
+   {
+    "label": "P-pr",
+    "rgb": [
+     1.0,
+     0.99,
+     0.91
+    ],
+    "cx": 464.98969757908577,
+    "cy": 808.5812669193286,
+    "area_mm2": 2585.8
+   },
+   {
+    "label": "D2d-r+D2d-u",
+    "rgb": [
+     0.94,
+     0.33,
+     0.31
+    ],
+    "cx": 354.50550265858783,
+    "cy": 180.51156176579696,
+    "area_mm2": 323.48
+   },
+   {
+    "label": "D2m",
+    "rgb": [
+     0.9,
+     0.45,
+     0.45
+    ],
+    "cx": 369.4197963429322,
+    "cy": 288.2899375889631,
+    "area_mm2": 365.32
+   },
+   {
+    "label": "D2p",
+    "rgb": [
+     0.94,
+     0.6,
+     0.6
+    ],
+    "cx": 401.4420868926242,
+    "cy": 402.87452925507483,
+    "area_mm2": 435.48
+   },
+   {
+    "label": "P-dr",
+    "rgb": [
+     0.97,
+     0.73,
+     0.82
+    ],
+    "cx": 490.83352480639945,
+    "cy": 563.0039783848183,
+    "area_mm2": 1880.16
+   },
+   {
+    "label": "W",
+    "rgb": [
+     0.94,
+     0.92,
+     0.91
+    ],
+    "cx": 603.5781404817237,
+    "cy": 1063.702732890162,
+    "area_mm2": 2220.36
+   },
+   {
+    "label": "D3d-r+D3d-u",
+    "rgb": [
+     0.5,
+     0.34,
+     0.76
+    ],
+    "cx": 533.2210340775558,
+    "cy": 110.9508813160987,
+    "area_mm2": 340.4
+   },
+   {
+    "label": "D3m",
+    "rgb": [
+     0.58,
+     0.46,
+     0.8
+    ],
+    "cx": 533.9226723946374,
+    "cy": 242.31864306347677,
+    "area_mm2": 540.04
+   },
+   {
+    "label": "D3p",
+    "rgb": [
+     0.7,
+     0.62,
+     0.86
+    ],
+    "cx": 540.9791991679667,
+    "cy": 379.0688160859768,
+    "area_mm2": 461.52
+   },
+   {
+    "label": "P-pu",
+    "rgb": [
+     0.88,
+     0.97,
+     0.98
+    ],
+    "cx": 671.162786047545,
+    "cy": 823.4631415241057,
+    "area_mm2": 1800.4
+   },
+   {
+    "label": "P-du",
+    "rgb": [
+     0.7,
+     0.87,
+     0.86
+    ],
+    "cx": 684.9953262341663,
+    "cy": 596.5902222694319,
+    "area_mm2": 1506.28
+   },
+   {
+    "label": "D4p",
+    "rgb": [
+     0.51,
+     0.83,
+     0.98
+    ],
+    "cx": 668.7607532020646,
+    "cy": 414.8856815140509,
+    "area_mm2": 418.48
+   },
+   {
+    "label": "D4m",
+    "rgb": [
+     0.31,
+     0.77,
+     0.97
+    ],
+    "cx": 684.3573480409054,
+    "cy": 288.7660576812593,
+    "area_mm2": 348.12
+   },
+   {
+    "label": "D4d-r+D4d-u",
+    "rgb": [
+     0.16,
+     0.71,
+     0.97
+    ],
+    "cx": 689.3950316069646,
+    "cy": 167.2291227681047,
+    "area_mm2": 360.68
+   },
+   {
+    "label": "D5p",
+    "rgb": [
+     0.65,
+     0.84,
+     0.66
+    ],
+    "cx": 784.834401876466,
+    "cy": 504.87365129007037,
+    "area_mm2": 255.8
+   },
+   {
+    "label": "D5m",
+    "rgb": [
+     0.51,
+     0.78,
+     0.52
+    ],
+    "cx": 821.6527015793848,
+    "cy": 422.1898586866168,
+    "area_mm2": 240.6
+   },
+   {
+    "label": "D5d-r+D5d-u",
+    "rgb": [
+     0.4,
+     0.73,
+     0.42
+    ],
+    "cx": 859.4379170056957,
+    "cy": 330.2281529698942,
+    "area_mm2": 245.8
+   }
+  ]
+ }
+}

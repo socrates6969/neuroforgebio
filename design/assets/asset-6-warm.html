@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Warm Neuron Network</title>
+<style>
+  html,body{margin:0;height:100%;background:#FFF7F0;overflow:hidden}
+  #stage{position:absolute;inset:0}
+  canvas{display:block;width:100%;height:100%}
+</style>
+</head>
+<body>
+<div id="stage" role="img" aria-label="Soft, warm illustration of an organic neuron network: rounded cell bodies in terracotta, teal and sand with branching dendrites, gently breathing while small glowing pulses travel between them.">
+  <canvas id="c" aria-hidden="true"></canvas>
+</div>
+<script>
+(function(){
+  'use strict';
+  var stage = document.getElementById('stage'), cv = document.getElementById('c'), ctx = cv.getContext('2d');
+  var RM = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : {matches:false};
+  var BG = '#FFF7F0', INK = [43,33,24];
+  var COLS = [[224,122,95],[61,139,125],[242,204,143]]; // #E07A5F #3D8B7D #F2CC8F
+  var W=1,H=1,DPR=1,S=1;
+  var seed = 7; function rnd(){ seed = (Math.imul(seed,1664525)+1013904223)>>>0; return seed/4294967296; }
+  function rgba(c,a){ return 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')'; }
+  function mix(a,b,t){ return [Math.round(a[0]+(b[0]-a[0])*t),Math.round(a[1]+(b[1]-a[1])*t),Math.round(a[2]+(b[2]-a[2])*t)]; }
+
+  // ---------- network (normalized coordinates, seeded) ----------
+  var nodes = [], edges = [], pulses = [];
+  (function build(){
+    var tries = 0;
+    while(nodes.length < 36 && tries++ < 4000){
+      var x = 0.05 + rnd()*0.9, y = 0.07 + rnd()*0.86, ok = true;
+      for(var i=0;i<nodes.length;i++){ var dx=(nodes[i].x-x)*1.5, dy=nodes[i].y-y; if(dx*dx+dy*dy < 0.018){ ok=false; break; } }
+      if(!ok) continue;
+      var ci = rnd() < 0.45 ? 0 : (rnd() < 0.55 ? 1 : 2);
+      var n = {x:x, y:y, r:0.8+rnd()*0.7, col:COLS[ci], ph:rnd()*6.283, glow:0, dend:[]};
+      var nd = 3 + (rnd()*3|0);
+      for(var k=0;k<nd;k++){
+        var a = (k/nd)*6.283 + rnd()*0.8, len = 30 + rnd()*55;
+        var br = {a:a, len:len, bend:(rnd()-0.5)*0.9, kids:[]};
+        var nk = rnd() < 0.8 ? 2 : 1;
+        for(var q=0;q<nk;q++) br.kids.push({a:(q?1:-1)*(0.35+rnd()*0.5), len:len*(0.45+rnd()*0.35), bend:(rnd()-0.5)*0.8, at:0.6+rnd()*0.3});
+        n.dend.push(br);
+      }
+      nodes.push(n);
+    }
+    // connect each node to its 2 nearest neighbours
+    var seen = {};
+    nodes.forEach(function(n, i){
+      var ds = nodes.map(function(m, j){ var dx=(m.x-n.x)*1.6, dy=m.y-n.y; return [dx*dx+dy*dy, j]; }).filter(function(d){ return d[1]!==i; });
+      ds.sort(function(a,b){ return a[0]-b[0]; });
+      for(var k=0;k<2 && k<ds.length;k++){
+        var j = ds[k][1], key = Math.min(i,j)+'-'+Math.max(i,j);
+        if(seen[key]) continue; seen[key] = 1;
+        edges.push({a:i, b:j, curve:(rnd()-0.5)*0.7});
+      }
+    });
+    nodes.forEach(function(n){ n.edges = []; });
+    edges.forEach(function(e, k){ nodes[e.a].edges.push(k); nodes[e.b].edges.push(k); });
+  })();
+
+  function layout(){
+    var r = stage.getBoundingClientRect();
+    W = Math.max(1,r.width); H = Math.max(1,r.height);
+    DPR = Math.min(2, window.devicePixelRatio||1);
+    cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    S = Math.max(0.55, Math.min(1.6, Math.sqrt(W*H)/760));
+  }
+
+  function nodePos(n, t){
+    return [n.x*W + Math.sin(t*0.42 + n.ph)*5*S, n.y*H + Math.cos(t*0.35 + n.ph*1.3)*5*S];
+  }
+  function edgeGeom(e, t){
+    var A = nodePos(nodes[e.a], t), B = nodePos(nodes[e.b], t);
+    var mx=(A[0]+B[0])/2, my=(A[1]+B[1])/2, dx=B[0]-A[0], dy=B[1]-A[1];
+    var sway = Math.sin(t*0.5 + e.a)*0.06;
+    return [A, [mx - dy*(e.curve+sway), my + dx*(e.curve+sway)], B];
+  }
+  function qpt(g, u){ var v=1-u; return [v*v*g[0][0]+2*v*u*g[1][0]+u*u*g[2][0], v*v*g[0][1]+2*v*u*g[1][1]+u*u*g[2][1]]; }
+
+  function spawn(fromNode, depth){
+    if(pulses.length > 36) return;
+    var n = nodes[fromNode]; if(!n.edges.length) return;
+    var ek = n.edges[(rnd()*n.edges.length)|0], e = edges[ek];
+    pulses.push({e:ek, dir: e.a===fromNode ? 1 : -1, u:0, speed:0.28+rnd()*0.22, depth:depth||0,
+                 col: n.col});
+  }
+
+  function drawBranch(x, y, ang, len, bend, w, col, alpha, kids, t, ph){
+    var sw = Math.sin(t*0.6 + ph)*0.07;
+    var a = ang + sw, ex = x + Math.cos(a)*len, ey = y + Math.sin(a)*len;
+    var cx = x + Math.cos(a+bend)*len*0.55, cy = y + Math.sin(a+bend)*len*0.55;
+    ctx.strokeStyle = rgba(col, alpha); ctx.lineWidth = w;
+    ctx.beginPath(); ctx.moveTo(x,y); ctx.quadraticCurveTo(cx,cy,ex,ey); ctx.stroke();
+    if(kids){
+      for(var i=0;i<kids.length;i++){
+        var k = kids[i], u = k.at, v = 1-u;
+        var px = v*v*x+2*v*u*cx+u*u*ex, py = v*v*y+2*v*u*cy+u*u*ey;
+        drawBranch(px, py, a + k.a, k.len, k.bend, w*0.55, col, alpha*0.8, null, t, ph+1.7);
+      }
+      ctx.fillStyle = rgba(col, alpha*0.9); ctx.beginPath(); ctx.arc(ex, ey, w*0.9, 0, 6.283); ctx.fill();
+    }
+  }
+
+  function draw(t){
+    // background: warm radial wash
+    ctx.fillStyle = BG; ctx.fillRect(0,0,W,H);
+    var bg = ctx.createRadialGradient(W*0.62,H*0.42,0,W*0.62,H*0.42,Math.max(W,H)*0.7);
+    bg.addColorStop(0,'rgba(242,204,143,0.28)'); bg.addColorStop(0.55,'rgba(224,122,95,0.07)'); bg.addColorStop(1,'rgba(255,247,240,0)');
+    ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+    ctx.lineCap = 'round';
+
+    // connections (axon-like soft curves)
+    for(var k=0;k<edges.length;k++){
+      var g = edgeGeom(edges[k], t), ca = nodes[edges[k].a].col, cb = nodes[edges[k].b].col;
+      var col = mix(ca, cb, 0.5);
+      ctx.strokeStyle = rgba(col, 0.16); ctx.lineWidth = 5*S;
+      ctx.beginPath(); ctx.moveTo(g[0][0],g[0][1]); ctx.quadraticCurveTo(g[1][0],g[1][1],g[2][0],g[2][1]); ctx.stroke();
+      ctx.strokeStyle = rgba(mix(col, INK, 0.35), 0.38); ctx.lineWidth = 1.3*S;
+      ctx.stroke();
+    }
+
+    // dendrites
+    for(var i=0;i<nodes.length;i++){
+      var n = nodes[i], p = nodePos(n, t), dc = mix(n.col, INK, 0.3);
+      for(var d=0; d<n.dend.length; d++){
+        var br = n.dend[d];
+        drawBranch(p[0], p[1], br.a, br.len*S, br.bend, 2.6*S, dc, 0.42, br.kids, t, n.ph + d);
+      }
+    }
+
+    // pulses (with soft trails)
+    for(k=0;k<pulses.length;k++){
+      var pu = pulses[k], ge = edgeGeom(edges[pu.e], t);
+      for(var s=0;s<5;s++){
+        var u = pu.u - s*0.025; if(u < 0) break;
+        var q = qpt(ge, pu.dir > 0 ? u : 1-u);
+        var rr = (s ? 3.4 - s*0.5 : 4.2)*S, a = s ? 0.5 - s*0.09 : 0.95;
+        if(!s){
+          var gl = ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],rr*4);
+          gl.addColorStop(0, rgba(pu.col, 0.55)); gl.addColorStop(1, rgba(pu.col, 0));
+          ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(q[0],q[1],rr*4,0,6.283); ctx.fill();
+          ctx.fillStyle = 'rgba(255,250,240,0.95)';
+        } else ctx.fillStyle = rgba(pu.col, a);
+        ctx.beginPath(); ctx.arc(q[0],q[1],rr,0,6.283); ctx.fill();
+      }
+    }
+
+    // somata
+    for(i=0;i<nodes.length;i++){
+      n = nodes[i]; p = nodePos(n, t);
+      var breathe = 1 + 0.07*Math.sin(t*0.8 + n.ph);
+      var R = (9 + n.r*6)*S*breathe, glow = 0.22 + 0.5*n.glow;
+      var halo = ctx.createRadialGradient(p[0],p[1],R*0.4,p[0],p[1],R*(3.2+n.glow*1.5));
+      halo.addColorStop(0, rgba(n.col, glow)); halo.addColorStop(1, rgba(n.col, 0));
+      ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(p[0],p[1],R*(3.2+n.glow*1.5),0,6.283); ctx.fill();
+      var body = ctx.createRadialGradient(p[0]-R*0.35,p[1]-R*0.4,R*0.1,p[0],p[1],R);
+      body.addColorStop(0, rgba(mix(n.col,[255,250,242],0.55), 1));
+      body.addColorStop(0.7, rgba(n.col, 1));
+      body.addColorStop(1, rgba(mix(n.col, INK, 0.2), 1));
+      ctx.fillStyle = body;
+      // slightly organic soma: wobbly circle
+      ctx.beginPath();
+      for(var a2=0;a2<=24;a2++){
+        var th = a2/24*6.283, rw = R*(1 + 0.06*Math.sin(th*3 + n.ph + t*0.5));
+        var xx = p[0] + Math.cos(th)*rw, yy = p[1] + Math.sin(th)*rw*0.94;
+        if(a2) ctx.lineTo(xx,yy); else ctx.moveTo(xx,yy);
+      }
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = rgba(mix(n.col, INK, 0.45), 0.55);
+      ctx.beginPath(); ctx.arc(p[0]+R*0.08, p[1]+R*0.06, R*0.28, 0, 6.283); ctx.fill();
+    }
+  }
+
+  function update(dt){
+    for(var i=pulses.length-1;i>=0;i--){
+      var pu = pulses[i]; pu.u += pu.speed*dt;
+      if(pu.u >= 1){
+        var e = edges[pu.e], target = pu.dir > 0 ? e.b : e.a;
+        nodes[target].glow = 1;
+        pulses.splice(i,1);
+        if(pu.depth < 4 && rnd() < 0.6) spawn(target, pu.depth+1);
+      }
+    }
+    for(i=0;i<nodes.length;i++) nodes[i].glow = Math.max(0, nodes[i].glow - dt*1.2);
+    if(rnd() < dt*1.4) spawn((rnd()*nodes.length)|0, 0);
+  }
+
+  var t = 3, raf=0, running=false, last=0, inView=true;
+  function frame(now){ var dt=Math.min(0.05,(now-last)/1000)||0; last=now; t+=dt; update(dt); draw(t); raf=requestAnimationFrame(frame); }
+  function start(){ if(running||RM.matches||document.hidden||!inView) return; running=true; last=performance.now(); raf=requestAnimationFrame(frame); }
+  function stop(){ running=false; cancelAnimationFrame(raf); }
+  function staticFrame(){
+    if(!pulses.length){ for(var i=0;i<8;i++){ spawn((i*5)%nodes.length, 9); pulses[pulses.length-1] && (pulses[pulses.length-1].u = 0.2 + 0.08*i); } }
+    nodes[3].glow = nodes[11].glow = 0.8;
+    draw(t);
+  }
+  document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+  var onRM = function(){ if(RM.matches){ stop(); staticFrame(); } else start(); };
+  if(RM.addEventListener) RM.addEventListener('change', onRM); else if(RM.addListener) RM.addListener(onRM);
+  if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ inView=es[0].isIntersecting; inView?start():stop(); }).observe(stage); }
+  if('ResizeObserver' in window){ new ResizeObserver(function(){ layout(); draw(t); }).observe(stage); }
+  else window.addEventListener('resize', function(){ layout(); draw(t); });
+  layout();
+  if(RM.matches) staticFrame(); else { for(var i=0;i<5;i++) spawn((i*7)%nodes.length, 0); draw(t); start(); }
+})();
+</script>
+</body>
+</html>

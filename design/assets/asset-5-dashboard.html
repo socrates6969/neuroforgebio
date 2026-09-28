@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live Session Dashboard</title>
+<style>
+  html,body{margin:0;height:100%;background:#0F172A;overflow:hidden}
+  #stage{position:absolute;inset:0}
+  canvas{display:block;width:100%;height:100%}
+</style>
+</head>
+<body>
+<div id="stage" role="img" aria-label="Mini analytics dashboard with synthetic demo data: a topographic scalp heatmap, band-power bars for delta, theta, alpha, beta and gamma, a scrolling eight-channel trace panel, and a p50 ingest latency sparkline tagged demo data.">
+  <canvas id="c" aria-hidden="true"></canvas>
+</div>
+<script>
+(function(){
+  'use strict';
+  var stage = document.getElementById('stage'), cv = document.getElementById('c'), ctx = cv.getContext('2d');
+  var RM = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : {matches:false};
+  var C = {bg:'#0F172A', panel:'#1E293B', sky:'#38BDF8', lime:'#A3E635', amber:'#FBBF24', red:'#F87171',
+           txt:'#E2E8F0', mute:'#94A3B8', dim:'#475569'};
+  var FONT = 'Inter, "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif';
+  var MONO = '"JetBrains Mono", SFMono-Regular, Menlo, Consolas, monospace';
+  function rgba(hex,a){ var n=parseInt(hex.slice(1),16); return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'; }
+
+  // electrodes (unit head, y toward nose)
+  var EL = [[-0.247,0.761],[0.247,0.761],[-0.647,0.47],[-0.335,0.42],[0,0.4],[0.335,0.42],[0.647,0.47],
+            [-0.8,0],[-0.4,0],[0,0],[0.4,0],[0.8,0],[-0.647,-0.47],[-0.335,-0.42],[0,-0.4],[0.335,-0.42],[0.647,-0.47],
+            [-0.247,-0.761],[0.247,-0.761]];
+  var TR_NAMES = ['Fz','Cz','Pz','C3','C4','O1','O2','Fp1'];
+  var BANDS = [['δ','Delta','1–4'],['θ','Theta','4–8'],['α','Alpha','8–13'],['β','Beta','13–30'],['γ','Gamma','30–45']];
+
+  // colormap LUT (dark navy -> sky -> lime -> amber -> red)
+  var STOPS = [[0,'#10213d'],[0.25,'#1f6f9c'],[0.45,'#38BDF8'],[0.65,'#A3E635'],[0.82,'#FBBF24'],[1,'#F87171']];
+  var LUT = new Uint8ClampedArray(256*3);
+  (function(){
+    for(var i=0;i<256;i++){
+      var t=i/255, k=0; while(k<STOPS.length-2 && t>STOPS[k+1][0]) k++;
+      var a=STOPS[k], b=STOPS[k+1], u=(t-a[0])/(b[0]-a[0]);
+      var ca=parseInt(a[1].slice(1),16), cb=parseInt(b[1].slice(1),16);
+      LUT[i*3]=(ca>>16&255)*(1-u)+(cb>>16&255)*u; LUT[i*3+1]=(ca>>8&255)*(1-u)+(cb>>8&255)*u; LUT[i*3+2]=(ca&255)*(1-u)+(cb&255)*u;
+    }
+  })();
+
+  // offscreen topomap
+  var TM = 72, tmc = document.createElement('canvas'); tmc.width = tmc.height = TM;
+  var tmx = tmc.getContext('2d'), tmImg = tmx.createImageData(TM, TM);
+
+  // seeded rng
+  var seed = 42; function rnd(){ seed = (Math.imul(seed,1664525)+1013904223)>>>0; return seed/4294967296; }
+
+  // state
+  var W=1,H=1,DPR=1,P={},fs=11;
+  var band = [0.22,0.18,0.3,0.2,0.1], bandT = band.slice(), bandTimer = 0;
+  var lat = [], latTimer = 0, latV = 11.6;
+  for(var i=0;i<90;i++){ latV = stepLat(latV); lat.push(latV); }
+  var topoTimer = 1;
+
+  function stepLat(v){
+    v += (rnd()-0.5)*0.9 + (11.5 - v)*0.12;
+    if(rnd() < 0.03) v += 3 + rnd()*3;
+    return Math.max(7.5, Math.min(19, v));
+  }
+
+  function layout(){
+    var r = stage.getBoundingClientRect();
+    W = Math.max(1,r.width); H = Math.max(1,r.height);
+    DPR = Math.min(2, window.devicePixelRatio||1);
+    cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    var g = Math.max(8, Math.min(14, W/80));
+    fs = Math.max(9.5, Math.min(12, W/95));
+    if(W >= 680){
+      var lw = (W-3*g)*0.4, rw = W-3*g-lw, ih = H-3*g;
+      P.topo  = {x:g, y:g, w:lw, h:ih*0.64};
+      P.lat   = {x:g, y:g*2+ih*0.64, w:lw, h:ih*0.36};
+      P.band  = {x:g*2+lw, y:g, w:rw, h:ih*0.42};
+      P.trace = {x:g*2+lw, y:g*2+ih*0.42, w:rw, h:ih*0.58};
+    } else {
+      var ih2 = H-5*g, y = g;
+      P.topo  = {x:g, y:y, w:W-2*g, h:ih2*0.34}; y += P.topo.h+g;
+      P.band  = {x:g, y:y, w:W-2*g, h:ih2*0.2};  y += P.band.h+g;
+      P.trace = {x:g, y:y, w:W-2*g, h:ih2*0.3};  y += P.trace.h+g;
+      P.lat   = {x:g, y:y, w:W-2*g, h:ih2*0.16};
+    }
+  }
+
+  function rr(x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+  function panel(p, title, tag, tagCol){
+    rr(p.x,p.y,p.w,p.h,10); ctx.fillStyle = C.panel; ctx.fill();
+    ctx.strokeStyle = 'rgba(148,163,184,0.12)'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.font = '600 '+(fs*0.88)+'px '+FONT; ctx.fillStyle = C.mute; ctx.textAlign='left'; ctx.textBaseline='middle';
+    ctx.fillText(title, p.x+14, p.y+fs*1.6);
+    if(tag){
+      ctx.font = '600 '+(fs*0.78)+'px '+MONO;
+      var tw = ctx.measureText(tag).width + 12, tx = p.x+p.w-14-tw, ty = p.y+fs*1.6;
+      rr(tx, ty-fs*0.72, tw, fs*1.44, fs*0.72);
+      ctx.fillStyle = rgba(tagCol||C.mute, 0.12); ctx.fill();
+      ctx.strokeStyle = rgba(tagCol||C.mute, 0.5); ctx.stroke();
+      ctx.fillStyle = tagCol||C.mute; ctx.textAlign='center'; ctx.fillText(tag, tx+tw/2, ty+0.5);
+    }
+    return {x:p.x+14, y:p.y+fs*3.1, w:p.w-28, h:p.h-fs*3.1-12};
+  }
+
+  // ---------- topomap ----------
+  function topoValues(t){
+    var v = new Float32Array(EL.length);
+    var hx = 0.35*Math.cos(t*0.35), hy = -0.45 + 0.2*Math.sin(t*0.5);
+    var gx = -0.5*Math.cos(t*0.23+1), gy = 0.35*Math.sin(t*0.31);
+    for(var i=0;i<EL.length;i++){
+      var dx=EL[i][0]-hx, dy=EL[i][1]-hy, ex=EL[i][0]-gx, ey=EL[i][1]-gy;
+      v[i] = 0.12 + 0.8*Math.exp(-(dx*dx+dy*dy)/0.18) + 0.35*Math.exp(-(ex*ex+ey*ey)/0.12) + 0.05*Math.sin(t*1.3+i);
+    }
+    return v;
+  }
+  function renderTopo(t){
+    var v = topoValues(t), d = tmImg.data, half = TM/2;
+    for(var py=0;py<TM;py++) for(var px=0;px<TM;px++){
+      var x=(px+0.5-half)/half, y=-(py+0.5-half)/half, o=(py*TM+px)*4, r2=x*x+y*y;
+      if(r2 > 1.02){ d[o+3]=0; continue; }
+      var num=0, den=0;
+      for(var i=0;i<EL.length;i++){
+        var dx=x-EL[i][0], dy=y-EL[i][1], w=1/(dx*dx+dy*dy+0.004); w*=w; num+=w*v[i]; den+=w;
+      }
+      var k = Math.max(0, Math.min(255, (num/den)*255|0));
+      d[o]=LUT[k*3]; d[o+1]=LUT[k*3+1]; d[o+2]=LUT[k*3+2]; d[o+3]=255;
+    }
+    tmx.putImageData(tmImg,0,0);
+  }
+  function drawTopo(){
+    var b = panel(P.topo, 'TOPOGRAPHY · α 8–13 Hz', 'demo', C.mute);
+    var legendW = Math.max(26, b.w*0.08);
+    var R = Math.min((b.w-legendW-24)/2, b.h/2 - fs*1.2) * 0.86;
+    if(R < 10) return;
+    var cx = b.x + (b.w-legendW)/2, cy = b.y + b.h/2 + R*0.04;
+    // nose + ears
+    ctx.strokeStyle = 'rgba(226,232,240,0.55)'; ctx.lineWidth = 1.3;
+    ctx.beginPath(); ctx.moveTo(cx-R*0.12, cy-R*0.99); ctx.lineTo(cx, cy-R*1.12); ctx.lineTo(cx+R*0.12, cy-R*0.99); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(cx-R*1.02, cy, R*0.06, R*0.17, 0, Math.PI*0.5, Math.PI*1.5); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(cx+R*1.02, cy, R*0.06, R*0.17, 0, -Math.PI*0.5, Math.PI*0.5); ctx.stroke();
+    ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.clip();
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(tmc, cx-R, cy-R, R*2, R*2);
+    // soft contour rings
+    ctx.strokeStyle = 'rgba(15,23,42,0.18)'; ctx.lineWidth = 1;
+    for(var k=1;k<4;k++){ ctx.beginPath(); ctx.arc(cx,cy,R*k/4,0,Math.PI*2); ctx.stroke(); }
+    ctx.restore();
+    ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.stroke();
+    for(var i=0;i<EL.length;i++){
+      ctx.fillStyle = 'rgba(15,23,42,0.75)';
+      ctx.beginPath(); ctx.arc(cx+EL[i][0]*R, cy-EL[i][1]*R, Math.max(1.8,R*0.028), 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.8)';
+      ctx.beginPath(); ctx.arc(cx+EL[i][0]*R, cy-EL[i][1]*R, Math.max(1,R*0.014), 0, Math.PI*2); ctx.fill();
+    }
+    // legend
+    var lx = b.x + b.w - legendW + 8, ly0 = cy - R*0.8, lh = R*1.6, lw = 8;
+    var lg = ctx.createLinearGradient(0, ly0+lh, 0, ly0);
+    STOPS.forEach(function(s){ lg.addColorStop(s[0], s[1]); });
+    rr(lx, ly0, lw, lh, 4); ctx.fillStyle = lg; ctx.fill();
+    ctx.font = '500 '+(fs*0.78)+'px '+FONT; ctx.fillStyle = C.mute; ctx.textAlign='left'; ctx.textBaseline='middle';
+    ctx.fillText('high', lx+lw+5, ly0+4); ctx.fillText('low', lx+lw+5, ly0+lh-4);
+  }
+
+  // ---------- band power ----------
+  function drawBands(){
+    var b = panel(P.band, 'RELATIVE BAND POWER', 'demo', C.mute);
+    var n = BANDS.length, labH = fs*2.6, top = b.y + fs*1.2, bot = b.y + b.h - labH, ch = bot-top;
+    if(ch < 8) return;
+    var gap = b.w/n, bw = Math.min(gap*0.52, 64), mx = 0, mi = 0, tot = 0;
+    for(var i=0;i<n;i++){ tot += band[i]; if(band[i]>mx){ mx=band[i]; mi=i; } }
+    ctx.strokeStyle = 'rgba(148,163,184,0.08)'; ctx.lineWidth = 1;
+    for(var k=0;k<=4;k++){ var gy = bot - ch*k/4; ctx.beginPath(); ctx.moveTo(b.x, gy+0.5); ctx.lineTo(b.x+b.w, gy+0.5); ctx.stroke(); }
+    for(i=0;i<n;i++){
+      var frac = band[i]/tot, bh = Math.max(3, ch * frac / 0.5), x = b.x + gap*i + (gap-bw)/2, y = bot - Math.min(ch, bh);
+      var col = i===mi ? C.amber : C.sky;
+      rr(x, y, bw, bot-y, 4); ctx.fillStyle = rgba(col, i===mi?0.95:0.75); ctx.fill();
+      ctx.font = '600 '+(fs*0.95)+'px '+MONO; ctx.fillStyle = i===mi ? C.amber : C.txt; ctx.textAlign='center'; ctx.textBaseline='bottom';
+      ctx.fillText(Math.round(frac*100)+'%', x+bw/2, y-4);
+      ctx.textBaseline='top'; ctx.font = '600 '+fs+'px '+FONT; ctx.fillStyle = C.txt;
+      ctx.fillText(BANDS[i][0]+' '+BANDS[i][1], x+bw/2, bot+6);
+      ctx.font = '500 '+(fs*0.8)+'px '+FONT; ctx.fillStyle = C.mute;
+      ctx.fillText(BANDS[i][2]+' Hz', x+bw/2, bot+6+fs*1.25);
+    }
+  }
+
+  // ---------- traces ----------
+  function trVal(c, s){
+    var a = s*0.05;
+    return 0.45*Math.sin(a*1.7 + c*1.3)*(0.6+0.4*Math.sin(s*0.004+c)) + 0.3*Math.sin(a*3.9+c*2.1) + 0.15*Math.sin(a*8.3+c*0.4) + 0.1*Math.sin(a*0.45+c);
+  }
+  function drawTraces(t){
+    var b = panel(P.trace, 'EEG · 8 OF 32 CH · 256 Hz', 'synthetic', C.mute);
+    var n = 8, lab = fs*3, gap = b.h/n, x0 = b.x+lab, x1 = b.x+b.w-fs*1.6, amp = gap*0.38, sNow = t*90;
+    if(gap < 6) return;
+    ctx.font = '500 '+(fs*0.85)+'px '+MONO; ctx.textAlign='left'; ctx.textBaseline='middle';
+    for(var c=0;c<n;c++){
+      var yc = b.y + gap*(c+0.5);
+      ctx.fillStyle = C.mute; ctx.fillText(TR_NAMES[c], b.x, yc);
+      ctx.strokeStyle = 'rgba(148,163,184,0.07)'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(x0,yc); ctx.lineTo(x1,yc); ctx.stroke();
+      ctx.strokeStyle = rgba(C.sky, 0.9); ctx.lineWidth = 1.1; ctx.beginPath();
+      for(var x=x0; x<=x1; x+=2){
+        var s = sNow - (x1 - x); var v = trVal(c, s);
+        if(x===x0) ctx.moveTo(x, yc - v*amp); else ctx.lineTo(x, yc - v*amp);
+      }
+      ctx.stroke();
+      // quality dot
+      var ok = !(c===7 && Math.sin(t*0.7) > 0.6);
+      ctx.fillStyle = ok ? C.lime : C.amber; ctx.beginPath(); ctx.arc(b.x+b.w-fs*0.5, yc, 3, 0, Math.PI*2); ctx.fill();
+    }
+    // right-edge fade + playhead
+    ctx.strokeStyle = rgba(C.sky,0.35); ctx.setLineDash([2,3]); ctx.beginPath(); ctx.moveTo(x1+0.5,b.y); ctx.lineTo(x1+0.5,b.y+b.h); ctx.stroke(); ctx.setLineDash([]);
+    var lf = ctx.createLinearGradient(x0,0,x0+40,0); lf.addColorStop(0,C.panel); lf.addColorStop(1,'rgba(30,41,59,0)');
+    ctx.fillStyle = lf; ctx.fillRect(x0-1, b.y, 41, b.h);
+  }
+
+  // ---------- latency ----------
+  function drawLatency(){
+    var b = panel(P.lat, 'P50 INGEST LATENCY', 'DEMO DATA', C.amber);
+    var cur = lat[lat.length-1];
+    var big = Math.max(16, Math.min(34, b.h*0.42, b.w*0.1));
+    ctx.font = '700 '+big+'px '+FONT; ctx.fillStyle = C.lime; ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+    var numStr = cur.toFixed(1), nw = ctx.measureText(numStr).width;
+    var baseY = b.y + big*0.9;
+    ctx.fillText(numStr, b.x, baseY);
+    ctx.font = '500 '+(fs*1.05)+'px '+FONT; ctx.fillStyle = C.mute; ctx.fillText('ms', b.x+nw+5, baseY);
+    // sparkline area
+    var sx = b.x, sy = baseY + fs*0.9, sw = b.w, sh = b.y + b.h - sy;
+    var sideBySide = sh < 18;
+    if(sideBySide){ sx = b.x + nw + fs*4; sy = b.y; sw = b.w - (sx-b.x); sh = b.h; }
+    if(sw < 20 || sh < 10) return;
+    var lo = 6, hi = 20, n = lat.length;
+    function X(i){ return sx + sw*i/(n-1); } function Y(v){ return sy + sh - (v-lo)/(hi-lo)*sh; }
+    // p95 guide
+    ctx.strokeStyle = rgba(C.red,0.45); ctx.setLineDash([3,4]); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(sx, Y(16)); ctx.lineTo(sx+sw, Y(16)); ctx.stroke(); ctx.setLineDash([]);
+    ctx.font = '500 '+(fs*0.75)+'px '+MONO; ctx.fillStyle = rgba(C.red,0.8); ctx.textAlign='right'; ctx.textBaseline='bottom';
+    ctx.fillText('budget 16 ms', sx+sw, Y(16)-2);
+    // area + line
+    var ag = ctx.createLinearGradient(0,sy,0,sy+sh); ag.addColorStop(0,rgba(C.lime,0.25)); ag.addColorStop(1,rgba(C.lime,0));
+    ctx.beginPath(); ctx.moveTo(X(0), sy+sh);
+    for(var i=0;i<n;i++) ctx.lineTo(X(i), Y(lat[i]));
+    ctx.lineTo(X(n-1), sy+sh); ctx.closePath(); ctx.fillStyle = ag; ctx.fill();
+    ctx.beginPath(); for(i=0;i<n;i++){ if(i) ctx.lineTo(X(i), Y(lat[i])); else ctx.moveTo(X(i), Y(lat[i])); }
+    ctx.strokeStyle = C.lime; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = C.lime; ctx.beginPath(); ctx.arc(X(n-1), Y(cur), 3.2, 0, Math.PI*2); ctx.fill();
+  }
+
+  function draw(t){
+    ctx.fillStyle = C.bg; ctx.fillRect(0,0,W,H);
+    drawTopo(); drawBands(); drawTraces(t); drawLatency();
+  }
+
+  function update(dt, t){
+    bandTimer -= dt;
+    if(bandTimer <= 0){
+      bandTimer = 1.1 + rnd()*0.8;
+      bandT = [0.18+rnd()*0.1, 0.14+rnd()*0.08, 0.24+rnd()*0.16, 0.16+rnd()*0.1, 0.06+rnd()*0.06];
+    }
+    var k = Math.min(1, dt*2.2);
+    for(var i=0;i<5;i++) band[i] += (bandT[i]-band[i])*k;
+    latTimer -= dt;
+    if(latTimer <= 0){ latTimer = 0.3; latV = stepLat(latV); lat.push(latV); lat.shift(); }
+    topoTimer -= dt;
+    if(topoTimer <= 0){ topoTimer = 1/15; renderTopo(t); }
+  }
+
+  var t = 6, raf=0, running=false, last=0, inView=true;
+  function frame(now){ var dt=Math.min(0.05,(now-last)/1000)||0; last=now; t+=dt; update(dt,t); draw(t); raf=requestAnimationFrame(frame); }
+  function start(){ if(running||RM.matches||document.hidden||!inView) return; running=true; last=performance.now(); raf=requestAnimationFrame(frame); }
+  function stop(){ running=false; cancelAnimationFrame(raf); }
+  document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+  var onRM = function(){ if(RM.matches){ stop(); draw(t); } else start(); };
+  if(RM.addEventListener) RM.addEventListener('change', onRM); else if(RM.addListener) RM.addListener(onRM);
+  if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ inView=es[0].isIntersecting; inView?start():stop(); }).observe(stage); }
+  if('ResizeObserver' in window){ new ResizeObserver(function(){ layout(); draw(t); }).observe(stage); }
+  else window.addEventListener('resize', function(){ layout(); draw(t); });
+  layout(); renderTopo(t); draw(t); start();
+})();
+</script>
+</body>
+</html>

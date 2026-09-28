@@ -1,0 +1,23 @@
+---
+// /docs/quickstart/<slug>: the four quickstarts. Every code block is executed in CI by
+// tools/doc-snippets/run.py (in-process platform, or staging when configured).
+import DocsShell from '../../../components/DocsShell.astro';
+import DocSections from '../../../components/DocSections.astro';
+import { quickstarts } from '../../../lib/docs.ts';
+import DocsJsonLd from '../../../components/DocsJsonLd.astro';
+
+export function getStaticPaths() {
+  return quickstarts.map((q) => ({ params: { slug: q.slug }, props: { q } }));
+}
+const { q } = Astro.props;
+const i = quickstarts.findIndex((x) => x.slug === q.slug);
+const next = quickstarts[i + 1];
+---
+<DocsShell title={q.meta.title} description={q.meta.description} eyebrow={q.eyebrow} heading={q.heading} lede={q.lede} status={q.status}>
+  <DocsJsonLd title={q.meta.title} description={q.meta.description} path={`/docs/quickstart/${q.slug}/`} />
+  <DocSections sections={q.sections} />
+  {next && <p class="next"><a href={`/docs/quickstart/${next.slug}/`}>{next.eyebrow}: {next.navLabel}</a></p>}
+</DocsShell>
+<style>
+  .next { margin-top: 28px; }
+</style>

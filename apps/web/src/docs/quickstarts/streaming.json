@@ -1,0 +1,90 @@
+{
+  "order": 3,
+  "meta": {
+    "title": "Quickstart: streaming · {brand}",
+    "description": "Stream samples from a lab PC to the platform through the encrypted write-ahead buffer."
+  },
+  "navLabel": "Streaming",
+  "eyebrow": "Quickstart 3",
+  "heading": "Stream from a <em>lab PC.</em>",
+  "lede": "Samples go into an encrypted buffer on disk first and are sent from there. A slow or unreachable network never stops acquisition; after a disconnect the SDK resumes from what the server has stored.",
+  "sections": [
+    {
+      "id": "device",
+      "heading": "Register the device key",
+      "body": [
+        "The device signs every chunk. The private key is generated inside the SDK core and cannot be exported; on Windows it can be kept sealed by the operating system with DeviceKey.sealed(path). Only the public key is sent."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "import numpy as np",
+          "import {pkg} as nf",
+          "from {pkg} import streaming",
+          "",
+          "key = streaming.DeviceKey.generate()",
+          "device_id = streaming.register_device(\"lab-pc-1\", key)"
+        ]
+      }
+    },
+    {
+      "id": "open",
+      "heading": "Open a stream",
+      "body": [
+        "Streams carry the data direction device to platform only; nothing is ever sent to acquisition hardware.",
+        "The SDK cuts and signs chunks by time, using the sampling rate you register: chunk_ms sets the chunk length (default 100 ms, minimum 20 ms, so a 30 kHz stream is never signed per sample). The last, shorter chunk is written when you drain, and it ends the stream."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "channels = [{\"name\": f\"EEG{i:02d}\", \"modality\": \"EEG\", \"units\": \"uV\"} for i in range(8)]",
+          "stream = streaming.open_stream(",
+          "    device_id=device_id, key=key, sfreq=250.0, channels=channels,",
+          "    chunk_ms=100.0, wal_dir=\"nf-wal\", synthetic=True,",
+          ")"
+        ]
+      }
+    },
+    {
+      "id": "push",
+      "heading": "Push samples with their timestamps",
+      "body": [
+        "Each sample keeps its original timestamp. Clock offsets are stored next to the samples exactly as measured; corrections are separate derived data."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "rng = np.random.default_rng(0)",
+          "t0 = 1000.0",
+          "stream.add_clock_offset(t0, 0.0)",
+          "for block in range(10):",
+          "    samples = rng.normal(0.0, 10.0, (25, 8)).astype(np.float32)   # demo data",
+          "    stamps = t0 + (block * 25 + np.arange(25)) / 250.0",
+          "    stream.push(samples, stamps)"
+        ]
+      }
+    },
+    {
+      "id": "finish",
+      "heading": "Drain and close",
+      "body": [
+        "drain waits until the server has acknowledged every buffered chunk; acknowledged chunks are deleted from the buffer. finish closes the stream on the server."
+      ],
+      "code": {
+        "language": "python",
+        "lines": [
+          "assert stream.drain(timeout=60)",
+          "print(stream.stats[\"sender\"][\"chunks_acked\"], \"chunks stored\")",
+          "print(stream.finish()[\"state\"])"
+        ]
+      }
+    },
+    {
+      "id": "lsl",
+      "heading": "From an LSL stream",
+      "body": [
+        "{pkg}.lsl.LslInlet reads an existing LSL stream (inlet only) and captures LSL clock offsets with their reported uncertainty. Pass it to streaming.run_acquisition together with a stream. This path runs in CI with a test outlet; it is not part of this quickstart because it needs an LSL source."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NeuroForge Bio: Pitch Deck (DRAFT)</title>
+<meta name="description" content="DRAFT investor deck for NeuroForge Bio. Pre-product. All figures are ESTIMATES. Not sent to anyone.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F9FB; --surface:#FFFFFF; --soft:#EEF3F7; --tint:#E7F3F4;
+  --ink:#0B2540; --muted:#4A5B6E; --line:#DDE4EC;
+  --accent:#0E7C86; --accent-ink:#0A5F67; --sec:#5B8DEF;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
+  --s:.5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:#DCE3EA;color:var(--ink);font:400 20px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3,p,ul,ol{margin:0}
+h1{font-weight:300;font-size:92px;line-height:1.02;letter-spacing:-.025em}
+h2{font-weight:400;font-size:44px;line-height:1.12;letter-spacing:-.018em;max-width:40ch}
+h3{font-weight:500;font-size:22px;line-height:1.3}
+ul,ol{padding-left:1.2em}
+li{margin:.18em 0}
+b,strong{font-weight:600}
+.mono{font-family:var(--mono)}
+.label{font:500 14px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.label .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:10px;vertical-align:1px}
+.muted{color:var(--muted)}
+.accent{color:var(--accent-ink)}
+.small{font-size:16px;line-height:1.45}
+.xs{font-size:14px;line-height:1.4}
+.cite{font:400 13.5px/1.45 var(--mono);color:var(--muted)}
+.tag{display:inline-block;font:500 12.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border:1px solid var(--line);border-radius:4px;color:var(--muted);background:var(--surface);white-space:nowrap}
+.tag.planned{color:var(--accent-ink);border-color:#A9D3D6;background:var(--tint)}
+.tag.roadmap{color:#2F4E8F;border-color:#C5D6F7;background:#F1F5FD}
+.tag.est{color:#7A4B00;border-color:#EBCB8B;background:#FFF8E8}
+.tag.warn{color:#8A2A2A;border-color:#EBC1C1;background:#FDF3F3}
+
+/* ------- stage (desktop / presentation) ------- */
+#viewport{position:fixed;inset:0 0 48px 0;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform:translate(-50%,-50%) scale(var(--s));transform-origin:center center;box-shadow:0 10px 40px rgba(11,37,64,.18)}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--bg);padding:52px 72px 0;opacity:0;visibility:hidden;transition:opacity .25s ease;overflow:hidden}
+.slide.active{opacity:1;visibility:visible}
+.slide::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(var(--line) 1px,transparent 1px) 0 0/100% 64px,
+  linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/64px 100%;opacity:.35;
+  -webkit-mask-image:linear-gradient(180deg,#000 0,transparent 30%);mask-image:linear-gradient(180deg,#000 0,transparent 30%)}
+.slide > *{position:relative}
+.sh{display:flex;justify-content:space-between;align-items:center;gap:24px;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.sh .tags{display:flex;gap:8px;flex-wrap:wrap}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:22px}
+.sf{display:flex;justify-content:space-between;align-items:center;gap:24px;border-top:1px solid var(--line);margin-top:18px;padding:12px 0 16px;font:400 13px/1.4 var(--mono);color:var(--muted)}
+.sf .src{flex:1;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sf .n{white-space:nowrap;color:var(--ink)}
+.brandline{white-space:nowrap}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px 22px}
+.card.tint{background:var(--tint);border-color:#C6E2E4}
+.card.soft{background:var(--soft)}
+.card .k{font:500 13px/1.3 var(--mono);color:var(--accent-ink);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.callout{border-left:3px solid var(--accent);padding:10px 18px;background:var(--surface)}
+.callout.warn{border-left-color:#B54747}
+
+table{border-collapse:collapse;width:100%;background:var(--surface);border:1px solid var(--line);font-size:17px;line-height:1.38}
+th,td{text-align:left;vertical-align:top;padding:9px 14px;border-bottom:1px solid var(--line)}
+th{font:500 12.5px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--soft)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td .cite{display:block;margin-top:2px}
+.tw{overflow-x:auto}
+
+svg text{font-family:var(--sans)}
+svg .m{font-family:var(--mono)}
+
+/* title slide */
+.s-title .body{justify-content:center;gap:28px}
+.s-title .lede{font-size:30px;line-height:1.35;color:var(--ink);font-weight:300;max-width:34ch}
+.s-title .fine{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.big-stat{font:300 64px/1 var(--sans);letter-spacing:-.02em}
+
+/* controls */
+.controls{position:fixed;left:0;right:0;bottom:0;height:48px;display:flex;align-items:center;justify-content:center;gap:14px;background:var(--surface);border-top:1px solid var(--line);font:500 14px var(--mono);color:var(--ink);z-index:10}
+.controls button{font:500 14px var(--mono);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px 14px;cursor:pointer}
+.controls button:hover{border-color:var(--ink)}
+.controls .hint{color:var(--muted);font-weight:400;font-size:12.5px}
+.zone{position:fixed;top:0;bottom:48px;width:14%;background:transparent;border:0;padding:0;cursor:pointer;z-index:5}
+.zone:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
+.zone.prev{left:0;cursor:w-resize}.zone.next{right:0;cursor:e-resize}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* ------- phone / narrow: stacked, readable ------- */
+@media screen and (max-width:760px){
+  body{overflow:auto;background:var(--bg);font-size:16px}
+  #viewport{position:static;overflow:visible}
+  #stage{position:static;width:auto;height:auto;transform:none;box-shadow:none}
+  .slide{position:relative;inset:auto;opacity:1;visibility:visible;padding:28px 16px 0;border-bottom:6px solid var(--line);min-height:0}
+  .controls,.zone{display:none}
+  h1{font-size:42px}
+  h2{font-size:26px}
+  h3{font-size:18px}
+  .s-title .lede{font-size:20px}
+  .big-stat{font-size:40px}
+  .grid2,.grid3,.grid4,.s-title .fine{grid-template-columns:1fr!important;gap:14px}
+  .split{grid-template-columns:1fr!important}
+  table{font-size:14px}
+  th,td{padding:7px 9px}
+  .sh{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:18px}
+  .sf{flex-direction:column;align-items:flex-start;gap:4px}
+  .sf .src{text-align:left;white-space:normal}
+  .small{font-size:14.5px}
+  svg{max-width:100%;height:auto}
+  .brandline{white-space:normal}
+  .slide,.body,.card,.split > *,.grid2 > *,.grid3 > *,.grid4 > *{min-width:0;max-width:100%}
+  .body{overflow-wrap:anywhere}
+  html,body{width:100%;overflow-x:hidden}
+}
+
+/* ------- print: one slide per page ------- */
+@media print{
+  @page{size:1600px 900px;margin:0}
+  html,body{height:auto;overflow:visible;background:#fff}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .controls,.zone{display:none!important}
+  #viewport{position:static;overflow:visible}
+  #stage{position:static;transform:none!important;width:1600px;height:auto;box-shadow:none}
+  .slide{position:relative;inset:auto;width:1600px;height:900px;opacity:1!important;visibility:visible!important;break-after:page;page-break-after:always;transition:none}
+  .slide:last-child{break-after:auto;page-break-after:auto}
+}
+</style>
+</head>
+<body>
+<div id="viewport">
+<main id="stage" aria-roledescription="slide deck" aria-label="NeuroForge Bio pitch deck, draft">
+
+<!-- 1 TITLE -->
+<section class="slide s-title" id="s1" aria-label="Slide 1 of 17: Title">
+  <div class="sh">
+    <span class="label"><span class="dot"></span>Investor pitch · draft for owner review</span>
+    <span class="tags"><span class="tag warn">Not sent to anyone</span><span class="tag">Pre-product · 2026</span></span>
+  </div>
+  <div class="body">
+    <div style="display:flex;align-items:center;gap:18px">
+      <svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><rect x="1" y="1" width="54" height="54" rx="8" fill="#FFFFFF" stroke="#DDE4EC"/><path d="M8 30h9l4-11 6 20 5-14 3 5h13" fill="none" stroke="#0E7C86" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      <span class="label" style="font-size:16px">NeuroForge Bio<sup>*</sup></span>
+    </div>
+    <h1>NeuroForge Bio</h1>
+    <p class="lede">Versioned, comparable pipelines and neural-data governance, from electrode to model.</p>
+    <p class="muted" style="font-size:22px">The evidence and governance layer for neurotechnology teams. Pre-product, 2026.</p>
+    <p style="font-size:22px"><b>Marius Carlsson</b>, founder</p>
+    <div class="fine">
+      <div class="card soft small"><div class="k">Status</div>Pre-product. Nothing described here is built; every capability is <i>designed</i>, <i>planned</i> or <i>roadmap</i>. No customers, LOIs, pilots, partners or users.</div>
+      <div class="card soft small"><div class="k">Figures</div>Every financial figure is an <b>ESTIMATE</b> from <span class="mono">investor\financial-model.py</span>. Every price is an ESTIMATE until customer discovery validates it.</div>
+      <div class="card soft small"><div class="k">Fine print</div><sup>*</sup>Name subject to <b>pending trademark clearance</b> (Neuroforge GmbH &amp; Co. KG operates in Germany). <b>Not a medical device:</b> non-device R&amp;D software; no diagnostic or therapeutic claims.</div>
+    </div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">market\names.md · market\regulation.md §4 · grades A peer-reviewed/law · B press · C preprint · D vendor</span><span class="n">1 / 17</span></div>
+</section>
+
+<!-- 2 PROBLEM -->
+<section class="slide" id="s2" aria-label="Slide 2 of 17: Problem">
+  <div class="sh"><span class="label"><span class="dot"></span>02 · Problem</span><span class="tags"><span class="tag">Sources graded A–D</span></span></div>
+  <div class="body">
+    <h2>Neurotech teams cannot easily show <span class="accent">what was done to their data</span>, or <span class="accent">what they are allowed to do with it</span>.</h2>
+    <div class="grid2" style="gap:20px">
+      <div class="card"><div class="k">1 · Results depend on unrecorded preprocessing</div>
+        <ul class="small">
+          <li>All artifact-correction steps <i>reduced</i> decoding performance; higher high-pass cutoffs increased it. <span class="cite">Kessler et al., Commun Biol 2025, doi:10.1038/s42003-025-08464-3 (A)</span></li>
+          <li>Across 43 pipelines: "no single best pipeline". <span class="cite">Huang et al., Psychophysiology 2025, doi:10.1111/psyp.70197 (A)</span></li>
+          <li>Only <b>20.9%</b> of 129 EEG-BCI papers made code or pipelines available. <span class="cite">Peksa et al., Sensors 2026, doi:10.3390/s26175562 (A)</span></li>
+        </ul></div>
+      <div class="card"><div class="k">2 · Neural data is regulated, and the rules conflict</div>
+        <p class="small">Colorado and California cover central <i>and</i> peripheral nervous-system data; Connecticut covers the central nervous system only; California excludes data inferred from non-neural information. One EMG or EEG recording can be "neural data" in one state and not in the next.</p>
+        <p class="cite" style="margin-top:6px">market\regulation.md §1 (A)</p></div>
+      <div class="card"><div class="k">3 · Consent withdrawal must reach models</div>
+        <p class="small">Withdrawal has to reach derivatives and trained models. No neural-specific tool for this was found.</p>
+        <p class="cite" style="margin-top:6px">market\landscape.md §3</p></div>
+      <div class="card"><div class="k">4 · Clinical-stage teams need documented evidence</div>
+        <p class="small">FDA says implanted BCIs "should generally address the recommendations for an Enhanced Documentation Level".</p>
+        <p class="cite" style="margin-top:6px">FDA BCI guidance, 2021, with an updated note; market\regulation.md §4 (A)</p></div>
+    </div>
+    <div class="callout small"><b>Not yet measured:</b> how many engineering weeks startups lose to this. That is discovery question #1 (market\validation.md #1, verdict WEAK).</div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">Kessler 2025 · Huang 2025 · Peksa 2026 · regulation.md §1, §4 · landscape.md §3</span><span class="n">2 / 17</span></div>
+</section>
+
+<!-- 3 WHY NOW -->
+<section class="slide" id="s3" aria-label="Slide 3 of 17: Why now">
+  <div class="sh"><span class="label"><span class="dot"></span>03 · Why now</span><span class="tags"><span class="tag">Sources graded A–D</span></span></div>
+  <div class="body">
+    <h2>Laws are in force, implants are entering trials, and capital is flowing.</h2>
+    <div class="tw"><table>
+      <thead><tr><th style="width:18%">Driver</th><th>Evidence</th><th class="num" style="width:9%">Grade</th></tr></thead>
+      <tbody>
+        <tr><td><b>State neural-data laws are in force</b></td><td>CO HB24-1058 (effective 7 Aug 2024); CA SB 1223 (Ch. 887, 28 Sep 2024); MT SB 163 (May 2025, via a peer-reviewed review; statute text not yet opened); CT PA 25-113 (CTDPA sections effective <b>1 Jul 2026</b>)</td><td class="num">A</td></tr>
+        <tr><td><b>Federal attention</b></td><td>MIND Act introduced Sep 2025; it directs an FTC study (Young, Simon &amp; Evans, <i>Neurology</i> 2026)</td><td class="num">A</td></tr>
+        <tr><td><b>EU restrictions</b></td><td>AI Act Art. 5(1)(f) bans emotion inference in workplace and education (except medical or safety reasons), applicable from 2 Feb 2025</td><td class="num">B</td></tr>
+        <tr><td><b>Implants are entering trials</b></td><td>Paradromics IDE approved Nov 2025 and first implant Jun 2026; Precision 510(k) Apr 2025; Science's PRIMA EU launch Jul 2026 (market\landscape.md §1)</td><td class="num">B / D</td></tr>
+        <tr><td><b>Capital is flowing to the sector</b></td><td>Neurotech devices received $1.2B of VC in 2024, "more than any other type of medical device" (<i>Sci Adv</i> 2026, citing HSBC, A). HSBC 1H 2026: "Neuro remained the strongest medtech investment category" (B)</td><td class="num">A / B</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">Sources for all rows: market\regulation.md · market\sizing.md §1 · market\landscape.md §1</span><span class="n">3 / 17</span></div>
+</section>
+
+<!-- 4 PRODUCT -->
+<section class="slide" id="s4" aria-label="Slide 4 of 17: Product">
+  <div class="sh"><span class="label"><span class="dot"></span>04 · Product</span><span class="tags"><span class="tag planned">Planned</span><span class="tag roadmap">Roadmap</span><span class="tag">Nothing built yet</span></span></div>
+  <div class="body" style="gap:18px">
+    <h2>One lineage graph over neural data, pipelines and models, with three products built on it.</h2>
+    <div class="tw"><table>
+      <thead><tr><th style="width:22%">Product</th><th>What it does</th><th style="width:21%">Status</th></tr></thead>
+      <tbody>
+        <tr><td><b>Open Core SDK</b><br><span class="xs muted">Apache-2.0, per D6</span></td><td>Python SDK, converters, validators, local provenance; integrates MNE, BIDS, NWB, LSL and BrainFlow rather than replacing them</td><td><span class="tag planned">Planned</span> months 0–3</td></tr>
+        <tr><td><b>Multiverse audit</b></td><td>Runs a grid of preprocessing pipelines and reports how results shift, with every parameter recorded</td><td><span class="tag planned">Planned</span> months 0–3<br><span class="xs muted">on public DANDI/OpenNeuro data</span></td></tr>
+        <tr><td><b>Consent &amp; Deletion Ledger</b></td><td>Per-channel jurisdiction classification (CO/CA/CT/MT and EU flags); versioned opt-in consent; withdrawal propagated to raw data, derivatives and trained models; signed deletion certificate</td><td><span class="tag planned">Planned</span> months 3–9</td></tr>
+        <tr><td><b>FDA Evidence Kit + latency harness</b></td><td>Traceability, SBOM and OTS/SOUP documentation scaffolds from the same graph; reproducible end-to-end timing reports</td><td><span class="tag roadmap">Roadmap</span> months 9–18</td></tr>
+        <tr><td><b>Governed model registry</b></td><td>Model provenance with use-restriction flags (EU AI Act 5(1)(f))</td><td><span class="tag roadmap">Roadmap</span> only on customer pull</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout warn small"><b>What we do not claim:</b> certified unlearning, HIPAA compliance, SOC 2, or "automated cleaning". The deletion guarantee is "retrained without the subject, with a provenance proof" (BLUEPRINT.md §8.4). Legal rules ship with a <span class="mono">review_status</span> and need counsel review before customers rely on them.</div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">market\new-ideas.md (top 5) · architecture\BLUEPRINT.md §0, §8.4</span><span class="n">4 / 17</span></div>
+</section>
+
+<!-- 5 HOW IT WORKS -->
+<section class="slide" id="s5" aria-label="Slide 5 of 17: How it works">
+  <div class="sh"><span class="label"><span class="dot"></span>05 · How it works</span><span class="tags"><span class="tag">Designed architecture</span></span></div>
+  <div class="body">
+    <h2>Everything reads from, and writes to, one provenance graph.</h2>
+    <div class="split" style="display:grid;grid-template-columns:1.45fr 1fr;gap:36px;align-items:start">
+      <svg viewBox="0 0 900 470" role="img" aria-labelledby="s5t" style="width:100%;height:auto;background:#FFFFFF;border:1px solid #DDE4EC;border-radius:6px">
+        <title id="s5t">Diagram: devices and files flow into ingest via open readers, then into a provenance graph stored in Postgres, which feeds the Consent and Deletion Ledger, the Multiverse audit and the FDA Evidence Kit.</title>
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0A5F67"/></marker></defs>
+        <rect x="30" y="28" width="220" height="64" rx="6" fill="#EEF3F7" stroke="#DDE4EC"/>
+        <text x="140" y="66" text-anchor="middle" font-size="19" fill="#0B2540">devices / files</text>
+        <line x1="252" y1="60" x2="322" y2="60" stroke="#0A5F67" stroke-width="2" marker-end="url(#ah)"/>
+        <rect x="326" y="28" width="544" height="64" rx="6" fill="#FFFFFF" stroke="#0B2540"/>
+        <text x="346" y="55" font-size="19" fill="#0B2540" font-weight="500">ingest</text>
+        <text x="346" y="80" font-size="15" class="m" fill="#4A5B6E">open readers: MNE · pynwb · pyxdf · liblsl</text>
+        <line x1="598" y1="94" x2="598" y2="132" stroke="#0A5F67" stroke-width="2" marker-end="url(#ah)"/>
+        <rect x="30" y="136" width="840" height="150" rx="8" fill="#E7F3F4" stroke="#0E7C86" stroke-width="2"/>
+        <text x="50" y="166" font-size="20" fill="#0A5F67" font-weight="600">provenance graph</text>
+        <text x="222" y="166" font-size="15" class="m" fill="#4A5B6E">(Postgres)</text>
+        <line x1="92" y1="228" x2="808" y2="228" stroke="#0E7C86" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <g font-size="14.5" class="m" fill="#0B2540" text-anchor="middle">
+          <rect x="44" y="210" width="98" height="36" rx="4" fill="#FFFFFF" stroke="#0E7C86"/><text x="93" y="233">subjects</text>
+          <rect x="160" y="210" width="112" height="36" rx="4" fill="#FFFFFF" stroke="#0E7C86"/><text x="216" y="233">recordings</text>
+          <rect x="290" y="210" width="98" height="36" rx="4" fill="#FFFFFF" stroke="#0E7C86"/><text x="339" y="233">channels</text>
+          <rect x="406" y="210" width="130" height="36" rx="4" fill="#FFFFFF" stroke="#0E7C86"/><text x="471" y="233">pipeline runs</text>
+          <rect x="554" y="210" width="98" height="36" rx="4" fill="#FFFFFF" stroke="#0E7C86"/><text x="603" y="233">artifacts</text>
+          <rect x="670" y="210" width="90" height="36" rx="4" fill="#FFFFFF" stroke="#0E7C86"/><text x="715" y="233">datasets</text>
+          <rect x="778" y="210" width="80" height="36" rx="4" fill="#FFFFFF" stroke="#0E7C86"/><text x="818" y="233">models</text>
+        </g>
+        <text x="50" y="272" font-size="13.5" class="m" fill="#4A5B6E">every read, pipeline run and training job passes one consent-policy check</text>
+        <line x1="170" y1="288" x2="170" y2="346" stroke="#0A5F67" stroke-width="2" marker-end="url(#ah)"/>
+        <line x1="450" y1="288" x2="450" y2="346" stroke="#0A5F67" stroke-width="2" marker-end="url(#ah)"/>
+        <line x1="730" y1="288" x2="730" y2="346" stroke="#0A5F67" stroke-width="2" marker-end="url(#ah)"/>
+        <g>
+          <rect x="30" y="350" width="280" height="96" rx="6" fill="#FFFFFF" stroke="#DDE4EC"/>
+          <text x="46" y="380" font-size="18" fill="#0B2540" font-weight="500">Consent &amp; Deletion Ledger</text>
+          <text x="46" y="404" font-size="15" fill="#4A5B6E">governance</text>
+          <text x="46" y="431" font-size="12.5" class="m" fill="#0A5F67">PLANNED · MONTHS 3–9</text>
+          <rect x="316" y="350" width="268" height="96" rx="6" fill="#FFFFFF" stroke="#DDE4EC"/>
+          <text x="332" y="380" font-size="18" fill="#0B2540" font-weight="500">Multiverse audit</text>
+          <text x="332" y="404" font-size="15" fill="#4A5B6E">reproducibility</text>
+          <text x="332" y="431" font-size="12.5" class="m" fill="#0A5F67">PLANNED · MONTHS 0–3</text>
+          <rect x="590" y="350" width="280" height="96" rx="6" fill="#FFFFFF" stroke="#DDE4EC"/>
+          <text x="606" y="380" font-size="18" fill="#0B2540" font-weight="500">FDA Evidence Kit</text>
+          <text x="606" y="404" font-size="15" fill="#4A5B6E">regulated evidence</text>
+          <text x="606" y="431" font-size="12.5" class="m" fill="#2F4E8F">ROADMAP · MONTHS 9–18</text>
+        </g>
+      </svg>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="card"><div class="k">Storage</div><p class="small">Signals are stored as chunked Zarr arrays on S3-compatible storage. Commodity storage is deliberate: low-latency storage is not a differentiator (market\validation.md #7).</p></div>
+        <div class="card"><div class="k">One core</div><p class="small">One Rust core (<span class="mono">nf-core</span>) sits behind the Python and C/C++ SDKs (D7).</p></div>
+        <div class="card tint"><div class="k">One policy check</div><p class="small">Every read, pipeline run and training job passes one consent-policy check (BLUEPRINT.md §8.3).</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">architecture\BLUEPRINT.md §8.3 · market\validation.md #7 · DECISIONS D7</span><span class="n">5 / 17</span></div>
+</section>
+
+<!-- 6 MARKET -->
+<section class="slide" id="s6" aria-label="Slide 6 of 17: Market">
+  <div class="sh"><span class="label"><span class="dot"></span>06 · Market</span><span class="tags"><span class="tag est">All figures ESTIMATE</span></span></div>
+  <div class="body" style="gap:18px">
+    <h2>The money sits with <span class="accent">regulated buyers</span>.</h2>
+    <div class="split" style="display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:start">
+      <div>
+        <svg viewBox="0 0 820 300" role="img" aria-labelledby="s6t" style="width:100%;height:auto;background:#FFFFFF;border:1px solid #DDE4EC;border-radius:6px">
+          <title id="s6t">ESTIMATE, log scale. TAM $0.1B to $1.1B, top-down, not decision-grade. SAM $10M to $86M ARR, bottom-up. SOM about $2.4M ARR and 108 logos three years after launch.</title>
+          <defs><pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="8" stroke="#5B8DEF" stroke-width="2"/></pattern></defs>
+          <text x="800" y="24" text-anchor="end" font-size="12.5" class="m" fill="#7A4B00">ESTIMATE · LOG SCALE · USD</text>
+          <!-- gridlines at 1M,10M,100M,1B -->
+          <g stroke="#DDE4EC"><line x1="120" y1="36" x2="120" y2="250"/><line x1="319.9" y1="36" x2="319.9" y2="250"/><line x1="519.9" y1="36" x2="519.9" y2="250"/><line x1="719.8" y1="36" x2="719.8" y2="250"/></g>
+          <g font-size="13" class="m" fill="#4A5B6E" text-anchor="middle"><text x="120" y="272">$1M</text><text x="319.9" y="272">$10M</text><text x="519.9" y="272">$100M</text><text x="719.8" y="272">$1B</text></g>
+          <!-- TAM -->
+          <text x="20" y="78" font-size="17" font-weight="600" fill="#0B2540">TAM</text>
+          <rect x="519.9" y="56" width="208.2" height="32" fill="url(#hatch)" stroke="#5B8DEF" stroke-dasharray="5 3"/>
+          <text x="512" y="78" text-anchor="end" font-size="14" fill="#0B2540">$0.1B–$1.1B · <tspan font-weight="600">not decision-grade</tspan></text>
+          <!-- SAM -->
+          <text x="20" y="148" font-size="17" font-weight="600" fill="#0B2540">SAM</text>
+          <rect x="319.9" y="126" width="186.9" height="32" fill="#0E7C86"/>
+          <text x="516" y="148" font-size="14" fill="#0B2540">$10M–$86M ARR</text>
+          <!-- SOM -->
+          <text x="20" y="218" font-size="17" font-weight="600" fill="#0B2540">SOM</text>
+          <line x1="196" y1="196" x2="196" y2="228" stroke="#0A5F67" stroke-width="3"/>
+          <circle cx="196" cy="212" r="7" fill="#0A5F67"/>
+          <text x="210" y="217" font-size="14" fill="#0B2540">~$2.4M ARR, 108 logos (yr 3 after launch)</text>
+        </svg>
+        <div class="tw" style="margin-top:14px"><table>
+          <thead><tr><th>Layer</th><th>Method</th></tr></thead>
+          <tbody>
+            <tr><td><b>TAM</b> all neural-data software</td><td>Top-down from analyst figures that disagree by about 11x. <b>Not decision-grade.</b></td></tr>
+            <tr><td><b>SAM</b> reachable with this product</td><td>Bottom-up: segment count × ACV across four segments</td></tr>
+            <tr><td><b>SOM</b> 3 years after launch</td><td>Bottom-up logo count</td></tr>
+          </tbody></table></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="tw"><table>
+          <thead><tr><th>Segment (ESTIMATE)</th><th class="num">Count</th><th class="num">ACV</th></tr></thead>
+          <tbody>
+            <tr><td><b>S1</b> clinical-stage and implant neurotech</td><td class="num">80–150</td><td class="num">$50k–$150k</td></tr>
+            <tr><td><b>S2</b> consumer neurotech under state laws</td><td class="num">100–300</td><td class="num">$10k–$50k</td></tr>
+            <tr><td><b>S3</b> research labs, paid institutional plans <span class="xs muted">(10–20% paying)</span></td><td class="num">900–1,750</td><td class="num">$2k–$10k</td></tr>
+            <tr><td><b>S4</b> CNS pharma and CROs with EEG endpoints</td><td class="num">50–150</td><td class="num">$100k–$300k</td></tr>
+          </tbody></table></div>
+        <div class="callout small"><b>Honest read:</b> "picks and shovels for BCI hardware makers" alone is a small market. S1 alone is $4M–$22M. S1 plus S4 make up about <b>70–80% of SAM</b> (market\sizing.md §4).</div>
+      </div>
+    </div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">market\sizing.md §3, §4</span><span class="n">6 / 17</span></div>
+</section>
+
+<!-- 7 BUSINESS MODEL -->
+<section class="slide" id="s7" aria-label="Slide 7 of 17: Business model">
+  <div class="sh"><span class="label"><span class="dot"></span>07 · Business model</span><span class="tags"><span class="tag est">All prices ESTIMATE</span></span></div>
+  <div class="body" style="gap:18px">
+    <h2>Open core for distribution, with a paid hosted platform.</h2>
+    <p class="muted" style="font-size:19px;margin-top:-6px">Value metric: <b style="color:var(--ink)">data subjects plus devices under management</b>, not GB.</p>
+    <div class="split" style="display:grid;grid-template-columns:1.5fr 1fr;gap:28px;align-items:start">
+      <div class="tw"><table>
+        <thead><tr><th>Tier</th><th>Buyer</th><th class="num">Price (ESTIMATE)</th></tr></thead>
+        <tbody>
+          <tr><td><b>Open Core</b></td><td>Individual researchers</td><td class="num">$0</td></tr>
+          <tr><td><b>Lab / Institution</b></td><td>Labs, core facilities (can be budgeted under the NIH DMS policy)</td><td class="num">$3k–$10k/yr</td></tr>
+          <tr><td><b>Startup</b></td><td>Neurotech startups with ≤$2M raised</td><td class="num">$300–$800/mo</td></tr>
+          <tr><td><b>Growth</b></td><td>Series A–C and clinical-stage neurotech</td><td class="num">$50k–$150k/yr</td></tr>
+          <tr><td><b>Enterprise / Pharma</b></td><td>CNS sponsors, CROs, large device firms</td><td class="num">$100k–$300k+/yr</td></tr>
+          <tr><td><b>Services</b></td><td>Multiverse audit, timing report, conversion</td><td class="num">$5k–$40k / engagement</td></tr>
+        </tbody></table></div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="card tint"><div class="k">Model gross margin · base · ESTIMATE</div>
+          <div style="display:flex;align-items:baseline;gap:14px"><span class="big-stat">52%</span><span class="muted">year 2</span><span class="mono accent">→</span><span class="big-stat">74%</span><span class="muted">year 5</span></div></div>
+        <div class="card"><div class="k">Comparables · all grade D (vendor pages)</div>
+          <ul class="small">
+            <li>NeuroPype startup $79–$99/mo</li>
+            <li>EmotivPRO $1,068–$2,689/yr</li>
+            <li>Aptible HIPAA Production $499/mo</li>
+            <li>W&amp;B gates HIPAA to Enterprise</li>
+            <li>Flywheel quote-only in regulated imaging</li>
+          </ul></div>
+      </div>
+    </div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">investor\PRICING.md · investor\financial-model.py</span><span class="n">7 / 17</span></div>
+</section>
+
+<!-- 8 GTM -->
+<section class="slide" id="s8" aria-label="Slide 8 of 17: Go-to-market">
+  <div class="sh"><span class="label"><span class="dot"></span>08 · Go-to-market</span><span class="tags"><span class="tag planned">Planned sequence</span></span></div>
+  <div class="body" style="gap:18px">
+    <h2>Earn credibility in public first, then sell to regulated buyers.</h2>
+    <div class="grid3">
+      <div class="card"><div class="k">Months 0–3 · credibility</div><p class="small">No customers needed. Release the open-core SDK and validator. Run the multiverse audit on public DANDI/OpenNeuro data and publish the results.</p></div>
+      <div class="card"><div class="k">Months 3–9</div><p class="small">Ledger MVP and the Startup tier. Recruit <b>5 design partners</b> at 50% off Growth for 12 months, in exchange for case studies.</p></div>
+      <div class="card"><div class="k">Months 9–18</div><p class="small">FDA Evidence Kit and latency harness; Growth tier; first pharma pilot.</p></div>
+    </div>
+    <div class="grid4">
+      <div class="card soft"><div class="k">Integrations</div><p class="small">Where users already are: MNE (308k downloads/month), pynwb (108k), pylsl (34k).</p><p class="cite" style="margin-top:6px">pypistats, Sep 2026</p></div>
+      <div class="card soft"><div class="k">Content</div><p class="small">A free neural-data law tracker (not legal advice); peer-reviewed benchmark papers.</p></div>
+      <div class="card soft"><div class="k">Events</div><p class="small">International BCI Society Meeting, 7–10 Jun 2027, Šibenik; SfN.</p></div>
+      <div class="card soft"><div class="k">Partners (targets)</div><p class="small">CatalystNeuro for NWB conversion (partner, do not compete); the OpenBCI/BrainFlow ecosystem.</p></div>
+    </div>
+    <div class="callout small"><b>First step:</b> the owner runs 15–20 discovery interviews before building paid features. Full plan: marketing\MARKETING-PLAN.md.</div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">market\pricing-and-gtm.md §5 · marketing\MARKETING-PLAN.md · pypistats Sep 2026</span><span class="n">8 / 17</span></div>
+</section>
+
+<!-- 9 COMPETITION -->
+<section class="slide" id="s9" aria-label="Slide 9 of 17: Competition">
+  <div class="sh"><span class="label"><span class="dot"></span>09 · Competition</span><span class="tags"><span class="tag">market\landscape.md §2</span></span></div>
+  <div class="body" style="gap:16px">
+    <h2>Everyone stops short of neural-specific governance.</h2>
+    <div class="tw"><table style="font-size:16.5px">
+      <thead><tr><th style="width:22%">Category</th><th style="width:30%">Examples</th><th>Where they stop</th></tr></thead>
+      <tbody>
+        <tr><td><b>Open-source analysis libraries</b></td><td>MNE, EEGLAB, braindecode, pyRiemann, SpikeInterface</td><td>Libraries, with no governance or provenance service</td></tr>
+        <tr><td><b>Public archives</b></td><td>DANDI, OpenNeuro, brainlife</td><td>Sharing and academic compute. Free and publicly funded, so we integrate with them</td></tr>
+        <tr><td><b>Real-time pipeline products</b></td><td>NeuroPype / NeuroScale</td><td>Closest commercial analogue (academic free, startup $79–99/mo). No neural-data governance found</td></tr>
+        <tr><td><b>Conversion services</b></td><td>CatalystNeuro (69 labs)</td><td>Consulting, not compliance-grade. A partner, not a target</td></tr>
+        <tr><td><b>Regulated data platforms</b></td><td>Flywheel</td><td>Imaging-first. Shows that pharma pays for compliance-grade research data</td></tr>
+        <tr><td><b>HIPAA cloud</b></td><td>AWS (175+ eligible services), Aptible</td><td>Commodity infrastructure, with no neural formats or neural-law mapping</td></tr>
+        <tr><td><b>Vertically integrated BCI leaders</b></td><td>Neuralink, Synchron (Chiral model)</td><td>Build their own software. <b>Not our buyers</b></td></tr>
+      </tbody></table></div>
+    <div class="callout small"><b>Whitespace:</b> neural-specific governance (consent, deletion lineage, jurisdiction mapping) and regulated evidence. "None found in this pass" does not mean none exists.</div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">market\landscape.md §2</span><span class="n">9 / 17</span></div>
+</section>
+
+<!-- 10 MOAT -->
+<section class="slide" id="s10" aria-label="Slide 10 of 17: Moat">
+  <div class="sh"><span class="label"><span class="dot"></span>10 · Moat</span><span class="tags"><span class="tag planned">All four are plans</span></span></div>
+  <div class="body">
+    <h2>What compounds, and what does not.</h2>
+    <div class="card soft small"><div class="k">Does not make a moat</div>HIPAA infrastructure (a commodity, market\validation.md #2), storage, cleaning algorithms or SDK code (open source by design).</div>
+    <div class="grid2" style="gap:18px">
+      <div class="card"><div class="k">1 · Machine-readable neural-law RuleSets</div><p class="small">Versioned, counsel-reviewed rules per jurisdiction, maintained as laws change. They also power the public law tracker. Harder to copy as more jurisdictions are added.</p></div>
+      <div class="card"><div class="k">2 · Lineage graph as system of record</div><p class="small">Once consent, pipeline runs and model versions live in one graph, the deletion certificate and the FDA evidence come from it, which creates switching cost.</p></div>
+      <div class="card"><div class="k">3 · Published reproducibility evidence</div><p class="small">Multiverse results on public datasets become citable references.</p></div>
+      <div class="card"><div class="k">4 · Trust posture</div><p class="small">Open-core code, no trackers on our own site (D9), and honest status labels.</p></div>
+    </div>
+    <div class="callout small"><b>All four are plans. None exists yet.</b></div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">market\validation.md #2 · DECISIONS D9</span><span class="n">10 / 17</span></div>
+</section>
+
+<!-- 11 TRUST AND SECURITY -->
+<section class="slide" id="s11" aria-label="Slide 11 of 17: Trust and security">
+  <div class="sh"><span class="label"><span class="dot"></span>11 · Trust and security</span><span class="tags"><span class="tag warn">Not audited or certified</span><span class="tag planned">Designed / planned</span><span class="tag roadmap">Roadmap</span></span></div>
+  <div class="body" style="gap:16px">
+    <h2>A breach cannot be undone: <span class="accent">"you cannot rotate a brain"</span>.</h2>
+    <div class="tw"><table style="font-size:16px">
+      <thead><tr><th style="width:18%">Area</th><th>Posture</th><th style="width:15%">Status</th></tr></thead>
+      <tbody>
+        <tr><td><b>Application security</b></td><td>OWASP ASVS 5.0 <b>Level 2</b> as the release gate for everything internet-facing. <b>Level 3</b> for the chapters that guard neural data (authorisation, cryptography, data protection, logging). <b>Full L3</b> for the consent ledger, deletion and key management</td><td><span class="tag planned">Designed</span></td></tr>
+        <tr><td><b>Secure development</b></td><td>NIST SSDF (SP 800-218) and IEC 81001-5-1 lifecycle for components offered as SOUP; SLSA Build L2 → L3 target; CycloneDX SBOM per release; signed artifacts</td><td><span class="tag planned">Planned</span></td></tr>
+        <tr><td><b>EU law</b></td><td>GDPR Art. 32 controls; <b>EU Cyber Resilience Act</b> readiness for the SDKs (reporting obligations have applied since 11 Sep 2026); NIS2 supplier-ready controls for customers</td><td><span class="tag planned">Designed / planned</span></td></tr>
+        <tr><td><b>Customers' device submissions</b></td><td>Evidence for FDA's premarket cybersecurity guidance (final, 3 Feb 2026) and EU MDR Annex I §17: SBOM, support levels, vulnerability status</td><td><span class="tag planned">Planned</span></td></tr>
+        <tr><td><b>Certifications</b></td><td>ISO/IEC 27001, then 27701; SOC 2 Type II when 2–3 design partners ask</td><td><span class="tag roadmap">Roadmap</span></td></tr>
+        <tr><td><b>Safety boundary</b></td><td>The platform and SDKs <b>never command stimulation or any actuator</b>. They are read-only toward acquisition hardware</td><td><span class="tag planned">Designed</span><br><span class="xs muted">a permanent rule</span></td></tr>
+      </tbody></table></div>
+    <div class="grid2" style="gap:16px">
+      <div class="callout warn small"><b>Nothing here is audited or certified.</b> Every control is <i>designed</i>, <i>planned</i> or <i>roadmap</i>.</div>
+      <div class="callout small"><i>Not legal or regulatory advice.</i> Counsel and a regulatory consultant must confirm each applicability call.</div>
+    </div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">security\STANDARDS-MAP.md (draft by the security expert) §1.1</span><span class="n">11 / 17</span></div>
+</section>
+
+<!-- 12 DATA ASSET -->
+<section class="slide" id="s12" aria-label="Slide 12 of 17: A lawful neural-data asset">
+  <div class="sh"><span class="label"><span class="dot"></span>12 · A lawful neural-data asset</span><span class="tags"><span class="tag est">Upside · not in base case</span><span class="tag warn">Risk: legal-team draft</span><span class="tag">Not legal advice</span></span></div>
+  <div class="body" style="gap:14px">
+    <h2 style="font-size:38px">Upside, not in the base case: a consented, opt-in data asset. <span class="accent">Never a data broker.</span></h2>
+    <div class="grid3" style="gap:16px;grid-template-columns:1fr 1fr 1.15fr">
+      <div class="card"><div class="k">Principles</div>
+        <ul class="xs">
+          <li><b>Customers own their data.</b> Any contribution to a NeuroForge Bio research pool is opt-in, <b>OFF by default</b>, and needs explicit consent scopes.</li>
+          <li>Proposed new consent-ledger scopes: <i>internal R&amp;D</i> and <i>future biotech/neurobiology research</i>, narrowed to nervous-system research, with REK approval per project. The <i>model training</i> scope already exists.</li>
+          <li><b>Withdrawal always works.</b> It propagates through the lineage graph into derivatives and models.</li>
+          <li><b>Never a data broker:</b> no sale of individual-level records; no insurer, employer, advertiser or law-enforcement buyers.</li>
+        </ul></div>
+      <div class="card"><div class="k">How the asset builds up</div>
+        <ul class="xs">
+          <li>Opt-in pool, in exchange for credits or discounts.</li>
+          <li>Our own REK/IRB-approved research programmes with broad consent (non-invasive EEG only, no stimulation).</li>
+          <li>Curated public datasets (OpenNeuro/DANDI, with licences checked).</li>
+          <li>Synthetic data, released only after membership-inference tests pass.</li>
+          <li>Tiered storage (S3 Standard $0.023 down to Glacier Deep Archive $0.00099 per GB-month; AWS pricing page, D).</li>
+        </ul></div>
+      <div class="card tint"><div class="k">Top revenue models · ESTIMATE, year-5 range</div>
+        <table style="border:0;font-size:14.5px;background:transparent"><tbody>
+          <tr><td style="padding:4px 0">1 · Compute-to-data / federated analysis <span class="muted">(data never leaves)</span></td><td class="num" style="padding:4px 0">$0.1M–$1.5M</td></tr>
+          <tr><td style="padding:4px 0">2 · Pharma/CRO endpoint analytics and data clean rooms</td><td class="num" style="padding:4px 0">$0.2M–$2.1M</td></tr>
+          <tr><td style="padding:4px 0">3 · Consent and provenance attestation <span class="muted">(attestation reports)</span></td><td class="num" style="padding:4px 0">$0.1M–$1.1M</td></tr>
+          <tr><td style="padding:4px 0">4 · Benchmarks and held-out evaluations</td><td class="num" style="padding:4px 0">$0.05M–$0.6M</td></tr>
+          <tr><td style="padding:4px 0">5 · Grants and tax credits (non-dilutive): SkatteFUNN 19% of R&amp;D costs; Innovation Norway start-up grant up to NOK 150k; EIC Accelerator grant below €2.5M (Norway's eligibility UNVERIFIED)</td><td class="num" style="padding:4px 0"></td></tr>
+        </tbody></table></div>
+    </div>
+    <div class="grid2" style="gap:16px;grid-template-columns:1.6fr 1fr">
+      <div class="callout small"><b>Data-asset upside to base revenue, year 5 (ESTIMATE):</b> low $0.13M / mid $0.80M / high $2.40M. In the model (scenarios base+data_*), year-5 recognised revenue is $3.46M / $4.14M / $5.74M, against $3.34M in the base case; year-5 cash is $7.1M / $8.2M / $10.3M. <b>The base case excludes this revenue.</b></div>
+      <div class="callout warn small"><b>Rejected:</b> insurer or employer uses (AI Act Art. 5 and state-law risk), selling raw data, and advertising, neuromarketing or law-enforcement uses.</div>
+    </div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">investor\DATA-REVENUE-STRATEGY.md · financial-model.py (base+data_*) · risk ratings: nfb-legal-privacy draft, counsel to confirm · not legal advice</span><span class="n">12 / 17</span></div>
+</section>
+
+<!-- 13 TRACTION -->
+<section class="slide" id="s13" aria-label="Slide 13 of 17: Traction">
+  <div class="sh"><span class="label"><span class="dot"></span>13 · Traction</span><span class="tags"><span class="tag warn">Pre-product</span></span></div>
+  <div class="body">
+    <h1 style="font-size:84px">Pre-product.</h1>
+    <p style="font-size:26px;font-weight:300">There are no customers, revenue, LOIs, pilots or partnerships.</p>
+    <div class="grid2">
+      <div class="card"><div class="k">What exists today · internal work, not traction</div>
+        <ul class="small">
+          <li>Market, regulation and pricing research with graded sources (<span class="mono">market\</span>).</li>
+          <li>An enterprise architecture blueprint and build guide (<span class="mono">architecture\</span>).</li>
+          <li>Website designs in two themes (<span class="mono">design\</span>).</li>
+          <li>A computational research programme on closed-loop somatosensory feedback (<span class="mono">research\somatosensory\</span>). Simulation only, with no human work.</li>
+        </ul></div>
+      <div class="card tint"><div class="k">Next 90 days · would count as traction</div>
+        <ol class="small">
+          <li>15–20 discovery interviews completed</li>
+          <li>Open-core SDK published</li>
+          <li>Multiverse results on public data published</li>
+          <li>3–5 design partners signed</li>
+        </ol></div>
+    </div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">market\ · architecture\ · design\ · research\somatosensory\</span><span class="n">13 / 17</span></div>
+</section>
+
+<!-- 14 TEAM -->
+<section class="slide" id="s14" aria-label="Slide 14 of 17: Team">
+  <div class="sh"><span class="label"><span class="dot"></span>14 · Team</span><span class="tags"><span class="tag est">Hiring plan ESTIMATE</span></span></div>
+  <div class="body">
+    <div class="split" style="display:grid;grid-template-columns:1fr 1.5fr;gap:32px;align-items:start">
+      <div class="card" style="padding:26px">
+        <div class="k">Founder</div>
+        <h3 style="font-size:30px;font-weight:500">Marius Carlsson</h3>
+        <p class="muted" style="margin-top:4px">Founder</p>
+        <div style="margin-top:18px;border:1px dashed var(--muted);border-radius:6px;padding:16px;background:var(--soft)" class="small"><b>Background:</b> <span class="mono">[OWNER TO WRITE]</span><br><span class="muted">must be factual</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="tw"><table>
+          <thead><tr><th>Year-end (base, ESTIMATE)</th><th class="num">1</th><th class="num">2</th><th class="num">3</th><th class="num">4</th><th class="num">5</th></tr></thead>
+          <tbody>
+            <tr><td>Employees, excl. founder</td><td class="num">4</td><td class="num">12</td><td class="num">13</td><td class="num">25</td><td class="num">33</td></tr>
+            <tr><td class="muted">Model headcount, incl. founder</td><td class="num muted">5</td><td class="num muted">13</td><td class="num muted">14</td><td class="num muted">26</td><td class="num muted">34</td></tr>
+          </tbody></table></div>
+        <ul class="small">
+          <li><b>First hires (after the seed, around month 9):</b> 3 software engineers (Rust/Python/platform) and 1 neuro-data scientist.</li>
+          <li><b>Year 2:</b> DevOps/security, regulatory/QA, product designer, account executive, customer success, and marketing/developer relations.</li>
+          <li><b>Advisors to recruit (not engaged):</b> privacy counsel, an FDA regulatory consultant, and a neuroscientist or clinician advisor.</li>
+        </ul>
+        <div class="callout small"><b>Nobody is hired before the seed closes.</b> Each hire needs cash covering 9 months of projected burn, so year 3 pauses hiring until the Series A.</div>
+        <p class="xs muted">Development tooling includes AI coding and research assistants. They are tools, not team members.</p>
+      </div>
+    </div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">investor\financial-model.py (base case)</span><span class="n">14 / 17</span></div>
+</section>
+
+<!-- 15 ROADMAP -->
+<section class="slide" id="s15" aria-label="Slide 15 of 17: Roadmap">
+  <div class="sh"><span class="label"><span class="dot"></span>15 · Roadmap</span><span class="tags"><span class="tag planned">Planned</span><span class="tag roadmap">Roadmap</span><span class="tag">Scenario</span></span></div>
+  <div class="body">
+    <h2>From funding: credibility, then ledger, then regulated evidence.</h2>
+    <div class="tw"><table>
+      <thead><tr><th style="width:17%">When (from funding)</th><th>Milestone</th><th style="width:13%">Status</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">Months 0–3</td><td>Website (clinical theme); open-core SDK and validator; multiverse audit on public data</td><td><span class="tag planned">Planned</span></td></tr>
+        <tr><td class="mono">Months 3–9</td><td>Consent &amp; Deletion Ledger MVP; Startup tier; 3–5 design partners; privacy counsel reviews the RuleSets</td><td><span class="tag planned">Planned</span></td></tr>
+        <tr><td class="mono">Months 9–18</td><td>FDA Evidence Kit and latency harness; Growth tier; first pharma pilot; SOC 2 Type II started when partners ask</td><td><span class="tag roadmap">Roadmap</span></td></tr>
+        <tr><td class="mono">Years 2–3</td><td>EU region (GDPR); Part 11 workflows for CNS trials; governed model registry if customers pull for it</td><td><span class="tag roadmap">Roadmap</span></td></tr>
+        <tr><td class="mono">Years 3–5</td><td>US + EU scale; Enterprise/Pharma tier; C++/Unity/Unreal SDKs only on customer pull; opt-in research pool (default OFF)</td><td><span class="tag">Scenario</span></td></tr>
+        <tr><td class="mono">Years 8–15</td><td><b>Biotech and neurobiology research arm.</b> It builds on the consented data asset and our models: biomarkers, target discovery, somatosensory and neuroprosthetic research. Wet-lab or clinical work needs REK/ethics approval and other licences (see SCALING-PLAN.md §10)</td><td><span class="tag">Scenario</span></td></tr>
+      </tbody></table></div>
+    <p class="small muted">The 10–15 year view is in investor\SCALING-PLAN.md. Beyond year 2 it is scenarios, not forecasts.</p>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">market\pricing-and-gtm.md §5 · investor\SCALING-PLAN.md</span><span class="n">15 / 17</span></div>
+</section>
+
+<!-- 16 FINANCIALS -->
+<section class="slide" id="s16" aria-label="Slide 16 of 17: Financials">
+  <div class="sh"><span class="label"><span class="dot"></span>16 · Financials</span><span class="tags"><span class="tag est">ESTIMATE · base case</span><span class="tag">Seed month 9 · paid launch month 17</span></span></div>
+  <div class="body" style="gap:12px">
+    <h2 style="font-size:36px">Financials (ESTIMATE, base case). Year-5 end ARR: bear $1.15M · base $3.63M · bull $7.00M.</h2>
+    <p class="xs muted" style="margin-top:-4px">Funding path corrected 2026-09-26. First round <b style="color:var(--ink)">NOK 1M</b> (≈ USD 105k at 9.5063 NOK/USD, the Norges Bank rate for 2026-09-25). The seed closes in month 9; the paid launch is in month 17.</p>
+    <div class="split" style="display:grid;grid-template-columns:1fr 1.3fr;gap:26px;align-items:start">
+      <svg viewBox="0 0 680 420" role="img" aria-labelledby="s16t" style="width:100%;height:auto;background:#FFFFFF;border:1px solid #DDE4EC;border-radius:6px">
+        <title id="s16t">ESTIMATE. Base-case end ARR by model year: Y1 $0.00M, Y2 $0.28M, Y3 $1.15M, Y4 $2.28M, Y5 $3.63M. Year-5 scenarios: bear $1.15M, bull $7.00M.</title>
+        <text x="20" y="26" font-size="15" font-weight="600" fill="#0B2540">End ARR, base case</text>
+        <text x="660" y="26" text-anchor="end" font-size="12.5" class="m" fill="#7A4B00">ESTIMATE · USD M</text>
+        <g stroke="#DDE4EC"><line x1="70" y1="380" x2="600" y2="380" stroke="#0B2540"/><line x1="70" y1="304" x2="600" y2="304"/><line x1="70" y1="228" x2="600" y2="228"/><line x1="70" y1="152" x2="600" y2="152"/><line x1="70" y1="76" x2="600" y2="76"/></g>
+        <g font-size="12.5" class="m" fill="#4A5B6E" text-anchor="end"><text x="60" y="384">$0</text><text x="60" y="308">$2M</text><text x="60" y="232">$4M</text><text x="60" y="156">$6M</text><text x="60" y="80">$8M</text></g>
+        <g fill="#0E7C86">
+          <rect x="92" y="379" width="56" height="1"/>
+          <rect x="192" y="369.36" width="56" height="10.64"/>
+          <rect x="292" y="336.3" width="56" height="43.7"/>
+          <rect x="392" y="293.36" width="56" height="86.64"/>
+          <rect x="492" y="242.06" width="56" height="137.94"/>
+        </g>
+        <g font-size="13.5" class="m" fill="#0B2540" text-anchor="middle">
+          <text x="120" y="371">$0.00M</text><text x="220" y="361">$0.28M</text><text x="320" y="328">$1.15M</text><text x="420" y="285">$2.28M</text><text x="520" y="234" font-weight="500">$3.63M</text>
+        </g>
+        <g font-size="13" class="m" fill="#4A5B6E" text-anchor="middle"><text x="120" y="402">Y1</text><text x="220" y="402">Y2</text><text x="320" y="402">Y3</text><text x="420" y="402">Y4</text><text x="520" y="402">Y5</text></g>
+        <!-- scenario markers at Y5 -->
+        <line x1="480" y1="114" x2="560" y2="114" stroke="#5B8DEF" stroke-width="3" stroke-dasharray="6 3"/>
+        <text x="566" y="118" font-size="13" class="m" fill="#2F4E8F">bull $7.00M</text>
+        <line x1="480" y1="336.3" x2="560" y2="336.3" stroke="#0B2540" stroke-width="3" stroke-dasharray="6 3"/>
+        <text x="566" y="340.5" font-size="13" class="m" fill="#0B2540">bear $1.15M</text>
+      </svg>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="tw"><table style="font-size:15px">
+          <thead><tr><th>Model year (ESTIMATE)</th><th class="num">1</th><th class="num">2</th><th class="num">3</th><th class="num">4</th><th class="num">5</th></tr></thead>
+          <tbody>
+            <tr><td>End ARR</td><td class="num">$0.00M</td><td class="num">$0.28M</td><td class="num">$1.15M</td><td class="num">$2.28M</td><td class="num"><b>$3.63M</b></td></tr>
+            <tr><td>Recognised revenue</td><td class="num">$0.04M</td><td class="num">$0.27M</td><td class="num">$0.92M</td><td class="num">$2.05M</td><td class="num"><b>$3.34M</b></td></tr>
+            <tr><td>Gross margin</td><td class="num">36%</td><td class="num">52%</td><td class="num">62%</td><td class="num">74%</td><td class="num">74%</td></tr>
+            <tr><td>Net burn</td><td class="num">$0.35M</td><td class="num">$1.35M</td><td class="num">$2.32M</td><td class="num">$2.66M</td><td class="num">$3.45M</td></tr>
+            <tr><td>Year-end cash</td><td class="num">$0.81M</td><td class="num">$3.46M</td><td class="num">$1.14M</td><td class="num">$10.48M</td><td class="num">$7.03M</td></tr>
+            <tr><td>Headcount (end of year)</td><td class="num">5</td><td class="num">13</td><td class="num">14</td><td class="num">26</td><td class="num">34</td></tr>
+            <tr><td>Paying logos</td><td class="num">0</td><td class="num">19</td><td class="num">54</td><td class="num">95</td><td class="num">140</td></tr>
+          </tbody></table></div>
+        <div class="callout small"><b>Data-asset upside (not in base):</b> year-5 revenue of $3.46M / $4.14M / $5.74M in the low / mid / high cases (slide 12).</div>
+      </div>
+    </div>
+    <div class="grid3" style="gap:16px">
+      <ul class="xs">
+        <li><b>Scenarios, year-5 end ARR:</b> bear $1.15M, with a funding gap of −$1.25M in month 49; base $3.63M; bull $7.00M.</li>
+        <li><b>Lean</b> (founder-led, no hires): no ARR. It relies on about one $20k audit per quarter, which is unvalidated.</li>
+      </ul>
+      <ul class="xs">
+        <li><b>SOM check:</b> 36 months after launch (model month 52), base ARR is $2.66M with 109 logos, against the sizing SOM of $2.4M and 108 logos.</li>
+        <li><b>Biggest sensitivities</b> (year-5 cash impact): a 1.45× loading factor, −$1.45M; a 6-month longer build, −$1.42M; all S2 customers on the Startup tier, −$0.83M.</li>
+      </ul>
+      <ul class="xs">
+        <li><b>Not profitable by year 5 in any growth scenario.</b></li>
+        <li><b>Cost inputs still to be quoted:</b> counsel, SOC 2, pen test and regulatory consultant.</li>
+        <li><b>Salary base:</b> BLS median $135,980 (A) × 1.30 (ESTIMATE).</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">investor\financial-model.py → financial-model.csv · Norges Bank 2026-09-25 · BLS (A)</span><span class="n">16 / 17</span></div>
+</section>
+
+<!-- 17 ASK -->
+<section class="slide" id="s17" aria-label="Slide 17 of 17: The ask">
+  <div class="sh"><span class="label"><span class="dot"></span>17 · The ask</span><span class="tags"><span class="tag est">ESTIMATE · owner decides amount and terms</span><span class="tag">Pre-seed (angel), not a Series A</span></span></div>
+  <div class="body" style="gap:12px">
+    <div style="display:flex;align-items:baseline;gap:22px;flex-wrap:wrap"><h1 style="font-size:60px">Now: NOK 1,000,000</h1><span class="muted" style="font-size:17px;max-width:66ch">≈ USD 105k. A first round: in market terms a <b style="color:var(--ink)">pre-seed (angel) round</b>, not a Series A; a Series A usually comes after revenue traction. The owner decides the amount and terms.</span></div>
+    <div class="grid3" style="gap:16px;grid-template-columns:1.15fr 1.15fr 1fr">
+      <div class="card"><div class="k">Proposed structure · ESTIMATE</div>
+        <ul class="xs">
+          <li>A priced share issue of <b>NOK 1M at NOK 10M pre-money</b>, with a pro-rata right in the next round. Floor: NOK 8M pre-money.</li>
+          <li><b>Fallback:</b> a convertible loan with a NOK 12M cap and a 20% discount.</li>
+        </ul>
+        <svg viewBox="0 0 560 214" role="img" aria-labelledby="s17t" style="width:100%;height:auto;margin-top:8px;background:#FFFFFF;border:1px solid #DDE4EC;border-radius:6px">
+          <title id="s17t">ESTIMATE. Founder ownership along the base path: after this round 90.9%; after the seed (NOK 10M at NOK 40M pre-money, with a 10% option pool) 63.6%; after round N2 (USD 4.0M at NOK 120M pre-money) 48.3%; after the Series A (USD 12M) 36.2%.</title>
+          <text x="14" y="22" font-size="14" font-weight="600" fill="#0B2540">Founder ownership, base path</text>
+          <text x="546" y="22" text-anchor="end" font-size="11.5" class="m" fill="#7A4B00">ESTIMATE · %</text>
+          <g stroke="#DDE4EC"><line x1="190" y1="34" x2="190" y2="186" stroke="#0B2540"/><line x1="270" y1="34" x2="270" y2="186"/><line x1="350" y1="34" x2="350" y2="186"/><line x1="430" y1="34" x2="430" y2="186"/><line x1="510" y1="34" x2="510" y2="186"/></g>
+          <g font-size="11.5" class="m" fill="#4A5B6E" text-anchor="middle"><text x="190" y="202">0</text><text x="270" y="202">25</text><text x="350" y="202">50</text><text x="430" y="202">75</text><text x="510" y="202">100</text></g>
+          <g font-size="13" fill="#0B2540" text-anchor="end">
+            <text x="182" y="61">After this round</text>
+            <text x="182" y="97">After the seed</text>
+            <text x="182" y="133">After round N2</text>
+            <text x="182" y="169">After Series A</text>
+          </g>
+          <rect x="190" y="44" width="290.88" height="24" fill="#0E7C86"/>
+          <rect x="190" y="80" width="203.52" height="24" fill="#0E7C86"/>
+          <rect x="190" y="116" width="154.56" height="24" fill="#0E7C86"/>
+          <rect x="190" y="152" width="115.84" height="24" fill="#0E7C86"/>
+          <g font-size="12.5" class="m" fill="#0B2540">
+            <text x="489" y="61">90.9%</text>
+            <text x="402" y="97">63.6%</text>
+            <text x="353" y="133">48.3%</text>
+            <text x="314" y="169">36.2%</text>
+          </g>
+        </svg>
+        <p class="cite" style="margin-top:6px">Seed: NOK 10M at NOK 40M pre, with a 10% option pool · N2: USD 4.0M (≈ NOK 38.0M) at NOK 120M pre · Series A: USD 12M</p></div>
+      <div class="card tint"><div class="k">How far NOK 1M gets us · no revenue assumed</div>
+        <svg viewBox="0 0 560 176" role="img" aria-labelledby="s17r" style="width:100%;height:auto;background:#FFFFFF;border:1px solid #DDE4EC;border-radius:6px">
+          <title id="s17r">ESTIMATE. Runway on NOK 1M with no revenue: lean mode (about NOK 50k per month) 18 months, 22 months with grants; small team (about NOK 114k per month) 8 months, 9 months with grants.</title>
+          <g stroke="#DDE4EC"><line x1="160" y1="30" x2="160" y2="150" stroke="#0B2540"/><line x1="232" y1="30" x2="232" y2="150"/><line x1="304" y1="30" x2="304" y2="150"/><line x1="376" y1="30" x2="376" y2="150"/><line x1="448" y1="30" x2="448" y2="150"/><line x1="520" y1="30" x2="520" y2="150"/></g>
+          <g font-size="11.5" class="m" fill="#4A5B6E" text-anchor="middle"><text x="160" y="166">0</text><text x="232" y="166">5</text><text x="304" y="166">10</text><text x="376" y="166">15</text><text x="448" y="166">20</text><text x="520" y="166">25 mo</text></g>
+          <g fill="#0B2540" text-anchor="end">
+            <text x="150" y="56" font-size="13.5" font-weight="600">Lean</text>
+            <text x="150" y="72" font-size="11.5" class="m" fill="#4A5B6E">≈ NOK 50k/mo</text>
+            <text x="150" y="116" font-size="13.5" font-weight="600">Small team</text>
+            <text x="150" y="132" font-size="11.5" class="m" fill="#4A5B6E">≈ NOK 114k/mo</text>
+          </g>
+          <rect x="160" y="42" width="259.2" height="16" fill="#0E7C86"/>
+          <rect x="160" y="62" width="316.8" height="16" fill="#0E7C86" fill-opacity=".4"/>
+          <rect x="160" y="102" width="115.2" height="16" fill="#0E7C86"/>
+          <rect x="160" y="122" width="129.6" height="16" fill="#0E7C86" fill-opacity=".4"/>
+          <g font-size="12" class="m" fill="#0B2540">
+            <text x="425" y="55">18 mo</text>
+            <text x="483" y="75">22 mo</text>
+            <text x="281" y="115">8 mo</text>
+            <text x="296" y="135">9 mo</text>
+          </g>
+        </svg>
+        <p class="cite" style="margin-top:4px">Dark: without grants · light: with grants</p>
+        <ul class="xs" style="margin-top:6px">
+          <li><b>Lean:</b> founder + AI tools + 0.1 FTE contractor, minimal cloud. ≈ NOK 50k/mo: <b>18 months</b>, <b>22 months</b> with grants.</li>
+          <li><b>Small team:</b> founder + 0.5 FTE contractor. ≈ NOK 114k/mo: <b>8 months</b>, <b>9 months</b> with grants.</li>
+        </ul>
+        <p class="xs" style="margin-top:6px"><b>Grants are conditional</b> on the AS existing and on approval; none is guaranteed. Innovation Norway start-up grant (oppstartstilskudd 1): up to NOK 150k. SkatteFUNN: 19% of eligible R&amp;D costs, paid through the tax settlement, so cash arrives around month 21 (UNVERIFIED). Forskningsrådet: not modelled (programme page could not be opened).</p></div>
+      <div class="card"><div class="k">What the round buys · before the seed</div>
+        <p class="xs muted">The seed must close by months 9–10 in the base plan.</p>
+        <ul class="xs" style="margin-top:6px">
+          <li>15–20 discovery interviews, with the pricing hypotheses tested;</li>
+          <li>the open-core SDK and multiverse results on public data, published;</li>
+          <li>a trademark clearance search and a first privacy-counsel review;</li>
+          <li>3–5 design partners recruited;</li>
+          <li>grant applications.</li>
+        </ul>
+        <div class="callout small" style="margin-top:12px">If the seed is late, switch to <b>lean mode</b>: 18–22 months of runway.</div></div>
+    </div>
+    <div class="callout warn small"><b>Top risks:</b> (1) Willingness to pay is unvalidated. (2) Seed timing: the small-team pre-phase has only about 8–9 months of runway, and the base plan's minimum cash is about $13k in month 8. (3) Neural-law RuleSets and consent scopes need a lawyer's review; the name needs trademark clearance (Neuroforge GmbH, Germany).</div>
+  </div>
+  <div class="sf"><span class="brandline">NeuroForge Bio · DRAFT · pre-product · figures are ESTIMATES</span><span class="src">investor\FUNDING-ROUND.md · dilution.py · ROUND-ASSUMPTIONS.md · prephase-runway.csv · legal\ (same numbers)</span><span class="n">17 / 17</span></div>
+</section>
+
+</main>
+</div>
+
+<button class="zone prev" type="button" aria-label="Previous slide"></button>
+<button class="zone next" type="button" aria-label="Next slide"></button>
+<nav class="controls" aria-label="Slide controls">
+  <button type="button" id="prevBtn" aria-label="Previous slide">&larr;</button>
+  <span id="counter" aria-live="polite">1 / 17</span>
+  <button type="button" id="nextBtn" aria-label="Next slide">&rarr;</button>
+  <span class="hint">← → · space · Home/End · print to PDF: one slide per page</span>
+</nav>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var N = slides.length, cur = 0;
+  var stage = document.getElementById('stage');
+  var counter = document.getElementById('counter');
+  var narrow = window.matchMedia('screen and (max-width:760px)');
+
+  function fit(){
+    if (narrow.matches) return;
+    var w = window.innerWidth, h = window.innerHeight - 48;
+    var s = Math.min(w / 1600, h / 900) * 0.97;
+    stage.style.setProperty('--s', s.toFixed(4));
+  }
+  function fromHash(){
+    var n = parseInt((location.hash || '').replace('#', ''), 10);
+    return (n >= 1 && n <= N) ? n - 1 : 0;
+  }
+  function go(n, fromUser){
+    n = Math.max(0, Math.min(N - 1, n));
+    cur = n;
+    slides.forEach(function(s, k){
+      var on = k === n;
+      s.classList.toggle('active', on);
+      if (narrow.matches) { s.removeAttribute('aria-hidden'); }
+      else { s.setAttribute('aria-hidden', on ? 'false' : 'true'); }
+    });
+    counter.textContent = (n + 1) + ' / ' + N;
+    var h = '#' + (n + 1);
+    if (location.hash !== h) { history.replaceState(null, '', h); }
+    if (narrow.matches && fromUser) {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      slides[n].scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'start'});
+    }
+  }
+  document.addEventListener('keydown', function(e){
+    var t = e.target && e.target.tagName;
+    if (t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT') return;
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'PageDown' || (k === ' ' && !e.shiftKey)) { e.preventDefault(); go(cur + 1, true); }
+    else if (k === 'ArrowLeft' || k === 'PageUp' || (k === ' ' && e.shiftKey)) { e.preventDefault(); go(cur - 1, true); }
+    else if (k === 'Home') { e.preventDefault(); go(0, true); }
+    else if (k === 'End') { e.preventDefault(); go(N - 1, true); }
+  });
+  document.querySelector('.zone.prev').addEventListener('click', function(){ go(cur - 1, true); });
+  document.querySelector('.zone.next').addEventListener('click', function(){ go(cur + 1, true); });
+  document.getElementById('prevBtn').addEventListener('click', function(){ go(cur - 1, true); });
+  document.getElementById('nextBtn').addEventListener('click', function(){ go(cur + 1, true); });
+  window.addEventListener('hashchange', function(){ go(fromHash(), true); });
+  window.addEventListener('resize', fit);
+  if (narrow.addEventListener) { narrow.addEventListener('change', function(){ fit(); go(cur, false); }); }
+  fit();
+  go(fromHash(), !!location.hash);
+})();
+</script>
+</body>
+</html>

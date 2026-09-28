@@ -1,0 +1,17 @@
+{
+ "cycle1_helper_selftests(11)": true,
+ "sigma_h_inf_=14.15": true,
+ "hs_calibration_MC_JND_tau=inf": true,
+ "hs_calibration_MC_JND_tau=0.3": true,
+ "weber_arm_equals_cycle1_observe": true,
+ "fv_sd_constant_per_episode": true,
+ "fv_sd_value": true,
+ "fv_mean_rbar_matched_5pct": true,
+ "variance_step_detectable_by_abs_detectors": true,
+ "pure_noise_AUC_~0.5": true,
+ "scored_equals_encoder_eval": true,
+ "decide_pass": true,
+ "decide_fail_V": true,
+ "decide_inconclusive": true,
+ "decide_hs_disagree_downgrade": true
+}

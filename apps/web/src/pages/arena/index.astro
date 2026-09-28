@@ -1,0 +1,199 @@
+---
+// Decoder Arena (/arena): pick a decoder, run it live in your own browser (Rust -> WebAssembly,
+// tools/arena-core) against the same open MC_RTT/DANDI-000129 asset the Neural Playground uses.
+// Server render carries the static copy and control ranges (from the same asset playground.astro
+// reads); src/scripts/arena.ts adds the live WASM evaluation once it loads. Standalone page: no
+// edits to site.ts, @nf/content, the sitemap, Base.astro, or any shared component, so a mistake
+// here can't affect another page. See docs/hive/ARENA-DESIGN.md for exact build/verification
+// status (deliberately NOT under src/pages/: Astro routes any .md file placed there).
+import Base from '../../layouts/Base.astro';
+import SectionHead from '@nf/ui/components/SectionHead.astro';
+import Banner from '@nf/ui/components/Banner.astro';
+import raw from '../../assets/playground/mc-rtt-playground.json';
+import { parsePlayground } from '../../lib/playground-data.mjs';
+import { arenaPkgAvailable } from '../../lib/arena-pkg.mjs';
+// Only the static brand name (never the full content schema/site.ts -- see this file's own
+// arena.test.mjs check), so the CC BY no-endorsement line never has the company name typed by
+// hand (nfb-playground/lead convention, 308b779).
+import brand from '@nf/content/brand.json' with { type: 'json' };
+
+const model = parsePlayground(raw);
+const lastCount = model.neuronCounts.length - 1;
+const noiseLabel = (hz: number) => (hz === 0 ? 'none' : `+${hz} Hz`);
+const ds = model.dataset;
+// Licence verified directly against the DANDI API 2026-09-27 (api.dandiarchive.org/api/dandisets/
+// 000129/versions/0.241017.1444/): license "spdx:CC-BY-4.0", matching ds.licence below -- not
+// just trusted from the asset. Same source tools/playground/nf_playground/dataset.py already
+// pins (dandiset, version, sha256), shared with /playground; not re-verified independently there.
+const doiUrl = `https://doi.org/${ds.doi}`;
+const dandiUrl = `https://dandiarchive.org/dandiset/${ds.dandiset}/${ds.version}`;
+const licenceUrl = ds.licence === 'CC-BY-4.0' ? 'https://creativecommons.org/licenses/by/4.0/' : undefined;
+
+// Build-time only: is the wasm-bindgen bundle actually present (apps/web/src/assets/arena/pkg/,
+// a CI-built artifact per tools/arena-core/README.md, never committed here)? When it's absent
+// we render a plain "unavailable" state and emit NO script that could ever attempt a
+// WebAssembly request -- astro.config.mjs makes the same check to alias `virtual:arena-loader`
+// to a zero-wasm stub, so the two stay in sync (both import apps/web/src/lib/arena-pkg.mjs).
+const wasmAvailable = arenaPkgAvailable();
+
+const meta = {
+  title: 'Decoder Arena',
+  description:
+    'Run a ridge, Kalman, or small GRU-reservoir decoder live in your browser against an open neural recording, with a leak check and confidence interval on every run.',
+};
+---
+<Base title={meta.title} description={meta.description} noindex={!wasmAvailable}>
+  <section class="nf-section" aria-labelledby="h-arena">
+    <div class="nf-wrap">
+      <SectionHead
+        id="h-arena"
+        level={1}
+        eyebrow="Research demo"
+        heading="Decoder Arena"
+        lede="Pick a decoder, run it live in your own browser on an open neural recording, and get back a signed evaluation card: R², a confidence interval, and a leak check that must pass before any number here is trusted."
+      />
+      <Banner
+        text="Research demo only. Not a medical device. No hardware control, stimulation, or actuation — this page only computes on a precomputed, already-open dataset entirely inside your browser. No data leaves your device."
+        tone="caution"
+      />
+
+      {wasmAvailable ? (
+        <div class="arena" data-arena data-load-error="Could not load the dataset. Try reloading the page." data-wasm-error="Could not load the evaluator in this browser." data-units-unit="units">
+          <noscript><p class="arena-status">This demo needs JavaScript and WebAssembly.</p></noscript>
+          <p class="arena-status" data-arena-status hidden>Loading the evaluator…</p>
+
+          <form class="arena-controls nf-card" data-arena-controls aria-labelledby="h-arena-controls">
+            <h2 id="h-arena-controls" class="nf-visually-hidden">Decoder settings</h2>
+            <div class="row">
+              <label>
+                <span class="lbl">Decoder</span>
+                <select data-arena-decoder disabled>
+                  <option value="ridge" selected>Ridge (linear)</option>
+                  <option value="kalman">Kalman filter</option>
+                  <option value="gru_reservoir">GRU-style reservoir</option>
+                </select>
+              </label>
+              <label class="arena-param">
+                <span class="lbl">Ridge / readout λ</span>
+                <input type="number" data-arena-ridge-lambda value="10" min="0.01" step="1" disabled />
+              </label>
+              <label class="arena-param" hidden>
+                <span class="lbl">Reservoir hidden units</span>
+                <input type="number" data-arena-gru-hidden value="32" min="4" max="128" step="1" disabled />
+              </label>
+            </div>
+            <div class="row">
+              <label class="grow">
+                <span class="lbl">Neurons used: <output data-arena-units-out>{model.neuronCounts[lastCount]}</output></span>
+                <input type="range" data-arena-units min="0" max={String(lastCount)} step="1" value={String(lastCount)}
+                  aria-valuetext={`${model.neuronCounts[lastCount]} units`} disabled />
+                <span class="ticks" aria-hidden="true">{model.neuronCounts.map((n) => <span>{n}</span>)}</span>
+              </label>
+            </div>
+            <div class="row">
+              <fieldset>
+                <legend class="lbl">Added noise</legend>
+                {model.noiseHz.map((hz, i) => (
+                  <label class="radio"><input type="radio" name="arena-noise" value={String(i)} checked={i === 0} /> {noiseLabel(hz)}</label>
+                ))}
+              </fieldset>
+            </div>
+            <button type="button" class="nf-btn nf-btn--primary" data-arena-run disabled>Run evaluation</button>
+          </form>
+
+          <p class="nf-visually-hidden" aria-live="polite" data-arena-live></p>
+
+          <div class="arena-card nf-card" data-arena-card>
+            <p class="arena-empty">Run a decoder to see its evaluation card.</p>
+          </div>
+
+          <div class="arena-board-wrap">
+            <h2 class="panel-h">Your runs (this browser only)</h2>
+            <table class="arena-board">
+              <thead>
+                <tr><th>Time</th><th>Decoder</th><th>Params</th><th>Units</th><th>Noise</th><th>Mean R²</th><th>Leak</th></tr>
+              </thead>
+              <tbody data-arena-board></tbody>
+            </table>
+          </div>
+        </div>
+      ) : (
+        <div class="arena arena-unavailable nf-card" data-arena-unavailable>
+          <h2 class="panel-h">Decoder loading unavailable</h2>
+          <p>
+            The live evaluator hasn't been published to this build yet. It compiles from
+            <code>tools/arena-core</code> to WebAssembly in a signed CI job, byte-hash-checked
+            across two independent builds, and only ships once that artifact exists — see
+            <code>tools/arena-core/README.md</code> for the exact build. Nothing on this page
+            fetches or runs WebAssembly until it does.
+          </p>
+        </div>
+      )}
+
+      <p class="arena-attribution">
+        Neural recording: <a href={dandiUrl} rel="noopener noreferrer">{ds.name}</a>, DANDI {ds.dandiset}, {ds.citation.replace(` https://doi.org/${ds.doi}`, '')}{' '}
+        <a href={doiUrl} rel="noopener noreferrer">doi:{ds.doi}</a>. Licence:{' '}
+        {licenceUrl ? <a href={licenceUrl} rel="noopener noreferrer license">{ds.licence}</a> : ds.licence}.
+        Derived from {ds.shortName} ({ds.licence}); changes were made: we counted spikes in
+        fifty-millisecond bins, chose a subset of the recorded neurons, split the reaches into
+        training and held-out test blocks, decoded them with a ridge, Kalman or reservoir decoder
+        you pick, and, when you choose added noise, mixed in simulated random spikes. The
+        dataset's creators do not endorse {brand.name}. This is public research data (not human
+        data), shown here for research and demonstration only.
+      </p>
+
+      <div class="arena-cta">
+        <div>
+          <h2 id="arena-cta-private">Evaluate your own decoder privately</h2>
+          <p>Bring your own decoder and run it against your own recordings without sending data anywhere. Copy only for now — no accounts, no payments, no backend.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  {wasmAvailable && (
+    <script>
+      import '../../scripts/arena.ts';
+    </script>
+  )}
+</Base>
+<style>
+  .arena { margin-top: 24px; display: grid; gap: 20px; }
+  /* Page-local copy of @nf/ui/components/CTA.astro's look (not imported: pulling the shared
+     component in makes /arena a 3rd consumer of its CSS chunk, which reshuffles chunk order/
+     numbering on the homepage -- caught by apps/web/test/homepage-css.test.mjs; web-perf,
+     2026-09-27). Keep in sync by eye if CTA.astro's styles ever change. */
+  .arena-cta { background: var(--color-surface); border: 1px solid var(--color-line); box-shadow: var(--elevation-card); border-radius: var(--radius-card); padding: 48px; }
+  .arena-cta p { color: var(--color-muted); margin-top: 10px; max-width: 56ch; }
+  @media (max-width: 700px) { .arena-cta { padding: 32px 24px; } }
+  .arena-attribution { margin-top: 24px; font-size: 13.5px; color: var(--color-muted); max-width: 80ch; }
+  .arena-status { color: var(--color-muted); }
+  .arena-controls { padding: 18px; display: grid; gap: 14px; }
+  .row { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: end; }
+  .row label { display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+  .row .grow { flex: 1 1 260px; }
+  .lbl { font: 500 12px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--color-muted); }
+  select, input[type='number'], input[type='range'] { font: inherit; color: var(--color-ink); accent-color: var(--color-accent); }
+  select, input[type='number'] { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 4px; padding: 6px 8px; min-height: 36px; }
+  .ticks { display: flex; justify-content: space-between; font-size: 12px; color: var(--color-muted); }
+  fieldset { border: 1px solid var(--color-line); border-radius: 4px; margin: 0; padding: 8px 12px 10px; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .radio { flex-direction: row !important; align-items: center; gap: 6px !important; min-height: 28px; }
+  .arena-card { padding: 20px; }
+  .arena-empty { margin: 0; color: var(--color-muted); }
+  .arena-nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px 24px; margin: 0; }
+  .arena-nums dt { font-size: 13.5px; color: var(--color-muted); }
+  .arena-nums dd { margin: 4px 0 0; font-size: 20px; }
+  .arena-nums .big { font-size: 30px; color: var(--color-accent-ink); }
+  .arena-nums .ok { color: var(--color-accent-ink); }
+  .arena-nums .bad { color: var(--color-secondary); font-weight: 600; }
+  .arena-convention, .arena-caveat, .arena-source { font-size: 13.5px; color: var(--color-muted); max-width: 80ch; margin: 12px 0 0; }
+  .panel-h { font-size: 16px; line-height: 1.3; font-weight: 500; }
+  /* min-width: 0 overrides the grid item's default min-width: auto (CSS Grid "blowout"),
+     the same fix as /gallery's -- without it .arena-board's explicit 560px min-width forces
+     this grid item, and the page, wider than the viewport at 320-360px instead of scrolling
+     inside overflow-x: auto (web-a11y T11, docs/web/a11y-t11.md). */
+  .arena-board-wrap { overflow-x: auto; min-width: 0; }
+  .arena-board { border-collapse: collapse; font-size: 14px; width: 100%; min-width: 560px; }
+  .arena-board th, .arena-board td { text-align: left; padding: 6px 12px; border-top: 1px solid var(--color-line); }
+  .arena-board thead th { font: 500 12px var(--font-mono); color: var(--color-muted); }
+  @media (max-width: 700px) { .row { flex-direction: column; align-items: stretch; } }
+</style>

@@ -1,0 +1,30 @@
+---
+import type { Status, StatusLabels, UiCta } from '../types.ts';
+import Button from './Button.astro';
+import StatusPill from './StatusPill.astro';
+interface Tier { id: string; name: string; price: string; who: string; features: { text: string; status?: Status }[]; featured?: boolean; cta: UiCta }
+interface Props { tiers: Tier[]; statusLabels: StatusLabels; statusPrefix?: string }
+const { tiers, statusLabels, statusPrefix } = Astro.props;
+---
+<div class="plans">
+  {tiers.map((t) => (
+    <article class={`plan nf-card${t.featured ? ' feat' : ''}`} aria-labelledby={`plan-${t.id}`}>
+      <h3 class="nf-label" id={`plan-${t.id}`}>{t.name}</h3>
+      <p class="price">{t.price}</p>
+      <p class="who">{t.who}</p>
+      <ul class="nf-checks">{t.features.map((f) => <li>{f.text}{f.status && <> <StatusPill status={f.status} label={statusLabels[f.status]} prefix={statusPrefix} /></>}</li>)}</ul>
+      <Button cta={t.cta} />
+    </article>
+  ))}
+</div>
+<style>
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .plan { padding: 30px 28px; display: flex; flex-direction: column; }
+  .feat { border-color: var(--color-accent); box-shadow: 0 0 0 1px var(--color-accent); }
+  h3.nf-label { font-size: 11.5px; letter-spacing: .12em; }
+  .price { font-size: 30px; margin: 14px 0 4px; letter-spacing: -.02em; font-family: var(--font-display); }
+  .who { color: var(--color-muted); font-size: 14.5px; min-height: 46px; }
+  .nf-checks { flex: 1; }
+  .plan > :global(.nf-btn), .plan > :global(.nf-btn-wrap) { margin-top: 22px; }
+  @media (max-width: 900px) { .plans { grid-template-columns: 1fr; } }
+</style>

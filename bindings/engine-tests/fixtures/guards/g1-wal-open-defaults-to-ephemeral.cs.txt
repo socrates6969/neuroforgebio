@@ -1,0 +1,25 @@
+// Regression fixture for G1 (nfb-engine, ABI 1.2 WAL keys): Wal.Open has default-null key
+// parameters and silently falls back to the ephemeral (non-persistent, in-memory-key) WAL when no
+// key is given, instead of requiring a persistent key and routing only
+// Wal.OpenEphemeralForTesting to nf_wal_open_ephemeral. A caller who forgets the key loses every
+// unsent record on a crash or restart without ever being told. This file is text only, read by
+// review-guards.test.mjs to prove walOpenRequiresPersistentKey() and ephemeralWalOnlyForTesting()
+// both flag this pattern (and find no such default/fallback in the real fix in Streaming.cs).
+namespace NeuroForge
+{
+    public sealed unsafe class Wal
+    {
+        public static Wal Open(string directory, string streamId, byte[] key32 = null, string dpapiKeyPath = null, bool fsync = true)
+        {
+            byte[] dir = Utf8.Z(directory);
+            byte[] sid = Utf8.Z(streamId);
+            int s;
+            WalHandle h;
+            if (key32 == null && string.IsNullOrEmpty(dpapiKeyPath))
+                s = NativeMethods.nf_wal_open_ephemeral(dir, sid, fsync, out h);
+            else
+                s = NativeMethods.nf_wal_open(dir, sid, null, dpapiKeyPath, fsync, out h);
+            return new Wal(h);
+        }
+    }
+}

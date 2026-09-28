@@ -1,0 +1,28 @@
+name: good
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - name: checkout, key order does not matter
+        with:
+          fetch-depth: 0
+          persist-credentials: false # APP-L5
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - run: pnpm exec cdxgen -t pnpm -o sbom.json .
+      - uses: ./.github/actions/local
+      - run: pnpm install --frozen-lockfile
+      - run: |
+          uv sync --locked
+          cargo test --workspace --locked
+          cargo fmt --all -- --check
+      # - run: pnpm install   (commented out: ignored)

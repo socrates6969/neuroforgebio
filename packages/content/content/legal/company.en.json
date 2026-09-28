@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "Company information · {brand}",
+    "description": "Draft company information for the not-yet-incorporated entity behind {brand}. Not legal advice; pending advokat review."
+  },
+  "draft": true,
+  "draftNotice": "DRAFT – not legal advice. Must be reviewed by a Norwegian lawyer (advokat) before use.",
+  "title": "Company information",
+  "shortTitle": "Company information",
+  "blocks": [
+    {
+      "type": "p",
+      "text": "ASSUMPTION: {brand} will be a Norwegian private limited company (aksjeselskap, AS). It is not yet incorporated. Every field in [brackets] is a placeholder, to be filled once the company is registered. Do not publish before that."
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "Company name",
+          "[{brand} AS]"
+        ],
+        [
+          "Business address",
+          "[street address, postcode, city, Norway]"
+        ],
+        [
+          "E-mail",
+          "[contact e-mail]"
+        ],
+        [
+          "Business register",
+          "Foretaksregisteret (Register of Business Enterprises), Brønnøysund"
+        ],
+        [
+          "Organisation number",
+          "[org.nr.]"
+        ],
+        [
+          "VAT (MVA)",
+          "[Registered in the VAT register / Not registered for VAT]"
+        ],
+        [
+          "Required authorisations",
+          "[None required for this activity – advokat to confirm]"
+        ],
+        [
+          "Owner / general manager",
+          "[Marius Carlsson – confirm role once incorporated]"
+        ]
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Related pages: [Privacy Policy](/legal/privacy) · [Terms of Use](/legal/terms) · [Cookie Statement](/legal/cookies)"
+    },
+    {
+      "type": "h2",
+      "id": "s-hjemmel-legal-basis",
+      "text": "Hjemmel / Legal basis"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "E-commerce Act (ehandelsloven, LOV-2003-05-23-35) § 8, the service provider's duty to disclose information: name, address, e-mail address and other details allowing direct contact; the business register and organisation number; VAT status; and any required authorisations with the name and address of the authority. The information must be \"enkelt og direkte tilgjengelig\" (easily and directly accessible). https://lovdata.no/lov/2003-05-23-35/§8 (opened 2026-09-26).",
+        "Whether a free marketing website alone is an \"information society service\" (§ 1: \"normally provided for remuneration\") is **UNVERIFIED**. This page is recommended regardless. The hosted platform is covered.",
+        "Whether \"authorisations\" applies to {brand}'s activity is **UNVERIFIED**; the expected answer is none."
+      ]
+    }
+  ]
+}

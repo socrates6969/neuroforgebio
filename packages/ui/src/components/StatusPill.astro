@@ -1,0 +1,12 @@
+---
+import type { Status } from '../types.ts';
+interface Props { status: Status; label: string; prefix?: string }
+const { status, label, prefix } = Astro.props;
+---
+<style>
+  .pill { display: inline-block; font: 500 11px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; padding: 6px 8px; border-radius: 3px; white-space: nowrap; }
+  .pill--designed { background: var(--color-status-designed-bg, color-mix(in srgb, var(--color-accent) 14%, transparent)); color: var(--color-status-designed-ink, var(--color-accent-ink)); }
+  .pill--planned { background: var(--color-status-planned-bg, color-mix(in srgb, var(--color-secondary) 16%, transparent)); color: var(--color-status-planned-ink, var(--color-ink)); }
+  .pill--roadmap, .pill--in-preparation { background: var(--color-status-roadmap-bg, color-mix(in srgb, var(--color-muted) 14%, transparent)); color: var(--color-status-roadmap-ink, var(--color-ink)); }
+</style>
+<span class={`pill pill--${status}`}>{prefix && <span class="nf-visually-hidden">{prefix} </span>}{label}</span>

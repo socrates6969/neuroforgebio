@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "title": "Research · {brand}",
+    "description": "Computational and methods work, published with its assumptions, code and status stated."
+  },
+  "hero": {
+    "eyebrow": "Research",
+    "heading": "Whitepapers and <em>working notes.</em>",
+    "lede": "Computational and methods work, published with its assumptions, code and status stated. Figures stay labelled preliminary until they pass our verification gate."
+  },
+  "banner": "Computational/theoretical work; any clinical application requires IRB/FDA oversight",
+  "cards": [
+    {
+      "slug": "somatosensory-closed-loop",
+      "title": "Bidirectional closed-loop somatosensory feedback: a computational study",
+      "summary": "Modelling how patterned stimulation of somatosensory cortex could encode touch, pressure and proprioception.",
+      "status": "in-preparation",
+      "kind": "Whitepaper · computational study",
+      "featured": true,
+      "banner": "Computational/theoretical work; any clinical application requires IRB/FDA oversight",
+      "href": "/research/somatosensory-closed-loop",
+      "cta": {
+        "label": "Read the preview",
+        "href": "/research/somatosensory-closed-loop",
+        "variant": "ghost"
+      }
+    },
+    {
+      "slug": "preprocessing-multiverse",
+      "title": "How preprocessing choices change decoding results: a multiverse analysis on public EEG",
+      "summary": "Running a grid of preprocessing pipelines on open EEG datasets to measure how decoding results move, with code and methods released alongside the results.",
+      "status": "planned",
+      "kind": "Methods study"
+    },
+    {
+      "slug": "hipaa-aligned-reference-architecture",
+      "title": "A reference architecture for HIPAA-aligned neural data pipelines",
+      "summary": "How encryption, access control, audit logging and consent records fit together across ingest, storage and models.",
+      "status": "planned",
+      "kind": "Architecture note"
+    }
+  ]
+}

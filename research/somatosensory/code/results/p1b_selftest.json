@@ -1,0 +1,13 @@
+{
+ "cycle1_helper_selftests(10)": true,
+ "reference_config_bit_identical_to_cycle1": true,
+ "trial_draws_unchanged": true,
+ "memory_prior_range": true,
+ "noise_free_K0_SM0.2_zero_failures": true,
+ "noise_free_K0_SM0_fails_iff_overestimate": true,
+ "no_slip_no_update": true,
+ "replace_sets_mu_hat_to_0.9mu": true,
+ "replace_can_raise_min_cannot": true,
+ "crn_p0_equals_nofb": true,
+ "delay_exact_tau": true
+}

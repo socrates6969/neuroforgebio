@@ -1,0 +1,28 @@
+# Requirements of BUILD-GUIDE 6.4 (SISA sharded training) and 6.5 (SOUP export per model version),
+# in the 5.8 traceability format (see platform.yaml for the conventions). SCAFFOLD, NOT A SUBMISSION.
+# Owner: m6-sisa.
+schema: nf.requirements/v1
+component: nf-train
+requirements:
+  - id: REQ-SISA-001
+    title: A withdrawal retrains only the affected shard; unaffected shard checkpoints are neither read nor rewritten (checkpoint audit). Not certified unlearning.
+    source: BUILD-GUIDE 6.4
+    tests:
+      - services/platform/tests/sisa/test_sisa_core.py::test_sisa_withdrawal_retrains_only_one_shard_from_the_checkpoint_before
+      - services/platform/tests/sisa/test_sisa_core.py::test_sisa_two_withdrawals_in_one_shard_and_unknown_subject
+      - services/platform/tests/sisa/test_sisa_platform.py::test_sisa_platform_withdrawal_retrains_only_one_shard
+      - services/platform/tests/sisa/test_sisa_platform.py::test_sisa_platform_superseded_checkpoint_is_unreadable
+      - services/platform/tests/sisa/test_sisa_registry.py::test_sisa_registry_soup_export_and_one_shard_retrain
+  - id: REQ-SISA-002
+    title: Accuracy after a SISA shard retrain is measured against full retraining and reported, not claimed
+    source: BUILD-GUIDE 6.4
+    tests:
+      - services/platform/tests/sisa/test_sisa_core.py::test_sisa_accuracy_vs_full_retraining_is_measured
+  - id: REQ-SOUP-001
+    title: The per-model-version SOUP export lists every dependency of the model's container SBOM and states "not intended for real-time or safety-critical control"
+    source: BUILD-GUIDE 6.5; SEC-092; SEC-083
+    tests:
+      - services/platform/tests/soup/test_soup_builder.py::test_soup_every_container_sbom_component_is_exported
+      - services/platform/tests/soup/test_soup_builder.py::test_soup_ci_sbom_every_component_is_exported
+      - services/platform/tests/soup/test_soup_builder.py::test_soup_required_sections_and_statements
+      - services/platform/tests/sisa/test_sisa_registry.py::test_sisa_registry_soup_export_and_one_shard_retrain

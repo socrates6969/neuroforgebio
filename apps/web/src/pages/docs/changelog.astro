@@ -1,0 +1,23 @@
+---
+// /docs/changelog
+import DocsShell from '../../components/DocsShell.astro';
+import StatusPill from '@nf/ui/components/StatusPill.astro';
+import { changes } from '../../lib/docs.ts';
+import { statusLabels, statusPrefix } from '../../lib/site.ts';
+import type { Status } from '@nf/content';
+import DocsJsonLd from '../../components/DocsJsonLd.astro';
+const c = changes;
+---
+<DocsShell title={c.meta.title} description={c.meta.description} eyebrow={c.eyebrow} heading={c.heading} lede={c.lede}>
+  <DocsJsonLd title={c.meta.title} description={c.meta.description} path="/docs/changelog/" />
+  {c.entries.map((e, i) => (
+    <section id={`release-${i}`} aria-labelledby={`h-release-${i}`}>
+      <h2 id={`h-release-${i}`}>{e.version}</h2>
+      {e.status && <p><StatusPill status={e.status as Status} label={statusLabels[e.status as Status]} prefix={statusPrefix} /></p>}
+      <ul class="items">{e.items.map((it) => <li>{it}</li>)}</ul>
+    </section>
+  ))}
+</DocsShell>
+<style>
+  .items { margin: 14px 0 0; padding-left: 20px; display: grid; gap: 8px; max-width: 76ch; color: var(--color-muted); }
+</style>

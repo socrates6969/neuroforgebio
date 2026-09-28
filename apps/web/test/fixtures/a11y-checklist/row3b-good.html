@@ -1,0 +1,15 @@
+<!-- Row 3b PASSING fixture (paired with row3b-good.js): the hidden live region only ever gets a
+     short textContent update; the visible card re-renders in full via innerHTML, but it is not
+     itself aria-live, so that's fine. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <p class="nf-visually-hidden" aria-live="polite" data-run-live></p>
+    <div class="run-card" data-run-card>
+      <p class="empty">Run a decoder to see its evaluation card.</p>
+    </div>
+  </body>
+</html>

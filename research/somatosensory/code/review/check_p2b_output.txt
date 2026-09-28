@@ -1,0 +1,10 @@
+contact mask identical to a>0 for both encoders: True
+weber: d'_bio 0.5422 d'_lin 0.0170 Delta 0.5252  AUC bio [0.649 0.506] lin [0.499 0.505]
+fv: d'_bio 0.1295 d'_lin 0.0174 Delta 0.1121  AUC bio [0.536 0.51 ] lin [0.499 0.505]
+hs: d'_bio 0.0770 d'_lin 0.0221 Delta 0.0550  AUC bio [0.522 0.506] lin [0.501 0.506]
+V_FV = 0.7865   V_HS = 0.8953
+coder JSON: Delta W/FV/HS 0.5252/0.1121/0.0550, V_FV 0.7865, V_HS 0.8953
+variance-only probe, bio sd course of arm weber: d' 0.4889 AUC [0.635 0.504]
+variance-only probe, bio sd course of arm fv: d' 0.0533 AUC [0.515 0.508]
+HS per-sample sd 141.53; MC JND 13.41 (target 13.5)
+mean rbar bio 60.309 lin 60.256

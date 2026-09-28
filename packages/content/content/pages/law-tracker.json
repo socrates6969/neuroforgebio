@@ -1,0 +1,145 @@
+{
+  "meta": {
+    "title": "Neural-data law tracker · {brand}",
+    "description": "A draft of US state, US federal and EU rules that touch neural data, generated from the platform rule files, with a source for every row. Not legal advice."
+  },
+  "hero": {
+    "eyebrow": "Law tracker · draft",
+    "heading": "Neural-data law, <em>row by row.</em>",
+    "lede": "Which laws touch neural data, how each one defines it, and where each statement comes from. The table is generated from the same rule files the platform uses to classify channels. Rows whose source we could not verify are marked unverified."
+  },
+  "banner": "Not legal advice. This is a research summary for product planning. Engage qualified counsel before relying on it.",
+  "asOf": "2026-09-26",
+  "legend": {
+    "verified": "Checked against the source cited in the row.",
+    "unverified": "Unverified: the primary text or current status was not opened. Read it as a lead, not a fact."
+  },
+  "ruleset": {
+    "heading": "Rules the platform encodes",
+    "intro": "One row per rule in the jurisdiction RuleSet. Every rule is a draft until counsel reviews it, and counsel review is still pending.",
+    "generatedFrom": "Generated at build time from RuleSet",
+    "hashLabel": "Content hash",
+    "caption": "Neural-data rules encoded in the RuleSet: jurisdiction, citation, effective date, what each rule covers and its review status.",
+    "columns": {
+      "jurisdiction": "Jurisdiction",
+      "citation": "Citation and source",
+      "effective": "Effective date",
+      "covers": "What it covers",
+      "review": "Review status"
+    },
+    "badges": {
+      "draft": "Draft: encoded from our research notes, not reviewed by counsel",
+      "unverified": "Unverified: the primary text was not opened; the platform does not evaluate this rule",
+      "counselReviewed": "Reviewed by counsel"
+    },
+    "effectiveNone": "Not stated in our research notes",
+    "definitionLabel": "Definition quoted in the source",
+    "absenceNote": "A law missing from this table was not encoded in the RuleSet. That says nothing about whether it applies to you.",
+    "contextHeading": "Context not encoded in the RuleSet",
+    "contextIntro": "Research notes that the platform does not evaluate: bills, federal context and rules that apply to models rather than channels."
+  },
+  "groups": [
+    {
+      "id": "us-states",
+      "heading": "US states",
+      "intro": "Bills that the reviews name but that we have not opened. They are not encoded as rules.",
+      "rows": [
+        {
+          "id": "other-states",
+          "jurisdiction": "Other states",
+          "instrument": "Bills under consideration",
+          "status": "Status of each bill not verified",
+          "text": "Peer-reviewed reviews list bills under consideration in Alabama, Massachusetts, Minnesota, Illinois and Vermont.",
+          "verified": false,
+          "note": "Named in reviews only; the bills and their status were not opened.",
+          "source": "market/regulation.md §1",
+          "sourceUrl": "https://doi.org/10.1038/s44319-025-00505-6",
+          "grade": "A"
+        }
+      ]
+    },
+    {
+      "id": "us-federal",
+      "heading": "US federal",
+      "rows": [
+        {
+          "id": "us-mind-act",
+          "jurisdiction": "United States (federal)",
+          "instrument": "MIND Act of 2025 (Management of Individuals' Neural Data)",
+          "status": "Introduced September 2025; bill number, sponsors and current status not verified",
+          "text": "The bill defined neural data and directed the Federal Trade Commission to study how to regulate it.",
+          "verified": false,
+          "note": "That the bill was introduced is reported in a peer-reviewed article; its number, sponsors and current status were not opened.",
+          "source": "market/regulation.md §2",
+          "sourceUrl": "https://doi.org/10.1212/wnl.0000000000214942",
+          "grade": "A"
+        },
+        {
+          "id": "us-no-federal-statute",
+          "jurisdiction": "United States (federal)",
+          "instrument": "No federal neural-data statute",
+          "status": "As of the source review",
+          "text": "No federal statute regulates neural data; federal governance of neurotechnology is mostly soft policy.",
+          "verified": true,
+          "source": "market/regulation.md §2",
+          "sourceUrl": "https://doi.org/10.1111/bioe.70062",
+          "grade": "A"
+        },
+        {
+          "id": "us-hipaa-scope",
+          "jurisdiction": "United States (federal)",
+          "instrument": "HIPAA",
+          "status": "Federal law",
+          "text": "HIPAA applies to covered entities and their business associates. Many consumer, wellness and research-only neurotech companies are not covered entities, so state privacy laws are their binding constraint.",
+          "verified": true,
+          "note": "The second sentence is our reading of scope, not legal advice.",
+          "source": "market/regulation.md §3",
+          "grade": "A"
+        }
+      ]
+    },
+    {
+      "id": "eu",
+      "heading": "European Union",
+      "rows": [
+        {
+          "id": "eu-ai-act-art5",
+          "jurisdiction": "European Union",
+          "instrument": "EU AI Act, Art. 5(1)(f)",
+          "status": "Applicable from 2 Feb 2025",
+          "text": "Bans AI systems that infer emotions of people in workplace and education settings, except for medical or safety reasons.",
+          "verified": true,
+          "note": "Cited from a secondary site that reproduces the article text (grade B).",
+          "source": "market/regulation.md §5",
+          "sourceUrl": "https://artificialintelligenceact.eu/article/5",
+          "grade": "B"
+        }
+      ]
+    },
+    {
+      "id": "context",
+      "heading": "Other jurisdictions (context)",
+      "rows": [
+        {
+          "id": "cl-constitution",
+          "jurisdiction": "Chile",
+          "instrument": "2021 constitutional amendment",
+          "status": "Amended 2021; court ruling 2023",
+          "text": "Protects cerebral activity and the information drawn from it; in 2023 the Supreme Court ordered neural-data deletion.",
+          "verified": true,
+          "source": "market/regulation.md §5",
+          "sourceUrl": "https://doi.org/10.1038/s44319-025-00505-6",
+          "grade": "A"
+        }
+      ]
+    }
+  ],
+  "openHeading": "Open questions",
+  "openItems": [
+    "Montana SB 163 statute text.",
+    "MIND Act bill number, sponsors and status.",
+    "Status of the Massachusetts, Minnesota, Illinois, Vermont and Alabama bills.",
+    "Whether Colorado's sensitive-data consent rules apply at the controller-size thresholds relevant to startups."
+  ],
+  "sourceNote": "Every row cites the section of our research notes it comes from, plus the primary or peer-reviewed source named there. The rules table is regenerated from the rule files at every site build; the context rows are maintained by hand."
+}

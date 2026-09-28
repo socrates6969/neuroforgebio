@@ -1,0 +1,5 @@
+{
+  "rule": "Lead ruling 2026-09-27: a budget may be raised only by the measured bytes of a named addition (node tools/web/perf-audit.mjs --jsonld on a build that contains it), with the reason and the measured SHA here. No blanket raises. Remove an entry when budgets are next regenerated from a build that already contains the addition.",
+  "clinical": {},
+  "cosmos": {}
+}

@@ -1,0 +1,41 @@
+---
+import type { StatusLabels, UiLink } from '../types.ts';
+import StatusPill from './StatusPill.astro';
+// `lang` on a group / `textLang` on the copy: set when it differs from the page language
+// (English site copy on a Norwegian page).
+interface Props { tagline: string; disclaimer: string; copyright: string; groups: { heading: string; links: UiLink[]; lang?: string }[]; navLabel: string; statusLabels: StatusLabels; homeHref?: string; textLang?: string }
+const { tagline, disclaimer, copyright, groups, navLabel, statusLabels, homeHref = '/', textLang } = Astro.props;
+---
+<footer class="site-foot">
+  <div class="nf-wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href={homeHref}><slot name="brand" /></a>
+        <p class="tag" lang={textLang}>{tagline}</p>
+      </div>
+      <nav aria-label={navLabel} class="groups">
+        {groups.map((g) => (
+          <div lang={g.lang}>
+            <p class="nf-label">{g.heading}</p>
+            <ul>{g.links.map((l) => <li>{l.status ? <span>{l.label} <StatusPill status={l.status} label={statusLabels[l.status]} /></span> : <a href={l.href}>{l.label}</a>}</li>)}</ul>
+          </div>
+        ))}
+      </nav>
+    </div>
+    <div class="fine" lang={textLang}><span>{disclaimer}</span><span>{copyright}</span></div>
+  </div>
+</footer>
+<style>
+  .site-foot { border-top: 1px solid var(--color-line); padding: 48px 0 40px; margin-top: 96px; font-size: 14px; color: var(--color-muted); }
+  .foot { display: grid; grid-template-columns: 1.4fr 2fr; gap: 32px; }
+  .groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 32px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--color-ink); text-decoration: none; font-weight: 600; }
+  .tag { margin-top: 10px; max-width: 40ch; }
+  ul { list-style: none; margin: 10px 0 0; padding: 0; }
+  li { padding: 4px 0; }
+  a { color: var(--color-muted); }
+  .groups a { text-decoration: none; }
+  .groups a:hover { color: var(--color-ink); text-decoration: underline; }
+  .fine { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--color-line); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font: 400 12px var(--font-mono); }
+  @media (max-width: 700px) { .foot { grid-template-columns: 1fr; } }
+</style>

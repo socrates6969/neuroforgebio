@@ -1,0 +1,14 @@
+[workspace]
+resolver = "3"
+members = ["core/nf-core", "bindings/python", "bindings/c", "tools/arena-core", "tools/site-rs"]
+
+[workspace.package]
+edition = "2024"
+rust-version = "1.95"
+license = "LicenseRef-Proprietary"
+publish = false
+
+# Debug builds only on the owner's PC (RAM). Release/wheels are CI-only.
+[profile.dev]
+debug = 1
+incremental = true

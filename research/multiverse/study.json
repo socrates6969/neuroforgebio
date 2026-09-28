@@ -1,0 +1,37 @@
+{
+  "schema": "nf.multiverse-study/v1",
+  "id": "preprocessing-decoding-multiverse",
+  "title": "How preprocessing choices change decoding results",
+  "status": "planned",
+  "status_label": "Planned / in preparation",
+  "question": "How much does cross-validated decoding accuracy on public EEG data move when only the preprocessing pipeline changes (high-pass cutoff, low-pass cutoff, line-noise notch), with the classifier, features, data and seed held fixed?",
+  "motivation": [
+    {
+      "claim": "All artifact-correction steps reduced decoding performance, while higher high-pass cutoffs increased it.",
+      "source": "market/landscape.md §3 (Kessler et al., Commun Biol 2025, doi:10.1038/s42003-025-08464-3)"
+    },
+    {
+      "claim": "43 pipelines tested; no single best pipeline.",
+      "source": "market/landscape.md §3 (Huang et al., Psychophysiology 2025, doi:10.1111/psyp.70197)"
+    }
+  ],
+  "base_pipeline": "research/multiverse/pipelines/base.json",
+  "grid": {
+    "filter.l_freq": [0.1, 0.5, 1.0, 2.0],
+    "filter.h_freq": [30.0, 40.0],
+    "notch.freqs": [[50.0], [60.0]]
+  },
+  "metric": { "step": "decode", "key": "accuracy", "higher_is_better": true },
+  "datasets_manifest": "research/multiverse/datasets.json",
+  "dataset_specific_todo": [
+    "notch.freqs: keep only the dataset's mains frequency (50 or 60 Hz) once a dataset is chosen",
+    "epochs.event_codes / tmin / tmax: set from the dataset's task events",
+    "base pipeline sampling-rate-dependent parameters (band_power.n_fft, n_per_seg) from the dataset"
+  ],
+  "reproducibility": "Every figure cell cites the run IDs and provenance node IDs of the platform runs that produced it; an independent re-run from those IDs must reproduce every figure (BUILD-GUIDE 3.9).",
+  "publication": {
+    "published": false,
+    "owner_gate": "Nothing is published without the owner's explicit approval; claims are graded before any text leaves research/.",
+    "claims": []
+  }
+}

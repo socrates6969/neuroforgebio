@@ -1,0 +1,40 @@
+{
+  "paper": "somatosensory-closed-loop",
+  "generatedBy": "packages/figures/scripts/pin.mjs (hashes and commits); plot specs by nfb-frontend. Axis units are taken from research/somatosensory/code/RESULTS_P1_P2.md and RESULTS_P3_P4.md. Fields are plotted as stored; nothing is recomputed.",
+  "figures": [
+    {
+      "id": "p4-capacity-heatmap",
+      "status": "preliminary",
+      "result": {
+        "path": "research/somatosensory/code/results/p4_pooling_capacity.json",
+        "sha256": "1b1921a5de3ff844cc83b80e7ef4fbca1da89587337ee2496f615c47358844bd"
+      },
+      "staticSvg": {
+        "path": "research/somatosensory/code/figures/p4_capacity_vs_M.svg",
+        "sha256": "ab8c4c17e6ba177397d4b5c20f8a490a68011f26b47c7d01b8360901e4530bd3"
+      },
+      "script": {
+        "path": "research/somatosensory/code/p4_pooling_capacity.py",
+        "sha256": "acaa0ec878a4a47f9462af08a56138d617369c1529a6ef3380bec32f7ad2bcad",
+        "commit": "455986f4b73a63d472ef40e5832b30bbb312c8a3"
+      },
+      "plot": {
+        "kind": "heatmap",
+        "base": ["B", "table"],
+        "key": "0|{row}|{col}",
+        "field": "C",
+        "rows": {
+          "values": ["0.128", "0.162", "0.225", "0.268"],
+          "label": "w (B.table key 0|w|M)"
+        },
+        "cols": {
+          "values": ["1", "2", "4", "8", "16", "32", "64", "256", "1024"],
+          "label": "M (electrodes)"
+        },
+        "value": {
+          "label": "C (bits/symbol)"
+        }
+      }
+    }
+  ]
+}

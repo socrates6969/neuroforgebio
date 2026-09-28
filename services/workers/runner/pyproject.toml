@@ -1,0 +1,20 @@
+# nf-runner: the pipeline worker process (BUILD-GUIDE 3.3). Imports nf_platform (queue, runs, storage) and
+# nf_steps; never nf_platform.api (services/workers/.importlinter). Tested from the repo root (root
+# pyproject.toml adds this directory to pytest's pythonpath/testpaths); DB tests live in
+# services/platform/tests/jobs (one Postgres cluster per session).
+[project]
+name = "nf-runner"
+version = "0.1.0"
+description = "Postgres-queue worker: leases, heartbeats, retries, sandboxed step runners, provenance-before-visibility runs."
+requires-python = "==3.12.*"
+dependencies = ["nf-platform", "nf-steps"]
+
+[project.scripts]
+nf-worker = "nf_runner.__main__:main"
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["nf_runner"]

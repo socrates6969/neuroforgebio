@@ -1,0 +1,232 @@
+---
+// Neural interface in 3D: an illustrative WebGL scene (anatomy and device are drawings) whose firing
+// is replayed from the same open MC_RTT recording as /playground, and whose cursor and simulated arm
+// follow the precomputed ridge-filter output on test reaches. three.js is bundled and loaded only by
+// a dynamic import on this route (src/scripts/interface.ts). A still image stands in when WebGL is
+// missing or reduced motion is on. ?record=1 gives a fixed camera path and window.__seek(t) for video.
+// Graphics only; no hardware is controlled.
+import { Picture, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import JsonLd from '../components/JsonLd.astro';
+import SectionHead from '@nf/ui/components/SectionHead.astro';
+import Banner from '@nf/ui/components/Banner.astro';
+import { canonicalUrl, content, organizationJsonLd } from '../lib/site.ts';
+import { datasetSchema, parseDatasetCitation, webApplicationSchema } from '../lib/jsonld.ts';
+import raw from '../assets/playground/mc-rtt-playground.json';
+// The @theme alias resolves to one theme per build, so only this theme's still is emitted.
+import still from '@theme/stills/interface-still.jpg';
+import { parsePlayground } from '../lib/playground-data.mjs';
+import { unitsByElectrode } from '../lib/interface-model.mjs';
+
+const ix = content.pages.interface;
+// fallback still rendered from this scene in the same theme (tools/playground/README.md, Stills)
+// AVIF made at build time (sharp); the script-inserted still uses it with the JPEG as fallback.
+const stillAvif = await getImage({ src: still, format: 'avif' });
+// Responsive widths for the <noscript> <Picture>.
+const stillWidths = [640, 1280, still.width].filter((w, i, a) => w <= still.width && a.indexOf(w) === i);
+// .nf-wrap: max 1200px with 24px side padding (16px at <=420px), so the stage is at most 1152px
+const stillSizes = '(max-width: 420px) calc(100vw - 32px), (max-width: 1200px) calc(100vw - 48px), 1152px';
+const c = ix.controls;
+const model = parsePlayground(raw);
+const ds = model.dataset;
+const byElectrode = unitsByElectrode(model.unitElectrode);
+const electrodeIds = [...byElectrode.keys()].sort((a, b) => a - b);
+const layerKeys = ['tissue', 'electrodes', 'signals', 'decoder'] as const;
+const dandiUrl = `https://dandiarchive.org/dandiset/${ds.dandiset}/${ds.version}`;
+const licenceUrl = ds.licence === 'CC-BY-4.0' ? 'https://creativecommons.org/licenses/by/4.0/' : undefined;
+const doiUrl = `https://doi.org/${ds.doi}`;
+// JSON-LD (web-seo T5b, docs/hive/SEO-JSONLD-PLAYGROUND-INTERFACE-PROPOSAL.md): every field below is
+// read from the same validated `ds` (dataset) object the page already cites above, never invented.
+// No accuracy numbers in the JSON-LD; isBasedOn cites the DOI, it never claims this page shows the
+// raw, unmodified dataset (the CC-BY notice already on the page states what was changed).
+// Trimmed per web-queen/nfb-playground (perf budget, T5b review): no alternateName/sameAs (the DOI in
+// identifier/url already resolves the dataset; the DANDI page is one click from there via the page's
+// own visible dandiUrl link) and no WebApplication.description (already carried by this page's own
+// meta/og description tags, so repeating it in JSON-LD is optional weight, not new information).
+// creator/datePublished/name are derived from ds.citation (not hardcoded), so a re-pointed dataset
+// version can never silently drift from the visible citation; no Dataset node if it doesn't parse.
+const cited = parseDatasetCitation(ds.citation);
+const datasetNode =
+  licenceUrl && cited
+    ? datasetSchema({
+        name: cited.name,
+        creatorName: cited.creatorName,
+        datePublished: cited.datePublished,
+        licenseUrl: licenceUrl,
+        doiUrl,
+        citation: ds.citation,
+        description:
+          'Spike times and cursor paths from a monkey motor-cortex recording, used in derived form (binned and decoded) by this demo.',
+      })
+    : undefined;
+const webAppNode = webApplicationSchema({
+  title: ix.meta.title,
+  url: canonicalUrl('/interface/'),
+  brand: content.brand.name,
+  isBasedOnUrl: doiUrl,
+});
+const schema = datasetNode ? [organizationJsonLd, datasetNode, webAppNode] : [organizationJsonLd, webAppNode];
+---
+<Base title={ix.meta.title} description={ix.meta.description}>
+  <JsonLd schema={schema} />
+  <section class="nf-section head" aria-labelledby="h-ix">
+    <div class="nf-wrap">
+      <SectionHead id="h-ix" level={1} eyebrow={ix.hero.eyebrow} heading={ix.hero.heading} lede={ix.hero.lede} />
+      <Banner text={ix.banner} tone="caution" id="ix-disclaimer" />
+      <p class="back"><a href={ix.playgroundLink.href}>{ix.playgroundLink.label}</a></p>
+    </div>
+  </section>
+
+  <section class="nf-section demo" aria-label={c.heading}>
+    <div class="nf-wrap">
+      <div class="ix" data-interface data-play={c.play} data-pause={c.pause} data-of={c.of}
+        data-trial={c.trial} data-unit-word={c.unitWord} data-units-word={c.unitsWord} data-electrode={c.electrode}>
+        <div class="stage" data-ix-stage role="img" aria-label={ix.sceneLabel}
+          data-still-src={still.src} data-still-avif={stillAvif.src} data-still-width={still.width} data-still-height={still.height} data-still-alt={ix.fallback.alt}>
+          {/* The still costs nothing on the normal path: JS off -> <noscript>; no WebGL or reduced
+              motion -> interface.ts inserts it from these data attributes. */}
+          <noscript><Picture src={still} formats={['avif']} fallbackFormat="jpg" widths={stillWidths} sizes={stillSizes}
+            loading="eager" fetchpriority="high" alt={ix.fallback.alt} class="still" /></noscript>
+          <div class="overlay" data-ix-overlay aria-hidden="true" hidden>
+            {Object.entries(ix.labels).map(([k, text]) => <span class="tag" data-ix-label={k}>{text}</span>)}
+            <p class="caption" data-ix-caption></p>
+            <p class="credit">{ix.recordCredit} ({ds.shortName}, DANDI {ds.dandiset}, {ds.licence})</p>
+          </div>
+        </div>
+        <p class="still-cap" data-ix-still-caption hidden>{ix.fallback.caption}</p>
+        <noscript><p class="still-cap">{ix.fallback.caption}</p><p class="status">{ix.fallback.noscript}</p></noscript>
+        <ul hidden data-ix-captions>
+          {Object.entries(ix.tour).map(([k, text]) => <li data-key={k}>{text}</li>)}
+        </ul>
+        <p class="nf-visually-hidden" aria-live="polite" data-ix-live></p>
+        <p class="status" data-ix-status hidden>{ix.loading}</p>
+        <p class="status" data-ix-nowebgl hidden>{ix.fallback.noWebgl}</p>
+        <div class="status" data-ix-reduced hidden>
+          <p>{ix.fallback.reducedMotion}</p>
+          <button type="button" class="nf-btn nf-btn--primary" data-ix-show>{ix.fallback.show}</button>
+        </div>
+
+        <form class="controls nf-card" data-ix-controls data-ix-needs-scene hidden aria-labelledby="h-ix-controls">
+          <h2 id="h-ix-controls" class="nf-visually-hidden">{c.heading}</h2>
+          <div class="row">
+            <button type="button" class="nf-btn nf-btn--primary" data-ix-play disabled>{c.play}</button>
+            <button type="button" class="nf-btn nf-btn--ghost" data-ix-tour aria-pressed="false" disabled>{c.tour}</button>
+            <button type="button" class="nf-btn nf-btn--ghost" data-ix-reset disabled>{c.reset}</button>
+            <button type="button" class="nf-btn nf-btn--ghost sq" data-ix-zoom="0.8" aria-label={c.zoomIn} disabled>+</button>
+            <button type="button" class="nf-btn nf-btn--ghost sq" data-ix-zoom="1.25" aria-label={c.zoomOut} disabled>−</button>
+            <output class="mono readout" data-ix-readout aria-live="off"></output>
+          </div>
+          <div class="row">
+            <fieldset>
+              <legend class="lbl">{c.layers}</legend>
+              {layerKeys.map((k) => (
+                <label class="check"><input type="checkbox" data-ix-layer={k} checked disabled /> {c.layerNames[k]}</label>
+              ))}
+            </fieldset>
+            <label class="pick">
+              <span class="lbl">{c.inspect}</span>
+              <select data-ix-inspect disabled>
+                <option value="">{c.inspectNone}</option>
+                {electrodeIds.map((e) => (
+                  <option value={String(e)}>{c.electrode} {e} · {byElectrode.get(e)?.length} {byElectrode.get(e)?.length === 1 ? c.unitWord : c.unitsWord}</option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <p class="hint" id="ix-hint">{c.orbitHint}</p>
+        </form>
+
+        <div class="inspect nf-card" data-ix-needs-scene hidden aria-labelledby="h-ix-inspect">
+          <h2 id="h-ix-inspect" class="panel-h">{ix.inspect.heading} <span class="mono" data-ix-inspect-title></span></h2>
+          <p class="muted" data-ix-inspect-empty>{ix.inspect.empty}</p>
+          <p class="muted" data-ix-inspect-nounits hidden>{ix.inspect.noUnits}</p>
+          <div class="traces" data-ix-inspect-body hidden>
+            <figure>
+              <figcaption>{ix.inspect.trace}</figcaption>
+              <canvas class="cv" data-ix-trace width="600" height="140" aria-hidden="true"></canvas>
+              <p class="note">{ix.inspect.traceNote}</p>
+            </figure>
+            <figure>
+              <figcaption>{ix.inspect.raster}</figcaption>
+              <canvas class="cv" data-ix-raster width="600" height="90" aria-hidden="true"></canvas>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="nf-section band" aria-labelledby="h-ix-notes">
+    <div class="nf-wrap">
+      <h2 id="h-ix-notes">{ix.notes.heading}</h2>
+      <ul class="notes">{ix.notes.items.map((it) => <li>{it}</li>)}</ul>
+      <p class="src">
+        <a href={dandiUrl} rel="noopener noreferrer">{ds.shortName}, DANDI {ds.dandiset}</a>, {ds.licence}. {ds.citation}
+      </p>
+    </div>
+  </section>
+</Base>
+<script>
+  import '../scripts/interface.ts';
+</script>
+<style>
+  .head { padding-bottom: 8px; }
+  .back { margin-top: 16px; }
+  .demo { padding-top: 24px; }
+  .stage { position: relative; width: 100%; aspect-ratio: 16 / 9; min-height: 280px; border-radius: var(--radius-card); overflow: hidden; background: var(--color-bg); border: 1px solid var(--color-line); }
+  .stage:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+  .stage :global(canvas) { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+  /* :global: the still is created by the script or lives in <noscript>, outside Astro's scoping */
+  /* the script-inserted <picture data-ix-still> fills the stage itself, so the element that carries
+     data-ix-still has a real box (a bare <picture> around an absolutely positioned <img> has none) */
+  .stage :global(picture[data-ix-still]) { position: absolute; inset: 0; display: block; }
+  .stage :global(.still) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .overlay { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+  /* Square corners: the only pixels of a label that differed between two renders of the same
+     record-mode frame were its antialiased rounded corners (browser compositing history); straight
+     edges on whole pixels are not antialiased, so labels now render identically every time. */
+  .tag { position: absolute; top: 0; padding: 3px 8px; border-radius: 0; font: 500 12px var(--font-mono); color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-line); white-space: nowrap; left: -9999px; }
+  .caption { position: absolute; left: 16px; right: 16px; bottom: 36px; margin: 0; max-width: 70ch; padding: 10px 14px; font-size: 15px; color: var(--color-ink); background: var(--color-surface); border-left: 3px solid var(--color-accent); border-radius: 0 4px 4px 0; }
+  .caption:empty { display: none; }
+  .credit { position: absolute; left: 12px; bottom: 6px; margin: 0; padding: 2px 6px; border-radius: 3px; font: 400 11px var(--font-mono); color: var(--color-muted); background: var(--color-bg); }
+  .status { margin: 14px 0 0; color: var(--color-muted); display: grid; gap: 10px; justify-items: start; }
+  .still-cap { margin: 8px 0 0; font-size: 13.5px; color: var(--color-muted); max-width: 80ch; }
+  .tag.is-off { visibility: hidden; }
+  .still-cap[hidden], .status[hidden], .tag[hidden], .controls[hidden], .inspect[hidden] { display: none; }
+  .controls { margin-top: 16px; padding: 16px 18px; display: grid; gap: 14px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; }
+  .sq { min-width: 44px; justify-content: center; }
+  .readout { margin-left: auto; font-size: 13.5px; color: var(--color-muted); }
+  .mono { font-family: var(--font-mono); }
+  fieldset { border: 1px solid var(--color-line); border-radius: 4px; margin: 0; padding: 8px 12px 10px; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  legend { padding: 0 4px; }
+  .lbl { font: 500 12px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--color-muted); }
+  .check { display: inline-flex; gap: 6px; align-items: center; min-height: 28px; font-size: 14px; }
+  .pick { display: flex; flex-direction: column; gap: 4px; }
+  select { font: inherit; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 4px; padding: 6px 8px; min-height: 36px; }
+  select option { background: var(--color-bg); color: var(--color-ink); }
+  .hint { font-size: 13.5px; color: var(--color-muted); }
+  .inspect { margin-top: 16px; padding: 18px; display: grid; gap: 10px; }
+  .panel-h { font-size: 16px; font-weight: 500; }
+  .muted, .note { color: var(--color-muted); font-size: 14px; }
+  .traces { display: grid; gap: 14px; }
+  .traces figure { margin: 0; display: grid; gap: 6px; }
+  .traces figcaption { font-size: 13.5px; }
+  .cv { width: 100%; height: 140px; background: var(--color-bg); border: 1px solid var(--color-line); border-radius: 4px; }
+  [data-ix-raster] { height: 90px; }
+  .band { background: var(--color-surface); border-top: 1px solid var(--color-line); border-bottom: 1px solid var(--color-line); }
+  .notes { margin: 14px 0 0; padding-left: 20px; display: grid; gap: 6px; color: var(--color-muted); max-width: 80ch; }
+  .src { margin-top: 16px; font-size: 13.5px; color: var(--color-muted); overflow-wrap: anywhere; }
+  /* record mode (?record=1): the scene fills the viewport for frame capture; chrome hidden */
+  :global(html.nf-rec body > header), :global(html.nf-rec body > footer), :global(html.nf-rec .nf-skip) { display: none; }
+  :global(html.nf-rec) .head, :global(html.nf-rec) .band, :global(html.nf-rec) .controls, :global(html.nf-rec) .inspect { display: none; }
+  :global(html.nf-rec) .demo { padding: 0; }
+  :global(html.nf-rec) .demo :global(.nf-wrap) { max-width: none; padding: 0; }
+  :global(html.nf-rec) .stage { width: 100vw; height: 100vh; aspect-ratio: auto; border: 0; border-radius: 0; }
+  @media (max-width: 700px) {
+    .stage { aspect-ratio: 4 / 5; }
+    .caption { font-size: 13.5px; bottom: 30px; }
+    .tag { padding: 2px 6px; font-size: 11px; }
+    .readout { margin-left: 0; }
+  }
+</style>

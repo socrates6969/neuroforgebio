@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import SectionHead from '@nf/ui/components/SectionHead.astro';
+import Banner from '@nf/ui/components/Banner.astro';
+import ResearchCards from '@nf/ui/components/ResearchCards.astro';
+import { content, organizationJsonLd, statusLabels, statusPrefix } from '../../lib/site.ts';
+const r = content.pages.research;
+---
+<Base title={r.meta.title} description={r.meta.description}>
+  <JsonLd schema={organizationJsonLd} />
+  <section class="nf-section" aria-labelledby="h-research">
+    <div class="nf-wrap">
+      <SectionHead id="h-research" level={1} eyebrow={r.hero.eyebrow} heading={r.hero.heading} lede={r.hero.lede} />
+      <Banner text={r.banner} tone="caution" />
+      <div class="cards"><ResearchCards cards={r.cards} statusLabels={statusLabels} statusPrefix={statusPrefix} headingLevel={2} /></div>
+    </div>
+  </section>
+</Base>
+<style>
+  .cards { margin-top: 40px; }
+</style>

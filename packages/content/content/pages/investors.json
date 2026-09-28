@@ -1,0 +1,278 @@
+{
+  "meta": {
+    "title": "For investors · {brand}",
+    "description": "Versioned, comparable pipelines and neural-data governance for neurotechnology teams. Pre-release: not deployed, no customers yet."
+  },
+  "hero": {
+    "eyebrow": "Investors",
+    "heading": "Evidence layer for <em>regulated neural data.</em>",
+    "lede": "Neurotech teams need to show what was done to their data and what they are allowed to do with it. Several state neural-data laws are in force, and none of the neural-data tools and services in our market review offers neural-specific consent, deletion and audit."
+  },
+  "banner": "Pre-release. Not deployed. No customers yet.",
+  "sections": [
+    {
+      "id": "problem",
+      "heading": "Why this <em>matters now.</em>",
+      "body": [
+        "Results depend on preprocessing choices that are rarely shared, and the laws that now cover neural data do not agree on what it is."
+      ],
+      "items": [
+        {
+          "heading": "Preprocessing choices change results",
+          "body": "Artifact correction and filter settings change decoding performance, and in one comparison of dozens of pipelines, none was best overall."
+        },
+        {
+          "heading": "Few papers share their pipelines",
+          "body": "A systematic review of EEG-BCI publications found that only a minority made their code or pipelines available."
+        },
+        {
+          "heading": "States disagree on what neural data is",
+          "body": "Colorado and California cover the central or peripheral nervous system; Connecticut covers the central nervous system only. One EMG or EEG recording can be neural data in one state and not in the next."
+        },
+        {
+          "heading": "Clinical teams need documented evidence",
+          "body": "FDA guidance says implanted BCIs should generally follow the Enhanced Documentation Level for device software."
+        }
+      ],
+      "evidence": [
+        {
+          "text": "All artifact-correction steps reduced decoding performance; higher high-pass cutoffs increased it (Kessler et al., Commun Biol 2025).",
+          "source": "market/landscape.md §3",
+          "grade": "A"
+        },
+        {
+          "text": "Across 43 pipelines there was \"no single best pipeline\" (Huang et al., Psychophysiology 2025).",
+          "source": "market/landscape.md §3",
+          "grade": "A"
+        },
+        {
+          "text": "Of 129 EEG-BCI publications, 20.9% made code or pipelines available (Peksa et al., Sensors 2026).",
+          "source": "market/landscape.md §3",
+          "grade": "A"
+        },
+        {
+          "text": "Colorado HB24-1058 and California SB 1223 define neural data by the central or peripheral nervous system; Connecticut PA 25-113 by the central nervous system only; California excludes data inferred from non-neural information.",
+          "source": "market/regulation.md §1",
+          "grade": "A"
+        },
+        {
+          "text": "Our review of 22 neural-data tools and services (e.g. BrainFlow, LSL, MNE-Python, DANDI, OpenNeuro, Flywheel, AWS) found no neural-specific privacy tooling; every open tool lacks consent, deletion and audit features.",
+          "source": "market/landscape.md §3"
+        },
+        {
+          "text": "FDA's implanted BCI guidance (issued 20 May 2021) notes that implanted BCIs \"should generally address the recommendations for an Enhanced Documentation Level\".",
+          "source": "market/regulation.md §4",
+          "grade": "A"
+        }
+      ]
+    },
+    {
+      "id": "regulatory",
+      "heading": "The regulatory <em>driver.</em>",
+      "body": [
+        "Neural data has moved into protected categories in several US states, the EU restricts emotion inference, and investors are funding neurotech devices."
+      ],
+      "items": [
+        {
+          "heading": "State laws in force",
+          "body": "Colorado, California and Connecticut have enacted neural-data protections, and a peer-reviewed review reports that Montana has too. A federal bill, the MIND Act, has been introduced."
+        },
+        {
+          "heading": "EU limits on emotion models",
+          "body": "The EU AI Act bans emotion inference in workplace and education settings, except for medical or safety reasons."
+        },
+        {
+          "heading": "Implants moving into clinical use",
+          "body": "Implant makers have received FDA clearances and clinical-study approvals."
+        },
+        {
+          "heading": "Capital is reaching the sector",
+          "body": "In the year covered by the cited review, neurotech devices drew more venture funding than any other type of medical device."
+        }
+      ],
+      "evidence": [
+        {
+          "text": "Colorado HB24-1058 effective 7 Aug 2024; California SB 1223 chaptered 28 Sep 2024; Connecticut PA 25-113 signed 24 Jun 2025, CTDPA sections effective 1 Jul 2026.",
+          "source": "market/regulation.md §1",
+          "grade": "A"
+        },
+        {
+          "text": "Montana adopted SB 163 in May 2025, per Cabrera et al., Bioethics 2026. The statute text itself has not been opened.",
+          "source": "market/regulation.md §1",
+          "grade": "A"
+        },
+        {
+          "text": "The MIND Act was introduced in September 2025 and directs an FTC study (Young, Simon & Evans, Neurology 2026). Bill number and current status not verified.",
+          "source": "market/regulation.md §2",
+          "grade": "A"
+        },
+        {
+          "text": "EU AI Act Art. 5(1)(f) bans AI that infers emotions in workplace and education, except for medical or safety reasons; applicable from 2 Feb 2025.",
+          "source": "market/regulation.md §5",
+          "grade": "B"
+        },
+        {
+          "text": "Precision Neuroscience: FDA 510(k) clearance Apr 2025. Paradromics: IDE approved Nov 2025.",
+          "source": "market/landscape.md §1",
+          "grade": "B-"
+        },
+        {
+          "text": "In 2024, \"neurotechnology companies received $1.2 billion in venture capital funding, more than any other type of medical device\" (Ruiz-Mateos Serrano et al., Sci Adv 2026, citing HSBC).",
+          "source": "market/sizing.md §1",
+          "grade": "A"
+        }
+      ]
+    },
+    {
+      "id": "product",
+      "heading": "What we are <em>building.</em>",
+      "body": [
+        "One lineage graph over neural data, pipelines and models, with products built on it. Core modules are built and tested internally; none is deployed, published or in use by a customer."
+      ],
+      "items": [
+        {
+          "heading": "Open Core SDK",
+          "body": "A Python SDK with local provenance, designed to work alongside MNE, BIDS, NWB and LSL rather than replace them. Planned as open source; not yet published.",
+          "status": "planned",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M4-REPORT.md step 4.2–4.3"
+        },
+        {
+          "heading": "Multiverse audit",
+          "body": "Runs a grid of preprocessing pipelines and reports how results shift, with every parameter recorded. The sweep engine is built; the study on public data has not been run.",
+          "status": "planned",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M3-REPORT.md step 3.6"
+        },
+        {
+          "heading": "Consent & Deletion Ledger",
+          "body": "Per-channel jurisdiction classification, versioned consent, and withdrawal that reaches raw data, derivatives and trained models, with a signed deletion certificate.",
+          "status": "planned",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.5"
+        },
+        {
+          "heading": "FDA Evidence Kit",
+          "body": "Traceability, SBOM and off-the-shelf software documentation scaffolds generated from the lineage graph. A scaffold, not a regulatory submission.",
+          "status": "roadmap",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.8"
+        },
+        {
+          "heading": "Governed model registry",
+          "body": "Model provenance with use-restriction flags, so an emotion model cannot be deployed where the EU AI Act prohibits it.",
+          "status": "roadmap",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M6-REPORT.md step 6.2"
+        }
+      ]
+    },
+    {
+      "id": "controls",
+      "heading": "Controls <em>built in.</em>",
+      "body": [
+        "Governance controls that are built and tested internally. They have not been audited externally."
+      ],
+      "items": [
+        {
+          "heading": "Crypto-shredding",
+          "body": "Per-subject encryption keys, so deleting a key makes that subject's data unreadable, including the backup copy, while other subjects stay readable.",
+          "status": "designed",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M2-REPORT.md step 2.3"
+        },
+        {
+          "heading": "Tamper-evident lineage",
+          "body": "Changing a node, edge or batch in the provenance graph fails verification.",
+          "status": "designed",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M3-REPORT.md step 3.1"
+        },
+        {
+          "heading": "Consent check on every data route",
+          "body": "Every route that touches data calls one consent-policy check, and training without the training consent scope is denied.",
+          "status": "designed",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.4"
+        }
+      ]
+    },
+    {
+      "id": "moat",
+      "heading": "What could <em>compound.</em>",
+      "body": ["Three advantages we plan to build. None is established yet."],
+      "items": [
+        {
+          "heading": "Machine-readable neural-law rules",
+          "body": "Versioned rules per jurisdiction, which already generate the public law tracker. Counsel review is still pending, so the rules are marked unverified where they have not been checked.",
+          "status": "planned",
+          "buildState": "built-internal",
+          "buildSource": "docs/hive/M5-REPORT.md step 5.6"
+        },
+        {
+          "heading": "The lineage graph as system of record",
+          "body": "Once consent, pipeline runs and model versions live in one graph, deletion certificates and FDA evidence come from it, which creates switching cost.",
+          "status": "planned"
+        },
+        {
+          "heading": "Published reproducibility evidence",
+          "body": "Multiverse results on public datasets could become citable references. No results have been published yet.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "go-to-market",
+      "heading": "Planned go-to-market <em>sequence.</em>",
+      "body": [
+        "First: release the open-core SDK and publish the multiverse study on public data. Next: the ledger and a startup tier, recruiting design partners. Then: the FDA Evidence Kit and a first pharma pilot. This is a plan; no step has started with customers."
+      ]
+    },
+    {
+      "id": "demos",
+      "heading": "What you can <em>open today.</em>",
+      "body": [
+        "The Neural Playground is an offline demo on open monkey motor-cortex data. It is not the platform's evaluation engine.",
+        "The Decoder Arena is in development. The law tracker is generated at build time from the rule files in the repository."
+      ]
+    },
+    {
+      "id": "data-room",
+      "heading": "Where the <em>evidence lives.</em>",
+      "body": [
+        "Every claim on this page cites a document in the company repository; the sources are listed under each section."
+      ],
+      "items": [
+        {
+          "heading": "Regulation map",
+          "body": "US state, federal, FDA and EU rules on neural data, with primary sources and evidence grades."
+        },
+        {
+          "heading": "Market landscape and sizing",
+          "body": "Hardware makers, software tools, gaps and funding, each figure with its source and grade."
+        },
+        {
+          "heading": "Module build reports",
+          "body": "What each platform module does, how it was tested locally, and what remains CI-only or untested."
+        }
+      ]
+    }
+  ],
+  "cta": [
+    {
+      "label": "Open the playground",
+      "href": "/playground",
+      "variant": "primary"
+    },
+    {
+      "label": "Decoder Arena (in development)",
+      "href": "/arena",
+      "variant": "ghost"
+    },
+    {
+      "label": "Law tracker",
+      "href": "/law-tracker",
+      "variant": "ghost"
+    }
+  ]
+}

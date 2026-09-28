@@ -1,0 +1,59 @@
+# CODEOWNERS (SEC-084, SEC-088). Last matching pattern wins.
+#
+# PLACEHOLDER: `@PLACEHOLDER-ORG/security-role` is NOT a real team. The owner (Marius Carlsson) creates the
+# GitHub organisation and a security-role team, replaces every `@PLACEHOLDER-ORG/...` handle below, and turns on
+# "Require review from Code Owners" (docs/security/branch-protection.md). Until then GitHub reports these
+# lines as unknown owners and enforces nothing.
+
+# Dependency manifests and lockfiles: a new direct dependency needs the security role (SEC-084).
+/pnpm-lock.yaml                     @PLACEHOLDER-ORG/security-role
+/uv.lock                            @PLACEHOLDER-ORG/security-role
+/Cargo.lock                         @PLACEHOLDER-ORG/security-role
+/pnpm-workspace.yaml                @PLACEHOLDER-ORG/security-role
+package.json                        @PLACEHOLDER-ORG/security-role
+pyproject.toml                      @PLACEHOLDER-ORG/security-role
+Cargo.toml                          @PLACEHOLDER-ORG/security-role
+
+# CI, supply chain and security policy (SEC-080..089, SEC-001).
+/.github/                           @PLACEHOLDER-ORG/security-role
+/security/                          @PLACEHOLDER-ORG/security-role
+/docs/security/                     @PLACEHOLDER-ORG/security-role
+/SECURITY.md                        @PLACEHOLDER-ORG/security-role
+/.gitleaks.toml                     @PLACEHOLDER-ORG/security-role
+/.pre-commit-config.yaml            @PLACEHOLDER-ORG/security-role
+/.gitignore                         @PLACEHOLDER-ORG/security-role
+/tools/repo-guard/                  @PLACEHOLDER-ORG/security-role
+# hw-guard: the security role is @socrates6969 for now (nfb-security, 2026-09-27); replace with the org team later.
+/tools/hw-guard/                    @socrates6969 @PLACEHOLDER-ORG/security-role
+/services/platform/tests/security/  @PLACEHOLDER-ORG/security-role
+/tools/ci-lint/                     @PLACEHOLDER-ORG/security-role
+/tools/vuln-gate/                   @PLACEHOLDER-ORG/security-role
+/tools/licence-check/               @PLACEHOLDER-ORG/security-role
+/tools/sbom-props/                  @PLACEHOLDER-ORG/security-role
+/tools/sbom-cdxgen/                 @PLACEHOLDER-ORG/security-role
+/tools/copy-lint/allow.json         @PLACEHOLDER-ORG/security-role
+
+# Stimulation exclusion surface (SEC-090/091): API, protos, SDKs, bindings, core.
+/proto/                             @PLACEHOLDER-ORG/security-role
+/openapi/                           @PLACEHOLDER-ORG/security-role
+/sdk/                               @PLACEHOLDER-ORG/security-role
+/bindings/                          @PLACEHOLDER-ORG/security-role
+
+# Two reviewers (SEC-088): governance, infrastructure and crypto. The second reviewer is enforced by the
+# ruleset's review count on these paths, not by CODEOWNERS itself.
+/services/platform/governance/      @PLACEHOLDER-ORG/security-role @PLACEHOLDER-ORG/platform-leads
+/infra/                             @PLACEHOLDER-ORG/security-role @PLACEHOLDER-ORG/platform-leads
+/core/nf-core/src/crypto*           @PLACEHOLDER-ORG/security-role @PLACEHOLDER-ORG/platform-leads
+
+# SEC-150 per-route CSP exceptions (ADR 0014): changes need the owner (lead-approved line, owned by web-headers).
+apps/web/csp-exceptions.json @socrates6969
+
+# /arena WebAssembly (EXC-150-1 condition 4, ADR 0014; nfb-security gap a): the shipped module, its CI-verified
+# manifest, the vendored SBOM schemas and the build that produces them. Owner plus security role until the
+# security-role team exists. Placed last so they win over broader rules above.
+/apps/web/src/assets/arena/         @socrates6969 @PLACEHOLDER-ORG/security-role
+/apps/web/public/arena/             @socrates6969 @PLACEHOLDER-ORG/security-role
+/security/arena-pkg.sha256          @socrates6969 @PLACEHOLDER-ORG/security-role
+/security/cyclonedx-schema/         @socrates6969 @PLACEHOLDER-ORG/security-role
+/tools/arena-core/                  @socrates6969 @PLACEHOLDER-ORG/security-role
+/.github/workflows/arena-wasm.yml   @socrates6969 @PLACEHOLDER-ORG/security-role

@@ -1,0 +1,60 @@
+---
+// /legal/{privacy,terms,cookies} and /no/legal/…: the nfb-legal DRAFTS (docs/inputs/legal-website),
+// rendered verbatim from @nf/content with a visible DRAFT banner. Pages are noindex while draft (Base).
+import Banner from '@nf/ui/components/Banner.astro';
+import { getContent, type LegalKey } from '@nf/content';
+import { inline } from '../lib/inline.ts';
+import { localiseHref, type Locale } from '../lib/i18n.ts';
+
+interface Props { locale: Locale; page: LegalKey }
+const { locale, page: key } = Astro.props;
+const { legal, ui } = getContent(locale);
+const page = legal[key];
+const md = (t: string) => inline(t, { mapHref: (h) => localiseHref(h, locale) });
+---
+<section class="nf-section head" aria-labelledby="h-page">
+  <div class="nf-wrap">
+    <p class="nf-label">{ui.legal.heading}{page.draft && <> · <span class="draft">{ui.draftLabel}</span></>}</p>
+    <h1 id="h-page">{page.title}</h1>
+    {page.draft && <Banner id="draft" tone="caution" text={page.draftNotice} />}
+  </div>
+</section>
+<section class="nf-section doc">
+  <div class="nf-wrap prose">
+    {page.blocks.map((b) => {
+      switch (b.type) {
+        case 'h2': return <h2 id={b.id} set:html={md(b.text ?? '')} />;
+        case 'h3': return <h3 id={b.id} set:html={md(b.text ?? '')} />;
+        case 'p': return <p set:html={md(b.text ?? '')} />;
+        case 'quote': return <blockquote><p set:html={md(b.text ?? '')} /></blockquote>;
+        case 'ul': return <ul>{(b.items ?? []).map((it) => <li set:html={md(it)} />)}</ul>;
+        case 'table': return (
+          <div class="tbl" tabindex="0"><table>
+            {b.head && b.head.length > 0 && <thead><tr>{b.head.map((h) => <th scope="col" set:html={md(h)} />)}</tr></thead>}
+            {/* without a header row it is a key/value table: the first cell labels the row */}
+            <tbody>{(b.rows ?? []).map((r) => <tr>{r.map((c, i) => (!b.head?.length && i === 0 ? <th scope="row" set:html={md(c)} /> : <td set:html={md(c)} />))}</tr>)}</tbody>
+          </table></div>
+        );
+      }
+    })}
+  </div>
+</section>
+<style>
+  .head { padding-bottom: 8px; }
+  .head h1 { max-width: 30ch; }
+  .draft { text-transform: uppercase; }
+  .doc { padding-top: 16px; }
+  .prose { max-width: 860px; }
+  .prose :global(h2) { margin-top: 36px; font-size: 22px; }
+  .prose :global(h3) { margin-top: 24px; font-size: 18px; }
+  .prose :global(p), .prose :global(ul), .prose :global(blockquote) { margin-top: 12px; color: var(--color-muted); max-width: 72ch; }
+  .prose :global(strong) { color: var(--color-ink); }
+  .prose :global(ul) { padding-left: 20px; display: grid; gap: 6px; }
+  .prose :global(blockquote) { margin-left: 0; padding: 10px 14px; border-left: 2px solid var(--color-secondary); background: var(--color-surface); }
+  .prose :global(a) { overflow-wrap: anywhere; }
+  .tbl { margin-top: 16px; overflow-x: auto; }
+  .tbl table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--color-surface); border: 1px solid var(--color-line); }
+  .tbl th, .tbl td { text-align: left; vertical-align: top; padding: 10px 12px; border-top: 1px solid var(--color-line); }
+  .tbl th { font: 500 11px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--color-muted); border-top: 0; }
+  .tbl td { color: var(--color-muted); min-width: 120px; }
+</style>

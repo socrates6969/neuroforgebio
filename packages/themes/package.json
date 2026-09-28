@@ -1,0 +1,22 @@
+{
+  "name": "@nf/themes",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Two build-time themes (clinical, cosmos): semantic tokens, self-hosted fonts and four presentational slots each.",
+  "exports": {
+    "./contract": "./contract.ts",
+    "./*": "./*"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@fontsource/ibm-plex-sans": "5.3.0",
+    "@fontsource/inter": "5.3.0",
+    "@fontsource/jetbrains-mono": "5.3.0",
+    "@fontsource/space-grotesk": "5.3.0",
+    "three": "0.160.0"
+  }
+}

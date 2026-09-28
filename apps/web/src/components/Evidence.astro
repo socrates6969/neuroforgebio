@@ -1,0 +1,27 @@
+---
+// Source list for factual claims: every claim shows its source (repo path) and grade when given.
+import type { Claim } from '@nf/content';
+interface Props { claims: Claim[]; heading?: string }
+const { claims, heading } = Astro.props;
+---
+<div class="evidence">
+  {heading && <p class="nf-label">{heading}</p>}
+  <ol>
+    {claims.map((c) => (
+      <li>
+        <span class="t">{c.text}</span>
+        <span class="src">
+          {c.grade && <span class="grade">[{c.grade}]</span>}
+          {c.sourceUrl ? <a href={c.sourceUrl} rel="noopener noreferrer">{c.source}</a> : <span>{c.source}</span>}
+        </span>
+      </li>
+    ))}
+  </ol>
+</div>
+<style>
+  .evidence { margin-top: 24px; font-size: 13.5px; color: var(--color-muted); }
+  ol { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 8px; }
+  .t { color: var(--color-ink); }
+  .src { display: block; font: 400 12px/1.5 var(--font-mono); word-break: break-word; }
+  .grade { margin-right: 6px; color: var(--color-ink); }
+</style>

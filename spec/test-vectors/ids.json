@@ -1,0 +1,286 @@
+{
+  "spec": "docs/spec/hashing.md \u00a74-\u00a75",
+  "blob": [
+    {
+      "data_hex": "",
+      "id": "blob:sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "data_hex": "68656c6c6f0a",
+      "id": "blob:sha256:5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03"
+    },
+    {
+      "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+      "id": "blob:sha256:40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880"
+    }
+  ],
+  "pipeline_version": [
+    {
+      "name": "eeg-basic@1.2.0",
+      "spec": {
+        "schema": "nf.pipeline-version/v1",
+        "meta": {
+          "name": "eeg-basic",
+          "version": "1.2.0",
+          "description": "Illustrative test vector"
+        },
+        "steps": [
+          {
+            "name": "filter",
+            "image": "ghcr.io/example/nf-steps@sha256:abababababababababababababababababababababababababababababababab",
+            "entrypoint": [
+              "nf-step",
+              "filter"
+            ],
+            "params": {
+              "l_freq": 0.1,
+              "h_freq": 40.0,
+              "method": "fir",
+              "phase": "zero"
+            },
+            "tolerance": {
+              "kind": "exact"
+            }
+          },
+          {
+            "name": "rereference",
+            "image": "ghcr.io/example/nf-steps@sha256:abababababababababababababababababababababababababababababababab",
+            "entrypoint": [
+              "nf-step",
+              "reref"
+            ],
+            "params": {
+              "ref_channels": "average"
+            },
+            "tolerance": {
+              "kind": "abs",
+              "value": 1e-09
+            }
+          }
+        ],
+        "seed": 42
+      },
+      "payload": "{\"schema\":\"nf.pipeline-version/v1\",\"seed\":42,\"steps\":[{\"entrypoint\":[\"nf-step\",\"filter\"],\"image\":\"ghcr.io/example/nf-steps@sha256:abababababababababababababababababababababababababababababababab\",\"name\":\"filter\",\"params\":{\"h_freq\":40,\"l_freq\":0.1,\"method\":\"fir\",\"phase\":\"zero\"},\"tolerance\":{\"kind\":\"exact\"}},{\"entrypoint\":[\"nf-step\",\"reref\"],\"image\":\"ghcr.io/example/nf-steps@sha256:abababababababababababababababababababababababababababababababab\",\"name\":\"rereference\",\"params\":{\"ref_channels\":\"average\"},\"tolerance\":{\"kind\":\"abs\",\"value\":1e-9}}]}",
+      "id": "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047"
+    },
+    {
+      "name": "renamed-same-content",
+      "spec": {
+        "schema": "nf.pipeline-version/v1",
+        "meta": {
+          "name": "my-copy",
+          "version": "9.9.9",
+          "description": "Illustrative test vector"
+        },
+        "steps": [
+          {
+            "name": "filter",
+            "image": "ghcr.io/example/nf-steps@sha256:abababababababababababababababababababababababababababababababab",
+            "entrypoint": [
+              "nf-step",
+              "filter"
+            ],
+            "params": {
+              "l_freq": 0.1,
+              "h_freq": 40.0,
+              "method": "fir",
+              "phase": "zero"
+            },
+            "tolerance": {
+              "kind": "exact"
+            }
+          },
+          {
+            "name": "rereference",
+            "image": "ghcr.io/example/nf-steps@sha256:abababababababababababababababababababababababababababababababab",
+            "entrypoint": [
+              "nf-step",
+              "reref"
+            ],
+            "params": {
+              "ref_channels": "average"
+            },
+            "tolerance": {
+              "kind": "abs",
+              "value": 1e-09
+            }
+          }
+        ],
+        "seed": 42
+      },
+      "payload": "{\"schema\":\"nf.pipeline-version/v1\",\"seed\":42,\"steps\":[{\"entrypoint\":[\"nf-step\",\"filter\"],\"image\":\"ghcr.io/example/nf-steps@sha256:abababababababababababababababababababababababababababababababab\",\"name\":\"filter\",\"params\":{\"h_freq\":40,\"l_freq\":0.1,\"method\":\"fir\",\"phase\":\"zero\"},\"tolerance\":{\"kind\":\"exact\"}},{\"entrypoint\":[\"nf-step\",\"reref\"],\"image\":\"ghcr.io/example/nf-steps@sha256:abababababababababababababababababababababababababababababababab\",\"name\":\"rereference\",\"params\":{\"ref_channels\":\"average\"},\"tolerance\":{\"kind\":\"abs\",\"value\":1e-9}}]}",
+      "id": "pv:sha256:559f82ec36332fb5ee03f2ddd9a881ddc28e2ff957da3b4372526783e738d047"
+    },
+    {
+      "name": "highpass-changed",
+      "spec": {
+        "schema": "nf.pipeline-version/v1",
+        "meta": {
+          "name": "eeg-basic",
+          "version": "1.2.1",
+          "description": "Illustrative test vector"
+        },
+        "steps": [
+          {
+            "name": "filter",
+            "image": "ghcr.io/example/nf-steps@sha256:abababababababababababababababababababababababababababababababab",
+            "entrypoint": [
+              "nf-step",
+              "filter"
+            ],
+            "params": {
+              "l_freq": 1.0,
+              "h_freq": 40.0,
+              "method": "fir",
+              "phase": "zero"
+            },
+            "tolerance": {
+              "kind": "exact"
+            }
+          },
+          {
+            "name": "rereference",
+            "image": "ghcr.io/example/nf-steps@sha256:abababababababababababababababababababababababababababababababab",
+            "entrypoint": [
+              "nf-step",
+              "reref"
+            ],
+            "params": {
+              "ref_channels": "average"
+            },
+            "tolerance": {
+              "kind": "abs",
+              "value": 1e-09
+            }
+          }
+        ],
+        "seed": 42
+      },
+      "payload": "{\"schema\":\"nf.pipeline-version/v1\",\"seed\":42,\"steps\":[{\"entrypoint\":[\"nf-step\",\"filter\"],\"image\":\"ghcr.io/example/nf-steps@sha256:abababababababababababababababababababababababababababababababab\",\"name\":\"filter\",\"params\":{\"h_freq\":40,\"l_freq\":1,\"method\":\"fir\",\"phase\":\"zero\"},\"tolerance\":{\"kind\":\"exact\"}},{\"entrypoint\":[\"nf-step\",\"reref\"],\"image\":\"ghcr.io/example/nf-steps@sha256:abababababababababababababababababababababababababababababababab\",\"name\":\"rereference\",\"params\":{\"ref_channels\":\"average\"},\"tolerance\":{\"kind\":\"abs\",\"value\":1e-9}}]}",
+      "id": "pv:sha256:8415ba56cc21a9c20e05caff585996ceff61800c7b7bfff1d574f2ab9fb1a74c"
+    }
+  ],
+  "chunk": [
+    {
+      "name": "float32-2x3",
+      "dtype": "float32",
+      "shape": [
+        2,
+        3
+      ],
+      "values": [
+        0.0,
+        1.5,
+        -2.25,
+        1e-07,
+        3.4028234663852886e+38,
+        -0.0
+      ],
+      "data_hex": "000000000000c03f000010c095bfd633ffff7f7f00000080",
+      "preimage_hex": "6e662e6368756e6b2e7631007b226474797065223a22666c6f61743332222c226f72646572223a2243222c227368617065223a5b322c335d7d0a000000000000c03f000010c095bfd633ffff7f7f00000080",
+      "id": "chunk:sha256:e8ac3abe116fd7d11cd1b3ff7e7389c713f8f83521ecfa0bc3f916e5a3e930e1"
+    },
+    {
+      "name": "int16-4",
+      "dtype": "int16",
+      "shape": [
+        4
+      ],
+      "values": [
+        0,
+        1,
+        -1,
+        32767
+      ],
+      "data_hex": "00000100ffffff7f",
+      "preimage_hex": "6e662e6368756e6b2e7631007b226474797065223a22696e743136222c226f72646572223a2243222c227368617065223a5b345d7d0a00000100ffffff7f",
+      "id": "chunk:sha256:0ceeccacf881be191597d23b07e873c34f7a61d08c40d82e1c2aaa963023fb22"
+    },
+    {
+      "name": "int16-2x2-same-bytes-other-shape",
+      "dtype": "int16",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        0,
+        1,
+        -1,
+        32767
+      ],
+      "data_hex": "00000100ffffff7f",
+      "preimage_hex": "6e662e6368756e6b2e7631007b226474797065223a22696e743136222c226f72646572223a2243222c227368617065223a5b322c325d7d0a00000100ffffff7f",
+      "id": "chunk:sha256:708ecf15fddf7761fdda2e7c50012243ecb12ac7b562b1e617cbc2277ca33400"
+    }
+  ],
+  "prov_batch_chain": [
+    {
+      "batch": {
+        "schema": "nf.prov-batch/v1",
+        "tenant": "tn_test",
+        "seq": 0,
+        "prev": null,
+        "created_at": "2026-09-26T12:00:00.000Z",
+        "records": [
+          {
+            "type": "entity",
+            "id": "ent-0001",
+            "label": "raw",
+            "content": "blob:sha256:a14b61c087a2e50563c1d12eef4ac9194949abfa9e2f1d14a4945d0e68354709"
+          },
+          {
+            "type": "activity",
+            "id": "act-0001",
+            "label": "ingest"
+          },
+          {
+            "type": "edge",
+            "rel": "wasGeneratedBy",
+            "from": "ent-0001",
+            "to": "act-0001"
+          }
+        ]
+      },
+      "payload": "{\"created_at\":\"2026-09-26T12:00:00.000Z\",\"prev\":null,\"records\":[{\"content\":\"blob:sha256:a14b61c087a2e50563c1d12eef4ac9194949abfa9e2f1d14a4945d0e68354709\",\"id\":\"ent-0001\",\"label\":\"raw\",\"type\":\"entity\"},{\"id\":\"act-0001\",\"label\":\"ingest\",\"type\":\"activity\"},{\"from\":\"ent-0001\",\"rel\":\"wasGeneratedBy\",\"to\":\"act-0001\",\"type\":\"edge\"}],\"schema\":\"nf.prov-batch/v1\",\"seq\":0,\"tenant\":\"tn_test\"}",
+      "id": "provb:sha256:7cafa0a30a7b6a801763b3a7cc97dccd349844c1ba4e1514a1cf5679cca347ec"
+    },
+    {
+      "batch": {
+        "schema": "nf.prov-batch/v1",
+        "tenant": "tn_test",
+        "seq": 1,
+        "prev": "provb:sha256:7cafa0a30a7b6a801763b3a7cc97dccd349844c1ba4e1514a1cf5679cca347ec",
+        "created_at": "2026-09-26T12:00:01.000Z",
+        "records": [
+          {
+            "type": "activity",
+            "id": "act-0002",
+            "label": "run"
+          }
+        ]
+      },
+      "payload": "{\"created_at\":\"2026-09-26T12:00:01.000Z\",\"prev\":\"provb:sha256:7cafa0a30a7b6a801763b3a7cc97dccd349844c1ba4e1514a1cf5679cca347ec\",\"records\":[{\"id\":\"act-0002\",\"label\":\"run\",\"type\":\"activity\"}],\"schema\":\"nf.prov-batch/v1\",\"seq\":1,\"tenant\":\"tn_test\"}",
+      "id": "provb:sha256:cb569cbec671f6a01ddb03e10da45039ebe281d8c144945b6e6aad59b12dff5f"
+    },
+    {
+      "batch": {
+        "schema": "nf.prov-batch/v1",
+        "tenant": "tn_test",
+        "seq": 2,
+        "prev": "provb:sha256:cb569cbec671f6a01ddb03e10da45039ebe281d8c144945b6e6aad59b12dff5f",
+        "created_at": "2026-09-26T12:00:02.000Z",
+        "records": [
+          {
+            "type": "edge",
+            "rel": "used",
+            "from": "act-0002",
+            "to": "ent-0001"
+          }
+        ]
+      },
+      "payload": "{\"created_at\":\"2026-09-26T12:00:02.000Z\",\"prev\":\"provb:sha256:cb569cbec671f6a01ddb03e10da45039ebe281d8c144945b6e6aad59b12dff5f\",\"records\":[{\"from\":\"act-0002\",\"rel\":\"used\",\"to\":\"ent-0001\",\"type\":\"edge\"}],\"schema\":\"nf.prov-batch/v1\",\"seq\":2,\"tenant\":\"tn_test\"}",
+      "id": "provb:sha256:69f6d9ce8f8762c3170043042d0de2cb82c0f7ac94b5f036a9ce4cb76962af5b"
+    }
+  ]
+}

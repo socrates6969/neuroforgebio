@@ -1,0 +1,184 @@
+---
+// Neural-data law tracker. Not legal advice; every row cites its source; unverified rows are shown
+// as unverified. BUILD-GUIDE 5.6: the rules table is generated at build time from rules/*.yaml
+// (the RuleSet the platform classifies with; NF_RULES_DIR overrides the directory), so a changed
+// rule file changes this page at the next build. Copy (labels, banner, context rows) stays in
+// @nf/content. Never "not regulated": absence from the table is described as "not encoded".
+import { join } from 'node:path';
+import Base from '../layouts/Base.astro';
+import JsonLd from '../components/JsonLd.astro';
+import SectionHead from '@nf/ui/components/SectionHead.astro';
+import Banner from '@nf/ui/components/Banner.astro';
+import { content, organizationJsonLd, site } from '../lib/site.ts';
+import { doiUrl, loadRuleSet } from '../lib/rules.mjs';
+const lt = content.pages.lawTracker;
+const rs = lt.ruleset;
+const ruleSet = loadRuleSet(process.env.NF_RULES_DIR || join(__NF_REPO_ROOT__, 'rules'));
+const badge = (s: string) =>
+  s === 'counsel-reviewed' ? rs.badges.counselReviewed : s === 'unverified' ? rs.badges.unverified : rs.badges.draft;
+---
+<Base title={lt.meta.title} description={lt.meta.description}>
+  <JsonLd schema={organizationJsonLd} />
+  <section class="nf-section head" aria-labelledby="h-lt">
+    <div class="nf-wrap">
+      <SectionHead id="h-lt" level={1} eyebrow={lt.hero.eyebrow} heading={lt.hero.heading} lede={lt.hero.lede} />
+      <Banner text={lt.banner} tone="caution" id="not-legal-advice" />
+      {lt.banner !== site.banners.notLegalAdvice && <Banner text={site.banners.notLegalAdvice} tone="caution" />}
+      <ul class="legend">
+        <li><span class="v v--ok" aria-hidden="true">✓</span> {lt.legend.verified}</li>
+        <li><span class="v v--un" aria-hidden="true">?</span> {lt.legend.unverified}</li>
+      </ul>
+      <p class="asof nf-label"><time datetime={lt.asOf}>{lt.asOf}</time></p>
+    </div>
+  </section>
+  <section class="nf-section grp" id="ruleset" aria-labelledby="h-ruleset">
+    <div class="nf-wrap">
+      <h2 id="h-ruleset">{rs.heading}</h2>
+      <p class="intro">{rs.intro}</p>
+      <p class="rsver nf-label" data-ruleset-version={String(ruleSet.version)}>
+        {rs.generatedFrom} v{ruleSet.version} · {rs.hashLabel} <code>{ruleSet.contentSha256.slice(0, 12)}</code>
+      </p>
+      <table class="rules">
+        <caption class="nf-visually-hidden">{rs.caption}</caption>
+        <thead>
+          <tr>
+            <th scope="col">{rs.columns.jurisdiction}</th>
+            <th scope="col">{rs.columns.citation}</th>
+            <th scope="col">{rs.columns.effective}</th>
+            <th scope="col">{rs.columns.covers}</th>
+            <th scope="col">{rs.columns.review}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ruleSet.rows.map((r) => (
+            <tr
+              id={`rule-${r.id}`}
+              class={`rule ${r.verified ? 'is-verified' : 'is-unverified'}`}
+              data-rule-id={r.id}
+              data-review-status={r.reviewStatus}
+              data-verified={String(r.verified)}
+            >
+              <th scope="row" data-label={rs.columns.jurisdiction}>
+                <span class="jur">{r.jurisdiction}</span> {r.jurisdictionName}
+              </th>
+              <td class="cite" data-label={rs.columns.citation}>
+                <span class="inst">{r.instrument}</span>
+                <span class="src">
+                  {r.citation.grade && <span class="grade">[{r.citation.grade}]</span>}
+                  {doiUrl(r.citation.source) ? (
+                    <a href={doiUrl(r.citation.source)} rel="noopener noreferrer">{r.citation.source}</a>
+                  ) : (
+                    <span>{r.citation.source}</span>
+                  )}
+                  {r.citation.researchRef && <span class="ref"> · {r.citation.researchRef}</span>}
+                </span>
+              </td>
+              <td class="eff" data-label={rs.columns.effective}>
+                {r.effectiveDate ? <time datetime={r.effectiveDate}>{r.effectiveDate}</time> : <span>{rs.effectiveNone}</span>}
+                <span class="status">{r.statusText}</span>
+              </td>
+              <td class="covers" data-label={rs.columns.covers}>
+                <p class="title">{r.title}</p>
+                {r.citation.definition && (
+                  <blockquote class="def"><span class="nf-visually-hidden">{rs.definitionLabel}: </span>{r.citation.definition}</blockquote>
+                )}
+                <ul class="obl">{r.obligations.map((o) => <li>{o}</li>)}</ul>
+                {r.notes && <p class="note">{r.notes}</p>}
+              </td>
+              <td class="rev" data-label={rs.columns.review}>
+                <span class={`badge badge--${r.reviewStatus}`}>
+                  <span class="v" aria-hidden="true">{r.verified ? '✓' : '?'}</span> {badge(r.reviewStatus)}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="absence">{rs.absenceNote}</p>
+    </div>
+  </section>
+  <section class="nf-section grp ctx" aria-labelledby="h-not-encoded">
+    <div class="nf-wrap">
+      <h2 id="h-not-encoded">{rs.contextHeading}</h2>
+      <p class="intro">{rs.contextIntro}</p>
+    </div>
+  </section>
+  {lt.groups.map((g) => (
+    <section class="nf-section grp" id={g.id} aria-labelledby={`h-${g.id}`}>
+      <div class="nf-wrap">
+        <h2 id={`h-${g.id}`}>{g.heading}</h2>
+        {g.intro && <p class="intro">{g.intro}</p>}
+        <ol class="rows">
+          {g.rows.map((r) => (
+            <li class={`row nf-card ${r.verified ? 'is-verified' : 'is-unverified'}`} id={r.id} data-verified={String(r.verified)}>
+              <h3><span class="jur">{r.jurisdiction}</span> <span class="inst">{r.instrument}</span></h3>
+              <p class="status">{r.status}</p>
+              <p class="effect">{r.text}</p>
+              {r.definition && <blockquote class="def">{r.definition}</blockquote>}
+              <p class={`ver ${r.verified ? 'ok' : 'un'}`}>
+                <span class="v" aria-hidden="true">{r.verified ? '✓' : '?'}</span> {r.verified ? lt.legend.verified : lt.legend.unverified}
+              </p>
+              {r.note && <p class="note">{r.note}</p>}
+              <p class="src">
+                {r.grade && <span class="grade">[{r.grade}]</span>}
+                {r.sourceUrl ? <a href={r.sourceUrl} rel="noopener noreferrer">{r.source}</a> : <span>{r.source}</span>}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  ))}
+  <section class="nf-section grp" aria-labelledby="h-open">
+    <div class="nf-wrap">
+      <h2 id="h-open">{lt.openHeading}</h2>
+      <ul class="open">{lt.openItems.map((o) => <li>{o}</li>)}</ul>
+      <p class="srcnote">{lt.sourceNote}</p>
+    </div>
+  </section>
+</Base>
+<style>
+  .head { padding-bottom: 24px; }
+  .legend { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 6px; font-size: 14px; color: var(--color-muted); }
+  .asof { margin-top: 12px; }
+  .grp { padding: 40px 0; border-top: 1px solid var(--color-line); }
+  .intro { color: var(--color-muted); margin-top: 10px; max-width: 70ch; }
+  .rows { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 16px; }
+  .row { padding: 22px 24px; }
+  .row h3 { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+  .jur { font: 500 12px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--color-accent-ink); }
+  .status { font: 400 13px var(--font-mono); color: var(--color-muted); margin-top: 6px; }
+  .effect { margin-top: 10px; }
+  .def { margin: 12px 0 0; padding-left: 14px; border-left: 2px solid var(--color-line); color: var(--color-muted); font-size: 14.5px; }
+  .ver { margin-top: 12px; font-size: 13.5px; }
+  .ver.un { color: var(--color-ink); font-weight: 500; }
+  .is-unverified { border-style: dashed; }
+  .v { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; border: 1px solid currentColor; font: 600 11px var(--font-mono); }
+  .note { margin-top: 6px; font-size: 13.5px; color: var(--color-muted); }
+  .src { margin-top: 10px; font: 400 12px/1.5 var(--font-mono); color: var(--color-muted); word-break: break-word; }
+  .grade { margin-right: 6px; color: var(--color-ink); }
+  .open { color: var(--color-muted); padding-left: 20px; display: grid; gap: 6px; }
+  .ctx { padding-bottom: 0; }
+  .rsver { margin-top: 12px; }
+  .rsver code { font: 400 12px var(--font-mono); }
+  .rules { width: 100%; margin-top: 24px; border-collapse: collapse; font-size: 14.5px; }
+  .rules th, .rules td { text-align: left; vertical-align: top; padding: 14px 12px; border-top: 1px solid var(--color-line); }
+  .rules thead th { font: 500 12px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--color-muted); border-top: 0; }
+  .rules tbody th { font-weight: 500; }
+  .rules .is-unverified { outline: 1px dashed var(--color-line); outline-offset: -1px; }
+  .cite .inst { display: block; }
+  .cite .src, .eff .status { display: block; margin-top: 6px; font: 400 12px/1.5 var(--font-mono); color: var(--color-muted); word-break: break-word; }
+  .covers .title { font-weight: 500; }
+  .obl { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 4px; }
+  .badge { display: inline-flex; gap: 6px; align-items: baseline; font-size: 13.5px; }
+  .badge--unverified { font-weight: 500; }
+  .absence { margin-top: 16px; font-size: 13.5px; color: var(--color-muted); max-width: 70ch; }
+  @media (max-width: 760px) {
+    .rules thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .rules, .rules tbody, .rules tr, .rules th, .rules td { display: block; width: 100%; }
+    .rules tr { border-top: 1px solid var(--color-line); padding: 8px 0; }
+    .rules th, .rules td { border-top: 0; padding: 6px 0; }
+    .rules td::before { content: attr(data-label); display: block; font: 500 11px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--color-muted); }
+  }
+  .srcnote { margin-top: 16px; font-size: 13.5px; color: var(--color-muted); }
+</style>

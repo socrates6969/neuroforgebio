@@ -1,0 +1,25 @@
+# Security input for MSA/DPA Schedule 2 (Art. 32 TOMs)
+
+From nfb-security, 2026-09-26. Sources: `security\SECURITY-REQUIREMENTS.md` (SEC IDs), `security\LEGAL-HANDOFF.md` (12 clause proposals), `security\INCIDENT-RESPONSE.md`. Status words must stay "designed/planned/roadmap" until the controls are built.
+
+## Suggested Schedule 2 wording (edit freely)
+
+1. **Encryption (designed).** Customer Data is encrypted in transit with TLS 1.3 (earlier versions refused on platform endpoints) and at rest with AES-256-GCM envelope encryption. Keys are held in a cloud key-management service in a hierarchy of root → tenant key → a separate key per data subject (SEC-030, SEC-031).
+2. **Key management (designed).** Keys rotate at least yearly and on suspected compromise. Deleting keys requires a waiting period and two-person approval, except inside a customer-initiated deletion job (SEC-033, SEC-123). Deletion is by crypto-shredding: destroying a data subject's key renders all copies unreadable, including backups (SEC-034).
+3. **Access control (designed).** Single sign-on with multi-factor authentication for all users. Administrators use phishing-resistant authenticators (passkeys/WebAuthn). No SMS second factor. Least-privilege roles, tenant isolation at the application, database (row-level security) and key levels. Four-eyes approval for raw exports of sensitive data (SEC-010…025).
+4. **Personnel access (designed).** No standing production data access for Provider staff. Emergency ("break-glass") access is time-limited (≤ 4 h), justified, alerted and logged (SEC-025). Access is reviewed quarterly (SEC-114).
+5. **Logging (designed).** Security-relevant events (authentication, every data read or export, admin actions, consent changes, key operations, deletions) are recorded in an append-only, hash-chained audit log with write-once storage. Retention is 3 years by default and at least 6 years for BAA customers (**legal to confirm**). Application logs exclude signal data, subject identifiers and free text (SEC-100, SEC-101, SEC-147). The Customer's auditor role can export and verify the log (SEC-105).
+6. **Breach / incident notice.** The Provider notifies the Customer of a Personal Data Breach or significant security incident affecting Customer Data **without undue delay and in any event within 24 hours after confirmation**, with the content listed in INCIDENT-RESPONSE §6, and updates as facts develop. (GDPR Art. 33(2) requires only "without undue delay"; the 24 h figure is our proposal, see LEGAL-HANDOFF B7.)
+7. **Vulnerability management (planned).** The Provider aims to fix confirmed vulnerabilities in its software within **14 days (critical), 30 days (high) and 90 days (medium)** of confirmation. These are targets, not a guarantee of result. It publishes advisories with SBOM and VEX updates, and notifies customers who embed Provider components in medical devices before public disclosure (SEC-131, SEC-132; VULN-DISCLOSURE §4–5).
+8. **Security testing (planned / roadmap).** Automated security testing runs on every code change (SEC-111). An independent penetration test is performed before Customer Data is first processed in production and annually thereafter (SEC-110; roadmap, owner spend). A summary is available to the Customer on request under NDA.
+9. **Backup and recovery (planned).** Point-in-time recovery for metadata (≥ 14 days) and copies held in a separate account/region (SEC-120). Recovery drills run quarterly. Recovery objectives are **targets**, not commitments: RPO ≤ 15 min for metadata, RTO ≤ 8 h (SEC-122). A restore never reinstates deleted subjects (SEC-124).
+10. **Environments (designed).** Real Customer Data is processed only in production. Development and test use synthetic or public data (SEC-071).
+11. **Software supply chain (planned).** Signed releases (Sigstore), SLSA provenance and a CycloneDX SBOM per release, with a stated support period per SDK version (SEC-081…083, SEC-134).
+12. **Prohibited use / safety.** The Customer shall not use the Services, SDKs or models to control stimulation, neuromodulation or any actuator, or in any real-time safety-critical loop. Acknowledgements from the Services carry no timing guarantee (SEC-090…094).
+13. **Certifications.** The Provider holds no security certification or third-party attestation at the Effective Date. SOC 2 Type II and ISO/IEC 27001 are on the roadmap. Do **not** write "compliant with" or "certified".
+14. **Deletion scope.** Deletion covers data held by the Provider. Exports the Customer made earlier cannot be recalled (they are listed on the deletion certificate). Trained models are flagged and retrained or blocked; machine "unlearning" is not certified.
+
+## Corrections to watch for when drafting from BLUEPRINT §8
+- The blueprint says "AES-256"; write **AES-256-GCM** and mention per-subject keys.
+- Do not promise "yearly pen test" as current practice: it is **roadmap** (budget).
+- Avoid "HIPAA-compliant"; write "BAA available for enterprise customers (planned)".

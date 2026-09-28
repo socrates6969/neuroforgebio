@@ -1,0 +1,131 @@
+---
+// Whitepaper layout: status "In preparation", IRB/FDA banner, questions with sources (evidence
+// slots), hash-pinned preliminary figures, citation block, print stylesheet.
+import Base from '../../layouts/Base.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import Banner from '@nf/ui/components/Banner.astro';
+import StatusPill from '@nf/ui/components/StatusPill.astro';
+import Figure from '@nf/ui/components/Figure.astro';
+import FigureIsland from '@nf/figures/FigureIsland.astro';
+import { canonicalUrl, content, organizationJsonLd, site, statusLabels, statusPrefix, uiEn } from '../../lib/site.ts';
+import { manifestFor, REPO_ROOT, staticSvgUrl } from '../../lib/figures.ts';
+import { techArticleSchema } from '../../lib/jsonld.ts';
+
+export function getStaticPaths() {
+  return Object.keys(content.whitepapers).map((slug) => ({ params: { slug } }));
+}
+const wp = content.whitepapers[Astro.params.slug as string];
+const manifest = manifestFor(wp.slug); // throws (fails the build) on any hash mismatch
+const fui = site.figureUi;
+const figures = (manifest?.figures ?? []).filter((f) => wp.figures?.[f.id]);
+const short = (h: string) => h.slice(0, 12);
+const schema = [
+  organizationJsonLd,
+  techArticleSchema({
+    title: wp.meta.title,
+    description: wp.meta.description,
+    url: canonicalUrl(`/research/${wp.slug}/`),
+    brand: content.brand.name,
+  }),
+];
+---
+<Base title={wp.meta.title} description={wp.meta.description}>
+  <JsonLd schema={schema} />
+  <article class="paper" aria-labelledby="h-wp">
+    <header class="nf-wrap phead">
+      <div class="meta">
+        <StatusPill status={wp.status} label={statusLabels[wp.status]} prefix={statusPrefix} />
+        <span class="nf-label">{wp.kind}</span>
+      </div>
+      <h1 id="h-wp">{wp.title}</h1>
+      <Banner text={wp.banner} tone="caution" id="irb-fda" />
+      <p class="status-note">{wp.statusNote}</p>
+      {wp.printNote && <p class="print-only">{wp.printNote}</p>}
+    </header>
+
+    <div class="nf-wrap cols">
+      <div class="text">
+        {wp.intro.map((p) => <p>{p}</p>)}
+        <p class="abstract">{wp.abstractPlaceholder}</p>
+
+        <ol class="questions">
+          {wp.questions.map((q) => (
+            <li class="nf-card q">
+              <h2>{q.heading}</h2>
+              <p>{q.body}</p>
+              <p class="src">{q.source}</p>
+            </li>
+          ))}
+        </ol>
+        {wp.evidenceLegend && <p class="legend">{wp.evidenceLegend}</p>}
+      </div>
+    </div>
+
+    {figures.length > 0 && (
+      <section class="nf-wrap figs" aria-label={fui.manifestLabel}>
+        {figures.map((f, i) => {
+          const cap = wp.figures![f.id];
+          return (
+            <Figure id={`fig-${f.id}`} number={`${i + 1}.`} title={cap.title} status={fui.statusPreliminary} caption={cap.caption}>
+              {cap.note && <p class="fnote" role="note">{cap.note}</p>}
+              <FigureIsland entry={f} repoRoot={REPO_ROOT} ariaLabel={`${cap.title}. ${cap.caption}`}
+                ui={{ dataTableSummary: fui.dataTableSummary, keyboardHint: fui.keyboardHint, readoutLabel: fui.readoutLabel }} />
+              <div slot="links" class="prov">
+                {f.staticSvg && <a href={staticSvgUrl(f.staticSvg.path)} download>{fui.downloadSvg}</a>}
+                <details>
+                  <summary>{fui.reproduceLink}</summary>
+                  <dl>
+                    <dt>{fui.manifestLabel}</dt><dd>{fui.statusPreliminary}</dd>
+                    <dt>script</dt><dd><code>{f.script.path}</code> @ <code>{short(f.script.commit)}</code></dd>
+                    <dt>result</dt><dd><code>{f.result.path}</code></dd>
+                    <dt>sha256</dt><dd><code>{f.result.sha256}</code></dd>
+                  </dl>
+                </details>
+              </div>
+            </Figure>
+          );
+        })}
+      </section>
+    )}
+
+    <footer class="nf-wrap cite" id="citation">
+      {wp.citation?.bibtex ? <pre class="bib" tabindex="0" aria-label={uiEn.citation}><code>{wp.citation.bibtex}</code></pre> : <p>{wp.citationNote}</p>}
+    </footer>
+  </article>
+</Base>
+<style>
+  .phead { padding-top: 64px; }
+  .meta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  h1 { margin-top: 18px; max-width: 26ch; font-size: clamp(30px, 4.2vw, 48px); }
+  .status-note { margin-top: 16px; color: var(--color-muted); max-width: 70ch; }
+  .print-only { display: none; }
+  .cols { margin-top: 40px; }
+  .text { max-width: 760px; }
+  .text > p { margin-top: 14px; font-size: 17px; }
+  .abstract { color: var(--color-muted); font-style: italic; }
+  .questions { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 14px; }
+  .q { padding: 20px 22px; }
+  .q h2 { font-size: 18px; font-weight: 500; }
+  .q p { margin-top: 8px; color: var(--color-muted); }
+  .q .src, .legend { font: 400 12px/1.5 var(--font-mono); color: var(--color-muted); word-break: break-word; }
+  .legend { margin-top: 16px; }
+  .figs { margin-top: 56px; display: grid; gap: 56px; }
+  .fnote { font-size: 13.5px; color: var(--color-ink); border-left: 2px solid var(--color-accent); padding-left: 10px; margin-bottom: 8px; }
+  .prov { display: flex; flex-direction: column; gap: 6px; }
+  .prov dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 8px 0 0; }
+  .prov dd { margin: 0; word-break: break-all; }
+  .prov summary { cursor: pointer; color: var(--color-accent-ink); }
+  .cite { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--color-line); }
+  .cite p { margin-top: 8px; color: var(--color-muted); }
+  .bib { margin-top: 8px; overflow-x: auto; font: 400 12.5px/1.6 var(--font-mono); }
+  @media print {
+    :global(header.site), :global(footer.site-foot), :global(.nf-skip) { display: none !important; }
+    .phead { padding-top: 0; }
+    .print-only { display: block; font: 400 11px var(--font-mono); margin-top: 8px; }
+    .figs { break-before: page; }
+    .prov details { display: block; }
+    .prov details > * { display: block; }
+    a[download] { display: none; }
+    :global(body) { font-size: 11pt; }
+  }
+</style>

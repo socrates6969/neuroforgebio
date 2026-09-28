@@ -1,0 +1,78 @@
+---
+// Internal component gallery (noindex, not in the sitemap). Renders every @nf/ui component and
+// the theme slots with real content, so both builds show each component in their theme.
+import Base from '../layouts/Base.astro';
+import HeroVisual from '@theme/slots/HeroVisual.astro';
+import BrandMark from '@theme/slots/BrandMark.astro';
+import SectionOrnament from '@theme/slots/SectionOrnament.astro';
+import SecurityVisual from '@theme/slots/SecurityVisual.astro';
+import Hero from '@nf/ui/components/Hero.astro';
+import SectionHead from '@nf/ui/components/SectionHead.astro';
+import PipelineSteps from '@nf/ui/components/PipelineSteps.astro';
+import AudienceTabs from '@nf/ui/components/AudienceTabs.astro';
+import ComplianceGrid from '@nf/ui/components/ComplianceGrid.astro';
+import PricingTeaser from '@nf/ui/components/PricingTeaser.astro';
+import ResearchCards from '@nf/ui/components/ResearchCards.astro';
+import CTA from '@nf/ui/components/CTA.astro';
+import Banner from '@nf/ui/components/Banner.astro';
+import Button from '@nf/ui/components/Button.astro';
+import StatusPill from '@nf/ui/components/StatusPill.astro';
+import Figure from '@nf/ui/components/Figure.astro';
+import EarlyAccessForm from '@nf/ui/components/EarlyAccessForm.astro';
+import FigureIsland from '@nf/figures/FigureIsland.astro';
+import { THEME, content, site, statusLabels, statusPrefix, uiEn } from "../lib/site.ts";
+import { manifestFor, REPO_ROOT } from '../lib/figures.ts';
+import type { Status } from '@nf/content';
+
+const h = content.home;
+const g = site.gallery;
+const ea = site.earlyAccess;
+const wp = content.whitepapers['somatosensory-closed-loop'];
+const fig = manifestFor('somatosensory-closed-loop')?.figures.find((f) => wp?.figures?.[f.id]);
+const figCap = fig ? wp.figures![fig.id] : undefined;
+const statuses = Object.keys(statusLabels) as Status[];
+const names = ['Hero', 'SectionHead', 'PipelineSteps', 'AudienceTabs', 'ComplianceGrid', 'PricingTeaser', 'ResearchCards', 'CTA', 'Banner', 'Button', 'StatusPill', 'Figure', 'EarlyAccessForm', 'BrandMark', 'SectionOrnament', 'SecurityVisual'];
+---
+<Base title={g.meta.title} description={g.meta.description} noindex>
+  <div class="nf-wrap gh">
+    <h1>{g.heading}</h1>
+    <nav aria-label={g.heading}><ul class="toc">{names.map((n) => <li><a href={`#g-${n}`}>{n}</a></li>)}</ul></nav>
+  </div>
+  <div id="g-Hero"><Hero eyebrow={h.hero.eyebrow} heading={h.hero.heading} sub={h.hero.sub} ctas={h.hero.ctas} formats={{ lead: h.formats.lead, items: h.formats.items, note: h.formats.note, label: site.aria.formats }}>
+    <HeroVisual slot="visual" label={site.aria.heroVisual[THEME]} caption={site.aria.heroVisualCaption} />
+  </Hero></div>
+  <div class="nf-wrap blocks">
+    <section id="g-SectionHead"><SectionHead id="g-sh" eyebrow={h.pipeline.eyebrow} heading={h.pipeline.heading} lede={h.pipeline.lede}><SectionOrnament slot="ornament" index={1} /></SectionHead></section>
+    <section id="g-PipelineSteps"><PipelineSteps steps={h.pipeline.steps} statusLabels={statusLabels} statusPrefix={statusPrefix} code={{ heading: h.pipeline.code.heading, body: h.pipeline.code.body, lines: h.pipeline.code.lines, note: h.pipeline.code.note, label: site.aria.codeSample }} /></section>
+    <section id="g-AudienceTabs"><AudienceTabs idPrefix="gal" label={site.aria.audienceTabs} panels={h.audience.panels} statusLabels={statusLabels} statusPrefix={statusPrefix} /></section>
+    <section id="g-ComplianceGrid"><ComplianceGrid rows={h.compliance.rows} legal={h.compliance.legal} statusLabels={statusLabels} statusPrefix={statusPrefix}><SecurityVisual slot="visual" label={uiEn.securityVisual} /></ComplianceGrid></section>
+    <section id="g-PricingTeaser"><PricingTeaser tiers={h.pricing.tiers} statusLabels={statusLabels} statusPrefix={statusPrefix} /></section>
+    <section id="g-ResearchCards"><ResearchCards cards={h.research.cards} statusLabels={statusLabels} statusPrefix={statusPrefix} /></section>
+    <section id="g-CTA"><CTA id="g-cta-h" heading={h.cta.heading} body={h.cta.body} ctas={h.cta.ctas} /></section>
+    <section id="g-Banner"><Banner text={site.banners.irbFda} /><Banner text={site.banners.notLegalAdvice} tone="caution" /></section>
+    <section id="g-Button" class="row">{h.hero.ctas.map((c) => <Button cta={c} />)}<Button cta={{ label: ea.submitLabel, href: '#g-EarlyAccessForm', variant: 'primary', disabled: true, note: ea.disabledNote }} /></section>
+    <section id="g-StatusPill" class="row">{statuses.map((s) => <StatusPill status={s} label={statusLabels[s]} prefix={statusPrefix} />)}</section>
+    <section id="g-Figure">
+      {fig && figCap && (
+        <Figure id="g-fig" number="1." title={figCap.title} caption={figCap.caption} status={site.figureUi.statusPreliminary}>
+          <FigureIsland entry={fig} repoRoot={REPO_ROOT} ariaLabel={figCap.title} ui={{ dataTableSummary: site.figureUi.dataTableSummary, keyboardHint: site.figureUi.keyboardHint, readoutLabel: site.figureUi.readoutLabel }} />
+        </Figure>
+      )}
+    </section>
+    <section id="g-EarlyAccessForm"><EarlyAccessForm heading={ea.heading} body={ea.body} emailLabel={ea.emailLabel} emailPlaceholder={ea.emailPlaceholder} submitLabel={ea.submitLabel} disabledNote={ea.disabledNote} statusLabel={statusLabels[ea.status]} /></section>
+    <section id="g-BrandMark" class="row"><BrandMark name={content.brand.name} /></section>
+    <section id="g-SectionOrnament" class="row"><SectionOrnament index={1} /><SectionOrnament index={2} /><SectionOrnament /></section>
+    <section id="g-SecurityVisual"><SecurityVisual label={uiEn.securityVisual} /></section>
+  </div>
+</Base>
+<style>
+  .gh { padding-top: 40px; }
+  .toc { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 8px 16px; font: 400 13px var(--font-mono); }
+  .blocks { display: grid; gap: 64px; padding-top: 48px; }
+  /* min-width: 0 overrides the CSS Grid default (grid items don't shrink below their content's
+     min-content width otherwise); without it, a section whose content can't wrap below a certain
+     width (e.g. PipelineSteps' unbreakable code-sample lines) can force this whole grid, and so
+     the page, wider than the viewport -- a real WCAG 1.4.10 reflow bug at narrow widths. */
+  .blocks > section { scroll-margin-top: 80px; min-width: 0; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+</style>

@@ -1,0 +1,339 @@
+{
+  "meta": {
+    "title": "{brand} · Reproducible pipelines and governance for neural data",
+    "description": "Versioned, comparable pipelines and neural-data governance, from electrode to model. In development; for research and development use."
+  },
+  "hero": {
+    "eyebrow": "Neural data infrastructure",
+    "heading": "The data layer for <em>brain-computer interfaces.</em>",
+    "sub": "Versioned, comparable pipelines and neural-data governance, from electrode to model.",
+    "ctas": [
+      {
+        "label": "Join early access",
+        "href": "/pricing#early-access",
+        "variant": "primary",
+        "disabled": true,
+        "note": "Early-access list opens soon"
+      },
+      { "label": "See the platform", "href": "/platform", "variant": "ghost" }
+    ]
+  },
+  "formats": {
+    "lead": "Designed for",
+    "items": ["BIDS", "LSL", "EDF/BDF", "NWB", "XDF"],
+    "note": "Open formats and protocols, not partners."
+  },
+  "pipeline": {
+    "eyebrow": "01 · Platform",
+    "heading": "One pipeline, <em>from electrode to model.</em>",
+    "lede": "Four stages. Every run is versioned, and every parameter, version and input hash is recorded as provenance.",
+    "steps": [
+      {
+        "id": "ingest",
+        "number": "01",
+        "kicker": "Ingest",
+        "heading": "Hardware-agnostic ingest",
+        "body": "Connectors for EEG, ECoG and microelectrode recordings in open formats, stored on standard time-series infrastructure.",
+        "tags": ["BIDS", "Lab Streaming Layer", "EDF/BDF · NWB · XDF"],
+        "status": "designed"
+      },
+      {
+        "id": "pipelines",
+        "number": "02",
+        "kicker": "Pipelines",
+        "heading": "Reproducible, comparable pipelines",
+        "body": "Versioned preprocessing pipelines with full provenance. Run one, or run a grid of them and see how your results move.",
+        "tags": ["Pinned versions", "Parameter provenance", "Pipeline grids"],
+        "status": "designed",
+        "evidence": [
+          {
+            "text": "In a 2025 study, every artifact-correction step reduced decoding performance.",
+            "source": "market/landscape.md §3",
+            "sourceUrl": "https://doi.org/10.1038/s42003-025-08464-3",
+            "grade": "A"
+          },
+          {
+            "text": "A 2025 comparison of 43 preprocessing pipelines found no single best pipeline.",
+            "source": "market/landscape.md §3",
+            "sourceUrl": "https://doi.org/10.1111/psyp.70197",
+            "grade": "A"
+          }
+        ]
+      },
+      {
+        "id": "models",
+        "number": "03",
+        "kicker": "Neuro-AI",
+        "heading": "Governed model registry",
+        "body": "Governed model registry (roadmap): versioned models with provenance, documented intended use and use restrictions. Benchmarks will be published with methods.",
+        "tags": ["Versioned models", "Intended use", "Use restrictions"],
+        "status": "roadmap"
+      },
+      {
+        "id": "sdks",
+        "number": "04",
+        "kicker": "SDKs",
+        "heading": "Python first, one shared core",
+        "body": "A Python SDK first, built on one shared core so every language records provenance the same way. C and C++ bindings follow; game engines on request.",
+        "tags": ["Python", "C / C++", "Unity / Unreal on request"],
+        "status": "planned"
+      }
+    ],
+    "code": {
+      "heading": "Every run carries its provenance.",
+      "body": "Open a recording, run a pinned pipeline version, and get a provenance handle that records every parameter, version and input hash.",
+      "language": "python",
+      "lines": [
+        "import {pkg} as nf            # Illustrative API, subject to change",
+        "rec = nf.open(\"sub-01_task-motor_eeg.edf\")",
+        "run = nf.pipelines.get(\"eeg-basic@1.0.0\").run(rec)",
+        "print(run.provenance.id)          # every parameter, version and input hash"
+      ],
+      "note": "Illustrative API, subject to change"
+    }
+  },
+  "governance": {
+    "eyebrow": "02 · Governance",
+    "heading": "Neural-data law is here. <em>Govern the data, not just the files.</em>",
+    "lede": "US states define neural data differently, so one recording can be regulated in one state and not in the next. Classification, consent and deletion have to follow the data into every derivative.",
+    "points": [
+      {
+        "heading": "Per-jurisdiction classification",
+        "body": "Each channel and derived feature is classified against each state's definition.",
+        "status": "planned"
+      },
+      {
+        "heading": "Versioned consent ledger",
+        "body": "Opt-in consent recorded with its version, and withdrawal propagated to raw data, derivatives and trained models.",
+        "status": "planned"
+      },
+      {
+        "heading": "Use restrictions on models",
+        "body": "Models carry intended-use and use-restriction metadata, for example for EU workplace and education settings.",
+        "status": "planned"
+      }
+    ],
+    "link": { "label": "Read the neural-data law tracker", "href": "/law-tracker" },
+    "evidence": [
+      {
+        "text": "Colorado, California, Montana and Connecticut have passed laws that add neural data to the sensitive data their privacy laws protect; Connecticut's amendments carry July 1, 2026 effective dates.",
+        "source": "market/regulation.md §1",
+        "grade": "A"
+      },
+      {
+        "text": "Colorado and California cover the central or peripheral nervous system; Connecticut covers the central nervous system only; California excludes data inferred from non-neural information.",
+        "source": "market/regulation.md §1",
+        "grade": "A"
+      }
+    ]
+  },
+  "audience": {
+    "eyebrow": "03 · Who it is for",
+    "heading": "Built for labs <em>and for device makers.</em>",
+    "lede": "The same provenance and governance layer, packaged for two different jobs.",
+    "panels": [
+      {
+        "id": "researchers",
+        "tabLabel": "For researchers",
+        "tier": "Academic tier · free (planned)",
+        "heading": "Spend your grant on science, <em>not plumbing.</em>",
+        "body": "Open your lab's recordings in a pipeline that other labs can re-run exactly, and compare pipelines instead of trusting one default.",
+        "bullets": [
+          { "text": "BIDS-native import and export", "status": "planned" },
+          { "text": "Versioned pipelines you can cite and rerun", "status": "designed" },
+          { "text": "Export to MNE- and EEGLAB-compatible formats", "status": "planned" },
+          { "text": "Citation-ready provenance for every result", "status": "designed" }
+        ],
+        "cta": {
+          "label": "Join early access",
+          "href": "/pricing#early-access",
+          "variant": "primary",
+          "disabled": true,
+          "note": "Early-access list opens soon"
+        }
+      },
+      {
+        "id": "hardware",
+        "tabLabel": "For hardware companies",
+        "tier": "Startup tier · pricing at launch",
+        "heading": "You build the device. <em>We carry the evidence.</em>",
+        "body": "For neurotech teams that need traceable data, consent records and documentation their reviewers can follow.",
+        "bullets": [
+          { "text": "Consent and deletion records per US state", "status": "planned" },
+          {
+            "text": "Provenance for every parameter, version and input hash",
+            "status": "designed"
+          },
+          { "text": "White-label SDK on the shared core", "status": "roadmap" },
+          { "text": "Cloud deployment first; edge deployment on request", "status": "roadmap" }
+        ],
+        "cta": {
+          "label": "Join early access",
+          "href": "/pricing#early-access",
+          "variant": "primary",
+          "disabled": true,
+          "note": "Early-access list opens soon"
+        }
+      }
+    ]
+  },
+  "compliance": {
+    "eyebrow": "04 · Compliance & security",
+    "heading": "Neural data is sensitive. <em>Our design starts there.</em>",
+    "lede": "Controls listed with their current status. We hold no certifications and claim none.",
+    "rows": [
+      {
+        "control": "Encryption",
+        "description": "AES-256 at rest, TLS 1.3 in transit",
+        "status": "designed"
+      },
+      { "control": "Access control", "description": "RBAC + audit logs", "status": "designed" },
+      {
+        "control": "HIPAA",
+        "description": "Designed for HIPAA-aligned workflows. BAA available for enterprise (planned)",
+        "status": "planned"
+      },
+      {
+        "control": "SOC 2 Type II",
+        "description": "SOC 2 Type II: on roadmap",
+        "status": "roadmap"
+      },
+      {
+        "control": "Neural-data privacy",
+        "description": "Built to support emerging US state neural-data privacy laws (e.g. Colorado, California, Connecticut, Montana)",
+        "status": "designed",
+        "claim": {
+          "text": "Colorado, California, Montana and Connecticut have enacted neural-data provisions in their consumer privacy laws.",
+          "source": "market/regulation.md §1",
+          "grade": "A"
+        }
+      },
+      {
+        "control": "Data residency",
+        "description": "Data residency options (planned)",
+        "status": "planned"
+      },
+      {
+        "control": "De-identification",
+        "description": "De-identification tooling to strip identifiers before sharing or export",
+        "status": "designed"
+      }
+    ],
+    "legal": "This is not legal advice. Customers remain responsible for their own regulatory obligations.",
+    "link": { "label": "Security overview", "href": "/security" }
+  },
+  "pricing": {
+    "eyebrow": "05 · Pricing",
+    "heading": "Free for science. <em>Fair for startups.</em>",
+    "lede": "No prices are final. We set them after discovery interviews, and early-access members hear first.",
+    "tiers": [
+      {
+        "id": "academic",
+        "name": "Academic",
+        "price": "Free",
+        "who": "For individual researchers and students, with fair-use limits.",
+        "features": [
+          { "text": "Open-source Python SDK", "status": "planned" },
+          { "text": "Local provenance for every run", "status": "designed" },
+          { "text": "BIDS, NWB and LSL integrations", "status": "planned" }
+        ],
+        "cta": {
+          "label": "Join the early-access list",
+          "href": "/pricing#early-access",
+          "variant": "ghost",
+          "disabled": true,
+          "note": "Opens soon"
+        }
+      },
+      {
+        "id": "startup",
+        "name": "Startup",
+        "price": "Banded subscription",
+        "who": "For seed-stage neurotech teams. Pricing at launch.",
+        "features": [
+          { "text": "Hosted pipelines and pipeline grids", "status": "planned" },
+          { "text": "Consent and deletion ledger for core US states", "status": "planned" },
+          { "text": "SSO", "status": "planned" }
+        ],
+        "featured": true,
+        "cta": {
+          "label": "Join the early-access list",
+          "href": "/pricing#early-access",
+          "variant": "primary",
+          "disabled": true,
+          "note": "Opens soon"
+        }
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "price": "Custom",
+        "who": "For organizations with regulated data and dedicated needs.",
+        "features": [
+          { "text": "BAA available for enterprise (planned)", "status": "planned" },
+          { "text": "SSO and advanced RBAC", "status": "planned" },
+          { "text": "Single-tenant or on-prem deployment", "status": "roadmap" }
+        ],
+        "cta": {
+          "label": "Join the early-access list",
+          "href": "/pricing#early-access",
+          "variant": "ghost",
+          "disabled": true,
+          "note": "Opens soon"
+        }
+      }
+    ],
+    "link": { "label": "How pricing will work", "href": "/pricing" }
+  },
+  "research": {
+    "eyebrow": "06 · Research",
+    "heading": "Whitepapers and <em>working notes.</em>",
+    "lede": "Computational and methods work, published with its assumptions, code and status stated.",
+    "cards": [
+      {
+        "slug": "somatosensory-closed-loop",
+        "title": "Bidirectional closed-loop somatosensory feedback: a computational study",
+        "summary": "Modelling how patterned stimulation of somatosensory cortex could encode touch, pressure and proprioception.",
+        "status": "in-preparation",
+        "kind": "Whitepaper · computational study",
+        "featured": true,
+        "banner": "Computational/theoretical work; any clinical application requires IRB/FDA oversight",
+        "href": "/research/somatosensory-closed-loop",
+        "cta": {
+          "label": "Read the preview",
+          "href": "/research/somatosensory-closed-loop",
+          "variant": "ghost"
+        }
+      },
+      {
+        "slug": "preprocessing-multiverse",
+        "title": "How preprocessing choices change decoding results: a multiverse analysis on public EEG",
+        "summary": "Running a grid of preprocessing pipelines on open EEG datasets to measure how decoding results move, with code and methods released alongside the results.",
+        "status": "planned",
+        "kind": "Methods study"
+      },
+      {
+        "slug": "hipaa-aligned-reference-architecture",
+        "title": "A reference architecture for HIPAA-aligned neural data pipelines",
+        "summary": "How encryption, access control, audit logging and consent records fit together across ingest, storage and models.",
+        "status": "planned",
+        "kind": "Architecture note"
+      }
+    ],
+    "link": { "label": "All research", "href": "/research" }
+  },
+  "cta": {
+    "heading": "Help shape the data layer <em>for neurotech.</em>",
+    "body": "The early-access list opens soon. Until then, read the research or the neural-data law tracker.",
+    "ctas": [
+      {
+        "label": "Join early access",
+        "href": "/pricing#early-access",
+        "variant": "primary",
+        "disabled": true,
+        "note": "Early-access list opens soon"
+      },
+      { "label": "Read the law tracker", "href": "/law-tracker", "variant": "ghost" }
+    ]
+  }
+}

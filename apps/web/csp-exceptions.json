@@ -1,0 +1,15 @@
+{
+  "$comment": "SEC-150 per-route CSP exceptions. Owned by the security role (CODEOWNERS); each entry needs nfb-security's written approval and an ADR. security-headers.mjs adds the token ONLY on the listed route (and paths under it); every other route keeps the baseline CSP byte for byte and assertCspSafe() still rejects the token there. Active only when the route is built AND a page under it reaches a .wasm in dist (scripts/csp-check.mjs exceptionsInUse; detection errors keep the baseline). A SITE_HOST=netlify build fails while an exception is active (nfb-security: KEEP FAIL, 2026-09-27).",
+  "exceptions": [
+    {
+      "route": "/arena/",
+      "directive": "script-src",
+      "token": "'wasm-unsafe-eval'",
+      "reason": "Decoder Arena compiles its same-origin, content-hashed WebAssembly decoder on the page's main thread (wasm-bindgen --target web, WebAssembly.instantiateStreaming). No Worker. Demo or synthetic data only; no platform API calls.",
+      "owner": "nfb-security",
+      "approved": "2026-09-27",
+      "review": "each milestone",
+      "adr": "docs/adr/0014-csp-wasm-exception-arena.md"
+    }
+  ]
+}

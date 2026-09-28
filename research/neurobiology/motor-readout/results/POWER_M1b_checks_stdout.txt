@@ -1,0 +1,13 @@
+2026-09-27T01:11:52 +    0.3s prereg + power lock + 4 old input hashes OK; no fresh file on disk
+2026-09-27T01:12:11 +   18.7s synthetic noise for R2 0.4: s = 13.7304
+2026-09-27T01:12:25 +   33.4s synthetic noise for R2 0.6: s = 7.6000
+2026-09-27T01:12:40 +   47.8s synthetic noise for R2 0.8: s = 5.6974
+2026-09-27T01:12:41 +   48.9s syn040: n=250 honest ridge R2 0.316 ridge 0.316 B0 -0.048
+2026-09-27T01:13:02 +   70.2s   P1 E 0.551 bar 0.276 mean rise 0.563 hits 20/20 (valid 20)
+2026-09-27T01:13:11 +   78.9s syn060: n=250 honest ridge R2 0.656 ridge 0.656 kf0 0.581 kfl 0.625 gru 0.549 B0 -0.022
+2026-09-27T01:13:30 +   98.5s   P1 E 0.260 bar 0.130 mean rise 0.235 hits 20/20 (valid 20)
+2026-09-27T01:14:19 +  146.8s   P2 clean: ridge 19/20 kf0 19/20 kfl 20/20 gru 5/5 methods ["('rejection', 'rejection')"]
+2026-09-27T01:14:59 +  187.2s   P3 NL-1 fails: ridge 20/20 kf0 20/20 kfl 20/20 gru 5/5
+2026-09-27T01:15:00 +  188.3s syn080: n=250 honest ridge R2 0.796 ridge 0.796 B0 0.001
+2026-09-27T01:15:17 +  205.1s   P1 E 0.163 bar 0.082 mean rise 0.120 hits 20/20 (valid 20)
+2026-09-27T01:15:28 +  216.4s large: n=500 honest ridge R2 0.669 ridge 0.669 kf0 0.286 kfl 0.448 gru 0.812 B0 0.061

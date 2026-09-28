@@ -1,0 +1,14 @@
+<!-- Row 7a PLANTED FAILURE: a range input with no aria-valuetext at render -- the /arena "neurons"
+     slider bug shape (docs/hive/A11Y-AUDIT.md row 7), before the fix. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <label>
+      <span>Neurons used: <output data-out>32</output></span>
+      <input type="range" data-neurons min="0" max="5" step="1" value="5" disabled />
+    </label>
+  </body>
+</html>
