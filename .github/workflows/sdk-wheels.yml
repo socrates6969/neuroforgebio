@@ -1,0 +1,52 @@
+# Python SDK wheels (abi3). Dispatch only. No publish step (SEC-134).
+name: sdk-wheels
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CI: 'true'
+
+jobs:
+  wheels:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-14, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c7f87aa956e4c323abf06d5dec078e358f6b4d04 # v6.0.0
+      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # v1.95.0
+      - run: uv sync --locked
+      - run: uv run --locked maturin build --release --manifest-path bindings/python/Cargo.toml
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: wheels-${{ matrix.os }}
+          path: target/wheels
+          retention-days: 14
+
+  docs-snippets:
+    runs-on: ubuntu-latest
+    environment: docs-snippets
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c7f87aa956e4c323abf06d5dec078e358f6b4d04 # v6.0.0
+      - run: uv sync --locked
+      - name: Quickstart snippets
+        env:
+          NF_DOCS_STAGING_URL: ${{ vars.NF_DOCS_STAGING_URL }}
+          NF_DOCS_STAGING_TOKEN: ${{ secrets.NF_DOCS_STAGING_TOKEN }}
+        run: |
+          uv run --locked python tools/doc-snippets/gen_api_reference.py --check
+          uv run --locked python tools/doc-snippets/run.py

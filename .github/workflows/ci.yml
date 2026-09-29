@@ -1,0 +1,142 @@
+# Manual dispatch only (SEC-080). Running this spends GitHub Actions minutes.
+name: ci
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CI: 'true'
+
+jobs:
+  repo-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          version: 9.15.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - uses: astral-sh/setup-uv@c7f87aa956e4c323abf06d5dec078e358f6b4d04 # v6.0.0
+      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # v1.95.0
+      - run: pnpm install --frozen-lockfile
+      - run: uv sync --locked
+      - run: node tools/dev/tasks.mjs lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          version: 9.15.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - uses: astral-sh/setup-uv@c7f87aa956e4c323abf06d5dec078e358f6b4d04 # v6.0.0
+      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # v1.95.0
+      - run: pnpm install --frozen-lockfile
+      - run: uv sync --locked
+      - run: node tools/dev/tasks.mjs test
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Install checksum-pinned gitleaks 8.30.1
+        run: |
+          curl -fsSL -o gitleaks.tar.gz \
+            https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  gitleaks.tar.gz" \
+            | sha256sum -c -
+          tar -xzf gitleaks.tar.gz gitleaks
+          install gitleaks /usr/local/bin/gitleaks
+      - run: gitleaks git --config .gitleaks.toml --verbose --exit-code 1
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          version: 9.15.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - uses: astral-sh/setup-uv@c7f87aa956e4c323abf06d5dec078e358f6b4d04 # v6.0.0
+      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # v1.95.0
+      - uses: taiki-e/install-action@e03236526ace47fa2e04bebcfc6da471ebd4690c # v2.49.0
+        with:
+          tool: cargo-audit,cargo-deny@0.20.2
+      - run: pnpm install --frozen-lockfile
+      - run: uv sync --locked
+      - run: node tools/licence-check/cli.mjs
+      - name: Audits and vuln-gate
+        run: |
+          pnpm audit --json > pnpm-audit.json || test $? -eq 1
+          uv export --frozen --output-file /tmp/req.txt
+          uvx pip-audit@2.10.1 -r /tmp/req.txt -f json > pip-audit.json
+          cargo audit --json > cargo-audit.json || test $? -eq 1
+          cargo deny check
+          curl -fsSL -o kev.json \
+            https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+          node tools/vuln-gate/cli.mjs \
+            --pnpm pnpm-audit.json --pip pip-audit.json --cargo cargo-audit.json \
+            --kev kev.json --vex security/vex
+      - name: Repository SBOM
+        run: |
+          pnpm install --dir tools/sbom-cdxgen --ignore-workspace --frozen-lockfile --ignore-scripts
+          tools/sbom-cdxgen/node_modules/.bin/cdxgen --spec-version 1.6 \
+            --exclude "tools/sbom-cdxgen/**" -o sbom-repo.cdx.json .
+          node tools/sbom-props/cli.mjs add sbom-repo.cdx.json \
+            --overrides security/support-levels.json --include security/sbom-ci-images.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: sbom-repo
+          path: sbom-repo.cdx.json
+          retention-days: 14
+
+  build-web:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        theme: [clinical, cosmos]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          version: 9.15.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build one theme and its SBOM
+        env:
+          THEME: ${{ matrix.theme }}
+        run: |
+          node tools/dev/tasks.mjs build-web "$THEME"
+          node tools/copy-lint/cli.mjs packages/content "apps/web/dist/$THEME"
+          pnpm install --dir tools/sbom-cdxgen --ignore-workspace --frozen-lockfile --ignore-scripts
+          tools/sbom-cdxgen/node_modules/.bin/cdxgen --spec-version 1.6 \
+            --exclude "tools/sbom-cdxgen/**" -o "sbom-web-$THEME.cdx.json" "apps/web/dist/$THEME"
+          node tools/sbom-props/cli.mjs add "sbom-web-$THEME.cdx.json" \
+            --overrides security/support-levels.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: web-${{ matrix.theme }}
+          path: |
+            apps/web/dist/${{ matrix.theme }}
+            sbom-web-${{ matrix.theme }}.cdx.json
+          retention-days: 14

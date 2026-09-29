@@ -1,0 +1,55 @@
+# Website quality gate (BUILD-GUIDE 1.9). Dispatch only.
+name: web-quality
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CI: 'true'
+
+jobs:
+  web-e2e:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        theme: [clinical, cosmos]
+    env:
+      THEME: ${{ matrix.theme }}
+      LHCI_THEME: ${{ matrix.theme }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          version: 9.15.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build both themes
+        run: |
+          node tools/dev/tasks.mjs build-web clinical
+          node tools/dev/tasks.mjs build-web cosmos
+      - run: pnpm --filter @nf/web test
+      - run: pnpm --filter @nf/web linkcheck
+      - run: pnpm --filter @nf/web size
+      - run: pnpm --filter @nf/web exec playwright install --with-deps chromium
+      - run: pnpm --filter @nf/web exec playwright test --project="$THEME" --update-snapshots=missing
+      - run: pnpm --filter @nf/web lhci
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: web-e2e-${{ matrix.theme }}
+          path: |
+            apps/web/playwright-report
+            apps/web/test-results
+            apps/web/e2e/__snapshots__
+            apps/web/.lighthouseci
+          retention-days: 14
+          if-no-files-found: ignore

@@ -1,0 +1,68 @@
+# Reproducibility harness (BUILD-GUIDE 3.5). Dispatch only. Cross-arch compare is CI-only.
+name: repro-check
+
+on:
+  workflow_dispatch:
+    inputs:
+      seeds:
+        description: Comma-separated integer seeds
+        required: false
+        default: '1,2'
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  CI: 'true'
+
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c7f87aa956e4c323abf06d5dec078e358f6b4d04 # v6.0.0
+      - run: uv sync --locked
+      - name: Run the harness
+        env:
+          SEEDS: ${{ inputs.seeds }}
+        run: |
+          if [[ ! "$SEEDS" =~ ^[0-9]+(,[0-9]+)*$ ]]; then
+            echo "seeds must be a comma-separated list of integers"
+            exit 1
+          fi
+          uv run --locked python -m nf_repro check --out repro-out --seeds "$SEEDS" --label "$RUNNER_OS"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: repro-${{ matrix.os }}
+          path: repro-out
+          retention-days: 14
+
+  compare-arch:
+    needs: check
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c7f87aa956e4c323abf06d5dec078e358f6b4d04 # v6.0.0
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          pattern: repro-*
+          path: arches
+      - run: uv sync --locked
+      - run: |
+          uv run --locked python -m nf_repro compare-arch \
+            arches/repro-ubuntu-24.04 arches/repro-ubuntu-24.04-arm \
+            --out compare --label x86-64-vs-arm64
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: repro-compare
+          path: compare
+          retention-days: 14
