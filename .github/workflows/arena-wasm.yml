@@ -1,0 +1,76 @@
+# Decoder Arena wasm (EXC-150-1 / ADR 0014). Dispatch only. Does not commit and does not deploy.
+# The site SBOM scanner is not used here; that scanner is limited to ci.yml and release.yml (APP-L5).
+name: arena-wasm
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CI: 'true'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # v1.95.0
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: taiki-e/install-action@e03236526ace47fa2e04bebcfc6da471ebd4690c # v2.49.0
+        with:
+          tool: cargo-deny@0.20.2
+      - name: Install wasm-bindgen-cli 0.2.129
+        run: cargo install wasm-bindgen-cli --version 0.2.129 --locked
+      - name: Two identical release builds
+        run: |
+          export RUSTFLAGS="--remap-path-prefix ${GITHUB_WORKSPACE}=/src"
+          CARGO_TARGET_DIR=target-a cargo build --release --locked --target wasm32-unknown-unknown -p arena-core --features wasm
+          CARGO_TARGET_DIR=target-b cargo build --release --locked --target wasm32-unknown-unknown -p arena-core --features wasm
+          cmp \
+            target-a/wasm32-unknown-unknown/release/arena_core.wasm \
+            target-b/wasm32-unknown-unknown/release/arena_core.wasm
+          cargo deny check
+      - name: Bindgen, magic bytes, and the four expected files
+        run: |
+          wasm-bindgen --target web --out-dir out \
+            target-b/wasm32-unknown-unknown/release/arena_core.wasm
+          python3 - <<'PY'
+          from pathlib import Path
+          expected = {
+              "arena_core.js",
+              "arena_core_bg.wasm",
+              "arena_core.d.ts",
+              "arena_core_bg.wasm.d.ts",
+          }
+          got = {p.name for p in Path("out").iterdir() if p.is_file()}
+          extra = got - expected
+          missing = expected - got
+          if extra or missing:
+              raise SystemExit(f"unexpected arena files extra={extra} missing={missing}")
+          wasm = Path("out/arena_core_bg.wasm").read_bytes()
+          if wasm[:4] != b"\0asm":
+              raise SystemExit("arena wasm magic is not \\0asm")
+          PY
+          if [ -f apps/web/src/assets/arena/pkg/arena_core_bg.wasm ]; then
+            cmp out/arena_core_bg.wasm apps/web/src/assets/arena/pkg/arena_core_bg.wasm
+            cmp out/arena_core.js apps/web/src/assets/arena/pkg/arena_core.js
+            (cd out && sha256sum arena_core.js arena_core_bg.wasm arena_core.d.ts arena_core_bg.wasm.d.ts) \
+              | sort -k2 > SHA256SUMS
+            sort -k2 security/arena-pkg.sha256 > /tmp/manifest
+            cmp SHA256SUMS /tmp/manifest
+          else
+            echo "No committed pkg/. Artifact is ready to review; this job does not commit it."
+            (cd out && sha256sum arena_core.js arena_core_bg.wasm arena_core.d.ts arena_core_bg.wasm.d.ts > ../SHA256SUMS)
+          fi
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: arena-wasm-a
+          path: |
+            out
+            SHA256SUMS
+          retention-days: 90
